@@ -28,10 +28,8 @@
 
 .patient {
   background-color: whitesmoke;
-  width: auto;
-  border: 3px solid rgb(47, 65, 183);
-  padding: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
+  width: 100%;
 }
 
 .tasks {
@@ -89,13 +87,13 @@ select {
 }
 
 table {
-  border: 2px solid rgb(45, 93, 225);
+  border: 2px solid rgb(238, 239, 244);
   width: 100%;
   height: auto;
 }
 
 th {
-  border-bottom: 1px solid rgb(41, 62, 225);
+  border-bottom: 1px solid rgb(246, 246, 248);
   width: auto;
 }
 
@@ -108,8 +106,8 @@ td {
   flex-direction: row;
   background-color: white;
   padding: 10px;
-  align-items: top;
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .landing {
@@ -148,6 +146,11 @@ td {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #060f43;
+  background-color: #172369;
   color: white;
+}
+
+h4 {
+  font-weight: bolder;
+  text-align: center;
 }

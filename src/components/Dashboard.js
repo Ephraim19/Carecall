@@ -44,6 +44,7 @@ const Dashboard = () => {
   const [intDisplay, setIntDisplay] = useState([]);
   const [prescription, setPrescription] = useState([]);
   const [prescDisplay, setPrescDisplay] = useState([]);
+  const [age, setAge] = useState("");
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ const Dashboard = () => {
           );
           setPatientData(dataArray);
           setPatientToDisplay([dataArray[dataArray.length - 1]]);
+          //get age
         } else {
           console.log("No data available");
         }
@@ -89,12 +91,16 @@ const Dashboard = () => {
     get(dbRef2)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const taskArray = Object.entries(snapshot.val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            })
-          );
+          var taskArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          //sort according to date
+          taskArray.sort(function(a, b) {
+            return b.dueDate > a.dueDate;
+          });
+          console.log(taskArray);
+
           setPatientTasks(taskArray);
           setPatientTasksDisplay([taskArray[taskArray.length - 1]]);
         } else {
@@ -207,6 +213,11 @@ const Dashboard = () => {
     setPrescDisplay(prescArray);
 
     Cookies.set("patient", obj.id);
+
+    //calculate age
+    const bornyr = dataArray[0].age.slice(12, 17);
+    const yr = new Date().getFullYear();
+    setAge(yr - bornyr);
   };
 
   const handleSearch = (e) => {
@@ -281,164 +292,152 @@ const Dashboard = () => {
       {patientToDisplay ? (
         <div className="dashboard">
           {patientToDisplay.map((patient) => (
-              <Sidebar key={patient.id} collapsed={menuCollapse}>
-                <div className="logotext">
-                  {/* small and big change using menucollapse state */}
-                  <h3 style={{ color: "purple", fontSize: "23px" }}>
-                    {menuCollapse
-                      ? patient.patient.split(" ")[0]
-                      : patient.patient}
-                  </h3>
-                </div>
-                <div className="closemenu" onClick={menuIconClick}>
-                  {/* changing menu collapse icon on click */}
-                  {menuCollapse ? (
-                    <FiArrowRightCircle />
-                  ) : (
-                    <FiArrowLeftCircle />
-                  )}
-                </div>
+            <Sidebar key={patient.id} collapsed={menuCollapse}>
+              <div className="logotext">
+                {/* small and big change using menucollapse state */}
+                <h3 style={{ color: "purple", fontSize: "23px" }}>
+                  {menuCollapse
+                    ? patient.patient.split(" ")[0]
+                    : patient.patient}{" "}
+                  ({age} )
+                </h3>
+              </div>
+              <div className="closemenu" onClick={menuIconClick}>
+                {/* changing menu collapse icon on click */}
+                {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
+              </div>
 
-                <Menu iconShape="square">
-                  <MenuItem active={true} icon={<FiCalendar />}>
-                    DOB: {patient.age.slice(4,17)}
-                  </MenuItem>
-                  <MenuItem icon={<FaPlusSquare />}>
-                    Status:<b>{patient.status}</b>
-                  </MenuItem>
-                  <MenuItem icon={<FaCartPlus />}>
-                    Goals: <b>{patient.goals}</b>
-                  </MenuItem>
-                  <MenuItem icon={<RiAlarmWarningLine />}>
-                    <b>Active conditions</b>
-                    <li>
-                      <ul key={1}>{patient.condition}</ul>
-                      <ul key={2}> {patient.condition1}</ul>
-                      <ul key={3}> {patient.condition2}</ul>
-                      <ul key={4}> {patient.condition3}</ul>
-                      <ul key={5}> {patient.condition4}</ul>
-                    </li>
-                  </MenuItem>
-                  <MenuItem icon={<BiAlarmExclamation />}>
-                    <b>Active Interventions</b>
-                    <li>
-                      <ol key={1}>{patient.intervention}</ol>
-                      <ol key={2}>{patient.intervention1}</ol>
-                      <ol key={3}>{patient.intervention2}</ol>
-                      <ol key={4}>{patient.intervention3}</ol>
-                      <ol key={5}>{patient.intervention4}</ol>
-                    </li>
-                  </MenuItem>
-                  <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
-                </Menu>
+              <Menu iconShape="square">
+                <MenuItem active={true} icon={<FiCalendar />}>
+                  DOB: {patient.age.slice(4, 17)}
+                </MenuItem>
+                <MenuItem icon={<FaPlusSquare />}>
+                  Status:<b>{patient.status}</b>
+                </MenuItem>
+                <MenuItem icon={<FaCartPlus />}>
+                  Goals: <b>{patient.goals}</b>
+                </MenuItem>
+                <MenuItem icon={<RiAlarmWarningLine />}>
+                  <b>Active conditions</b>
+                  <li>
+                    <ul key={1}>{patient.condition}</ul>
+                    <ul key={2}> {patient.condition1}</ul>
+                    <ul key={3}> {patient.condition2}</ul>
+                    <ul key={4}> {patient.condition3}</ul>
+                    <ul key={5}> {patient.condition4}</ul>
+                  </li>
+                </MenuItem>
+                <MenuItem icon={<BiAlarmExclamation />}>
+                  <b>Active Interventions</b>
+                  <li>
+                    <ol key={1}>{patient.intervention}</ol>
+                    <ol key={2}>{patient.intervention1}</ol>
+                    <ol key={3}>{patient.intervention2}</ol>
+                    <ol key={4}>{patient.intervention3}</ol>
+                    <ol key={5}>{patient.intervention4}</ol>
+                  </li>
+                </MenuItem>
+                <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+              </Menu>
 
-                <Menu iconShape="square">
-                  <MenuItem icon={<FiLogOut />}>
-                    {" "}
-                    <button className="App-info" onClick={Logout}>
-                      <b>Logout</b>
-                    </button>
-                  </MenuItem>
-                </Menu>
-              </Sidebar>
-            
+              <Menu iconShape="square">
+                <MenuItem icon={<FiLogOut />}>
+                  {" "}
+                  <button className="App-info" onClick={Logout}>
+                    <b>Logout</b>
+                  </button>
+                </MenuItem>
+              </Menu>
+            </Sidebar>
           ))}
 
           <div>
-            <div className="patient">
-              <h4>BP monitoring </h4>
+            <h4>Interaction log: </h4>
 
-              <table>
+            <table className="customers">
+              <tr>
+                <th>date </th>
+                <th>Message</th>
+              </tr>
+              {intDisplay.map((int) => (
                 <tr>
-                  <th>date </th>
-                  <th>Blood pressure</th>
+                  <td>{int.dueDate}</td>
+                  <td>{int.interaction}</td>
                 </tr>
-                {bpDisplay.map((bps) => (
-                  <tr key={bps.id}>
-                    <td>{bps.dueDate.slice(0, 17)}</td>
-                    <td>{bps.pressure}</td>
-                  </tr>
-                ))}
-              </table>
-
-              <br />
-              <button>
-                <Link to="/blood">Add</Link>
-              </button>
-            </div>
-
-            <div className="patient">
-              <h4>Clinical apointments: </h4>
-
-              <table>
-                <tr>
-                  <th>date </th>
-                  <th>Hospital</th>
-                </tr>
-                {clinicDisplay.map((cln) => (
-                  <tr key={cln.id}>
-                    <td>{cln.dueDate.slice(0, 17)}</td>
-                    <td>{cln.clinic}</td>
-                  </tr>
-                ))}
-              </table>
-
-              <br />
-
-              <button>
-                <Link to="/clinic">Add</Link>
-              </button>
-            </div>
-            <div className="patient">
-              <h4>Prescriptions: </h4>
-
-              <table>
-                <tr>
-                  <th>date </th>
-                  <th>Prescription</th>
-                </tr>
-                {prescDisplay.map((presc) => (
-                  <tr>
-                    <td>{presc.dueDate.slice(0, 17)}</td>
-                    <td>{presc.prescription}</td>
-                  </tr>
-                ))}
-              </table>
-
-              <br />
-
-              <button>
-                <Link to="/prescription">Add</Link>
-              </button>
-            </div>
-            <div className="patient">
-              <h4>Interaction log: </h4>
-
-              <table>
-                <tr>
-                  <th>date </th>
-                  <th>Message</th>
-                </tr>
-                {intDisplay.map((int) => (
-                  <tr>
-                    <td>{int.dueDate}</td>
-                    <td>{int.interaction}</td>
-                  </tr>
-                ))}
-              </table>
-
-              <br />
+              ))}
 
               <button>
                 <Link to="/interaction">Add</Link>
               </button>
-            </div>
+            </table>
+
+            <br />
+
+            <h4>BP monitoring </h4>
+
+            <table className="customers">
+              <tr>
+                <th>date </th>
+                <th>Blood pressure</th>
+              </tr>
+              {bpDisplay.map((bps) => (
+                <tr key={bps.id}>
+                  <td>{bps.dueDate.slice(0, 17)}</td>
+                  <td>{bps.pressure}</td>
+                </tr>
+              ))}
+
+              <button>
+                <Link to="/blood">Add</Link>
+              </button>
+            </table>
+
+            <br />
+
+            <h4>Clinical apointments: </h4>
+
+            <table className="customers">
+              <tr>
+                <th>date </th>
+                <th>Hospital</th>
+              </tr>
+              {clinicDisplay.map((cln) => (
+                <tr key={cln.id}>
+                  <td>{cln.dueDate.slice(0, 17)}</td>
+                  <td>{cln.clinic}</td>
+                </tr>
+              ))}
+            </table>
+            <button>
+              <Link to="/clinic">Add</Link>
+            </button>
+            <br />
+
+            <h4>Prescriptions: </h4>
+
+            <table className="customers">
+              <tr>
+                <th>date </th>
+                <th>Prescription</th>
+              </tr>
+              {prescDisplay.map((presc) => (
+                <tr>
+                  <td>{presc.dueDate.slice(0, 17)}</td>
+                  <td>{presc.prescription}</td>
+                </tr>
+              ))}
+            </table>
+            <button>
+              <Link to="/prescription">Add</Link>
+            </button>
+
+            <br />
           </div>
           <div>
             {patientToDisplay.map((patient) => (
-              <b key={patient.id} style={{ textAlign: "center" }}>
+              <h4 key={patient.id} style={{ textAlign: "center" }}>
                 Tasks to do for {patient.patient}
-              </b>
+              </h4>
             ))}
             <table className="customers">
               <tr>
@@ -449,6 +448,46 @@ const Dashboard = () => {
                 <th>status</th>
               </tr>
               {patientTasksDisplay.map((patient) => (
+                <>
+                  {patient ? (
+                    <tr>
+                      <td>{patient.task}</td>
+
+                      <td>{patient.dueDate.slice(0, 17)}</td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          id={patient.id}
+                          name="done"
+                          value={patient.id}
+                          checked={selectedIds.includes(patient.id)}
+                          onChange={handleOnChange}
+                        />
+                      </td>
+                    </tr>
+                  ) : (
+                    " "
+                  )}
+                </>
+              ))}
+
+              <br />
+              <button>
+                <Link to="/task">New</Link>
+              </button>
+            </table>
+
+            <h4>All tasks</h4>
+            <table className="customers">
+              <tr>
+                <th>Task</th>
+
+                <th>due</th>
+
+                <th>status</th>
+              </tr>
+              {patientTasks.map((patient) => (
                 <>
                   {patient ? (
                     <tr>
