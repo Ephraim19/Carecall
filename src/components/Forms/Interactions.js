@@ -50,17 +50,12 @@ const Interactions = () => {
             onChange={(e) => setInteraction(e.target.value)}
           />
         </label>
-
         <br />
+        <br />
+        <b>Date</b>
+        <br />
+        <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
 
-        <label>
-          Due date:
-          <br />
-          <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
-          />
-        </label>
         <br />
         <button className="App-info" onClick={NewInteraction}>
           Submit

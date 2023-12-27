@@ -1,3 +1,10 @@
+* {
+  box-sizing: border-box;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: 'Times New Roman', Times, serif;
+}
+
 .App {
   margin: 0;
 }
@@ -23,7 +30,8 @@
   background-color: whitesmoke;
   width: auto;
   border: 3px solid rgb(47, 65, 183);
-  padding: 20px;
+  padding: 10px;
+  margin-bottom: 5px;
 }
 
 .tasks {
@@ -99,7 +107,7 @@ td {
   display: flex;
   flex-direction: row;
   background-color: white;
-  
+  padding: 10px;
   align-items: top;
   justify-content: space-evenly;
 }
@@ -122,3 +130,24 @@ td {
   margin-bottom: 3%;
 }
 
+.customers {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.customers td, .customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.customers tr:nth-child(even){background-color: #f2f2f2;}
+
+.customers tr:hover {background-color: #ddd;}
+
+.customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #060f43;
+  color: white;
+}

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import carecall from "../carecall.png";
-import DatePicker from "react-date-picker";
+import DatePicker from "react-datepicker";
 import { ref, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { database } from "../Firebase";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Prescriptions = () => {
   const [prescription, setPrescription] = useState("");
@@ -49,17 +50,12 @@ const Prescriptions = () => {
             onChange={(e) => setPrescription(e.target.value)}
           />
         </label>
-
         <br />
+        <br />
+        <b>Date</b>
+        <br />
+        <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
 
-        <label>
-          Due date:
-          <br />
-          <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
-          />
-        </label>
         <br />
         <button className="App-info" onClick={NewPrescription}>
           Submit

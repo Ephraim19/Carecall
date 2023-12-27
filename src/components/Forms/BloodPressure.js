@@ -54,15 +54,10 @@ const BloodPressure = () => {
         </label>
 
         <br />
-
-        <label>
-          Due date:
-          <br />
-          <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
-          />
-        </label>
+        <br />
+        <b>Date</b>
+        <br />
+        <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
         <br />
         <button className="App-info" onClick={NewBp}>
           Submit

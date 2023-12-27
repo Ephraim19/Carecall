@@ -24,16 +24,14 @@ const Clinicals = () => {
   const NewClinic = (event) => {
     event.preventDefault();
     if (clinic && dueDate) {
-      push(
-        ref(database, "Clinic"), {
-          patient: Cookies.get("patient"),
-          clinic,
-          dueDate: dateStrip(3, dueDate),
-          
-        }).then((data) => {
-          console.log(data);
-          navigate("/dashboard");
-        })
+      push(ref(database, "Clinic"), {
+        patient: Cookies.get("patient"),
+        clinic,
+        dueDate: dateStrip(3, dueDate),
+      }).then((data) => {
+        console.log(data);
+        navigate("/dashboard");
+      });
     }
   };
 
@@ -54,15 +52,11 @@ const Clinicals = () => {
         </label>
 
         <br />
+        <br />
+        <b>Date</b>
+        <br />
+        <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
 
-        <label>
-          Due date:
-          <br />
-          <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
-          />
-        </label>
         <br />
         <button className="App-info" onClick={NewClinic}>
           Submit

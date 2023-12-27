@@ -25,16 +25,15 @@ export const Tasks = () => {
     console.log(dueDate);
     if (task && dueDate) {
       //push data to firebase
-      push(
-        ref(database, "tasks"), {
-          patient: Cookies.get("patient"),
-          task,
-          dueDate: dateStrip(3, dueDate),
-          completed: false,
-        }).then((data) => {
-          console.log(data);
-          navigate("/dashboard");
-        })
+      push(ref(database, "tasks"), {
+        patient: Cookies.get("patient"),
+        task,
+        dueDate: dateStrip(3, dueDate),
+        completed: false,
+      }).then((data) => {
+        console.log(data);
+        navigate("/dashboard");
+      });
     }
   };
 
@@ -50,15 +49,11 @@ export const Tasks = () => {
           />
         </label>
         <br />
+        <br />
+        <b>Date</b>
+        <br />
+        <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
 
-        <label>
-          Due date:
-          <br />
-          <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
-          />
-        </label>
         <br />
         <button className="App-info" onClick={NewTask}>
           Submit

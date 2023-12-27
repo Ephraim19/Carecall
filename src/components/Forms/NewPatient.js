@@ -4,12 +4,11 @@ import { database } from "../Firebase";
 import { set, ref, push } from "firebase/database";
 import Cookies from "js-cookie";
 import carecall from "../carecall.png";
-
+import DatePicker from "react-datepicker";
 
 //supabase passwrd 24YC?ei&@qK.UZE
 export const NewPatient = () => {
   const [patient, setPatient] = useState("");
-  const [age, setAge] = useState("");
   const [status, setStatus] = useState("Healthy");
   const [goals, setGoals] = useState("");
   const [condition, setCondition] = useState("");
@@ -22,17 +21,28 @@ export const NewPatient = () => {
   const [intervention2, setIntervention2] = useState("");
   const [intervention3, setIntervention3] = useState("");
   const [intervention4, setIntervention4] = useState("");
+  const [dueDate, setDueDate] = useState(new Date());
 
   const navigate = useNavigate();
 
+  const dateStrip = (numOfHours, date) => {
+    const dateCopy = new Date(date.getTime());
+    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
+    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
+      1,
+      -5
+    );
+    return stringDate;
+  };
+
   const Push = (event) => {
     event.preventDefault();
-    if (patient && age && status && goals) {
+    if (patient && dueDate && status && goals) {
       //push data to firebase
-      set(
+  
         push(ref(database, "clients"), {
           patient,
-          age,
+          age: dateStrip(3, dueDate),
           status,
           goals,
           condition,
@@ -49,9 +59,6 @@ export const NewPatient = () => {
           Cookies.set("FirebaseKey", data.key, { expires: 2 });
           navigate("/dashboard");
         })
-      ).catch((error) => {
-        console.log(error);
-      });
     }
   };
 
@@ -77,14 +84,12 @@ export const NewPatient = () => {
           </label>
           <br />
           <br />
-          <label>
-            <b>Enter the patients age:</b> <br />
-            <input
-              type="text"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-            />
-          </label>
+          <b>Date</b>
+          <br />
+          <DatePicker
+            selected={dueDate}
+            onChange={(date) => setDueDate(date)}
+          />
           <br />
           <br />
           <label>
@@ -114,9 +119,7 @@ export const NewPatient = () => {
             />{" "}
             Chronic <br />
           </label>
-
           <br />
-        
           <label>
             <b>Enter the patients health goals:</b> <br />
             <input
@@ -146,7 +149,6 @@ export const NewPatient = () => {
               onChange={(e) => setCondition1(e.target.value)}
             />
           </label>
-
           <br />
           <label>
             Condition 3: <br />
@@ -157,7 +159,6 @@ export const NewPatient = () => {
             />
           </label>
           <br />
-
           <label>
             Condition 4: <br />
             <input
@@ -166,7 +167,6 @@ export const NewPatient = () => {
               onChange={(e) => setCondition3(e.target.value)}
             />
           </label>
-
           <br />
           <label>
             Condition 5: <br />
@@ -178,7 +178,8 @@ export const NewPatient = () => {
           </label>
           <br />
           <br />
-          <b>Enter the interventions to be taken</b><br />
+          <b>Enter the interventions to be taken</b>
+          <br />
           <br />
           <label>
             Intervention 1: <br />
@@ -197,7 +198,6 @@ export const NewPatient = () => {
               onChange={(e) => setIntervention1(e.target.value)}
             />
           </label>
-
           <br />
           <label>
             Intervention 3: <br />
@@ -208,7 +208,6 @@ export const NewPatient = () => {
             />
           </label>
           <br />
-
           <label>
             Intervention 4: <br />
             <input
@@ -217,7 +216,6 @@ export const NewPatient = () => {
               onChange={(e) => setIntervention3(e.target.value)}
             />
           </label>
-
           <br />
           <label>
             Intervention 5: <br />

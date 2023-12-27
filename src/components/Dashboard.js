@@ -301,7 +301,7 @@ const Dashboard = () => {
 
                 <Menu iconShape="square">
                   <MenuItem active={true} icon={<FiCalendar />}>
-                    Age: {patient.age}
+                    DOB: {patient.age.slice(4,17)}
                   </MenuItem>
                   <MenuItem icon={<FaPlusSquare />}>
                     Status:<b>{patient.status}</b>
@@ -440,7 +440,7 @@ const Dashboard = () => {
                 Tasks to do for {patient.patient}
               </b>
             ))}
-            <table>
+            <table className="customers">
               <tr>
                 <th>Task</th>
 
