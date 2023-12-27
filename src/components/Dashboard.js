@@ -6,15 +6,27 @@ import { database } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { FaList, FaRegHeart } from "react-icons/fa";
+import {
+  FaCartPlus,
+  FaList,
+  FaPlusSquare,
+  FaRegHeart,
+  FaUserGraduate,
+} from "react-icons/fa";
 import {
   FiHome,
   FiLogOut,
   FiArrowLeftCircle,
   FiArrowRightCircle,
+  FiCalendar,
 } from "react-icons/fi";
-import { RiPencilLine } from "react-icons/ri";
-import { BiCog } from "react-icons/bi";
+
+import {
+  RiAlarmWarningFill,
+  RiAlarmWarningLine,
+  RiPencilLine,
+} from "react-icons/ri";
+import { BiAlarmExclamation, BiCog } from "react-icons/bi";
 
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
@@ -264,86 +276,74 @@ const Dashboard = () => {
             </select>
           </label>
         </form>
-        <button className="App-info" onClick={Logout}>
-          {cookie} <b> /Logout</b>
-        </button>
       </nav>
-
-      <div className="patient">
-        {patientToDisplay.map((patient) => (
-          <Sidebar key = {patient.id} collapsed={menuCollapse}>
-            <div className="logotext">
-              {/* small and big change using menucollapse state */}
-              <p>{menuCollapse ? "Logo" : patient.patient}</p>
-            </div>
-            <div className="closemenu" onClick={menuIconClick}>
-              {/* changing menu collapse icon on click */}
-              {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
-            </div>
-
-            <Menu iconShape="square">
-              <MenuItem active={true} icon={<FiHome />}>
-                Home
-              </MenuItem>
-              <MenuItem icon={<FaList />}>Category</MenuItem>
-              <MenuItem icon={<FaRegHeart />}>Favourite</MenuItem>
-              <MenuItem icon={<RiPencilLine />}>Author</MenuItem>
-              <MenuItem icon={<BiCog />}>Settings</MenuItem>
-            </Menu>
-
-            <Menu iconShape="square">
-              <MenuItem icon={<FiLogOut />}>Logout</MenuItem>
-            </Menu>
-          </Sidebar>
-        ))}
-      </div>
 
       {patientToDisplay ? (
         <div className="dashboard">
           {patientToDisplay.map((patient) => (
-            <div>
-              <div key={patient.id} className="patient">
-                <h4>Patient:{patient.patient} </h4>
-                <h4>Age:{patient.age} </h4>
-              </div>
+              <Sidebar key={patient.id} collapsed={menuCollapse}>
+                <div className="logotext">
+                  {/* small and big change using menucollapse state */}
+                  <h3 style={{ color: "purple", fontSize: "23px" }}>
+                    {menuCollapse
+                      ? patient.patient.split(" ")[0]
+                      : patient.patient}
+                  </h3>
+                </div>
+                <div className="closemenu" onClick={menuIconClick}>
+                  {/* changing menu collapse icon on click */}
+                  {menuCollapse ? (
+                    <FiArrowRightCircle />
+                  ) : (
+                    <FiArrowLeftCircle />
+                  )}
+                </div>
 
-              <div className="patient">
-                <h4>Health status: {patient.status} </h4>
-              </div>
+                <Menu iconShape="square">
+                  <MenuItem active={true} icon={<FiCalendar />}>
+                    Age: {patient.age}
+                  </MenuItem>
+                  <MenuItem icon={<FaPlusSquare />}>
+                    Status:<b>{patient.status}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaCartPlus />}>
+                    Goals: <b>{patient.goals}</b>
+                  </MenuItem>
+                  <MenuItem icon={<RiAlarmWarningLine />}>
+                    <b>Active conditions</b>
+                    <li>
+                      <ul key={1}>{patient.condition}</ul>
+                      <ul key={2}> {patient.condition1}</ul>
+                      <ul key={3}> {patient.condition2}</ul>
+                      <ul key={4}> {patient.condition3}</ul>
+                      <ul key={5}> {patient.condition4}</ul>
+                    </li>
+                  </MenuItem>
+                  <MenuItem icon={<BiAlarmExclamation />}>
+                    <b>Active Interventions</b>
+                    <li>
+                      <ol key={1}>{patient.intervention}</ol>
+                      <ol key={2}>{patient.intervention1}</ol>
+                      <ol key={3}>{patient.intervention2}</ol>
+                      <ol key={4}>{patient.intervention3}</ol>
+                      <ol key={5}>{patient.intervention4}</ol>
+                    </li>
+                  </MenuItem>
+                  <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+                </Menu>
 
-              <div className="patient">
-                <h4>Health goals: {patient.goals} </h4>
-              </div>
-
-              <div className="patient">
-                <h4>Active conditions: </h4>
-                <li>
-                  <ul key={1}>{patient.condition}</ul>
-                  <ul key={2}> {patient.condition1}</ul>
-                  <ul> {patient.condition2}</ul>
-                  <ul> {patient.condition3}</ul>
-                  <ul> {patient.condition4}</ul>
-                </li>
-                <button>
-                  <Link to="/conditions">Add</Link>
-                </button>
-              </div>
-
-              <div className="patient">
-                <h4>Active interventions: </h4>
-                <li>
-                  <ol>{patient.intervention}</ol>
-                  <ol>{patient.intervention1}</ol>
-                  <ol>{patient.intervention2}</ol>
-                  <ol>{patient.intervention3}</ol>
-                  <ol>{patient.intervention4}</ol>
-                </li>
-                <button>
-                  <Link to="/interventions">Add</Link>
-                </button>
-              </div>
-            </div>
+                <Menu iconShape="square">
+                  <MenuItem icon={<FiLogOut />}>
+                    {" "}
+                    <button className="App-info" onClick={Logout}>
+                      <b>Logout</b>
+                    </button>
+                  </MenuItem>
+                </Menu>
+              </Sidebar>
+            
           ))}
+
           <div>
             <div className="patient">
               <h4>BP monitoring </h4>

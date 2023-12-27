@@ -21,10 +21,9 @@
 
 .patient {
   background-color: whitesmoke;
-  width: 300px;
+  width: auto;
   border: 3px solid rgb(47, 65, 183);
   padding: 20px;
-  margin: 20px;
 }
 
 .tasks {
@@ -100,7 +99,7 @@ td {
   display: flex;
   flex-direction: row;
   background-color: white;
-  padding: 20px 40px;
+  
   align-items: top;
   justify-content: space-evenly;
 }
@@ -122,3 +121,4 @@ td {
   margin-top: 2%;
   margin-bottom: 3%;
 }
+

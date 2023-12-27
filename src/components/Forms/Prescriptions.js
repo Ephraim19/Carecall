@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import carecall from "../carecall.png";
-import DatePicker from "react-datepicker";
+import DatePicker from "react-date-picker";
 import { ref, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
