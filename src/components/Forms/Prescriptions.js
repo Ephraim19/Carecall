@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const Prescriptions = () => {
   const [prescription, setPrescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
+  const [daysTaken, setDaysTaken] = useState();
   const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
@@ -28,6 +29,7 @@ const Prescriptions = () => {
       push(ref(database, "Prescription"), {
         patient: Cookies.get("patient"),
         prescription,
+        daysTaken,
         dueDate: dateStrip(3, dueDate),
       }).then(() => {
         navigate("/dashboard");
@@ -50,12 +52,24 @@ const Prescriptions = () => {
             onChange={(e) => setPrescription(e.target.value)}
           />
         </label>
+
         <br />
         <br />
-        <b>Date</b>
+        <b>Start date</b>
         <br />
         <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
 
+        <br />
+        <br />
+        <label>
+          <b>No of days to be taken</b> <br />
+          <input
+            type="text"
+            value={daysTaken}
+            onChange={(e) => setDaysTaken(e.target.value)}
+          />
+        </label>
+        <br />
         <br />
         <button className="App-info" onClick={NewPrescription}>
           Submit

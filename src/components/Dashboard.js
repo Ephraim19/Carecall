@@ -183,6 +183,26 @@ const Dashboard = () => {
 
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
+
+          //Create a task if its the last day of prescription
+          for (let i = 0; i < prescArray.length; i++) {
+            var tody = prescArray[i].dueDate.slice(5, 17);
+            var words = tody.split(" ");
+            var newdate = words[0] + "/" + words[1] + "/" + words[2];
+            var strToDate = new Date(newdate);
+
+            strToDate.setDate(
+              strToDate.getDate() + parseInt(prescArray[i].daysTaken)
+            );
+  
+            const todayDate = new Date();
+            
+            if (todayDate.getDate() >= strToDate.getDate()) {
+              console.log("p");
+            } else {
+              console.log("s");
+            }
+          }
         } else {
           console.log("No data available");
         }
@@ -419,11 +439,13 @@ const Dashboard = () => {
               <tr>
                 <th>date </th>
                 <th>Prescription</th>
+                <th>Days</th>
               </tr>
               {prescDisplay.map((presc) => (
                 <tr>
                   <td>{presc.dueDate.slice(0, 17)}</td>
                   <td>{presc.prescription}</td>
+                  <td>{presc.daysTaken}</td>
                 </tr>
               ))}
             </table>
