@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { database } from "../Firebase";
-import { set, ref, push } from "firebase/database";
+import { ref, push } from "firebase/database";
 import Cookies from "js-cookie";
 import carecall from "../carecall.png";
 import DatePicker from "react-datepicker";
@@ -9,6 +9,8 @@ import DatePicker from "react-datepicker";
 //supabase passwrd 24YC?ei&@qK.UZE
 export const NewPatient = () => {
   const [patient, setPatient] = useState("");
+  const [Phone, setPhone] = useState(0);
+  const [gender, setGender] = useState("");
   const [status, setStatus] = useState("Healthy");
   const [goals, setGoals] = useState("");
   const [condition, setCondition] = useState("");
@@ -39,31 +41,38 @@ export const NewPatient = () => {
     event.preventDefault();
     if (patient && dueDate && status && goals) {
       //push data to firebase
-  
-        push(ref(database, "clients"), {
-          patient,
-          age: dateStrip(3, dueDate),
-          status,
-          goals,
-          condition,
-          condition1,
-          condition2,
-          condition3,
-          condition4,
-          intervention,
-          intervention1,
-          intervention2,
-          intervention3,
-          intervention4,
-        }).then((data) => {
-          Cookies.set("FirebaseKey", data.key, { expires: 2 });
-          navigate("/dashboard");
-        })
+
+      push(ref(database, "clients"), {
+        patient,
+        age: dateStrip(3, dueDate),
+        status,
+        goals,
+        condition,
+        condition1,
+        condition2,
+        condition3,
+        condition4,
+        intervention,
+        intervention1,
+        intervention2,
+        intervention3,
+        intervention4,
+        gender,
+        Phone,
+      }).then((data) => {
+        Cookies.set("FirebaseKey", data.key, { expires: 2 });
+        navigate("/dashboard");
+      });
     }
   };
 
   const onOptionChange = (e) => {
     setStatus(e.target.value);
+  };
+
+  const handleSelect = (e) => {
+    setGender(e.target.value);
+    console.log(e.target.value);
   };
 
   return (
@@ -84,12 +93,35 @@ export const NewPatient = () => {
           </label>
           <br />
           <br />
-          <b>Date</b>
+          <b>Date of birth</b>
           <br />
           <DatePicker
             selected={dueDate}
             onChange={(date) => setDueDate(date)}
           />
+          <br />
+          <br />
+          <b>Gender</b> <br />
+          <label htmlFor="Gender">
+            <select onChange={handleSelect}>
+              <option className="App-info" value="M" key={"M"}>
+                Male
+              </option>
+              <option className="App-info" value="F" key={"F"}>
+                Female
+              </option>
+            </select>
+          </label>
+          <br />
+          <br />
+          <label>
+            <b>Phone number:</b> <br />
+            <input
+              type="number"
+              value={Phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </label>
           <br />
           <br />
           <label>

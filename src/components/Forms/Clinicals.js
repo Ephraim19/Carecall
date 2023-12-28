@@ -9,6 +9,7 @@ import { database } from "../Firebase";
 const Clinicals = () => {
   const [clinic, setClinic] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
+  const [diagnosis, setDiagnosis] = useState("");
   const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
@@ -27,6 +28,7 @@ const Clinicals = () => {
       push(ref(database, "Clinic"), {
         patient: Cookies.get("patient"),
         clinic,
+        diagnosis,
         dueDate: dateStrip(3, dueDate),
       }).then((data) => {
         console.log(data);
@@ -48,6 +50,17 @@ const Clinicals = () => {
             type="text"
             value={clinic}
             onChange={(e) => setClinic(e.target.value)}
+          />
+        </label>
+
+        <br />
+        <br />
+        <label>
+          <b>Diagnosis:</b> <br />
+          <input
+            type="text"
+            value={diagnosis}
+            onChange={(e) => setDiagnosis(e.target.value)}
           />
         </label>
 

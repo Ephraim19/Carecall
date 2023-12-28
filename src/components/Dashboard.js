@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { remove, get, ref, child, update } from "firebase/database";
+import { push, get, ref, child, update } from "firebase/database";
 import { database } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import {
+  FaCalendarDay,
   FaCartPlus,
+  FaGenderless,
   FaList,
+  FaMale,
+  FaPhone,
   FaPlusSquare,
   FaRegHeart,
   FaUserGraduate,
@@ -45,6 +49,9 @@ const Dashboard = () => {
   const [prescription, setPrescription] = useState([]);
   const [prescDisplay, setPrescDisplay] = useState([]);
   const [age, setAge] = useState("");
+  const [searched, setSearched] = useState([]);
+  const [file, setFile] = useState([]);
+  const [fileDisplay, setFileDispaly] = useState([]);
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -55,6 +62,7 @@ const Dashboard = () => {
   const dbRef4 = ref(database, "Clinic");
   const dbRef5 = ref(database, "Interaction");
   const dbRef6 = ref(database, "Prescription");
+  const dbRef7 = ref(database, "Files");
 
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -65,20 +73,28 @@ const Dashboard = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
 
+  const dateStrip = (numOfHours, date) => {
+    const dateCopy = new Date(date.getTime());
+    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
+    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
+      1,
+      -5
+    );
+    return stringDate;
+  };
+
   useEffect(() => {
+    let dataArray = [];
     //read user
     get(dbRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const dataArray = Object.entries(snapshot.val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            })
-          );
+          dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
           setPatientData(dataArray);
           setPatientToDisplay([dataArray[dataArray.length - 1]]);
-          //get age
         } else {
           console.log("No data available");
         }
@@ -96,10 +112,28 @@ const Dashboard = () => {
             ...data,
           }));
           //sort according to date
+
+          //var allDates = prescArray[i].dueDate.slice(5, 17);
+          //   var words = tody.split(" ");
+          //   var newdate = words[0] + "/" + words[1] + "/" + words[2];
+          //   var strToDate = new Date(newdate);
+
+          //   strToDate.setDate(
+          //     strToDate.getDate() + parseInt(prescArray[i].daysTaken)
+          //   );
+
           taskArray.sort(function(a, b) {
-            return b.dueDate > a.dueDate;
+            var awords = a.dueDate.slice(5, 17).split(" ");
+            var bwords = b.dueDate.slice(5, 17).split(" ");
+
+            var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
+            var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
+
+            var strToDatea = new Date(aNewdate);
+            var strToDateb = new Date(bNewdate);
+
+            return strToDatea - strToDateb;
           });
-          console.log(taskArray);
 
           setPatientTasks(taskArray);
           setPatientTasksDisplay([taskArray[taskArray.length - 1]]);
@@ -159,7 +193,7 @@ const Dashboard = () => {
             id,
             ...data,
           }));
-          console.log(intArray);
+
           setInteraction(intArray);
           setIntDisplay([intArray[intArray.length - 1]]);
         } else {
@@ -185,24 +219,54 @@ const Dashboard = () => {
           setPrescDisplay([prescArray[prescArray.length - 1]]);
 
           //Create a task if its the last day of prescription
-          for (let i = 0; i < prescArray.length; i++) {
-            var tody = prescArray[i].dueDate.slice(5, 17);
-            var words = tody.split(" ");
-            var newdate = words[0] + "/" + words[1] + "/" + words[2];
-            var strToDate = new Date(newdate);
+          // for (let i = 0; i < prescArray.length; i++) {
+          //   var tody = prescArray[i].dueDate.slice(5, 17);
+          //   var words = tody.split(" ");
+          //   var newdate = words[0] + "/" + words[1] + "/" + words[2];
+          //   var strToDate = new Date(newdate);
 
-            strToDate.setDate(
-              strToDate.getDate() + parseInt(prescArray[i].daysTaken)
-            );
-  
-            const todayDate = new Date();
-            
-            if (todayDate.getDate() >= strToDate.getDate()) {
-              console.log("p");
-            } else {
-              console.log("s");
-            }
-          }
+          //   strToDate.setDate(
+          //     strToDate.getDate() + parseInt(prescArray[i].daysTaken)
+          //   );
+
+          //   const todayDate = new Date();
+          //   const userName = dataArray.find((name) => name.id === prescArray[i].patient).patient;
+
+          //   if (todayDate.getDate() == strToDate.getDate()) {
+          //     //push data to firebase
+          //     push(ref(database, "tasks"), {
+          //       patient: prescArray[i].patient,
+          //       task:
+          //         userName +
+          //         " has finished " + prescArray[i].prescription + " " +
+          //          dateStrip(3, todayDate),
+          //       dueDate: dateStrip(3, todayDate),
+          //       completed: false
+          //     }).then((data) => {
+          //       console.log(data);
+          //     });
+
+          //   }
+          // }
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    //read interactions
+    get(dbRef7)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const fileArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+
+          setFile(fileArray);
+          setFileDispaly([fileArray[fileArray.length - 1]]);
         } else {
           console.log("No data available");
         }
@@ -222,6 +286,7 @@ const Dashboard = () => {
     let clncArray = clinic.filter((name) => name.patient === obj.id);
     let intArray = interaction.filter((name) => name.patient === obj.id);
     let prescArray = prescription.filter((name) => name.patient === obj.id);
+    let fileArray = file.filter((name) => name.patient === obj.id);
 
     const dataArray = [obj];
 
@@ -231,8 +296,10 @@ const Dashboard = () => {
     setClinicDisplay(clncArray);
     setIntDisplay(intArray);
     setPrescDisplay(prescArray);
+    setFileDispaly(fileArray)
 
     Cookies.set("patient", obj.id);
+    Cookies.set("userName", obj.patient);
 
     //calculate age
     const bornyr = dataArray[0].age.slice(12, 17);
@@ -243,7 +310,16 @@ const Dashboard = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
-    //setOptionValue(e.target.value);
+
+    if(search.length > 1){
+    var searches = patientData.filter((name) =>
+      name.patient.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    setSearched(searches);
+    }else{
+      setSearched([]);
+    }
   };
 
   const handleOnChange = (e) => {
@@ -289,10 +365,19 @@ const Dashboard = () => {
               onChange={handleSearch}
             />
           </label>
+          {searched ? (
+            <div className="searchable">
+              {searched.map((patient) => (
+                <div key={patient.id}>
+                  <b>{patient.patient}</b>
+                </div>
+              ))}
+            </div>
+          ) : (
+            " "
+          )}
         </form>
-        <button className="App-info" onClick={New}>
-          New member
-        </button>
+
         <form>
           <label htmlFor="All Patients">
             <select onChange={handleSelect}>
@@ -307,6 +392,10 @@ const Dashboard = () => {
             </select>
           </label>
         </form>
+
+        <button className="App-info" onClick={New}>
+          New member
+        </button>
       </nav>
 
       {patientToDisplay ? (
@@ -319,7 +408,7 @@ const Dashboard = () => {
                   {menuCollapse
                     ? patient.patient.split(" ")[0]
                     : patient.patient}{" "}
-                  ({age} )
+                  ({age})-({patient.gender}) 
                 </h3>
               </div>
               <div className="closemenu" onClick={menuIconClick}>
@@ -327,9 +416,15 @@ const Dashboard = () => {
                 {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
               </div>
 
-              <Menu iconShape="square">
+              <Menu iconShape="square" className="menuItems">
                 <MenuItem active={true} icon={<FiCalendar />}>
                   DOB: {patient.age.slice(4, 17)}
+                </MenuItem>
+                <MenuItem icon={<FaMale />}>
+                  Gender:<b>{patient.gender}</b>
+                </MenuItem>
+                <MenuItem icon={<FaPhone />}>
+                  Phone:<b>{patient.Phone}</b>
                 </MenuItem>
                 <MenuItem icon={<FaPlusSquare />}>
                   Status:<b>{patient.status}</b>
@@ -420,11 +515,13 @@ const Dashboard = () => {
               <tr>
                 <th>date </th>
                 <th>Hospital</th>
+                <th>Diagnosis</th>
               </tr>
               {clinicDisplay.map((cln) => (
                 <tr key={cln.id}>
                   <td>{cln.dueDate.slice(0, 17)}</td>
                   <td>{cln.clinic}</td>
+                  <td>{cln.diagnosis}</td>
                 </tr>
               ))}
             </table>
@@ -451,6 +548,29 @@ const Dashboard = () => {
             </table>
             <button>
               <Link to="/prescription">Add</Link>
+            </button>
+
+            <br />
+            <br />
+
+            <h4>Files: </h4>
+
+            <table className="customers">
+              <tr>
+                <th>Description </th>
+                <th>Date</th>
+                <th>File</th>
+              </tr>
+              {fileDisplay.map((f) => (
+                <tr>
+                  <td>{f.description}</td>
+                  <td>{f.dueDate.slice(0, 17)}</td>
+                  <td> <a href = {f.url}>file</a></td>
+                </tr>
+              ))}
+            </table>
+            <button>
+              <Link to="/file">Add</Link>
             </button>
 
             <br />

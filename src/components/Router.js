@@ -14,6 +14,7 @@ import BloodPressure from "./Forms/BloodPressure";
 import Clinicals from "./Forms/Clinicals";
 import Interactions from "./Forms/Interactions";
 import Prescriptions from "./Forms/Prescriptions";
+import Files from "./Forms/Files";
 
 const Router = () => {
   return (
@@ -32,6 +33,7 @@ const Router = () => {
         <Route path="/clinic" Component={Clinicals} />
         <Route path="/interaction" Component={Interactions} />
         <Route path="/prescription" Component={Prescriptions} />
+        <Route path="/file" Component={Files} />
       </Routes>
     </BrowserRouter>
   );
