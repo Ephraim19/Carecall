@@ -22,20 +22,40 @@ const Bmi = () => {
     return stringDate;
   };
 
-  const NewBmi= (event) => {
+  const NewBmi = (event) => {
     event.preventDefault();
     if (weight && height && dueDate) {
-      push(
-        ref(database, "Bmi"), {
-          patient: Cookies.get("patient"),
-          weight,
-          height,
-          dueDate: dateStrip(3, dueDate),
-          
-        }).then((data) => {
-          console.log(data);
-          navigate("/dashboard");
-        })
+      push(ref(database, "Bmi"), {
+        patient: Cookies.get("patient"),
+        weight,
+        height,
+        dueDate: dateStrip(3, dueDate),
+      }).then(() => {
+        //Create a task if user has abnormal BMI
+
+        if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " is under weight on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: false,
+          });
+        } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " is under weight on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: false,
+          });
+        }
+        navigate("/dashboard");
+      });
     }
   };
 
@@ -74,6 +94,7 @@ const Bmi = () => {
         <b>Date</b>
         <br />
         <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
+        <br />
         <br />
         <button className="App-info" onClick={NewBmi}>
           Submit

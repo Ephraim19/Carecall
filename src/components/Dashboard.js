@@ -211,7 +211,6 @@ const Dashboard = () => {
 
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
-
         } else {
           console.log("No data available");
         }
@@ -352,7 +351,7 @@ const Dashboard = () => {
     setPrescDisplay(prescArray);
     setFileDispaly(fileArray);
     setBmiDispaly(bmiArray);
-    console.log(bmiArray)
+    console.log(bmiArray);
 
     Cookies.set("patient", patient.id);
     Cookies.set("userName", patient.patient);
@@ -526,15 +525,13 @@ const Dashboard = () => {
 
               {bpDisplay.map((bps) => (
                 <tr key={bps.id}>
-                  {bps.pressure.split("/")[0] > 130 ? (
+                  {bps.pressure.split("/")[0] > 120 ||
+                  bps.pressure.split("/")[0] < 60 ||
+                  bps.pressure.split("/")[1] < 60 ||
+                  bps.pressure.split("/")[1] > 80 ? (
                     <>
                       <td>{bps.dueDate.slice(0, 17)}</td>
                       <td style={{ color: "red" }}>{bps.pressure}</td>
-                    </>
-                  ) : bps.pressure.split("/")[1] < 60 ? (
-                    <>
-                      <td>{bps.dueDate.slice(0, 17)}</td>
-                      <td style={{ color: "blue" }}>{bps.pressure}</td>
                     </>
                   ) : (
                     <>
@@ -565,10 +562,30 @@ const Dashboard = () => {
               </tr>
               {bmiDisplay.map((b) => (
                 <tr key={b.id}>
-                  <td>{b.dueDate.slice(0, 17)}</td>
-                  <td>{b.weight}</td>
-                  <td>{b.height}</td>
-                  <td>{(parseInt(b.weight)/(parseInt(b.height ^ 2))).toFixed(2)}</td>
+                  {parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
+                  parseInt(b.weight) / parseInt(b.height ^ 2) > 25 ? (
+                    <>
+                      <td>{b.dueDate.slice(0, 17)}</td>
+                      <td>{b.weight}</td>
+                      <td>{b.height}</td>
+                      <td style={{ color: "red" }}>
+                        {(parseInt(b.weight) / parseInt(b.height ^ 2)).toFixed(
+                          2
+                        )}
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{b.dueDate.slice(0, 17)}</td>
+                      <td>{b.weight}</td>
+                      <td>{b.height}</td>
+                      <td>
+                        {(parseInt(b.weight) / parseInt(b.height ^ 2)).toFixed(
+                          2
+                        )}
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
             </table>

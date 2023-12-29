@@ -30,7 +30,7 @@ const BloodPressure = () => {
         dueDate: dateStrip(3, dueDate),
       }).then((data) => {
         //Create a task if bp is high or low
-        if (pressure.split("/")[0] > 130) {
+        if (pressure.split("/")[0] > 120 || pressure.split("/")[1] > 80) {
           push(ref(database, "tasks"), {
             patient: Cookies.get("patient"),
             task:
@@ -40,7 +40,7 @@ const BloodPressure = () => {
             dueDate: dateStrip(3, new Date),
             completed: false,
           });
-        } else if (pressure.split("/")[1] < 60) {
+        } else if (pressure.split("/")[1] < 60 || pressure.split("/")[0] < 60) {
           push(ref(database, "tasks"), {
             patient: Cookies.get("patient"),
             task:
