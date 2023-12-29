@@ -6,10 +6,12 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { database } from "../Firebase";
 
-const Bmi = () => {
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
+const BloodSugar = () => {
+  const [fasting, setFasting] = useState("");
+  const [random, setRandom] = useState("");
+  const [HBA1C, setHBA1C] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
+
   const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
@@ -22,33 +24,24 @@ const Bmi = () => {
     return stringDate;
   };
 
-  const NewBmi = (event) => {
+  const NewSugar = (event) => {
     event.preventDefault();
-    if (weight && height && dueDate) {
-      push(ref(database, "Bmi"), {
+    if (fasting || random || HBA1C && dueDate) {
+      push(ref(database, "Bloodsugar"), {
         patient: Cookies.get("patient"),
-        weight,
-        height,
+        random,
+        fasting,
+        HBA1C,
         dueDate: dateStrip(3, dueDate),
       }).then(() => {
-        //Create a task if user has abnormal BMI
+        //Create a task if user has abnormal Blood sugar
 
-        if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+        if (parseFloat(HBA1C) > 5.7 || parseFloat(fasting) > 10 || parseFloat(fasting) < 4 || parseFloat(random) > 10 || parseFloat(random) < 4) {
           push(ref(database, "tasks"), {
             patient: Cookies.get("patient"),
             task:
               Cookies.get("userName") +
-              " is under weight on " +
-              dateStrip(3, dueDate).slice(0, 17),
-            dueDate: dateStrip(3, new Date()),
-            completed: false,
-          });
-        } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
-          push(ref(database, "tasks"), {
-            patient: Cookies.get("patient"),
-            task:
-              Cookies.get("userName") +
-              " is over weight on " +
+              " has low / high blood sugar on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
             completed: false,
@@ -67,24 +60,34 @@ const Bmi = () => {
       </nav>
       <form className="newForm">
         <label>
-          <b>weight in kg</b> <br />
+          <b>Fasting blood sugar(mmol/l)</b> <br />
           <input
             type="text"
-            placeholder="i.e 80"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
+            value={fasting}
+            onChange={(e) => setFasting(e.target.value)}
           />
         </label>
 
         <br />
         <br />
         <label>
-          <b>Height in meters</b> <br />
+          <b>Random blood sugar</b> <br />
           <input
             type="text"
-            placeholder="i.e 1.7 "
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
+            value={random}
+            onChange={(e) => setRandom(e.target.value)}
+          />
+        </label>
+
+        <br />
+        <br />
+
+        <label>
+          <b>HBA1C</b> <br />
+          <input
+            type="text"
+            value={HBA1C}
+            onChange={(e) => setHBA1C(e.target.value)}
           />
         </label>
 
@@ -96,7 +99,7 @@ const Bmi = () => {
         <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
         <br />
         <br />
-        <button className="App-info" onClick={NewBmi}>
+        <button className="App-info" onClick={NewSugar}>
           Submit
         </button>
       </form>
@@ -104,4 +107,4 @@ const Bmi = () => {
   );
 };
 
-export default Bmi;
+export default BloodSugar;

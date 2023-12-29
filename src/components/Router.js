@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from "./LandingPage";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import { Patient } from "./Forms/Patient";
@@ -16,6 +15,7 @@ import Interactions from "./Forms/Interactions";
 import Prescriptions from "./Forms/Prescriptions";
 import Files from "./Forms/Files";
 import Bmi from "./Forms/Bmi";
+import BloodSugar from "./Forms/BloodSugar";
 
 const Router = () => {
   return (
@@ -36,6 +36,7 @@ const Router = () => {
         <Route path="/prescription" Component={Prescriptions} />
         <Route path="/file" Component={Files} />
         <Route path="/bmi" Component={Bmi} />
+        <Route path="/sugar" Component={BloodSugar} />
       </Routes>
     </BrowserRouter>
   );

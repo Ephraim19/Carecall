@@ -32,7 +32,6 @@ const Dashboard = () => {
   const [patientTasksDisplay, setPatientTasksDisplay] = useState([]);
   const [bp, setBp] = useState([]);
   const [bpDisplay, setBpDisplay] = useState([]);
-  const [selectedIds, setSelectedIds] = useState([]);
   const [clinic, setClinic] = useState([]);
   const [clinicDisplay, setClinicDisplay] = useState([]);
   const [interaction, setInteraction] = useState([]);
@@ -45,6 +44,9 @@ const Dashboard = () => {
   const [fileDisplay, setFileDispaly] = useState([]);
   const [bmi, setBmi] = useState([]);
   const [bmiDisplay, setBmiDispaly] = useState([]);
+  const [sugar, setSugar] = useState([]);
+  const [sugarDisplay, setSugarDispaly] = useState([]);
+  const [status, setStatus] = useState("");
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -57,6 +59,7 @@ const Dashboard = () => {
   const dbRef6 = ref(database, "Prescription");
   const dbRef7 = ref(database, "Files");
   const dbRef8 = ref(database, "Bmi");
+  const dbRef9 = ref(database, "Bloodsugar");
 
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -67,14 +70,20 @@ const Dashboard = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
 
-  const dateStrip = (numOfHours, date) => {
-    const dateCopy = new Date(date.getTime());
-    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
-    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
-      1,
-      -5
-    );
-    return stringDate;
+  //Sort by date
+  const dateSort = (x) => {
+    x.sort(function(a, b) {
+      var awords = a.dueDate.slice(5, 17).split(" ");
+      var bwords = b.dueDate.slice(5, 17).split(" ");
+
+      var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
+      var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
+
+      var strToDatea = new Date(aNewdate);
+      var strToDateb = new Date(bNewdate);
+
+      return strToDatea - strToDateb;
+    });
   };
 
   useEffect(() => {
@@ -105,29 +114,9 @@ const Dashboard = () => {
             id,
             ...data,
           }));
-          //sort according to date
 
-          //var allDates = prescArray[i].dueDate.slice(5, 17);
-          //   var words = tody.split(" ");
-          //   var newdate = words[0] + "/" + words[1] + "/" + words[2];
-          //   var strToDate = new Date(newdate);
-
-          //   strToDate.setDate(
-          //     strToDate.getDate() + parseInt(prescArray[i].daysTaken)
-          //   );
-
-          taskArray.sort(function(a, b) {
-            var awords = a.dueDate.slice(5, 17).split(" ");
-            var bwords = b.dueDate.slice(5, 17).split(" ");
-
-            var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
-            var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
-
-            var strToDatea = new Date(aNewdate);
-            var strToDateb = new Date(bNewdate);
-
-            return strToDatea - strToDateb;
-          });
+          //Sort by date
+          dateSort(taskArray);
 
           setPatientTasks(taskArray);
           setPatientTasksDisplay([taskArray[taskArray.length - 1]]);
@@ -147,6 +136,8 @@ const Dashboard = () => {
             id,
             ...data,
           }));
+          //Sort by date
+          dateSort(bpArray);
 
           setBp(bpArray);
           setBpDisplay([bpArray[bpArray.length - 1]]);
@@ -168,6 +159,8 @@ const Dashboard = () => {
               ...data,
             })
           );
+          //Sort by date
+          dateSort(clinicArray);
 
           setClinic(clinicArray);
           setClinicDisplay([clinicArray[clinicArray.length - 1]]);
@@ -187,6 +180,8 @@ const Dashboard = () => {
             id,
             ...data,
           }));
+          //Sort by date
+          dateSort(intArray);
 
           setInteraction(intArray);
           setIntDisplay([intArray[intArray.length - 1]]);
@@ -208,6 +203,8 @@ const Dashboard = () => {
               ...data,
             })
           );
+          //Sort by date
+          dateSort(prescArray);
 
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
@@ -229,6 +226,8 @@ const Dashboard = () => {
               ...data,
             })
           );
+          //Sort by date
+          dateSort(fileArray);
 
           setFile(fileArray);
           setFileDispaly([fileArray[fileArray.length - 1]]);
@@ -248,6 +247,8 @@ const Dashboard = () => {
             id,
             ...data,
           }));
+          //Sort by date
+          dateSort(bmiArray);
 
           setBmi(bmiArray);
           setBmiDispaly([bmiArray[bmiArray.length - 1]]);
@@ -258,40 +259,65 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    //read blood sugar
+    get(dbRef9)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const sugarArray = Object.entries(snapshot.val()).map(
+            ([id, data]) => ({
+              id,
+              ...data,
+            })
+          );
+          //Sort by date
+          dateSort(sugarArray);
+
+          setSugar(sugarArray);
+          setSugarDispaly([sugarArray[sugarArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
-  const handleSelect = (e) => {
-    setOptionValue(e.target.value);
-    setSearch(e.target.value);
+  // const handleSelect = (e) => {
+  //   setOptionValue(e.target.value);
+  //   setSearch(e.target.value);
+    
+  //   let obj = patientData.find((name) => name.patient === e.target.value);
+  //   let taskArray = patientTasks.filter((name) => name.patient === obj.id);
+  //   let Bps = bp.filter((name) => name.patient === obj.id);
+  //   let clncArray = clinic.filter((name) => name.patient === obj.id);
+  //   let intArray = interaction.filter((name) => name.patient === obj.id);
+  //   let prescArray = prescription.filter((name) => name.patient === obj.id);
+  //   let fileArray = file.filter((name) => name.patient === obj.id);
+  //   let bmiArray = bmi.filter((name) => name.patient === obj.id);
+  //   let sugarArray = sugar.filter((name) => name.patient === obj.id);
 
-    let obj = patientData.find((name) => name.patient === e.target.value);
-    let taskArray = patientTasks.filter((name) => name.patient === obj.id);
-    let Bps = bp.filter((name) => name.patient === obj.id);
-    let clncArray = clinic.filter((name) => name.patient === obj.id);
-    let intArray = interaction.filter((name) => name.patient === obj.id);
-    let prescArray = prescription.filter((name) => name.patient === obj.id);
-    let fileArray = file.filter((name) => name.patient === obj.id);
-    let bmiArray = bmi.filter((name) => name.patient === obj.id);
+  //   const dataArray = [obj];
 
-    const dataArray = [obj];
+  //   setPatientToDisplay(dataArray);
+  //   setPatientTasksDisplay(taskArray);
+  //   setBpDisplay(Bps);
+  //   setClinicDisplay(clncArray);
+  //   setIntDisplay(intArray);
+  //   setPrescDisplay(prescArray);
+  //   setFileDispaly(fileArray);
+  //   setBmiDispaly(bmiArray);
+  //   setSugarDispaly(sugarArray);
 
-    setPatientToDisplay(dataArray);
-    setPatientTasksDisplay(taskArray);
-    setBpDisplay(Bps);
-    setClinicDisplay(clncArray);
-    setIntDisplay(intArray);
-    setPrescDisplay(prescArray);
-    setFileDispaly(fileArray);
-    setBmiDispaly(bmiArray);
+  //   Cookies.set("patient", obj.id);
+  //   Cookies.set("userName", obj.patient);
 
-    Cookies.set("patient", obj.id);
-    Cookies.set("userName", obj.patient);
-
-    //calculate age
-    const bornyr = dataArray[0].age.slice(12, 17);
-    const yr = new Date().getFullYear();
-    setAge(yr - bornyr);
-  };
+  //   //calculate age
+  //   const bornyr = dataArray[0].age.slice(12, 17);
+  //   const yr = new Date().getFullYear();
+  //   setAge(yr - bornyr);
+  // };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -308,25 +334,25 @@ const Dashboard = () => {
     }
   };
 
-  const handleOnChange = (e) => {
-    console.log(e.target.value);
-    const checkedId = e.target.value;
-    const updates = {};
+  // const handleOnChange = (e) => {
+  //   console.log(e.target.value);
+  //   const checkedId = e.target.value;
+  //   const updates = {};
 
-    if (e.target.checked) {
-      setSelectedIds([...selectedIds, checkedId]);
+  //   if (e.target.checked) {
+  //     setSelectedIds([...selectedIds, checkedId]);
 
-      updates[checkedId + "/completed"] = true;
+  //     updates[checkedId + "/completed"] = true;
 
-      update(dbRef2, updates);
-    } else {
-      setSelectedIds(selectedIds.filter((id) => id !== checkedId));
+  //     update(dbRef2, updates);
+  //   } else {
+  //     setSelectedIds(selectedIds.filter((id) => id !== checkedId));
 
-      updates[checkedId + "/completed"] = false;
+  //     updates[checkedId + "/completed"] = false;
 
-      update(dbRef2, updates);
-    }
-  };
+  //     update(dbRef2, updates);
+  //   }
+  // };
 
   const handleResultClick = (patient) => {
     setSearch(patient.patient);
@@ -340,6 +366,7 @@ const Dashboard = () => {
     let prescArray = prescription.filter((name) => name.patient === patient.id);
     let fileArray = file.filter((name) => name.patient === patient.id);
     let bmiArray = bmi.filter((name) => name.patient === patient.id);
+    let sugarArray = sugar.filter((name) => name.patient === patient.id);
 
     const dataArray = [obj];
 
@@ -351,7 +378,7 @@ const Dashboard = () => {
     setPrescDisplay(prescArray);
     setFileDispaly(fileArray);
     setBmiDispaly(bmiArray);
-    console.log(bmiArray);
+    setSugarDispaly(sugarArray);
 
     Cookies.set("patient", patient.id);
     Cookies.set("userName", patient.patient);
@@ -362,6 +389,14 @@ const Dashboard = () => {
     setAge(yr - bornyr);
   };
 
+  const allTasks = () => {
+
+  }
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+    console.log(e.target.getAttribute('key'))
+  }
   const Logout = () => {
     navigate("/");
   };
@@ -403,7 +438,7 @@ const Dashboard = () => {
             " "
           )}
         </div>
-        <form>
+        {/* <form>
           <label htmlFor="All Patients">
             <select onChange={handleSelect}>
               <option className="App-info" value="1">
@@ -416,10 +451,14 @@ const Dashboard = () => {
               ))}
             </select>
           </label>
-        </form>
+        </form> */}
 
         <button className="App-info" onClick={New}>
           New member
+        </button>
+
+        <button className="App-info" onClick={allTasks}>
+          All tasks
         </button>
       </nav>
 
@@ -596,7 +635,47 @@ const Dashboard = () => {
             </button>
             <br />
 
-            <h4>Clinical appointments: </h4>
+            <h4> Blood sugar </h4>
+
+            <table className="customers">
+              <tr>
+                <th>date </th>
+                <th>Fasting</th>
+                <th>Random</th>
+                <th>HBA1C</th>
+              </tr>
+              {sugarDisplay.map((sug) => (
+                <tr key={sug.id}>
+                  {parseFloat(sug.fasting) > 10 ||
+                  parseFloat(sug.fasting) < 4 ||
+                  parseFloat(sug.random) < 4 ||
+                  parseFloat(sug.random) > 10 ||
+                  parseFloat(sug.HBA1C) > 5.7 ? (
+                    <>
+                      <td>{sug.dueDate.slice(0, 17)}</td>
+                      <td style={{ color: "red" }}>{sug.fasting}</td>
+                      <td style={{ color: "red" }}>{sug.random}</td>
+                      <td style={{ color: "red" }}>{sug.HBA1C}</td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{sug.dueDate.slice(0, 17)}</td>
+                      <td>{sug.fasting}</td>
+                      <td>{sug.random}</td>
+                      <td>{sug.HBA1C}</td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </table>
+            <button>
+              <Link className="link" to="/sugar">
+                Add
+              </Link>
+            </button>
+            <br />
+
+            <h4>Clinical appointments </h4>
 
             <table className="customers">
               <tr>
@@ -692,14 +771,24 @@ const Dashboard = () => {
                       <td>{patient.dueDate.slice(0, 17)}</td>
 
                       <td>
-                        <input
-                          type="checkbox"
-                          id={patient.id}
-                          name="done"
-                          value={patient.id}
-                          checked={selectedIds.includes(patient.id)}
-                          onChange={handleOnChange}
-                        />
+                        <form>
+                          <label htmlFor="status">
+                            <select onChange={handleStatus}>
+                              <option className="App-info" value="Not started">
+                                Not started
+                              </option>
+                              <option className="App-info" value="Inprogress">
+                                Inprogress
+                              </option>
+                              <option className="App-info" value="Incomplete">
+                                Incomplete
+                              </option>
+                              <option className="App-info" value="Complete">
+                                Complete
+                              </option>
+                            </select>
+                          </label>
+                        </form>
                       </td>
                     </tr>
                   ) : (
@@ -728,20 +817,30 @@ const Dashboard = () => {
               {patientTasks.map((patient) => (
                 <>
                   {patient ? (
-                    <tr>
+                    <tr key={patient.id}>
                       <td>{patient.task}</td>
 
                       <td>{patient.dueDate.slice(0, 17)}</td>
 
-                      <td>
-                        <input
-                          type="checkbox"
-                          id={patient.id}
-                          name="done"
-                          value={patient.id}
-                          checked={selectedIds.includes(patient.id)}
-                          onChange={handleOnChange}
-                        />
+                      <td key={patient.id}>
+                        <form>
+                          <label htmlFor="status">
+                            <select onChange={handleStatus}>
+                              <option className="App-info" value="Not started">
+                                Not started
+                              </option>
+                              <option className="App-info" value="Inprogress">
+                                Inprogress
+                              </option>
+                              <option className="App-info" value="Incomplete">
+                                Incomplete
+                              </option>
+                              <option className="App-info" value="Complete">
+                                Complete
+                              </option>
+                            </select>
+                          </label>
+                        </form>
                       </td>
                     </tr>
                   ) : (
