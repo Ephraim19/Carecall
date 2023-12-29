@@ -24,16 +24,35 @@ const BloodPressure = () => {
   const NewBp = (event) => {
     event.preventDefault();
     if (pressure && dueDate) {
-      push(
-        ref(database, "bloodPressure"), {
-          patient: Cookies.get("patient"),
-          pressure,
-          dueDate: dateStrip(3, dueDate),
-          
-        }).then((data) => {
-          console.log(data);
-          navigate("/dashboard");
-        })
+      push(ref(database, "bloodPressure"), {
+        patient: Cookies.get("patient"),
+        pressure,
+        dueDate: dateStrip(3, dueDate),
+      }).then((data) => {
+        //Create a task if bp is high or low
+        if (pressure.split("/")[0] > 130) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " had a high blood pressure on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date),
+            completed: false,
+          });
+        } else if (pressure.split("/")[1] < 60) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " had a low blood pressure on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: false,
+          });
+        }
+        navigate("/dashboard");
+      });
     }
   };
 
@@ -48,6 +67,7 @@ const BloodPressure = () => {
           <b>Blood pressure:</b> <br />
           <input
             type="text"
+            placeholder="i.e 120/80"
             value={pressure}
             onChange={(e) => setPressure(e.target.value)}
           />

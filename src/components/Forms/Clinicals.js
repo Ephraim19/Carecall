@@ -31,19 +31,39 @@ const Clinicals = () => {
         diagnosis,
         dueDate: dateStrip(3, dueDate),
       }).then(() => {
-
-        //Create a task
+        //Create a task for appointment reminder
         push(ref(database, "tasks"), {
           patient: Cookies.get("patient"),
           task:
-            "Remind " + Cookies.get("userName") +
+            "Remind " +
+            Cookies.get("userName") +
             " to go to " +
             clinic +
             " on " +
             dateStrip(3, dueDate).slice(0, 17),
           dueDate: dateStrip(3, dueDate),
           completed: false,
-        })
+        });
+
+        //Create a task for appointment followup
+        var tody = dateStrip(3, dueDate).slice(5, 17);
+        var words = tody.split(" ");
+        var newdate = words[0] + "/" + words[1] + "/" + words[2];
+        var strToDate = new Date(newdate);
+        strToDate.setDate(strToDate.getDate() + 1);
+
+        push(ref(database, "tasks"), {
+          patient: Cookies.get("patient"),
+          task:
+            "Follow up on " +
+            Cookies.get("userName") +
+            " about " +
+            clinic +
+            " appointment " +
+            dateStrip(3, strToDate).slice(0, 17),
+          dueDate: dateStrip(3, strToDate),
+          completed: false,
+        });
         navigate("/dashboard");
       });
     }

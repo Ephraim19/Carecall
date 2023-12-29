@@ -1,36 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { push, get, ref, child, update } from "firebase/database";
+import { push, get, ref, update } from "firebase/database";
 import { database } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import {
-  FaCalendarDay,
   FaCartPlus,
-  FaGenderless,
-  FaList,
   FaMale,
   FaPhone,
   FaPlusSquare,
-  FaRegHeart,
   FaUserGraduate,
 } from "react-icons/fa";
 import {
-  FiHome,
   FiLogOut,
   FiArrowLeftCircle,
   FiArrowRightCircle,
   FiCalendar,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
-import {
-  RiAlarmWarningFill,
-  RiAlarmWarningLine,
-  RiPencilLine,
-} from "react-icons/ri";
-import { BiAlarmExclamation, BiCog } from "react-icons/bi";
+import { RiAlarmWarningLine } from "react-icons/ri";
+import { BiAlarmExclamation } from "react-icons/bi";
 
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
@@ -52,6 +43,8 @@ const Dashboard = () => {
   const [searched, setSearched] = useState([]);
   const [file, setFile] = useState([]);
   const [fileDisplay, setFileDispaly] = useState([]);
+  const [bmi, setBmi] = useState([]);
+  const [bmiDisplay, setBmiDispaly] = useState([]);
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -63,6 +56,7 @@ const Dashboard = () => {
   const dbRef5 = ref(database, "Interaction");
   const dbRef6 = ref(database, "Prescription");
   const dbRef7 = ref(database, "Files");
+  const dbRef8 = ref(database, "Bmi");
 
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -218,36 +212,6 @@ const Dashboard = () => {
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
 
-          //Create a task if its the last day of prescription
-          // for (let i = 0; i < prescArray.length; i++) {
-          //   var tody = prescArray[i].dueDate.slice(5, 17);
-          //   var words = tody.split(" ");
-          //   var newdate = words[0] + "/" + words[1] + "/" + words[2];
-          //   var strToDate = new Date(newdate);
-
-          //   strToDate.setDate(
-          //     strToDate.getDate() + parseInt(prescArray[i].daysTaken)
-          //   );
-
-          //   const todayDate = new Date();
-          //   const userName = dataArray.find((name) => name.id === prescArray[i].patient).patient;
-
-          //   if (todayDate.getDate() == strToDate.getDate()) {
-          //     //push data to firebase
-          //     push(ref(database, "tasks"), {
-          //       patient: prescArray[i].patient,
-          //       task:
-          //         userName +
-          //         " has finished " + prescArray[i].prescription + " " +
-          //          dateStrip(3, todayDate),
-          //       dueDate: dateStrip(3, todayDate),
-          //       completed: false
-          //     }).then((data) => {
-          //       console.log(data);
-          //     });
-
-          //   }
-          // }
         } else {
           console.log("No data available");
         }
@@ -256,7 +220,7 @@ const Dashboard = () => {
         console.log(error);
       });
 
-    //read interactions
+    //read files
     get(dbRef7)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -269,6 +233,25 @@ const Dashboard = () => {
 
           setFile(fileArray);
           setFileDispaly([fileArray[fileArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    //read BMI
+    get(dbRef8)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const bmiArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+
+          setBmi(bmiArray);
+          setBmiDispaly([bmiArray[bmiArray.length - 1]]);
         } else {
           console.log("No data available");
         }
@@ -289,6 +272,7 @@ const Dashboard = () => {
     let intArray = interaction.filter((name) => name.patient === obj.id);
     let prescArray = prescription.filter((name) => name.patient === obj.id);
     let fileArray = file.filter((name) => name.patient === obj.id);
+    let bmiArray = bmi.filter((name) => name.patient === obj.id);
 
     const dataArray = [obj];
 
@@ -299,6 +283,7 @@ const Dashboard = () => {
     setIntDisplay(intArray);
     setPrescDisplay(prescArray);
     setFileDispaly(fileArray);
+    setBmiDispaly(bmiArray);
 
     Cookies.set("patient", obj.id);
     Cookies.set("userName", obj.patient);
@@ -347,14 +332,15 @@ const Dashboard = () => {
   const handleResultClick = (patient) => {
     setSearch(patient.patient);
     setSearched([]);
-    let obj = patientData.find((name) => name.id === patient.id);
 
+    let obj = patientData.find((name) => name.id === patient.id);
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
     let Bps = bp.filter((name) => name.patient === patient.id);
     let clncArray = clinic.filter((name) => name.patient === patient.id);
     let intArray = interaction.filter((name) => name.patient === patient.id);
     let prescArray = prescription.filter((name) => name.patient === patient.id);
     let fileArray = file.filter((name) => name.patient === patient.id);
+    let bmiArray = bmi.filter((name) => name.patient === patient.id);
 
     const dataArray = [obj];
 
@@ -365,6 +351,8 @@ const Dashboard = () => {
     setIntDisplay(intArray);
     setPrescDisplay(prescArray);
     setFileDispaly(fileArray);
+    setBmiDispaly(bmiArray);
+    console.log(bmiArray)
 
     Cookies.set("patient", patient.id);
     Cookies.set("userName", patient.patient);
@@ -404,7 +392,10 @@ const Dashboard = () => {
           {searched ? (
             <ul className="searchable">
               {searched.map((patient) => (
-                <div key={patient.id} onClick={() => handleResultClick(patient)}>
+                <div
+                  key={patient.id}
+                  onClick={() => handleResultClick(patient)}
+                >
                   {patient.patient}
                 </div>
               ))}
@@ -412,7 +403,6 @@ const Dashboard = () => {
           ) : (
             " "
           )}
-
         </div>
         <form>
           <label htmlFor="All Patients">
@@ -533,10 +523,25 @@ const Dashboard = () => {
                 <th>date </th>
                 <th>Blood pressure</th>
               </tr>
+
               {bpDisplay.map((bps) => (
                 <tr key={bps.id}>
-                  <td>{bps.dueDate.slice(0, 17)}</td>
-                  <td>{bps.pressure}</td>
+                  {bps.pressure.split("/")[0] > 130 ? (
+                    <>
+                      <td>{bps.dueDate.slice(0, 17)}</td>
+                      <td style={{ color: "red" }}>{bps.pressure}</td>
+                    </>
+                  ) : bps.pressure.split("/")[1] < 60 ? (
+                    <>
+                      <td>{bps.dueDate.slice(0, 17)}</td>
+                      <td style={{ color: "blue" }}>{bps.pressure}</td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{bps.dueDate.slice(0, 17)}</td>
+                      <td>{bps.pressure}</td>
+                    </>
+                  )}
                 </tr>
               ))}
 
@@ -547,6 +552,31 @@ const Dashboard = () => {
               </button>
             </table>
 
+            <br />
+
+            <h4>Weight & Height </h4>
+
+            <table className="customers">
+              <tr>
+                <th>date </th>
+                <th>weight</th>
+                <th>Height</th>
+                <th>BMI</th>
+              </tr>
+              {bmiDisplay.map((b) => (
+                <tr key={b.id}>
+                  <td>{b.dueDate.slice(0, 17)}</td>
+                  <td>{b.weight}</td>
+                  <td>{b.height}</td>
+                  <td>{(parseInt(b.weight)/(parseInt(b.height ^ 2))).toFixed(2)}</td>
+                </tr>
+              ))}
+            </table>
+            <button>
+              <Link className="link" to="/bmi">
+                Add
+              </Link>
+            </button>
             <br />
 
             <h4>Clinical appointments: </h4>
