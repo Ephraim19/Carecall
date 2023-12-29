@@ -348,7 +348,7 @@ const Dashboard = () => {
     setSearch(patient.patient);
     setSearched([]);
     let obj = patientData.find((name) => name.id === patient.id);
-    
+
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
     let Bps = bp.filter((name) => name.patient === patient.id);
     let clncArray = clinic.filter((name) => name.patient === patient.id);
@@ -387,30 +387,33 @@ const Dashboard = () => {
     <div>
       <nav className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
-        <form className="App-info">
-          <label>
-            <input
-              className="enlarged-text-box"
-              type="text"
-              value={search}
-              placeholder="Search patient"
-              //onChange={(e) => setSearch(e.target.value)}
-              onChange={handleSearch}
-            />
-          </label>
+        <div>
+          <form className="App-info">
+            <label>
+              <input
+                className="enlarged-text-box"
+                type="text"
+                value={search}
+                placeholder="Search patient"
+                //onChange={(e) => setSearch(e.target.value)}
+                onChange={handleSearch}
+              />
+            </label>
+          </form>
+
           {searched ? (
             <ul className="searchable">
               {searched.map((patient) => (
-                <li key={patient.id} onClick={() => handleResultClick(patient)}>
-                  <b>{patient.patient}</b>
-                </li>
+                <div key={patient.id} onClick={() => handleResultClick(patient)}>
+                  {patient.patient}
+                </div>
               ))}
             </ul>
           ) : (
             " "
           )}
-        </form>
 
+        </div>
         <form>
           <label htmlFor="All Patients">
             <select onChange={handleSelect}>
@@ -546,7 +549,7 @@ const Dashboard = () => {
 
             <br />
 
-            <h4>Clinical apointments: </h4>
+            <h4>Clinical appointments: </h4>
 
             <table className="customers">
               <tr>

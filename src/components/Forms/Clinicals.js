@@ -30,8 +30,20 @@ const Clinicals = () => {
         clinic,
         diagnosis,
         dueDate: dateStrip(3, dueDate),
-      }).then((data) => {
-        console.log(data);
+      }).then(() => {
+
+        //Create a task
+        push(ref(database, "tasks"), {
+          patient: Cookies.get("patient"),
+          task:
+            "Remind " + Cookies.get("userName") +
+            " to go to " +
+            clinic +
+            " on " +
+            dateStrip(3, dueDate).slice(0, 17),
+          dueDate: dateStrip(3, dueDate),
+          completed: false,
+        })
         navigate("/dashboard");
       });
     }

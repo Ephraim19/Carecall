@@ -32,32 +32,28 @@ const Prescriptions = () => {
         daysTaken,
         dueDate: dateStrip(3, dueDate),
       }).then(() => {
+        var tody = dateStrip(3, dueDate).slice(5, 17);
+        var words = tody.split(" ");
+        var newdate = words[0] + "/" + words[1] + "/" + words[2];
+        var strToDate = new Date(newdate);
+
+        strToDate.setDate(strToDate.getDate() + parseInt(daysTaken));
+
+        //Create a task
+        push(ref(database, "tasks"), {
+          patient: Cookies.get("patient"),
+          task:
+            Cookies.get("userName") +
+            " has finished " +
+            prescription +
+            " on " +
+            dateStrip(3, strToDate).slice(0, 17),
+          dueDate: dateStrip(3, strToDate),
+          completed: false,
+        }).then((data) => {
+          console.log(data);
+        });
         navigate("/dashboard");
-      });
-
-      
-      var tody = dateStrip(3, dueDate).slice(5,17);
-      var words = tody.split(" ");
-      var newdate = words[0] + "/" + words[1] + "/" + words[2];
-      var strToDate = new Date(newdate);
-
-      strToDate.setDate(
-        strToDate.getDate() + parseInt(daysTaken)
-      );
-
-      //Create a task
-      push(ref(database, "tasks"), {
-        patient: Cookies.get("patient"),
-        task:
-        Cookies.get("userName") +
-          " has finished " +
-          prescription +
-          " on " +
-          dateStrip(3, strToDate).slice(0,17),
-        dueDate: dateStrip(3, strToDate),
-        completed: false,
-      }).then((data) => {
-        console.log(data);
       });
     }
   };
