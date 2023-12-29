@@ -156,3 +156,6 @@ h4 {
 .menuItems {
   background-color: #e3e5f0;
 }
+.link {
+  text-decoration: none;
+}

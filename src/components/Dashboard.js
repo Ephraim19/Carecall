@@ -260,10 +260,12 @@ const Dashboard = () => {
     get(dbRef7)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const fileArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-            id,
-            ...data,
-          }));
+          const fileArray = Object.entries(snapshot.val()).map(
+            ([id, data]) => ({
+              id,
+              ...data,
+            })
+          );
 
           setFile(fileArray);
           setFileDispaly([fileArray[fileArray.length - 1]]);
@@ -296,7 +298,7 @@ const Dashboard = () => {
     setClinicDisplay(clncArray);
     setIntDisplay(intArray);
     setPrescDisplay(prescArray);
-    setFileDispaly(fileArray)
+    setFileDispaly(fileArray);
 
     Cookies.set("patient", obj.id);
     Cookies.set("userName", obj.patient);
@@ -311,13 +313,13 @@ const Dashboard = () => {
     e.preventDefault();
     setSearch(e.target.value);
 
-    if(search.length > 1){
-    var searches = patientData.filter((name) =>
-      name.patient.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    if (search.length > 1) {
+      var searches = patientData.filter((name) =>
+        name.patient.toLowerCase().includes(e.target.value.toLowerCase())
+      );
 
-    setSearched(searches);
-    }else{
+      setSearched(searches);
+    } else {
       setSearched([]);
     }
   };
@@ -340,6 +342,37 @@ const Dashboard = () => {
 
       update(dbRef2, updates);
     }
+  };
+
+  const handleResultClick = (patient) => {
+    setSearch(patient.patient);
+    setSearched([]);
+    let obj = patientData.find((name) => name.id === patient.id);
+    
+    let taskArray = patientTasks.filter((name) => name.patient === patient.id);
+    let Bps = bp.filter((name) => name.patient === patient.id);
+    let clncArray = clinic.filter((name) => name.patient === patient.id);
+    let intArray = interaction.filter((name) => name.patient === patient.id);
+    let prescArray = prescription.filter((name) => name.patient === patient.id);
+    let fileArray = file.filter((name) => name.patient === patient.id);
+
+    const dataArray = [obj];
+
+    setPatientToDisplay(dataArray);
+    setPatientTasksDisplay(taskArray);
+    setBpDisplay(Bps);
+    setClinicDisplay(clncArray);
+    setIntDisplay(intArray);
+    setPrescDisplay(prescArray);
+    setFileDispaly(fileArray);
+
+    Cookies.set("patient", patient.id);
+    Cookies.set("userName", patient.patient);
+
+    // //calculate age
+    const bornyr = dataArray[0].age.slice(12, 17);
+    const yr = new Date().getFullYear();
+    setAge(yr - bornyr);
   };
 
   const Logout = () => {
@@ -366,13 +399,13 @@ const Dashboard = () => {
             />
           </label>
           {searched ? (
-            <div className="searchable">
+            <ul className="searchable">
               {searched.map((patient) => (
-                <div key={patient.id}>
+                <li key={patient.id} onClick={() => handleResultClick(patient)}>
                   <b>{patient.patient}</b>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           ) : (
             " "
           )}
@@ -408,7 +441,7 @@ const Dashboard = () => {
                   {menuCollapse
                     ? patient.patient.split(" ")[0]
                     : patient.patient}{" "}
-                  ({age})-({patient.gender}) 
+                  ({age})-({patient.gender})
                 </h3>
               </div>
               <div className="closemenu" onClick={menuIconClick}>
@@ -434,7 +467,7 @@ const Dashboard = () => {
                 </MenuItem>
                 <MenuItem icon={<RiAlarmWarningLine />}>
                   <b>Active conditions</b>
-                  <li>
+                  <li key={patient.id}>
                     <ul key={1}>{patient.condition}</ul>
                     <ul key={2}> {patient.condition1}</ul>
                     <ul key={3}> {patient.condition2}</ul>
@@ -444,7 +477,7 @@ const Dashboard = () => {
                 </MenuItem>
                 <MenuItem icon={<BiAlarmExclamation />}>
                   <b>Active Interventions</b>
-                  <li>
+                  <li key={patient.id}>
                     <ol key={1}>{patient.intervention}</ol>
                     <ol key={2}>{patient.intervention1}</ol>
                     <ol key={3}>{patient.intervention2}</ol>
@@ -482,7 +515,9 @@ const Dashboard = () => {
               ))}
 
               <button>
-                <Link to="/interaction">Add</Link>
+                <Link className="link" to="/interaction">
+                  Add
+                </Link>
               </button>
             </table>
 
@@ -503,7 +538,9 @@ const Dashboard = () => {
               ))}
 
               <button>
-                <Link to="/blood">Add</Link>
+                <Link className="link" to="/blood">
+                  Add
+                </Link>
               </button>
             </table>
 
@@ -526,7 +563,9 @@ const Dashboard = () => {
               ))}
             </table>
             <button>
-              <Link to="/clinic">Add</Link>
+              <Link className="link" to="/clinic">
+                Add
+              </Link>
             </button>
             <br />
 
@@ -565,12 +604,17 @@ const Dashboard = () => {
                 <tr>
                   <td>{f.description}</td>
                   <td>{f.dueDate.slice(0, 17)}</td>
-                  <td> <a href = {f.url}>file</a></td>
+                  <td>
+                    {" "}
+                    <a href={f.url}>file</a>
+                  </td>
                 </tr>
               ))}
             </table>
             <button>
-              <Link to="/file">Add</Link>
+              <Link className="link" to="/file">
+                Add
+              </Link>
             </button>
 
             <br />
@@ -616,7 +660,9 @@ const Dashboard = () => {
 
               <br />
               <button>
-                <Link to="/task">New</Link>
+                <Link className="link" to="/task">
+                  New
+                </Link>
               </button>
             </table>
 
@@ -655,9 +701,6 @@ const Dashboard = () => {
               ))}
 
               <br />
-              <button>
-                <Link to="/task">New</Link>
-              </button>
             </table>
           </div>
         </div>

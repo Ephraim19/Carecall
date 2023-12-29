@@ -23,7 +23,7 @@ export const NewPatient = () => {
   const [intervention2, setIntervention2] = useState("");
   const [intervention3, setIntervention3] = useState("");
   const [intervention4, setIntervention4] = useState("");
-  const [dueDate, setDueDate] = useState(new Date());
+  const [dueDates, setDueDates] = useState(new Date());
 
   const navigate = useNavigate();
 
@@ -39,12 +39,12 @@ export const NewPatient = () => {
 
   const Push = (event) => {
     event.preventDefault();
-    if (patient && dueDate && status && goals) {
+    if (patient && dueDates && status && goals && gender && Phone) {
       //push data to firebase
 
       push(ref(database, "clients"), {
         patient,
-        age: dateStrip(3, dueDate),
+        age: dateStrip(3, dueDates),
         status,
         goals,
         condition,
@@ -60,7 +60,21 @@ export const NewPatient = () => {
         gender,
         Phone,
       }).then((data) => {
-        Cookies.set("FirebaseKey", data.key, { expires: 2 });
+        //Create task in firebase
+
+        // var tody = dateStrip(3, new Date()).slice(5, 17);
+        // var words = tody.split(" ");
+        // var newdate = words[0] + "/" + words[1] + "/" + words[2];
+        var strToDate = new Date();
+
+        strToDate.setDate(strToDate.getDate() + 1);
+        push(ref(database, "tasks"), {
+          patient: data.key,
+          task: "Call " + patient + " for welcoming",
+          dueDate: dateStrip(3, strToDate),
+          completed: false,
+        });
+        Cookies.set("patient", data.key);
         navigate("/dashboard");
       });
     }
@@ -96,14 +110,17 @@ export const NewPatient = () => {
           <b>Date of birth</b>
           <br />
           <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
+            selected={dueDates}
+            onChange={(date) => setDueDates(date)}
           />
           <br />
           <br />
           <b>Gender</b> <br />
           <label htmlFor="Gender">
             <select onChange={handleSelect}>
+              <option className="App-info" value="MF" key={"MF"}>
+                Select Gender
+              </option>
               <option className="App-info" value="M" key={"M"}>
                 Male
               </option>
