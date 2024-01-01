@@ -16,6 +16,7 @@ import Prescriptions from "./Forms/Prescriptions";
 import Files from "./Forms/Files";
 import Bmi from "./Forms/Bmi";
 import BloodSugar from "./Forms/BloodSugar";
+import AllTasks from "./Forms/AllTasks";
 
 const Router = () => {
   return (
@@ -37,6 +38,8 @@ const Router = () => {
         <Route path="/file" Component={Files} />
         <Route path="/bmi" Component={Bmi} />
         <Route path="/sugar" Component={BloodSugar} />
+        <Route path="/alltasks" Component={AllTasks} />
+
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { push, get, ref, update } from "firebase/database";
-import { database } from "./Firebase";
+import { get, ref, update } from "firebase/database";
+import { database, auth } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
@@ -22,6 +22,7 @@ import {
 //ffjjn,vtdyygkvv
 import { RiAlarmWarningLine } from "react-icons/ri";
 import { BiAlarmExclamation } from "react-icons/bi";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
@@ -47,6 +48,9 @@ const Dashboard = () => {
   const [sugar, setSugar] = useState([]);
   const [sugarDisplay, setSugarDispaly] = useState([]);
   const [status, setStatus] = useState("");
+  const [user, setUser] = useState(null);
+
+  
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -87,6 +91,17 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const email = user.email;
+        
+        setUser(email);
+      }
+    });
+
+    
+
     let dataArray = [];
     //read user
     get(dbRef)
@@ -287,7 +302,7 @@ const Dashboard = () => {
   // const handleSelect = (e) => {
   //   setOptionValue(e.target.value);
   //   setSearch(e.target.value);
-    
+
   //   let obj = patientData.find((name) => name.patient === e.target.value);
   //   let taskArray = patientTasks.filter((name) => name.patient === obj.id);
   //   let Bps = bp.filter((name) => name.patient === obj.id);
@@ -390,13 +405,13 @@ const Dashboard = () => {
   };
 
   const allTasks = () => {
-
-  }
+    navigate("/alltasks");
+  };
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
-    console.log(e.target.getAttribute('key'))
-  }
+    console.log(e.target.getAttribute("key"));
+  };
   const Logout = () => {
     navigate("/");
   };
@@ -760,6 +775,8 @@ const Dashboard = () => {
 
                 <th>due</th>
 
+                <th>Assignee</th>
+
                 <th>status</th>
               </tr>
               {patientTasksDisplay.map((patient) => (
@@ -770,6 +787,7 @@ const Dashboard = () => {
 
                       <td>{patient.dueDate.slice(0, 17)}</td>
 
+                      <td>{user.slice(0, 7) + "..."}</td>
                       <td>
                         <form>
                           <label htmlFor="status">
@@ -803,53 +821,6 @@ const Dashboard = () => {
                   New
                 </Link>
               </button>
-            </table>
-
-            <h4>All tasks</h4>
-            <table className="customers">
-              <tr>
-                <th>Task</th>
-
-                <th>due</th>
-
-                <th>status</th>
-              </tr>
-              {patientTasks.map((patient) => (
-                <>
-                  {patient ? (
-                    <tr key={patient.id}>
-                      <td>{patient.task}</td>
-
-                      <td>{patient.dueDate.slice(0, 17)}</td>
-
-                      <td key={patient.id}>
-                        <form>
-                          <label htmlFor="status">
-                            <select onChange={handleStatus}>
-                              <option className="App-info" value="Not started">
-                                Not started
-                              </option>
-                              <option className="App-info" value="Inprogress">
-                                Inprogress
-                              </option>
-                              <option className="App-info" value="Incomplete">
-                                Incomplete
-                              </option>
-                              <option className="App-info" value="Complete">
-                                Complete
-                              </option>
-                            </select>
-                          </label>
-                        </form>
-                      </td>
-                    </tr>
-                  ) : (
-                    " "
-                  )}
-                </>
-              ))}
-
-              <br />
             </table>
           </div>
         </div>

@@ -20,6 +20,7 @@ const firebaseConfig = {
   databaseURL: "https://care-call-2b79d-default-rtdb.firebaseio.com/"
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
