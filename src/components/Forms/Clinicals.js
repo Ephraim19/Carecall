@@ -42,7 +42,7 @@ const Clinicals = () => {
             " on " +
             dateStrip(3, dueDate).slice(0, 17),
           dueDate: dateStrip(3, dueDate),
-          completed: false,
+          completed: "Progress",
         });
 
         //Create a task for appointment followup

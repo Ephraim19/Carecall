@@ -44,7 +44,7 @@ const BloodSugar = () => {
               " has low / high blood sugar on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
-            completed: false,
+            completed: "Progress",
           });
         }
         navigate("/dashboard");

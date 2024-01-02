@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { database } from "../Firebase";
-import { set, ref, push } from "firebase/database";
+import {ref, push } from "firebase/database";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -29,7 +29,7 @@ export const Tasks = () => {
         patient: Cookies.get("patient"),
         task,
         dueDate: dateStrip(3, dueDate),
-        completed: false,
+        completed: "Progress",
       }).then((data) => {
         console.log(data);
         navigate("/dashboard");

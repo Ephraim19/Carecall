@@ -38,7 +38,7 @@ const BloodPressure = () => {
               " had a high blood pressure on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date),
-            completed: false,
+            completed: "Progress",
           });
         } else if (pressure.split("/")[1] < 60 || pressure.split("/")[0] < 60) {
           push(ref(database, "tasks"), {
@@ -48,7 +48,7 @@ const BloodPressure = () => {
               " had a low blood pressure on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
-            completed: false,
+            completed: "Progress",
           });
         }
         navigate("/dashboard");

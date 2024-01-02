@@ -50,7 +50,7 @@ const Dashboard = () => {
   const [status, setStatus] = useState("");
   const [user, setUser] = useState(null);
   const [assignee, setAssignee] = useState("");
-
+  const progress = ['Not started','Inprogress','Incomplete','complete'];
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -91,16 +91,13 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
-        
+
         setUser(email);
       }
     });
-
-    
 
     let dataArray = [];
     //read user
@@ -299,7 +296,6 @@ const Dashboard = () => {
       });
   }, []);
 
-
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -352,8 +348,9 @@ const Dashboard = () => {
     const dataArray = [obj];
 
     setPatientToDisplay(dataArray);
-    setAssignee(dataArray[0].hc)
+    setAssignee(dataArray[0].hc);
     setPatientTasksDisplay(taskArray);
+
     setBpDisplay(Bps);
     setClinicDisplay(clncArray);
     setIntDisplay(intArray);
@@ -371,15 +368,22 @@ const Dashboard = () => {
     setAge(yr - bornyr);
   };
 
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+    console.log(e.target.id);
+
+    //Update tasks progress
+    const updates = {};
+    updates[e.target.id + "/completed"] = e.target.value;
+    update(dbRef2, updates);
+
+  };
+
   const allTasks = () => {
     navigate("/alltasks");
   };
-
-  const handleStatus = (e) => {
-    setStatus(e.target.value);
-    console.log(e.target.getAttribute("key"));
-  };
   const Logout = () => {
+    //remove all cookies first
     navigate("/");
   };
 
@@ -420,20 +424,6 @@ const Dashboard = () => {
             " "
           )}
         </div>
-        {/* <form>
-          <label htmlFor="All Patients">
-            <select onChange={handleSelect}>
-              <option className="App-info" value="1">
-                All Patients
-              </option>
-              {patientData.map((patient) => (
-                <option key={patient.id} value={patient.key}>
-                  {patient.patient}
-                </option>
-              ))}
-            </select>
-          </label>
-        </form> */}
 
         <button className="App-info" onClick={New}>
           New member
@@ -490,13 +480,13 @@ const Dashboard = () => {
                 </MenuItem>
                 <MenuItem icon={<BiAlarmExclamation />}>
                   <b>Active Interventions</b>
-                  <li key={patient.id}>
-                    <ol key={1}>{patient.intervention}</ol>
-                    <ol key={2}>{patient.intervention1}</ol>
-                    <ol key={3}>{patient.intervention2}</ol>
-                    <ol key={4}>{patient.intervention3}</ol>
-                    <ol key={5}>{patient.intervention4}</ol>
-                  </li>
+                  <div style={{textAlign:"center"}} key={patient.id}>
+                    <p key={1}>{patient.intervention}</p>
+                    <p key={2}>{patient.intervention1}</p>
+                    <p key={3}>{patient.intervention2}</p>
+                    <p key={4}>{patient.intervention3}</p>
+                    <p key={5}>{patient.intervention4}</p>
+                  </div>
                 </MenuItem>
                 <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
               </Menu>
@@ -758,17 +748,20 @@ const Dashboard = () => {
                       <td>
                         <form>
                           <label htmlFor="status">
-                            <select onChange={handleStatus}>
-                              <option className="App-info" value="Not started">
+                            <select onChange={handleStatus} id={patient.id} >
+                            <option className="App-info" value="progress">
+                                {patient.completed}
+                              </option>                        
+                              <option className="App-info" value={progress[0]}>
                                 Not started
                               </option>
-                              <option className="App-info" value="Inprogress">
+                              <option className="App-info" value={progress[1]}>
                                 Inprogress
                               </option>
-                              <option className="App-info" value="Incomplete">
+                              <option className="App-info" value={progress[2]}>
                                 Incomplete
                               </option>
-                              <option className="App-info" value="Complete">
+                              <option className="App-info" value={progress[3]}>
                                 Complete
                               </option>
                             </select>

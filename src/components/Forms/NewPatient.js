@@ -103,7 +103,7 @@ export const NewPatient = () => {
           patient: data.key,
           task: "Call " + patient + " for welcoming",
           dueDate: dateStrip(3, strToDate),
-          completed: false,
+          completed: "Progress",
         });
 
         //Add +1 tasks to HC

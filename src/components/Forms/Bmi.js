@@ -41,7 +41,7 @@ const Bmi = () => {
               " is under weight on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
-            completed: false,
+            completed: "Progress",
           });
         } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
           push(ref(database, "tasks"), {
@@ -51,7 +51,7 @@ const Bmi = () => {
               " is over weight on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
-            completed: false,
+            completed: "Progress",
           });
         }
         navigate("/dashboard");
