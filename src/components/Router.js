@@ -20,7 +20,7 @@ import AllTasks from "./Forms/AllTasks";
 
 const Router = () => {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter >
       <Routes>
         <Route path="/" Component={Login} />
         <Route path="/dashboard" Component={Dashboard} />

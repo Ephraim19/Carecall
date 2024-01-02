@@ -468,15 +468,17 @@ const Dashboard = () => {
                 <MenuItem icon={<FaCartPlus />}>
                   Goals: <b>{patient.goals}</b>
                 </MenuItem>
+                <br />
                 <MenuItem icon={<RiAlarmWarningLine />}>
                   <b>Active conditions</b>
-                  <li key={patient.id}>
-                    <ul key={1}>{patient.condition}</ul>
-                    <ul key={2}> {patient.condition1}</ul>
-                    <ul key={3}> {patient.condition2}</ul>
-                    <ul key={4}> {patient.condition3}</ul>
-                    <ul key={5}> {patient.condition4}</ul>
-                  </li>
+                  <div style={{textAlign:"center"}} key={patient.id}>
+                    <p key={1}>{patient.condition}</p>
+                    <p key={2}> {patient.condition1}</p>
+                    <p key={3}> {patient.condition2}</p>
+                    <p key={4}> {patient.condition3}</p>
+                    <p key={5}> {patient.condition4}</p>
+                  </div>
+                  <br />
                 </MenuItem>
                 <MenuItem icon={<BiAlarmExclamation />}>
                   <b>Active Interventions</b>
@@ -508,12 +510,14 @@ const Dashboard = () => {
             <table className="customers">
               <tr>
                 <th>date </th>
-                <th>Message</th>
+                <th>Message </th>
+              
+
               </tr>
               {intDisplay.map((int) => (
                 <tr>
                   <td>{int.dueDate}</td>
-                  <td>{int.interaction}</td>
+                  <td>{int.interaction}  ({int.Hc})</td>
                 </tr>
               ))}
 

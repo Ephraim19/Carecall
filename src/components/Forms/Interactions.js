@@ -27,6 +27,7 @@ const Interactions = () => {
       push(ref(database, "Interaction"), {
         patient: Cookies.get("patient"),
         interaction,
+        Hc: Cookies.get("name"),
         dueDate: dateStrip(3, dueDate),
       }).then((data) => {
         console.log(data);
