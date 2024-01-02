@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { database } from "../Firebase";
-import { ref, push } from "firebase/database";
+import { ref, push, get,update } from "firebase/database";
 import Cookies from "js-cookie";
 import carecall from "../carecall.png";
 import DatePicker from "react-datepicker";
@@ -24,7 +24,9 @@ export const NewPatient = () => {
   const [intervention3, setIntervention3] = useState("");
   const [intervention4, setIntervention4] = useState("");
   const [dueDates, setDueDates] = useState(new Date());
+  const [hc, setHc] = useState();
 
+  const dbRef = ref(database, "HealthCordinator");
   const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
@@ -36,6 +38,38 @@ export const NewPatient = () => {
     );
     return stringDate;
   };
+
+  const assignedHN = () => {
+    let dataArray;
+    get(dbRef)
+      .then((snapshot) => {
+        
+        if (snapshot.exists()) {
+          dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }))
+
+          const valuesArray = dataArray.map(obj => obj.tasks);
+          
+          const min = valuesArray.reduce((a, b) => Math.min(a, b));
+          const HealthCord =dataArray.find((name)=> name.tasks === min);
+          setHc(HealthCord);
+
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return dataArray;
+  };
+
+
+  useEffect(() => {
+    assignedHN();
+  },[]);
 
   const Push = (event) => {
     event.preventDefault();
@@ -59,12 +93,9 @@ export const NewPatient = () => {
         intervention4,
         gender,
         Phone,
+        hc: hc.user,
       }).then((data) => {
-        //Create task in firebase
 
-        // var tody = dateStrip(3, new Date()).slice(5, 17);
-        // var words = tody.split(" ");
-        // var newdate = words[0] + "/" + words[1] + "/" + words[2];
         var strToDate = new Date();
 
         strToDate.setDate(strToDate.getDate() + 1);
@@ -74,6 +105,12 @@ export const NewPatient = () => {
           dueDate: dateStrip(3, strToDate),
           completed: false,
         });
+
+        //Add +1 tasks to HC
+        const updates = {};
+        updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
+        update(dbRef, updates);
+
         Cookies.set("patient", data.key);
         navigate("/dashboard");
       });

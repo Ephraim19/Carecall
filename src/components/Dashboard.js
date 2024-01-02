@@ -49,8 +49,8 @@ const Dashboard = () => {
   const [sugarDisplay, setSugarDispaly] = useState([]);
   const [status, setStatus] = useState("");
   const [user, setUser] = useState(null);
+  const [assignee, setAssignee] = useState("");
 
-  
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -299,40 +299,6 @@ const Dashboard = () => {
       });
   }, []);
 
-  // const handleSelect = (e) => {
-  //   setOptionValue(e.target.value);
-  //   setSearch(e.target.value);
-
-  //   let obj = patientData.find((name) => name.patient === e.target.value);
-  //   let taskArray = patientTasks.filter((name) => name.patient === obj.id);
-  //   let Bps = bp.filter((name) => name.patient === obj.id);
-  //   let clncArray = clinic.filter((name) => name.patient === obj.id);
-  //   let intArray = interaction.filter((name) => name.patient === obj.id);
-  //   let prescArray = prescription.filter((name) => name.patient === obj.id);
-  //   let fileArray = file.filter((name) => name.patient === obj.id);
-  //   let bmiArray = bmi.filter((name) => name.patient === obj.id);
-  //   let sugarArray = sugar.filter((name) => name.patient === obj.id);
-
-  //   const dataArray = [obj];
-
-  //   setPatientToDisplay(dataArray);
-  //   setPatientTasksDisplay(taskArray);
-  //   setBpDisplay(Bps);
-  //   setClinicDisplay(clncArray);
-  //   setIntDisplay(intArray);
-  //   setPrescDisplay(prescArray);
-  //   setFileDispaly(fileArray);
-  //   setBmiDispaly(bmiArray);
-  //   setSugarDispaly(sugarArray);
-
-  //   Cookies.set("patient", obj.id);
-  //   Cookies.set("userName", obj.patient);
-
-  //   //calculate age
-  //   const bornyr = dataArray[0].age.slice(12, 17);
-  //   const yr = new Date().getFullYear();
-  //   setAge(yr - bornyr);
-  // };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -386,6 +352,7 @@ const Dashboard = () => {
     const dataArray = [obj];
 
     setPatientToDisplay(dataArray);
+    setAssignee(dataArray[0].hc)
     setPatientTasksDisplay(taskArray);
     setBpDisplay(Bps);
     setClinicDisplay(clncArray);
@@ -787,7 +754,7 @@ const Dashboard = () => {
 
                       <td>{patient.dueDate.slice(0, 17)}</td>
 
-                      <td>{user.slice(0, 7) + "..."}</td>
+                      <td>{assignee.slice(0, 7) + "..."}</td>
                       <td>
                         <form>
                           <label htmlFor="status">

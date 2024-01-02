@@ -42,9 +42,16 @@ const Login = () => {
 
         Cookies.set("name", user.email, { expires: 7 });
 
-        let obj = hc.find((name) => name.user === user.email);
+        if (hc) {
+          let obj = hc.find((name) => name.user === user.email);
 
-        if (!obj) {
+          if (!obj) {
+            push(ref(database, "HealthCordinator"), {
+              user: user.email,
+              tasks: 0,
+            });
+          }
+        }else{
           push(ref(database, "HealthCordinator"), {
             user: user.email,
             tasks: 0,
