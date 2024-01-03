@@ -52,6 +52,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [assignee, setAssignee] = useState("");
   const progress = ["Not started", "Inprogress", "cancelled", "complete"];
+  const [visibleRows, setVisibleRows] = useState(5);
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -129,9 +130,13 @@ const Dashboard = () => {
           }));
 
           //Sort by date & status
-          const completetaskArray = taskArray.filter((name) => name.completed === "complete");
+          const completetaskArray = taskArray.filter(
+            (name) => name.completed === "complete"
+          );
 
-          const IncompletetaskArray = taskArray.filter((name) => name.completed !== "complete");
+          const IncompletetaskArray = taskArray.filter(
+            (name) => name.completed !== "complete"
+          );
           dateSort(IncompletetaskArray);
 
           const allTasksInorder = IncompletetaskArray.concat(completetaskArray);
@@ -376,9 +381,13 @@ const Dashboard = () => {
     navigate("/new");
   };
 
+  const addMoreRows = () => {
+    setVisibleRows(visibleRows + 5);
+  };
+
   return (
     <div>
-      <nav style={{position: "fixed"}} className="App-nav">
+      <nav style={{ position: "fixed" }} className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
         <div>
           <form className="App-info">
@@ -401,7 +410,7 @@ const Dashboard = () => {
                   key={patient.id}
                   onClick={() => handleResultClick(patient)}
                 >
-                  {patient.patient}
+                  {patient.patient} - ({patient.gender})
                 </div>
               ))}
             </ul>
@@ -509,7 +518,7 @@ const Dashboard = () => {
                 <th>Date </th>
                 <th>Message </th>
               </tr>
-              {intDisplay.map((int) => (
+              {intDisplay.slice(0, visibleRows).map((int) => (
                 <tr>
                   <td>{int.dueDate}</td>
                   <td>
@@ -517,6 +526,18 @@ const Dashboard = () => {
                   </td>
                 </tr>
               ))}
+              {visibleRows < intDisplay.length && (
+                <button
+                  style={{ alignItems: "left" }}
+                  className="App-info"
+                  onClick={addMoreRows}
+                >
+                  <b>More..</b>
+                </button>
+              )}
+
+              <br />
+              <br />
 
               <button>
                 <Link className="link" to="/interaction">
@@ -535,7 +556,7 @@ const Dashboard = () => {
                 <th>Blood pressure</th>
               </tr>
 
-              {bpDisplay.map((bps) => (
+              {bpDisplay.slice(0, visibleRows).map((bps) => (
                 <tr key={bps.id}>
                   {bps.pressure.split("/")[0] > 120 ||
                   bps.pressure.split("/")[0] < 60 ||
@@ -554,6 +575,18 @@ const Dashboard = () => {
                 </tr>
               ))}
 
+              {visibleRows < bpDisplay.length && (
+                <button
+                  style={{ alignItems: "left" }}
+                  className="App-info"
+                  onClick={addMoreRows}
+                >
+                  <b>More..</b>
+                </button>
+              )}
+
+              <br />
+              <br />
               <button>
                 <Link className="link" to="/blood">
                   Add
@@ -572,7 +605,7 @@ const Dashboard = () => {
                 <th>Height</th>
                 <th>BMI</th>
               </tr>
-              {bmiDisplay.map((b) => (
+              {bmiDisplay.slice(0, visibleRows).map((b) => (
                 <tr key={b.id}>
                   {parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
                   parseInt(b.weight) / parseInt(b.height ^ 2) > 25 ? (
@@ -601,6 +634,20 @@ const Dashboard = () => {
                 </tr>
               ))}
             </table>
+
+            {visibleRows < bmiDisplay.length && (
+              <button
+                style={{ alignItems: "left" }}
+                className="App-info"
+                onClick={addMoreRows}
+              >
+                <b>More..</b>
+              </button>
+            )}
+
+            <br />
+            <br />
+
             <button>
               <Link className="link" to="/bmi">
                 Add
@@ -617,7 +664,7 @@ const Dashboard = () => {
                 <th>Random</th>
                 <th>HBA1C</th>
               </tr>
-              {sugarDisplay.map((sug) => (
+              {sugarDisplay.slice(0, visibleRows).map((sug) => (
                 <tr key={sug.id}>
                   {parseFloat(sug.fasting) > 10 ||
                   parseFloat(sug.fasting) < 4 ||
@@ -641,6 +688,19 @@ const Dashboard = () => {
                 </tr>
               ))}
             </table>
+            {visibleRows < sugarDisplay.length && (
+              <button
+                style={{ alignItems: "left" }}
+                className="App-info"
+                onClick={addMoreRows}
+              >
+                <b>More..</b>
+              </button>
+            )}
+
+            <br />
+            <br />
+
             <button>
               <Link className="link" to="/sugar">
                 Add
@@ -656,7 +716,7 @@ const Dashboard = () => {
                 <th>Hospital</th>
                 <th>Diagnosis</th>
               </tr>
-              {clinicDisplay.map((cln) => (
+              {clinicDisplay.slice(0, visibleRows).map((cln) => (
                 <tr key={cln.id}>
                   <td>{cln.dueDate.slice(0, 17)}</td>
                   <td>{cln.clinic}</td>
@@ -664,6 +724,19 @@ const Dashboard = () => {
                 </tr>
               ))}
             </table>
+
+            {visibleRows < clinicDisplay.length && (
+              <button
+                style={{ alignItems: "left" }}
+                className="App-info"
+                onClick={addMoreRows}
+              >
+                <b>More..</b>
+              </button>
+            )}
+
+            <br />
+            <br />
             <button>
               <Link className="link" to="/clinic">
                 Add
@@ -679,7 +752,7 @@ const Dashboard = () => {
                 <th>Prescription</th>
                 <th>Days</th>
               </tr>
-              {prescDisplay.map((presc) => (
+              {prescDisplay.slice(0, visibleRows).map((presc) => (
                 <tr>
                   <td>{presc.dueDate.slice(0, 17)}</td>
                   <td>{presc.prescription}</td>
@@ -687,6 +760,19 @@ const Dashboard = () => {
                 </tr>
               ))}
             </table>
+            {visibleRows < prescDisplay.length && (
+              <button
+                style={{ alignItems: "left" }}
+                className="App-info"
+                onClick={addMoreRows}
+              >
+                <b>More..</b>
+              </button>
+            )}
+
+            <br />
+            <br />
+
             <button>
               <Link to="/prescription">Add</Link>
             </button>
@@ -702,7 +788,7 @@ const Dashboard = () => {
                 <th>Date</th>
                 <th>File</th>
               </tr>
-              {fileDisplay.map((f) => (
+              {fileDisplay.slice(0, visibleRows).map((f) => (
                 <tr>
                   <td>{f.description}</td>
                   <td>{f.dueDate.slice(0, 17)}</td>
@@ -713,6 +799,19 @@ const Dashboard = () => {
                 </tr>
               ))}
             </table>
+            {visibleRows < fileDisplay.length && (
+              <button
+                style={{ alignItems: "left" }}
+                className="App-info"
+                onClick={addMoreRows}
+              >
+                <b>More..</b>
+              </button>
+            )}
+
+            <br />
+            <br />
+
             <button>
               <Link className="link" to="/file">
                 Add
@@ -737,7 +836,7 @@ const Dashboard = () => {
 
                 <th>Status</th>
               </tr>
-              {patientTasksDisplay.map((patient) => (
+              {patientTasksDisplay.slice(0, visibleRows).map((patient) => (
                 <>
                   {patient ? (
                     <tr>
@@ -774,6 +873,16 @@ const Dashboard = () => {
                   )}
                 </>
               ))}
+              {visibleRows < patientTasksDisplay.length && (
+                <button
+                  style={{ alignItems: "left" }}
+                  className="App-info"
+                  onClick={addMoreRows}
+                >
+                  <b>More..</b>
+                </button>
+              )}
+              <br />
 
               <br />
               <button>
