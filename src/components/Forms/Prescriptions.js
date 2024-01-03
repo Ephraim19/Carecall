@@ -49,7 +49,7 @@ const Prescriptions = () => {
             " on " +
             dateStrip(3, strToDate).slice(0, 17),
           dueDate: dateStrip(3, strToDate),
-          completed: "Progress",
+          completed: "Not started",
         }).then((data) => {
           console.log(data);
         });

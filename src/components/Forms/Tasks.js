@@ -29,7 +29,7 @@ export const Tasks = () => {
         patient: Cookies.get("patient"),
         task,
         dueDate: dateStrip(3, dueDate),
-        completed: "Progress",
+        completed: "Not started",
       }).then((data) => {
         console.log(data);
         navigate("/dashboard");

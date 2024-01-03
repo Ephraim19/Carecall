@@ -25,6 +25,9 @@ export const NewPatient = () => {
   const [intervention4, setIntervention4] = useState("");
   const [dueDates, setDueDates] = useState(new Date());
   const [hc, setHc] = useState();
+  const [Address, setAddress] = useState();
+  const [Address1, setAddress1] = useState();
+
 
   const dbRef = ref(database, "HealthCordinator");
   const navigate = useNavigate();
@@ -93,6 +96,8 @@ export const NewPatient = () => {
         intervention4,
         gender,
         Phone,
+        Address,
+        Address1,
         hc: hc.user,
       }).then((data) => {
 
@@ -103,7 +108,7 @@ export const NewPatient = () => {
           patient: data.key,
           task: "Call " + patient + " for welcoming",
           dueDate: dateStrip(3, strToDate),
-          completed: "Progress",
+          completed: "Not started",
         });
 
         //Add +1 tasks to HC
@@ -178,6 +183,29 @@ export const NewPatient = () => {
           </label>
           <br />
           <br />
+          <label>
+            Home Address <br />
+            <input
+              type="text"
+              value={Address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+          <label>
+            Office Address <br />
+            <input
+              type="text"
+              value={Address1}
+              onChange={(e) => setAddress1(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+
           <label>
             <b>Enter the patients health status:</b> <br />
             <input

@@ -8,9 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import {
   FaCartPlus,
+  FaHome,
   FaMale,
   FaPhone,
   FaPlusSquare,
+  FaRegAddressBook,
   FaUserGraduate,
 } from "react-icons/fa";
 import {
@@ -27,7 +29,6 @@ import { onAuthStateChanged } from "firebase/auth";
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
   const [search, setSearch] = useState("");
-  const [optionValue, setOptionValue] = useState("");
   const [patientToDisplay, setPatientToDisplay] = useState([]);
   const [patientTasks, setPatientTasks] = useState([]);
   const [patientTasksDisplay, setPatientTasksDisplay] = useState([]);
@@ -50,7 +51,7 @@ const Dashboard = () => {
   const [status, setStatus] = useState("");
   const [user, setUser] = useState(null);
   const [assignee, setAssignee] = useState("");
-  const progress = ['Not started','Inprogress','Incomplete','complete'];
+  const progress = ["Not started", "Inprogress", "cancelled", "complete"];
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const Dashboard = () => {
 
   //Sort by date
   const dateSort = (x) => {
-    x.sort(function(a, b) {
+    x.sort(function (a, b) {
       var awords = a.dueDate.slice(5, 17).split(" ");
       var bwords = b.dueDate.slice(5, 17).split(" ");
 
@@ -127,10 +128,15 @@ const Dashboard = () => {
             ...data,
           }));
 
-          //Sort by date
-          dateSort(taskArray);
+          //Sort by date & status
+          const completetaskArray = taskArray.filter((name) => name.completed === "complete");
 
-          setPatientTasks(taskArray);
+          const IncompletetaskArray = taskArray.filter((name) => name.completed !== "complete");
+          dateSort(IncompletetaskArray);
+
+          const allTasksInorder = IncompletetaskArray.concat(completetaskArray);
+
+          setPatientTasks(allTasksInorder);
           setPatientTasksDisplay([taskArray[taskArray.length - 1]]);
         } else {
           console.log("No data available");
@@ -311,26 +317,6 @@ const Dashboard = () => {
     }
   };
 
-  // const handleOnChange = (e) => {
-  //   console.log(e.target.value);
-  //   const checkedId = e.target.value;
-  //   const updates = {};
-
-  //   if (e.target.checked) {
-  //     setSelectedIds([...selectedIds, checkedId]);
-
-  //     updates[checkedId + "/completed"] = true;
-
-  //     update(dbRef2, updates);
-  //   } else {
-  //     setSelectedIds(selectedIds.filter((id) => id !== checkedId));
-
-  //     updates[checkedId + "/completed"] = false;
-
-  //     update(dbRef2, updates);
-  //   }
-  // };
-
   const handleResultClick = (patient) => {
     setSearch(patient.patient);
     setSearched([]);
@@ -376,7 +362,6 @@ const Dashboard = () => {
     const updates = {};
     updates[e.target.id + "/completed"] = e.target.value;
     update(dbRef2, updates);
-
   };
 
   const allTasks = () => {
@@ -393,7 +378,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <nav className="App-nav">
+      <nav style={{position: "fixed"}} className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
         <div>
           <form className="App-info">
@@ -437,7 +422,11 @@ const Dashboard = () => {
       {patientToDisplay ? (
         <div className="dashboard">
           {patientToDisplay.map((patient) => (
-            <Sidebar key={patient.id} collapsed={menuCollapse}>
+            <Sidebar
+              key={patient.id}
+              collapsed={menuCollapse}
+              style={{ marginTop: "7%" }}
+            >
               <div className="logotext">
                 {/* small and big change using menucollapse state */}
                 <h3 style={{ color: "purple", fontSize: "23px" }}>
@@ -462,6 +451,12 @@ const Dashboard = () => {
                 <MenuItem icon={<FaPhone />}>
                   Phone:<b>{patient.Phone}</b>
                 </MenuItem>
+                <MenuItem icon={<FaHome />}>
+                  Home:<b>{patient.Address}</b>
+                </MenuItem>
+                <MenuItem icon={<FaRegAddressBook />}>
+                  Office:<b>{patient.Address1}</b>
+                </MenuItem>
                 <MenuItem icon={<FaPlusSquare />}>
                   Status:<b>{patient.status}</b>
                 </MenuItem>
@@ -469,9 +464,10 @@ const Dashboard = () => {
                   Goals: <b>{patient.goals}</b>
                 </MenuItem>
                 <br />
+                <br />
                 <MenuItem icon={<RiAlarmWarningLine />}>
-                  <b>Active conditions</b>
-                  <div style={{textAlign:"center"}} key={patient.id}>
+                  <b>Diagnosis</b>
+                  <div style={{ marginLeft: "10px" }} key={patient.id}>
                     <p key={1}>{patient.condition}</p>
                     <p key={2}> {patient.condition1}</p>
                     <p key={3}> {patient.condition2}</p>
@@ -479,10 +475,11 @@ const Dashboard = () => {
                     <p key={5}> {patient.condition4}</p>
                   </div>
                   <br />
+                  <br />
                 </MenuItem>
                 <MenuItem icon={<BiAlarmExclamation />}>
                   <b>Active Interventions</b>
-                  <div style={{textAlign:"center"}} key={patient.id}>
+                  <div style={{ marginLeft: "10px" }} key={patient.id}>
                     <p key={1}>{patient.intervention}</p>
                     <p key={2}>{patient.intervention1}</p>
                     <p key={3}>{patient.intervention2}</p>
@@ -504,20 +501,20 @@ const Dashboard = () => {
             </Sidebar>
           ))}
 
-          <div>
+          <div style={{ marginTop: "6%" }}>
             <h4>Interaction log: </h4>
 
             <table className="customers">
               <tr>
-                <th>date </th>
+                <th>Date </th>
                 <th>Message </th>
-              
-
               </tr>
               {intDisplay.map((int) => (
                 <tr>
                   <td>{int.dueDate}</td>
-                  <td>{int.interaction}  ({int.Hc})</td>
+                  <td>
+                    {int.interaction} ({int.Hc})
+                  </td>
                 </tr>
               ))}
 
@@ -534,7 +531,7 @@ const Dashboard = () => {
 
             <table className="customers">
               <tr>
-                <th>date </th>
+                <th>Date </th>
                 <th>Blood pressure</th>
               </tr>
 
@@ -570,8 +567,8 @@ const Dashboard = () => {
 
             <table className="customers">
               <tr>
-                <th>date </th>
-                <th>weight</th>
+                <th>Date </th>
+                <th>Weight</th>
                 <th>Height</th>
                 <th>BMI</th>
               </tr>
@@ -615,7 +612,7 @@ const Dashboard = () => {
 
             <table className="customers">
               <tr>
-                <th>date </th>
+                <th>Date </th>
                 <th>Fasting</th>
                 <th>Random</th>
                 <th>HBA1C</th>
@@ -655,7 +652,7 @@ const Dashboard = () => {
 
             <table className="customers">
               <tr>
-                <th>date </th>
+                <th>Date </th>
                 <th>Hospital</th>
                 <th>Diagnosis</th>
               </tr>
@@ -678,7 +675,7 @@ const Dashboard = () => {
 
             <table className="customers">
               <tr>
-                <th>date </th>
+                <th>Date </th>
                 <th>Prescription</th>
                 <th>Days</th>
               </tr>
@@ -724,7 +721,7 @@ const Dashboard = () => {
 
             <br />
           </div>
-          <div>
+          <div style={{ marginTop: "6%" }}>
             {patientToDisplay.map((patient) => (
               <h4 key={patient.id} style={{ textAlign: "center" }}>
                 Tasks to do for {patient.patient}
@@ -734,11 +731,11 @@ const Dashboard = () => {
               <tr>
                 <th>Task</th>
 
-                <th>due</th>
+                <th>Due</th>
 
                 <th>Assignee</th>
 
-                <th>status</th>
+                <th>Status</th>
               </tr>
               {patientTasksDisplay.map((patient) => (
                 <>
@@ -752,18 +749,17 @@ const Dashboard = () => {
                       <td>
                         <form>
                           <label htmlFor="status">
-                            <select onChange={handleStatus} id={patient.id} >
-                            <option className="App-info" value="progress">
-                                {patient.completed}
-                              </option>                        
+                            <select onChange={handleStatus} id={patient.id}>
                               <option className="App-info" value={progress[0]}>
-                                Not started
+                                {patient.completed
+                                  ? patient.completed
+                                  : "Not started"}
                               </option>
                               <option className="App-info" value={progress[1]}>
                                 Inprogress
                               </option>
                               <option className="App-info" value={progress[2]}>
-                                Incomplete
+                                Cancelled
                               </option>
                               <option className="App-info" value={progress[3]}>
                                 Complete

@@ -42,7 +42,7 @@ const Clinicals = () => {
             " on " +
             dateStrip(3, dueDate).slice(0, 17),
           dueDate: dateStrip(3, dueDate),
-          completed: "Progress",
+          completed: "Not started",
         });
 
         //Create a task for appointment followup
@@ -62,7 +62,7 @@ const Clinicals = () => {
             " appointment " +
             dateStrip(3, strToDate).slice(0, 17),
           dueDate: dateStrip(3, strToDate),
-          completed: false,
+          completed: "Not started",
         });
         navigate("/dashboard");
       });
