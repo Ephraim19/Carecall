@@ -418,6 +418,14 @@ const Dashboard = () => {
             " "
           )}
         </div>
+        
+        <div>
+          {patientToDisplay.map((patient) => (
+            <h3 style={{ color: "purple", fontSize: "23px" }}>
+              {patient.patient} ({age})-({patient.gender})
+            </h3>
+          ))}
+        </div>
 
         <button className="App-info" onClick={New}>
           New member
@@ -426,6 +434,7 @@ const Dashboard = () => {
         <button className="App-info" onClick={allTasks}>
           All tasks
         </button>
+
       </nav>
 
       {patientToDisplay ? (
@@ -516,7 +525,7 @@ const Dashboard = () => {
             <table className="customers">
               <tr>
                 <th>Date </th>
-                <th>Message </th>
+                <th>Conversation </th>
               </tr>
               {intDisplay.slice(0, visibleRows).map((int) => (
                 <tr>
