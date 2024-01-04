@@ -51,7 +51,7 @@ const Bmi = () => {
               " is over weight on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
-            completed: "Progress",
+            completed: "Not started",
           });
         }
         navigate("/dashboard");

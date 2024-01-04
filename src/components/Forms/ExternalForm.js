@@ -74,7 +74,7 @@ const ExternalForm = () => {
   const Push = (event) => {
     event.preventDefault();
     if (patient && Phone) {
-      //push data to firebase
+      //push data to firebase client
       setSave("saving...");
       push(ref(database, "clients"), {
         patient,
@@ -100,6 +100,19 @@ const ExternalForm = () => {
             prescription: medication,
             daysTaken: 0,
             dueDate: dateStrip(3, strToDate),
+          }).then(() => {
+            //Create a task
+            push(ref(database, "tasks"), {
+              patient: data.key,
+              task:
+                patient +
+                " has finished " +
+                medication +
+                " on " +
+                dateStrip(3, strToDate).slice(0, 17),
+              dueDate: dateStrip(3, strToDate),
+              completed: "Not started",
+            });
           });
         }
 
@@ -109,6 +122,32 @@ const ExternalForm = () => {
             patient: data.key,
             pressure: blood,
             dueDate: dateStrip(3, strToDate),
+          }).then(() => {
+            //Create a task if bp is high or low
+            if (blood.split("/")[0] > 120 || blood.split("/")[1] > 80) {
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " had a high blood pressure on " +
+                  dateStrip(3, strToDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            } else if (
+              blood.split("/")[1] < 60 ||
+              blood.split("/")[0] < 60
+            ) {
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " had a low blood pressure on " +
+                  dateStrip(3, strToDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
           });
         }
 
@@ -119,7 +158,32 @@ const ExternalForm = () => {
             weight,
             height,
             dueDate: dateStrip(3, strToDate),
-          });
+          }).then(()=>{
+                    //Create a task if user has abnormal BMI
+
+        if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+            push(ref(database, "tasks"), {
+              patient: data.key,
+              task:
+                patient +
+                " is under weight on " +
+                dateStrip(3, strToDate).slice(0, 17),
+              dueDate: dateStrip(3, new Date()),
+              completed: "Not started",
+            });
+          } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
+            push(ref(database, "tasks"), {
+              patient: data.key,
+              task:
+                patient +
+                " is over weight on " +
+                dateStrip(3, strToDate).slice(0, 17),
+              dueDate: dateStrip(3, new Date()),
+              completed: "Not started",
+            });
+          }
+
+          })
         }
 
         //Upload document if available
@@ -175,20 +239,19 @@ const ExternalForm = () => {
         updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
         update(dbRef, updates);
 
-        setBlood("")
-        setCondition("")
-        setCondition1("")
-        setCondition2("")
-        setCondition3("")
-        setCondition4("")
-        setFile("")
-        setGender("")
-        setHeight("")
-        setMedication(" ")
-        setPatient("")
-        setPhone("")
-        setWeight("")
-        set
+        setBlood("");
+        setCondition("");
+        setCondition1("");
+        setCondition2("");
+        setCondition3("");
+        setCondition4("");
+        setFile("");
+        setGender("");
+        setHeight("");
+        setMedication(" ");
+        setPatient("");
+        setPhone("");
+        setWeight("");
       });
     }
   };
@@ -307,7 +370,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Medication</b> <br />
+            <b>Medication (Include dosage, frequency and duration)</b> <br />
             <input
               type="text"
               value={medication}

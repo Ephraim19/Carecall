@@ -18,6 +18,7 @@ import Bmi from "./Forms/Bmi";
 import BloodSugar from "./Forms/BloodSugar";
 import AllTasks from "./Forms/AllTasks";
 import ExternalForm from "./Forms/ExternalForm";
+import HealthStatusForm from "./Forms/HealthStatusForm";
 
 const Router = () => {
   return (
@@ -41,7 +42,6 @@ const Router = () => {
         <Route path="/sugar" Component={BloodSugar} />
         <Route path="/alltasks" Component={AllTasks} />
         <Route path="/hospitals/member/form" Component={ExternalForm} />
-
 
       </Routes>
     </BrowserRouter>
