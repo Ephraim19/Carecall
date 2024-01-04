@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { database, storage } from "../Firebase";
-import { ref, push, get, update } from "firebase/database";
+import { ref, push, get, update, set } from "firebase/database";
 import carecall from "../carecall.png";
 import DatePicker from "react-datepicker";
 import {
@@ -217,7 +217,19 @@ const ExternalForm = () => {
                   dueDate: dateStrip(3, strToDate),
                 }).then((data) => {
                   setSave("saved");
-
+                  setBlood("");
+                  setCondition("");
+                  setCondition1("");
+                  setCondition2("");
+                  setCondition3("");
+                  setCondition4("");
+                  setFile("");
+                  setGender("");
+                  setHeight("");
+                  setMedication(" ");
+                  setPatient("");
+                  setPhone("");
+                  setWeight("");
                   console.log(data);
                 });
               });
@@ -239,6 +251,9 @@ const ExternalForm = () => {
         updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
         update(dbRef, updates);
 
+        if (!file){
+        setSave("Saved")
+
         setBlood("");
         setCondition("");
         setCondition1("");
@@ -252,6 +267,7 @@ const ExternalForm = () => {
         setPatient("");
         setPhone("");
         setWeight("");
+        }
       });
     }
   };

@@ -42,6 +42,7 @@ const Router = () => {
         <Route path="/sugar" Component={BloodSugar} />
         <Route path="/alltasks" Component={AllTasks} />
         <Route path="/hospitals/member/form" Component={ExternalForm} />
+        <Route path="/forms/status" Component={HealthStatusForm} />
 
       </Routes>
     </BrowserRouter>
