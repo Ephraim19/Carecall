@@ -4,6 +4,8 @@ import { auth } from "./Firebase";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import carecall from "./carecall.png";
+import lgin from "./lgin.png";
+
 import { ref, push, get } from "firebase/database";
 import { database } from "./Firebase";
 
