@@ -174,6 +174,21 @@ const ExternalForm = () => {
         const updates = {};
         updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
         update(dbRef, updates);
+
+        setBlood("")
+        setCondition("")
+        setCondition1("")
+        setCondition2("")
+        setCondition3("")
+        setCondition4("")
+        setFile("")
+        setGender("")
+        setHeight("")
+        setMedication(" ")
+        setPatient("")
+        setPhone("")
+        setWeight("")
+        set
       });
     }
   };
