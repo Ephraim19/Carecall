@@ -48,12 +48,12 @@ const HealthStatusForm = () => {
         <form className="App-info"></form>
       </nav>
       <div>
-        <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
-          Member Registaration Form
+        <h3 style={{ color: "purple", fontSize: "25px", marginLeft: "10%" }}>
+          Health Status
         </h3>
         <form className="newForm">
           <label>
-            <b>Enter the patient's full name:</b> <br />
+            <b>Full name:</b> <br />
             <input
               type="text"
               value={patient}

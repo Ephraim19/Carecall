@@ -21,6 +21,8 @@ const ExternalForm = () => {
   const [file, setFile] = useState([]);
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
+  const [duration, setDuration] = useState("");
+
 
   const [dueDates, setDueDates] = useState(new Date());
   const [hc, setHc] = useState();
@@ -87,7 +89,7 @@ const ExternalForm = () => {
         condition2,
         condition3,
         condition4,
-
+        
         gender,
         hc: hc.user,
       }).then((data) => {
@@ -98,10 +100,15 @@ const ExternalForm = () => {
           push(ref(database, "Prescription"), {
             patient: data.key,
             prescription: medication,
-            daysTaken: 0,
+            daysTaken: duration,
             dueDate: dateStrip(3, strToDate),
           }).then(() => {
             //Create a task
+
+            var strToDate1 = new Date();
+    
+            strToDate1.setDate(strToDate1.getDate() + parseInt(duration));
+
             push(ref(database, "tasks"), {
               patient: data.key,
               task:
@@ -109,8 +116,8 @@ const ExternalForm = () => {
                 " has finished " +
                 medication +
                 " on " +
-                dateStrip(3, strToDate).slice(0, 17),
-              dueDate: dateStrip(3, strToDate),
+                dateStrip(3, strToDate1).slice(0, 17),
+              dueDate: dateStrip(3, strToDate1),
               completed: "Not started",
             });
           });
@@ -391,6 +398,16 @@ const ExternalForm = () => {
               type="text"
               value={medication}
               onChange={(e) => setMedication(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            <b>Medication duration</b> <br />
+            <input
+              type="text"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
             />
           </label>
           <br />
