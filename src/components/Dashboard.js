@@ -7,12 +7,15 @@ import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import {
+  FaBabyCarriage,
+  FaBomb,
   FaCartPlus,
   FaHome,
   FaMale,
   FaPhone,
   FaPlusSquare,
   FaRegAddressBook,
+  FaSmile,
   FaUserGraduate,
 } from "react-icons/fa";
 import {
@@ -53,6 +56,8 @@ const Dashboard = () => {
   const [assignee, setAssignee] = useState("");
   const progress = ["Not started", "Inprogress", "cancelled", "complete"];
   const [visibleRows, setVisibleRows] = useState(5);
+  const [healthS, setHealthS] = useState([]);
+  const [healthSDisplay, setHealthSDisplay] = useState([]);
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -66,6 +71,7 @@ const Dashboard = () => {
   const dbRef7 = ref(database, "Files");
   const dbRef8 = ref(database, "Bmi");
   const dbRef9 = ref(database, "Bloodsugar");
+  const dbRef10 = ref(database, "HealthStatus");
 
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -305,6 +311,26 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    //read health status
+    get(dbRef10)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const statusArray = Object.entries(snapshot.val()).map(
+            ([id, data]) => ({
+              id,
+              ...data,
+            })
+          );
+
+          setHealthS(statusArray);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleSearch = (e) => {
@@ -335,6 +361,7 @@ const Dashboard = () => {
     let fileArray = file.filter((name) => name.patient === patient.id);
     let bmiArray = bmi.filter((name) => name.patient === patient.id);
     let sugarArray = sugar.filter((name) => name.patient === patient.id);
+    let healthArray = healthS.filter((name) => name.patient === patient.id);
 
     const dataArray = [obj];
 
@@ -349,6 +376,7 @@ const Dashboard = () => {
     setFileDispaly(fileArray);
     setBmiDispaly(bmiArray);
     setSugarDispaly(sugarArray);
+    setHealthSDisplay(healthArray);
 
     Cookies.set("patient", patient.id);
     Cookies.set("userName", patient.patient);
@@ -438,93 +466,114 @@ const Dashboard = () => {
 
       {patientToDisplay ? (
         <div className="dashboard">
-          {patientToDisplay.map((patient) => (
-            <Sidebar
-              key={patient.id}
-              collapsed={menuCollapse}
-              style={{ marginTop: "7%" }}
-            >
-              <div className="logotext">
-                {/* small and big change using menucollapse state */}
-                <h3 style={{ color: "purple", fontSize: "23px" }}>
-                  {menuCollapse ? (
-                    patient.patient.split(" ")[0]
-                  ) : (
-                    <button>
-                      <Link className="link" to="/forms/status">
-                        Health Status
-                      </Link>
-                    </button>
-                  )}
-                </h3>
-              </div>
-              <div className="closemenu" onClick={menuIconClick}>
-                {/* changing menu collapse icon on click */}
-                {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
-              </div>
-
-              <Menu iconShape="square" className="menuItems">
-              <MenuItem active={true} icon={<FaMale />}>
-                  Name: {patient.patient}
-                </MenuItem>
-                <MenuItem active={true} icon={<FiCalendar />}>
-                  DOB: {patient.age.slice(4, 17)}
-                </MenuItem>
-                <MenuItem icon={<FaMale />}>
-                  Gender:<b>{patient.gender}</b>
-                </MenuItem>
-                <MenuItem icon={<FaPhone />}>
-                  Phone:<b>{patient.Phone}</b>
-                </MenuItem>
-                <MenuItem icon={<FaHome />}>
-                  Home:<b>{patient.Address}</b>
-                </MenuItem>
-                <MenuItem icon={<FaRegAddressBook />}>
-                  Office:<b>{patient.Address1}</b>
-                </MenuItem>
-                <MenuItem icon={<FaPlusSquare />}>
-                  Status:<b>{patient.status}</b>
-                </MenuItem>
-                <MenuItem icon={<FaCartPlus />}>
-                  Goals: <b>{patient.goals}</b>
-                </MenuItem>
-                <br />
-                <br />
-                <MenuItem icon={<RiAlarmWarningLine />}>
-                  <b>Diagnosis</b>
-                  <div style={{ marginLeft: "10px" }} key={patient.id}>
-                    <p key={1}>{patient.condition}</p>
-                    <p key={2}> {patient.condition1}</p>
-                    <p key={3}> {patient.condition2}</p>
-                    <p key={4}> {patient.condition3}</p>
-                    <p key={5}> {patient.condition4}</p>
-                  </div>
-                  <br />
-                  <br />
-                </MenuItem>
-                <MenuItem icon={<BiAlarmExclamation />}>
-                  <b>Active Interventions</b>
-                  <div style={{ marginLeft: "10px" }} key={patient.id}>
-                    <p key={1}>{patient.intervention}</p>
-                    <p key={2}>{patient.intervention1}</p>
-                    <p key={3}>{patient.intervention2}</p>
-                    <p key={4}>{patient.intervention3}</p>
-                    <p key={5}>{patient.intervention4}</p>
-                  </div>
-                </MenuItem>
-                <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
-              </Menu>
-
-              <Menu iconShape="square">
-                <MenuItem icon={<FiLogOut />}>
-                  {" "}
-                  <button className="App-info" onClick={Logout}>
-                    <b>Logout</b>
+          <Sidebar collapsed={menuCollapse} style={{ marginTop: "7%" }}>
+            <div className="logotext">
+              {/* small and big change using menucollapse state */}
+              <h3 style={{ color: "purple", fontSize: "23px" }}>
+                {menuCollapse ? (
+                  " "
+                ) : (
+                  <button>
+                    <Link className="link" to="/forms/status">
+                      Health Status
+                    </Link>
                   </button>
-                </MenuItem>
-              </Menu>
-            </Sidebar>
-          ))}
+                )}
+              </h3>
+            </div>
+            <div className="closemenu" onClick={menuIconClick}>
+              {/* changing menu collapse icon on click */}
+              {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
+            </div>
+            {patientToDisplay.map((patient) => (
+              <div key={patient.key}>
+                <Menu iconShape="square" className="menuItems">
+                  <MenuItem active={true} icon={<FaMale />}>
+                    Name: {patient.patient}
+                  </MenuItem>
+                  <MenuItem active={true} icon={<FiCalendar />}>
+                    DOB: {patient.age.slice(4, 17)}
+                  </MenuItem>
+                  <MenuItem icon={<FaMale />}>
+                    Gender:<b>{patient.gender}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaPhone />}>
+                    Phone:<b>{patient.Phone}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaHome />}>
+                    Home:<b>{patient.Address}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaRegAddressBook />}>
+                    Office:<b>{patient.Address1}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaPlusSquare />}>
+                    Status:<b>{patient.status}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaCartPlus />}>
+                    Goals: <b>{patient.goals}</b>
+                  </MenuItem>
+                  <br />
+                  <br />
+                  <MenuItem icon={<RiAlarmWarningLine />}>
+                    <b>Diagnosis</b>
+                    <div style={{ marginLeft: "10px" }} key={patient.id}>
+                      <p key={1}>{patient.condition}</p>
+                      <p key={2}> {patient.condition1}</p>
+                      <p key={3}> {patient.condition2}</p>
+                      <p key={4}> {patient.condition3}</p>
+                      <p key={5}> {patient.condition4}</p>
+                    </div>
+                    <br />
+                    <br />
+                  </MenuItem>
+                  <MenuItem icon={<BiAlarmExclamation />}>
+                    <b>Active Interventions</b>
+                    <div style={{ marginLeft: "10px" }} key={patient.id}>
+                      <p key={1}>{patient.intervention}</p>
+                      <p key={2}>{patient.intervention1}</p>
+                      <p key={3}>{patient.intervention2}</p>
+                      <p key={4}>{patient.intervention3}</p>
+                      <p key={5}>{patient.intervention4}</p>
+                    </div>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ))}
+
+            {healthSDisplay.map((hs) => (
+              <div key={hs.key}>
+                <Menu iconShape="square" className="menuItems">
+                  <MenuItem icon={<FaBabyCarriage />}>
+                    Current:<b>{hs.cConditions[0].condition}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaBabyCarriage />}>
+                    Family:<b>{hs.FConditions[0].condition}</b>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaBabyCarriage />}>
+                    Drugs:<b>{hs.drugUse[0].condition}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaBomb />}>
+                    activities:<b>{hs.activity}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaSmile />}>
+                    Sleep:<b>{hs.sleep} Hrs</b>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ))}
+
+            <Menu iconShape="square">
+            <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+
+              <MenuItem icon={<FiLogOut />}>
+                {" "}
+                <button className="App-info" onClick={Logout}>
+                  <b>Logout</b>
+                </button>
+              </MenuItem>
+            </Menu>
+          </Sidebar>
 
           <div style={{ marginTop: "6%" }}>
             <h4>Interaction log: </h4>
