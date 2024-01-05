@@ -36,17 +36,66 @@ const BloodSugar = () => {
       }).then(() => {
         //Create a task if user has abnormal Blood sugar
 
-        if (parseFloat(HBA1C) > 5.7 || parseFloat(fasting) > 10 || parseFloat(fasting) < 4 || parseFloat(random) > 10 || parseFloat(random) < 4) {
+        if (HBA1C && parseFloat(HBA1C > 5.7) ) {
           push(ref(database, "tasks"), {
             patient: Cookies.get("patient"),
             task:
               Cookies.get("userName") +
-              " has low / high blood sugar on " +
+              " has high HBA1C on " +
               dateStrip(3, dueDate).slice(0, 17),
             dueDate: dateStrip(3, new Date()),
             completed: "Not started",
           });
         }
+
+        if (fasting && parseFloat(fasting) > 10) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " has high fasting blood sugar on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: "Not started",
+          });
+        }
+
+        if (fasting && parseFloat(fasting) < 4) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " has low fasting blood sugar on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: "Not started",
+          });
+        }
+
+        if (random && parseFloat(random) > 10) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " has high random blood sugar on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: "Not started",
+          });
+        }
+
+        if (random && parseFloat(random) < 10) {
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " has low random blood sugar on " +
+              dateStrip(3, dueDate).slice(0, 17),
+            dueDate: dateStrip(3, new Date()),
+            completed: "Not started",
+          });
+        }
+
         navigate("/dashboard");
       });
     }
