@@ -9,9 +9,9 @@ const HealthStatusForm = () => {
   const [improve, setImprove] = useState("");
   const [activity, setActivity] = useState("");
   const [sleep, setSleep] = useState(0);
-  const [cConditions, setCconditions] = useState();
-  const [FConditions, setFconditions] = useState();
-  const [drugUse, setDrugUse] = useState();
+  const [cConditions, setCconditions] = useState([]);
+  const [FConditions, setFconditions] = useState([]);
+  const [drugUse, setDrugUse] = useState([]);
 
   const navigate = useNavigate();
 
@@ -64,17 +64,19 @@ const HealthStatusForm = () => {
     );
     setCheckedState(updatedCheckedState);
 
+    var a = [];
     const AllConditions = updatedCheckedState.reduce(
       (all, currentState, index, AllTowns = []) => {
         if (currentState === true) {
-          console.log(AllTowns);
+          a.push(current[index]);
+          setCconditions(a);
+
           return AllTowns;
         }
         return all;
       },
       current
     );
-    setCconditions(AllConditions);
   };
 
   //Checkbox_1
@@ -84,17 +86,19 @@ const HealthStatusForm = () => {
     );
     setCheckedState1(updatedCheckedState);
 
+    var b = [];
     const AllCConditions = updatedCheckedState.reduce(
       (all, currentState, index, AllTowns1 = []) => {
         if (currentState === true) {
-          console.log(AllTowns1);
+          b.push(Fcurrent[index]);
+          setFconditions(b);
+
           return AllTowns1;
         }
         return all;
       },
       Fcurrent
     );
-    setFconditions(AllCConditions);
   };
 
   //Checkbox_2
@@ -104,17 +108,20 @@ const HealthStatusForm = () => {
     );
     setCheckedState2(updatedCheckedState);
 
+    var c = [];
     const AllDrugs = updatedCheckedState.reduce(
       (all, currentState, index, AllTowns2 = []) => {
         if (currentState === true) {
-          console.log(AllTowns2);
+          c.push(drugs[index]);
+          setDrugUse(c);
+
+          console.log(c);
           return AllTowns2;
         }
         return all;
       },
       drugs
     );
-    setDrugUse(AllDrugs);
   };
 
   const Push = (event) => {
@@ -127,8 +134,7 @@ const HealthStatusForm = () => {
       cConditions,
       FConditions,
       drugUse,
-      patient:Cookies.get("patient"),
-
+      patient: Cookies.get("patient"),
     }).then((data) => {
       navigate("/dashboard");
     });
