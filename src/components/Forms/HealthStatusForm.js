@@ -57,6 +57,16 @@ const HealthStatusForm = () => {
     new Array(drugs.length).fill(false)
   );
 
+  const dateStrip = (numOfHours, date) => {
+    const dateCopy = new Date(date.getTime());
+    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
+    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
+      1,
+      -5
+    );
+    return stringDate;
+  };
+
   //Checkbox
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -70,7 +80,6 @@ const HealthStatusForm = () => {
         if (currentState === true) {
           a.push(current[index]);
           setCconditions(a);
-
           return AllTowns;
         }
         return all;
@@ -92,7 +101,6 @@ const HealthStatusForm = () => {
         if (currentState === true) {
           b.push(Fcurrent[index]);
           setFconditions(b);
-
           return AllTowns1;
         }
         return all;
@@ -136,6 +144,34 @@ const HealthStatusForm = () => {
       drugUse,
       patient: Cookies.get("patient"),
     }).then((data) => {
+      //Add a task if member has conditions
+      if (cConditions.length > 0) {
+        const today = new Date();
+        push(ref(database, "tasks"), {
+          patient: Cookies.get("patient"),
+          task:
+            Cookies.get("userName") +
+            " has the following current conditions " +
+            JSON.stringify(cConditions),
+          dueDate: dateStrip(3, today),
+          completed: "Not started",
+        });
+
+        //Add a task if member has conditions
+        if (FConditions.length > 0) {
+          const today = new Date();
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task:
+              Cookies.get("userName") +
+              " has the following conditions in the family " +
+              JSON.stringify(FConditions),
+            dueDate: dateStrip(3, today),
+            completed: "Not started",
+          });
+        }
+      }
+
       navigate("/dashboard");
     });
   };
