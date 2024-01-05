@@ -1,45 +1,117 @@
-import React, { useEffect, useState } from "react";
-import { database } from "../Firebase";
-import { ref, push, get, update } from "firebase/database";
+import React, { useState } from "react";
 import carecall from "../carecall.png";
-import DatePicker from "react-datepicker";
 
 const HealthStatusForm = () => {
-  const [patient, setPatient] = useState("");
-  const [Phone, setPhone] = useState(0);
-  const [gender, setGender] = useState("");
-  const [condition, setCondition] = useState("");
-  const [condition1, setCondition1] = useState("");
-  const [condition2, setCondition2] = useState("");
-  const [condition3, setCondition3] = useState("");
-  const [condition4, setCondition4] = useState("");
-  const [file, setFile] = useState([]);
-  const [percent, setPercent] = useState(0);
-  const [Save, setSave] = useState("Save");
+  const [improve, setImprove] = useState("");
+  const [activity, setActivity] = useState("");
+  const [alcohol, setAlcohol] = useState("");
+  const [sleep, setSleep] = useState(0);
+  const [cConditions, setCconditions] = useState();
+  const [FConditions, setFconditions] = useState();
+  const [drugUse, setDrugUse] = useState();
 
-  const [dueDates, setDueDates] = useState(new Date());
-  const [hc, setHc] = useState();
 
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [medication, setMedication] = useState("");
-  const [blood, setBlood] = useState("");
+  const current = [
+    { condition: "High blood pressure" },
+    { condition: " Asthma" },
+    { condition: "High Cholesterol" },
+    { condition: "Overweight" },
+    { condition: " Lower back pain" },
+    { condition: "Diabetes" },
+    { condition: "Cancer" },
+    { condition: "Osteoarthritis" },
+    { condition: "other" },
+  ];
 
-  const dbRef = ref(database, "HealthCordinator");
+  const Fcurrent = [
+    { condition: "High blood pressure" },
+    { condition: "Asthma" },
+    { condition: "High Cholesterol" },
+    { condition: "Overweight" },
+    { condition: "Lower back pain" },
+    { condition: "Diabetes" },
+    { condition: "Cancer" },
+    { condition: "Osteoarthritis" },
+    { condition: "other" },
+  ];
 
-  const dateStrip = (numOfHours, date) => {
-    const dateCopy = new Date(date.getTime());
-    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
-    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
-      1,
-      -5
+  const drugs = [
+    { condition: "Alcohol" },
+    { condition: " Cigarretes" },
+    { condition: "Other" },
+    { condition: "None" },
+  ];
+  const [checkedState, setCheckedState] = useState(
+    new Array(current.length).fill(false)
+  );
+
+  const [checkedState1, setCheckedState1] = useState(
+    new Array(Fcurrent.length).fill(false)
+  );
+
+  const [checkedState2, setCheckedState2] = useState(
+    new Array(drugs.length).fill(false)
+  );
+
+  //Checkbox
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
     );
-    return stringDate;
+    setCheckedState(updatedCheckedState);
+
+    const AllConditions = updatedCheckedState.reduce(
+      (all, currentState, index, AllTowns = []) => {
+        if (currentState === true) {
+          console.log(AllTowns);
+          return AllTowns;
+        }
+        return all;
+      },
+      current
+    );
+    setCconditions(AllConditions);
   };
 
-  const Push = (e) =>{
-    e.preventDefault();
-  }
+  //Checkbox_1
+  const handleOnChange1 = (position) => {
+    const updatedCheckedState = checkedState1.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState1(updatedCheckedState);
+
+    const AllCConditions = updatedCheckedState.reduce(
+      (all, currentState, index, AllTowns1 = []) => {
+        if (currentState === true) {
+          console.log(AllTowns1);
+          return AllTowns1;
+        }
+        return all;
+      },
+      Fcurrent
+    );
+    setFconditions(AllCConditions);
+  };
+
+    //Checkbox_1
+    const handleOnChange2 = (position) => {
+      const updatedCheckedState = checkedState2.map((item, index) =>
+        index === position ? !item : item
+      );
+      setCheckedState2(updatedCheckedState);
+  
+      const AllDrugs = updatedCheckedState.reduce(
+        (all, currentState, index, AllTowns2 = []) => {
+          if (currentState === true) {
+            console.log(AllTowns2);
+            return AllTowns2;
+          }
+          return all;
+        },
+      drugs
+      );
+      setDrugUse(AllDrugs);
+    };
 
   return (
     <div>
@@ -48,133 +120,123 @@ const HealthStatusForm = () => {
         <form className="App-info"></form>
       </nav>
       <div>
-        <h3 style={{ color: "purple", fontSize: "25px", marginLeft: "10%" }}>
-          Health Status
+        <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
+          Member Registaration Form
         </h3>
-        <form className="newForm">
-          <label>
-            <b>Full name:</b> <br />
-            <input
-              type="text"
-              value={patient}
-              onChange={(e) => setPatient(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <b>Date of birth</b>
-          <br />
-          <DatePicker
-            selected={dueDates}
-            onChange={(date) => setDueDates(date)}
-          />
-          <br />
-          <br />
-          <b>Gender</b> <br />
-          
-          <br />
-          <br />
-          <label>
-            <b>Phone number:</b> <br />
-            <input
-              type="number"
-              value={Phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <b>Diagnosis</b> <br />
-          <br />
-          <label>
-            Diagnosis 1: <br />
-            <input
-              type="text"
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Diagnosis 2: <br />
-            <input
-              type="text"
-              value={condition1}
-              onChange={(e) => setCondition1(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Diagnosis 3: <br />
-            <input
-              type="text"
-              value={condition2}
-              onChange={(e) => setCondition2(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Diagnosis 4: <br />
-            <input
-              type="text"
-              value={condition3}
-              onChange={(e) => setCondition3(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Diagnosis 5: <br />
-            <input
-              type="text"
-              value={condition4}
-              onChange={(e) => setCondition4(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Medication (Include dosage, frequency and duration)</b> <br />
-            <input
-              type="text"
-              value={medication}
-              onChange={(e) => setMedication(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Blood pressure:</b> <br />
-            <input
-              type="text"
-              value={blood}
-              onChange={(e) => setBlood(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Height</b> <br />
-            <input
-              type="text"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Weight</b> <br />
-            <input
-              type="text"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <button onClick={Push}>{Save}</button>
-        </form>
       </div>
+      <form className="newForm">
+        <b>What aspect of your health would you want to work on</b> <br />
+        <ul className="toppings-list">
+          {current.map(({ condition }, index) => {
+            return (
+              <li key={index}>
+                <div className="toppings-list-item">
+                  <label htmlFor={`custom-checkbox-${index}`}>
+                    {condition}
+                  </label>
+
+                  <div className="left-section">
+                    <input
+                      type="checkbox"
+                      id={`custom-checkbox-${index}`}
+                      name={condition}
+                      value={condition}
+                      checked={checkedState[index]}
+                      onChange={() => handleOnChange(index)}
+                    />
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        <br />
+        <br />
+        <b>Family history</b> <br />
+        <ul className="toppings-list">
+          {Fcurrent.map(({ condition }, index) => {
+            return (
+              <li key={index}>
+                <div className="toppings-list-item">
+                  <label htmlFor={`custom-checkbox-${index}`}>
+                    {condition}
+                  </label>
+
+                  <div className="left-section">
+                    <input
+                      type="checkbox"
+                      id={`custom-checkbox-${index}`}
+                      name={condition}
+                      value={condition}
+                      checked={checkedState1[index]}
+                      onChange={() => handleOnChange1(index)}
+                    />
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        <br />
+        <br />
+        <label>
+          <b>What aspect of your health would you want to work on</b> <br />
+          <input
+            type="text"
+            value={improve}
+            onChange={(e) => setImprove(e.target.value)}
+          />
+        </label>
+        <br />
+        <br />
+        <label>
+          <b>Physical activity levels</b> <br />
+          <input
+            type="text"
+            value={activity}
+            onChange={(e) => setActivity(e.target.value)}
+          />
+        </label>
+        <br />
+        <br />
+        <b>Do you use any of the following?</b> <br />
+        <ul className="toppings-list">
+          {drugs.map(({ condition }, index) => {
+            return (
+              <li key={index}>
+                <div className="toppings-list-item">
+                  <label htmlFor={`custom-checkbox-${index}`}>
+                    {condition}
+                  </label>
+
+                  <div className="left-section">
+                    <input
+                      type="checkbox"
+                      id={`custom-checkbox-${index}`}
+                      name={condition}
+                      value={condition}
+                      checked={checkedState2[index]}
+                      onChange={() => handleOnChange2(index)}
+                    />
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        <br />
+        <br />
+        <label>
+          <b>Hours of sleep per night</b> <br />
+          <input
+            type="number"
+            value={sleep}
+            onChange={(e) => setSleep(e.target.value)}
+          />
+        </label>
+        <br />
+        <br />
+      </form>
     </div>
   );
 };

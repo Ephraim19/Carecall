@@ -22,6 +22,7 @@ const ExternalForm = () => {
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
+  const [hospital, setHospital] = useState("");
 
 
   const [dueDates, setDueDates] = useState(new Date());
@@ -89,7 +90,7 @@ const ExternalForm = () => {
         condition2,
         condition3,
         condition4,
-        
+        hospital,
         gender,
         hc: hc.user,
       }).then((data) => {
@@ -273,6 +274,7 @@ const ExternalForm = () => {
         setMedication(" ");
         setPatient("");
         setPhone("");
+        setHospital("");
         setWeight("");
         }
       });
@@ -300,6 +302,17 @@ const ExternalForm = () => {
           Member Registaration Form
         </h3>
         <form className="newForm">
+        <label>
+            <b>Hospital name</b> <br />
+            <input
+              type="text"
+              value={hospital}
+              onChange={(e) => setHospital(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
           <label>
             <b>Enter the patient's full name:</b> <br />
             <input
@@ -423,7 +436,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Height</b> <br />
+            <b>Height(meters)</b> <br />
             <input
               type="text"
               value={height}
@@ -433,7 +446,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Weight</b> <br />
+            <b>Weight(kgs)</b> <br />
             <input
               type="text"
               value={weight}
