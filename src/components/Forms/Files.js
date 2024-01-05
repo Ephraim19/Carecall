@@ -21,6 +21,7 @@ const Files = () => {
 
   // Handle file upload event and update state
   function handleChange(event) {
+    console.log(event.target.files[0])
     setFile(event.target.files[0]);
   }
 

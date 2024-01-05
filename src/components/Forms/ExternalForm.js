@@ -10,6 +10,7 @@ import {
 } from "firebase/storage";
 
 const ExternalForm = () => {
+
   const [patient, setPatient] = useState("");
   const [Phone, setPhone] = useState(0);
   const [gender, setGender] = useState("");
@@ -19,6 +20,9 @@ const ExternalForm = () => {
   const [condition3, setCondition3] = useState("");
   const [condition4, setCondition4] = useState("");
   const [file, setFile] = useState([]);
+  const [file1, setFile1] = useState([]);
+  const [file2, setFile2] = useState([]);
+
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
@@ -202,7 +206,14 @@ const ExternalForm = () => {
           console.log("success");
           // progress can be paused and resumed. It also exposes progress updates.
           // Receives the storage reference and the file to upload.
+          var allUploads = [];
           const uploadTask = uploadBytesResumable(storageRef, file);
+          const uploadTask1 = uploadBytesResumable(storageRef, file1);
+          const uploadTask2 = uploadBytesResumable(storageRef, file2);
+
+          allUploads.push(uploadTask);
+          allUploads.push(uploadTask1);
+          allUploads.push(uploadTask2);
 
           uploadTask.on(
             "state_changed",
@@ -289,6 +300,14 @@ const ExternalForm = () => {
   // Handle file upload event and update state
   function handleChange(event) {
     setFile(event.target.files[0]);
+  }
+
+  function handleChange2(event) {
+    setFile1(event.target.files[0]);
+  }
+
+  function handleChange3(event) {
+    setFile2(event.target.files[0]);
   }
 
   return (
@@ -455,10 +474,19 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-          <b>Lab results (file)</b>
+          <b>Lab results1 (file)</b>
           <br />
           <input type="file" onChange={handleChange} accept="media_type" />{" "}
           <br />
+          <b>Lab results2 (file)</b>
+          <br />
+          <input type="file" onChange={handleChange2} accept="media_type" />{" "}
+          <br />
+          <b>Lab results3 (file)</b>
+          <br />
+          <input type="file" onChange={handleChange3} accept="media_type" />{" "}
+          <br />
+
           <p>Progress: {percent}</p>
           <br />
           <button onClick={Push}>{Save}</button>

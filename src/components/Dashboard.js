@@ -103,6 +103,10 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    if (!Cookies.get("name")) {
+      navigate("/");
+    }
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
@@ -516,6 +520,9 @@ const Dashboard = () => {
                   <MenuItem icon={<FaCartPlus />}>
                     Goals: <b>{patient.goals}</b>
                   </MenuItem>
+                  <MenuItem icon={<FaCartPlus />}>
+                    Hospital:{patient.hospital} <b>{patient.goals}</b>
+                  </MenuItem>
                   <br />
                   <br />
                   <MenuItem icon={<RiAlarmWarningLine />}>
@@ -571,7 +578,7 @@ const Dashboard = () => {
             ))}
 
             <Menu iconShape="square">
-            <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+              <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
 
               <MenuItem icon={<FiLogOut />}>
                 {" "}
@@ -738,25 +745,41 @@ const Dashboard = () => {
               </tr>
               {sugarDisplay.slice(0, visibleRows).map((sug) => (
                 <tr key={sug.id}>
-                  {parseFloat(sug.fasting) > 10 ||
-                  parseFloat(sug.fasting) < 4 ||
-                  parseFloat(sug.random) < 4 ||
-                  parseFloat(sug.random) > 10 ||
-                  parseFloat(sug.HBA1C) > 5.7 ? (
-                    <>
-                      <td>{sug.dueDate.slice(0, 17)}</td>
-                      <td style={{ color: "red" }}>{sug.fasting}</td>
-                      <td style={{ color: "red" }}>{sug.random}</td>
-                      <td style={{ color: "red" }}>{sug.HBA1C}</td>
-                    </>
-                  ) : (
-                    <>
-                      <td>{sug.dueDate.slice(0, 17)}</td>
+                  {/* {parseFloat(sug.random) < 10 &&
+                    parseFloat(sug.random) > 4 &&
+                    parseFloat(sug.HBA1C) > 5.7 &&
+                    parseFloat(sug.fasting) < 10 &&
+                    parseFloat(sug.fasting) >
+                      4( */}
+                  <>
+                    <td>{sug.dueDate.slice(0, 17)}</td>
+
+                    {parseFloat(sug.fasting) < 10 &&
+                    parseFloat(sug.fasting) > 4 ? (
                       <td>{sug.fasting}</td>
+                    ) : (
+                      <td style={{ color: "red" }}>
+                        <td>{sug.fasting}</td>
+                      </td>
+                    )}
+
+                    {parseFloat(sug.random) < 10 &&
+                    parseFloat(sug.random) > 4 ? (
                       <td>{sug.random}</td>
+                    ) : (
+                      <td style={{ color: "red" }}>
+                        <td>{sug.random}</td>
+                      </td>
+                    )}
+
+                    {parseFloat(sug.HBA1C) < 5.7 ? (
                       <td>{sug.HBA1C}</td>
-                    </>
-                  )}
+                    ) : (
+                      <td style={{ color: "red" }}>
+                        <td>{sug.HBA1C}</td>
+                      </td>
+                    )}
+                  </>
                 </tr>
               ))}
             </table>
