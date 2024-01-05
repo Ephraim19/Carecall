@@ -10,7 +10,6 @@ import {
 } from "firebase/storage";
 
 const ExternalForm = () => {
-
   const [patient, setPatient] = useState("");
   const [Phone, setPhone] = useState(0);
   const [gender, setGender] = useState("");
@@ -27,7 +26,6 @@ const ExternalForm = () => {
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
   const [hospital, setHospital] = useState("");
-
 
   const [dueDates, setDueDates] = useState(new Date());
   const [hc, setHc] = useState();
@@ -111,7 +109,7 @@ const ExternalForm = () => {
             //Create a task
 
             var strToDate1 = new Date();
-    
+
             strToDate1.setDate(strToDate1.getDate() + parseInt(duration));
 
             push(ref(database, "tasks"), {
@@ -146,10 +144,7 @@ const ExternalForm = () => {
                 dueDate: dateStrip(3, new Date()),
                 completed: "Not started",
               });
-            } else if (
-              blood.split("/")[1] < 60 ||
-              blood.split("/")[0] < 60
-            ) {
+            } else if (blood.split("/")[1] < 60 || blood.split("/")[0] < 60) {
               push(ref(database, "tasks"), {
                 patient: data.key,
                 task:
@@ -170,32 +165,31 @@ const ExternalForm = () => {
             weight,
             height,
             dueDate: dateStrip(3, strToDate),
-          }).then(()=>{
-                    //Create a task if user has abnormal BMI
+          }).then(() => {
+            //Create a task if user has abnormal BMI
 
-        if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
-            push(ref(database, "tasks"), {
-              patient: data.key,
-              task:
-                patient +
-                " is under weight on " +
-                dateStrip(3, strToDate).slice(0, 17),
-              dueDate: dateStrip(3, new Date()),
-              completed: "Not started",
-            });
-          } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
-            push(ref(database, "tasks"), {
-              patient: data.key,
-              task:
-                patient +
-                " is over weight on " +
-                dateStrip(3, strToDate).slice(0, 17),
-              dueDate: dateStrip(3, new Date()),
-              completed: "Not started",
-            });
-          }
-
-          })
+            if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " is under weight on " +
+                  dateStrip(3, strToDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " is over weight on " +
+                  dateStrip(3, strToDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+          });
         }
 
         //Upload document if available
@@ -206,14 +200,9 @@ const ExternalForm = () => {
           console.log("success");
           // progress can be paused and resumed. It also exposes progress updates.
           // Receives the storage reference and the file to upload.
-          var allUploads = [];
           const uploadTask = uploadBytesResumable(storageRef, file);
           const uploadTask1 = uploadBytesResumable(storageRef, file1);
           const uploadTask2 = uploadBytesResumable(storageRef, file2);
-
-          allUploads.push(uploadTask);
-          allUploads.push(uploadTask1);
-          allUploads.push(uploadTask2);
 
           uploadTask.on(
             "state_changed",
@@ -249,6 +238,52 @@ const ExternalForm = () => {
                   setPatient("");
                   setPhone("");
                   setWeight("");
+                  setHospital("");
+                });
+              });
+            }
+          );
+
+          uploadTask1.on(
+            "state_changed",
+            (snapshot) => {
+              const percent = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+            },
+            (err) => console.log(err),
+            () => {
+              // download url1
+              getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
+                push(ref(database, "Files"), {
+                  patient: data.key,
+                  description: "Lab results1",
+                  url,
+                  dueDate: dateStrip(3, strToDate),
+                }).then((data) => {
+                  console.log(data);
+                });
+              });
+            }
+          );
+
+          uploadTask2.on(
+            "state_changed",
+            (snapshot) => {
+              const percent = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+            },
+            (err) => console.log(err),
+            () => {
+              // download url1
+              getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
+                push(ref(database, "Files"), {
+                  patient: data.key,
+                  description: "Lab results1",
+                  url,
+                  dueDate: dateStrip(3, strToDate),
+                }).then((data) => {
                   console.log(data);
                 });
               });
@@ -270,23 +305,23 @@ const ExternalForm = () => {
         updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
         update(dbRef, updates);
 
-        if (!file){
-        setSave("Saved")
+        if (!file) {
+          setSave("Saved");
 
-        setBlood("");
-        setCondition("");
-        setCondition1("");
-        setCondition2("");
-        setCondition3("");
-        setCondition4("");
-        setFile("");
-        setGender("");
-        setHeight("");
-        setMedication(" ");
-        setPatient("");
-        setPhone("");
-        setHospital("");
-        setWeight("");
+          setBlood("");
+          setCondition("");
+          setCondition1("");
+          setCondition2("");
+          setCondition3("");
+          setCondition4("");
+          setFile("");
+          setGender("");
+          setHeight("");
+          setMedication(" ");
+          setPatient("");
+          setPhone("");
+          setHospital("");
+          setWeight("");
         }
       });
     }
@@ -321,7 +356,7 @@ const ExternalForm = () => {
           Member Registaration Form
         </h3>
         <form className="newForm">
-        <label>
+          <label>
             <b>Hospital name</b> <br />
             <input
               type="text"
@@ -331,7 +366,6 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-
           <label>
             <b>Enter the patient's full name:</b> <br />
             <input
@@ -480,13 +514,20 @@ const ExternalForm = () => {
           <br />
           <b>Lab results2 (file)</b>
           <br />
-          <input type="file" onChange={handleChange2} accept="media_type" />{" "}
+          <input
+            type="file"
+            onChange={handleChange2}
+            accept="media_type"
+          />{" "}
           <br />
           <b>Lab results3 (file)</b>
           <br />
-          <input type="file" onChange={handleChange3} accept="media_type" />{" "}
+          <input
+            type="file"
+            onChange={handleChange3}
+            accept="media_type"
+          />{" "}
           <br />
-
           <p>Progress: {percent}</p>
           <br />
           <button onClick={Push}>{Save}</button>

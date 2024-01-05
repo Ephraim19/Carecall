@@ -152,7 +152,7 @@ const HealthStatusForm = () => {
         </h3>
       </div>
       <form className="newForm">
-        <b>What aspect of your health would you want to work on</b> <br />
+        <b>Current conditions</b> <br />
         <br />
         <ul className="toppings-list">
           {current.map(({ condition }, index) => {
