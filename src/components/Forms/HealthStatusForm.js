@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import carecall from "../carecall.png";
+import { ref, push } from "firebase/database";
+import { database } from "../Firebase";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const HealthStatusForm = () => {
   const [improve, setImprove] = useState("");
   const [activity, setActivity] = useState("");
-  const [alcohol, setAlcohol] = useState("");
   const [sleep, setSleep] = useState(0);
   const [cConditions, setCconditions] = useState();
   const [FConditions, setFconditions] = useState();
   const [drugUse, setDrugUse] = useState();
 
+  const navigate = useNavigate();
 
   const current = [
     { condition: "High blood pressure" },
@@ -93,25 +97,42 @@ const HealthStatusForm = () => {
     setFconditions(AllCConditions);
   };
 
-    //Checkbox_1
-    const handleOnChange2 = (position) => {
-      const updatedCheckedState = checkedState2.map((item, index) =>
-        index === position ? !item : item
-      );
-      setCheckedState2(updatedCheckedState);
-  
-      const AllDrugs = updatedCheckedState.reduce(
-        (all, currentState, index, AllTowns2 = []) => {
-          if (currentState === true) {
-            console.log(AllTowns2);
-            return AllTowns2;
-          }
-          return all;
-        },
+  //Checkbox_2
+  const handleOnChange2 = (position) => {
+    const updatedCheckedState = checkedState2.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState2(updatedCheckedState);
+
+    const AllDrugs = updatedCheckedState.reduce(
+      (all, currentState, index, AllTowns2 = []) => {
+        if (currentState === true) {
+          console.log(AllTowns2);
+          return AllTowns2;
+        }
+        return all;
+      },
       drugs
-      );
-      setDrugUse(AllDrugs);
-    };
+    );
+    setDrugUse(AllDrugs);
+  };
+
+  const Push = (event) => {
+    event.preventDefault();
+
+    push(ref(database, "HealthStatus"), {
+      improve,
+      activity,
+      sleep,
+      cConditions,
+      FConditions,
+      drugUse,
+      patient:Cookies.get("patient"),
+
+    }).then((data) => {
+      navigate("/dashboard");
+    });
+  };
 
   return (
     <div>
@@ -121,11 +142,12 @@ const HealthStatusForm = () => {
       </nav>
       <div>
         <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
-          Member Registaration Form
+          Member Health Status
         </h3>
       </div>
       <form className="newForm">
         <b>What aspect of your health would you want to work on</b> <br />
+        <br />
         <ul className="toppings-list">
           {current.map(({ condition }, index) => {
             return (
@@ -152,7 +174,7 @@ const HealthStatusForm = () => {
         </ul>
         <br />
         <br />
-        <b>Family history</b> <br />
+        <b>Family history</b> <br /> <br />
         <ul className="toppings-list">
           {Fcurrent.map(({ condition }, index) => {
             return (
@@ -236,6 +258,7 @@ const HealthStatusForm = () => {
         </label>
         <br />
         <br />
+        <button onClick={Push}>Submit</button>
       </form>
     </div>
   );

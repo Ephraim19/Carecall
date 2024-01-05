@@ -418,7 +418,7 @@ const Dashboard = () => {
             " "
           )}
         </div>
-        
+
         <div>
           {patientToDisplay.map((patient) => (
             <h3 style={{ color: "purple", fontSize: "23px" }}>
@@ -434,7 +434,6 @@ const Dashboard = () => {
         <button className="App-info" onClick={allTasks}>
           All tasks
         </button>
-
       </nav>
 
       {patientToDisplay ? (
@@ -448,10 +447,15 @@ const Dashboard = () => {
               <div className="logotext">
                 {/* small and big change using menucollapse state */}
                 <h3 style={{ color: "purple", fontSize: "23px" }}>
-                  {menuCollapse
-                    ? patient.patient.split(" ")[0]
-                    : patient.patient}{" "}
-                  ({age})-({patient.gender})
+                  {menuCollapse ? (
+                    patient.patient.split(" ")[0]
+                  ) : (
+                    <button>
+                      <Link className="link" to="/forms/status">
+                        Health Status
+                      </Link>
+                    </button>
+                  )}
                 </h3>
               </div>
               <div className="closemenu" onClick={menuIconClick}>
@@ -460,6 +464,9 @@ const Dashboard = () => {
               </div>
 
               <Menu iconShape="square" className="menuItems">
+              <MenuItem active={true} icon={<FaMale />}>
+                  Name: {patient.patient}
+                </MenuItem>
                 <MenuItem active={true} icon={<FiCalendar />}>
                   DOB: {patient.age.slice(4, 17)}
                 </MenuItem>

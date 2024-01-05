@@ -188,7 +188,7 @@ h4 {
 
 .toppings-list,
 .total {
-  width: 30%;
+  width: 50%;
   margin: 0 auto;
 }
 
@@ -209,10 +209,6 @@ h4 {
 .toppings-list-item label {
   vertical-align: text-bottom;
   margin-left: 0.2rem;
-}
-
-.total {
-  margin-top: 1rem;
 }
 
 @media screen and (max-width: 600px) {
