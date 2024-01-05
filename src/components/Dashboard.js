@@ -11,6 +11,7 @@ import {
   FaBomb,
   FaCartPlus,
   FaHome,
+  FaImages,
   FaMale,
   FaPhone,
   FaPlusSquare,
@@ -23,6 +24,9 @@ import {
   FiArrowLeftCircle,
   FiArrowRightCircle,
   FiCalendar,
+  FiAlertCircle,
+  FiAlertTriangle,
+  FiActivity,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { RiAlarmWarningLine } from "react-icons/ri";
@@ -543,15 +547,18 @@ const Dashboard = () => {
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
                 <Menu iconShape="square" className="menuItems">
-                  <MenuItem icon={<FaBabyCarriage />}>
+                  <MenuItem icon={<FiActivity />}>
                     Current:<b>{hs.cConditions[0].condition}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaBabyCarriage />}>
+                  <MenuItem icon={<FaImages />}>
                     Family:<b>{hs.FConditions[0].condition}</b>
                   </MenuItem>
 
-                  <MenuItem icon={<FaBabyCarriage />}>
+                  <MenuItem icon={<FiAlertCircle />}>
                     Drugs:<b>{hs.drugUse[0].condition}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaSmile />}>
+                    Improve:<b>{hs.improve}</b>
                   </MenuItem>
                   <MenuItem icon={<FaBomb />}>
                     activities:<b>{hs.activity}</b>
