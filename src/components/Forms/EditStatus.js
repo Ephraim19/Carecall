@@ -78,6 +78,7 @@ const EditStatus = () => {
         console.log(error);
       });
   }, []);
+  
   const Push = (e) => {
     e.preventDefault();
     //Update user data

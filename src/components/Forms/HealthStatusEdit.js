@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import carecall from "../carecall.png";
-import {get, ref, push } from "firebase/database";
+import { ref, get, update } from "firebase/database";
+
 import { database } from "../Firebase";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -12,13 +13,14 @@ const HealthStatusEdit = () => {
   const [cConditions, setCconditions] = useState([]);
   const [FConditions, setFconditions] = useState([]);
   const [drugUse, setDrugUse] = useState([]);
-  const [healthSDisplay, setHealthSDisplay] = useState([]);
+  const [healthSDisplayId, setHealthSDisplayId] = useState("");
 
-  const dbRef10 = ref(database, "HealthStatus");
+  const dbRef = ref(database, "HealthStatus");
+  
   const navigate = useNavigate();
 
   useEffect(() => {
-    get(dbRef10).then((snapshot) => {
+    get(dbRef).then((snapshot) => {
       if (snapshot.exists()) {
         const dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
           id,
@@ -26,20 +28,20 @@ const HealthStatusEdit = () => {
         }));
 
         const obj = dataArray.find(
-            (name) => name.patient === Cookies.get("patient")
-          );
+          (name) => name.patient === Cookies.get("patient")
+        );
 
-          setActivity(obj.activity);
-          setImprove(obj.improve);
-          setSleep(obj.sleep);
+        setActivity(obj.activity);
+        setImprove(obj.improve);
+        setSleep(obj.sleep);
+        setHealthSDisplayId(obj.id);
 
-          setFconditions(obj.FConditions);
-          setCconditions(obj.cConditions);
-          setDrugUse(obj.drugUse);
-          
+         setFconditions(obj.FConditions);
+         setCconditions(obj.cConditions);
+         setDrugUse(obj.drugUse);
       }
     });
-  });
+  }, []);
 
   const current = [
     { condition: "High blood pressure" },
@@ -158,49 +160,17 @@ const HealthStatusEdit = () => {
     );
   };
 
-  const Push = (event) => {
-    event.preventDefault();
+  const Push = (e) => {
+    e.preventDefault();
+    //Update user statys
+    const updates = {};
+    updates[healthSDisplayId + "/activity"] = activity;
+    updates[healthSDisplayId + "/improve"] = improve;
+    updates[healthSDisplayId + "/sleep"] = sleep;
 
-    push(ref(database, "HealthStatus"), {
-      improve,
-      activity,
-      sleep,
-      cConditions,
-      FConditions,
-      drugUse,
-      patient: Cookies.get("patient"),
-    }).then((data) => {
-      //Add a task if member has conditions
-      if (cConditions.length > 0) {
-        const today = new Date();
-        push(ref(database, "tasks"), {
-          patient: Cookies.get("patient"),
-          task:
-            Cookies.get("userName") +
-            " has the following current conditions " +
-            JSON.stringify(cConditions),
-          dueDate: dateStrip(3, today),
-          completed: "Not started",
-        });
 
-        //Add a task if member has conditions
-        if (FConditions.length > 0) {
-          const today = new Date();
-          push(ref(database, "tasks"), {
-            patient: Cookies.get("patient"),
-            task:
-              Cookies.get("userName") +
-              " has the following conditions in the family " +
-              { ...FConditions },
-
-            dueDate: dateStrip(3, today),
-            completed: "Not started",
-          });
-        }
-      }
-
-      navigate("/dashboard");
-    });
+    update(dbRef, updates);
+    navigate("/dashboard");
   };
 
   return (

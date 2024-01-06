@@ -152,7 +152,7 @@ const HealthStatusForm = () => {
           task:
             Cookies.get("userName") +
             " has the following current conditions " +
-            JSON.stringify(cConditions),
+            cConditions[0],
           dueDate: dateStrip(3, today),
           completed: "Not started",
         });

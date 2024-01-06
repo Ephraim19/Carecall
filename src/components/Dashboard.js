@@ -537,7 +537,7 @@ const Dashboard = () => {
                     Goals: <b>{patient.goals}</b>
                   </MenuItem>
                   <MenuItem icon={<FaCartPlus />}>
-                    Hospital:{patient.hospital} <b>{patient.goals}</b>
+                    Hospital: <b>{patient.hospital}</b>
                   </MenuItem>
                   <br />
                   <br />
@@ -602,7 +602,6 @@ const Dashboard = () => {
             ))}
 
             <Menu iconShape="square">
-              <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
               {healthSDisplay.length > 0 && (
                 <MenuItem icon={<FiEdit />}>
                   <button className="App-info" onClick={EditStatus}>
@@ -610,6 +609,9 @@ const Dashboard = () => {
                   </button>
                 </MenuItem>
               )}
+
+              <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+
               <MenuItem icon={<FiLogOut />}>
                 <button className="App-info" onClick={Logout}>
                   <b>Logout</b>
