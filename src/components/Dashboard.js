@@ -426,7 +426,7 @@ const Dashboard = () => {
   };
 
   const EditStatus = () => {
-    navigate("/edit");
+    navigate("/edit/status");
   };
 
   const addMoreRows = () => {
@@ -599,11 +599,13 @@ const Dashboard = () => {
 
             <Menu iconShape="square">
               <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
-              <MenuItem icon={<FiEdit />}>
-                <button className="App-info" onClick={EditStatus}>
-                  <b>Edit</b>
-                </button>
-              </MenuItem>
+              {healthSDisplay.length > 0 && (
+                <MenuItem icon={<FiEdit />}>
+                  <button className="App-info" onClick={EditStatus}>
+                    <b>Edit</b>
+                  </button>
+                </MenuItem>
+              )}
               <MenuItem icon={<FiLogOut />}>
                 <button className="App-info" onClick={Logout}>
                   <b>Logout</b>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import carecall from "../carecall.png";
-import { ref, push } from "firebase/database";
+import {get, ref, push } from "firebase/database";
 import { database } from "../Firebase";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +12,34 @@ const HealthStatusEdit = () => {
   const [cConditions, setCconditions] = useState([]);
   const [FConditions, setFconditions] = useState([]);
   const [drugUse, setDrugUse] = useState([]);
+  const [healthSDisplay, setHealthSDisplay] = useState([]);
 
+  const dbRef10 = ref(database, "HealthStatus");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    get(dbRef10).then((snapshot) => {
+      if (snapshot.exists()) {
+        const dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+
+        const obj = dataArray.find(
+            (name) => name.patient === Cookies.get("patient")
+          );
+
+          setActivity(obj.activity);
+          setImprove(obj.improve);
+          setSleep(obj.sleep);
+
+          setFconditions(obj.FConditions);
+          setCconditions(obj.cConditions);
+          setDrugUse(obj.drugUse);
+          
+      }
+    });
+  });
 
   const current = [
     { condition: "High blood pressure" },
@@ -164,7 +190,8 @@ const HealthStatusEdit = () => {
             patient: Cookies.get("patient"),
             task:
               Cookies.get("userName") +
-              " has the following conditions in the family " + {...FConditions},
+              " has the following conditions in the family " +
+              { ...FConditions },
 
             dueDate: dateStrip(3, today),
             completed: "Not started",
