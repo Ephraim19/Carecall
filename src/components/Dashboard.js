@@ -489,17 +489,21 @@ const Dashboard = () => {
           <Sidebar collapsed={menuCollapse} style={{ marginTop: "7%" }}>
             <div className="logotext">
               {/* small and big change using menucollapse state */}
-              <h3 style={{ color: "purple", fontSize: "23px" }}>
-                {menuCollapse ? (
-                  " "
-                ) : (
-                  <button>
-                    <Link className="link" to="/forms/status">
-                      Health Status
-                    </Link>
-                  </button>
-                )}
-              </h3>
+              {healthSDisplay.length === 0 ? (
+                <h3 style={{ color: "purple", fontSize: "23px" }}>
+                  {menuCollapse ? (
+                    " "
+                  ) : (
+                    <button>
+                      <Link className="link" to="/forms/status">
+                        Health Status
+                      </Link>
+                    </button>
+                  )}
+                </h3>
+              ) : (
+                ""
+              )}
             </div>
             <div className="closemenu" onClick={menuIconClick}>
               {/* changing menu collapse icon on click */}
