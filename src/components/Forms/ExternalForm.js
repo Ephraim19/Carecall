@@ -95,6 +95,22 @@ const ExternalForm = () => {
         hospital,
         gender,
         hc: hc.user,
+        Address1: "",
+        Address: "",
+        condition: "",
+        condition1: "",
+        condition2: "",
+        condition3: "",
+        condition4: "",
+
+        intervention: "",
+        intervention1: "",
+        intervention2: "",
+        intervention3: "",
+        intervention4: "",
+
+        goals: "",
+
       }).then((data) => {
         var strToDate = new Date();
 

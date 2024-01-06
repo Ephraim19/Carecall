@@ -99,7 +99,7 @@ const EditStatus = () => {
     updates[Cookies.get("patient") + "/intervention4"] = intervention4;
 
     updates[Cookies.get("patient") + "/patient"] = patient;
-    updates[Cookies.get("patient") + "/status"] = status;
+    //updates[Cookies.get("patient") + "/status"] = status;
 
     updates[Cookies.get("patient") + "/Address"] = Address;
     updates[Cookies.get("patient") + "/Address1"] = Address1;
