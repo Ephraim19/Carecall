@@ -5,7 +5,7 @@ import { database } from "../Firebase";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-const HealthStatusForm = () => {
+const HealthStatusEdit = () => {
   const [improve, setImprove] = useState("");
   const [activity, setActivity] = useState("");
   const [sleep, setSleep] = useState(0);
@@ -306,4 +306,4 @@ const HealthStatusForm = () => {
   );
 };
 
-export default HealthStatusForm;
+export default HealthStatusEdit;

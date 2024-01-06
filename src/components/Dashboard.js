@@ -27,6 +27,7 @@ import {
   FiAlertCircle,
   FiAlertTriangle,
   FiActivity,
+  FiEdit,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { RiAlarmWarningLine } from "react-icons/ri";
@@ -410,11 +411,22 @@ const Dashboard = () => {
   };
   const Logout = () => {
     //remove all cookies first
+    Cookies.remove("user");
+    Cookies.remove("userName");
+    Cookies.remove("patient");
     navigate("/");
   };
 
   const New = () => {
     navigate("/new");
+  };
+
+  const Edit = () => {
+    navigate("/edit");
+  };
+
+  const EditStatus = () => {
+    navigate("/edit");
   };
 
   const addMoreRows = () => {
@@ -551,6 +563,14 @@ const Dashboard = () => {
               </div>
             ))}
 
+            <Menu iconShape="square">
+              <MenuItem icon={<FiEdit />}>
+                <button className="App-info" onClick={Edit}>
+                  <b>Edit</b>
+                </button>
+              </MenuItem>
+            </Menu>
+
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
                 <Menu iconShape="square" className="menuItems">
@@ -579,9 +599,12 @@ const Dashboard = () => {
 
             <Menu iconShape="square">
               <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
-
+              <MenuItem icon={<FiEdit />}>
+                <button className="App-info" onClick={EditStatus}>
+                  <b>Edit</b>
+                </button>
+              </MenuItem>
               <MenuItem icon={<FiLogOut />}>
-                {" "}
                 <button className="App-info" onClick={Logout}>
                   <b>Logout</b>
                 </button>

@@ -19,6 +19,8 @@ import BloodSugar from "./Forms/BloodSugar";
 import AllTasks from "./Forms/AllTasks";
 import ExternalForm from "./Forms/ExternalForm";
 import HealthStatusForm from "./Forms/HealthStatusForm";
+import EditStatus from "./Forms/EditStatus";
+import HealthStatusEdit from "./Forms/HealthStatusEdit";
 
 const Router = () => {
   return (
@@ -43,6 +45,10 @@ const Router = () => {
         <Route path="/alltasks" Component={AllTasks} />
         <Route path="/hospitals/member/form" Component={ExternalForm} />
         <Route path="/forms/status" Component={HealthStatusForm} />
+        <Route path="/edit" Component={EditStatus} />
+        <Route path="/edit/status" Component={HealthStatusEdit} />
+
+
 
       </Routes>
     </BrowserRouter>

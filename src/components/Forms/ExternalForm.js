@@ -353,7 +353,7 @@ const ExternalForm = () => {
       </nav>
       <div>
         <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
-          Member Registaration Form
+          Member Registration Form
         </h3>
         <form className="newForm">
           <label>
@@ -469,7 +469,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Medication duration</b> <br />
+            <b>Medication duration(in days)</b> <br />
             <input
               type="text"
               value={duration}
