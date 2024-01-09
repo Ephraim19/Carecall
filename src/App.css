@@ -166,8 +166,12 @@ h4 {
 }
 
 .menuItems {
-  background-color: #e3e5f0;
+  background-color: #172369;;
+  margin-left: 0%;
+  color: white;
 }
+
+
 .link {
   text-decoration: none;
 }

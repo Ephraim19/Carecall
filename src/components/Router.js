@@ -43,11 +43,11 @@ const Router = () => {
         <Route path="/bmi" Component={Bmi} />
         <Route path="/sugar" Component={BloodSugar} />
         <Route path="/alltasks" Component={AllTasks} />
-        <Route path="/hospitals/member/form" Component={ExternalForm} />
         <Route path="/forms/status" Component={HealthStatusForm} />
         <Route path="/edit" Component={EditStatus} />
         <Route path="/edit/status" Component={HealthStatusEdit} />
 
+        <Route path="/hospitals/equityafia/form" Component={ExternalForm} />
 
 
       </Routes>

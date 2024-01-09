@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { get, ref, update } from "firebase/database";
+import { get, push, ref, update } from "firebase/database";
 import { database, auth } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { FileId } from "./services/firebaseapi";
+
 import {
-  FaBabyCarriage,
   FaBomb,
   FaCartPlus,
   FaHome,
@@ -126,7 +127,7 @@ const Dashboard = () => {
             ...data,
           }));
           setPatientData(dataArray);
-          setPatientToDisplay([dataArray[dataArray.length - 1]]);
+          //setPatientToDisplay([dataArray[dataArray.length - 1]]);
         } else {
           console.log("No data available");
         }
@@ -467,13 +468,15 @@ const Dashboard = () => {
           )}
         </div>
 
-        <div>
-          {patientToDisplay.map((patient) => (
-            <h3 style={{ color: "purple", fontSize: "23px" }}>
-              {patient.patient} ({age})-({patient.gender})
-            </h3>
-          ))}
-        </div>
+        {patientToDisplay.length > 0 && (
+          <div>
+            {patientToDisplay.map((patient) => (
+              <h3 style={{ color: "purple", fontSize: "23px" }}>
+                {patient.patient} ({age})-({patient.gender})
+              </h3>
+            ))}
+          </div>
+        )}
 
         <button className="App-info" onClick={New}>
           New member
@@ -486,7 +489,7 @@ const Dashboard = () => {
 
       {patientToDisplay ? (
         <div className="dashboard">
-          <Sidebar collapsed={menuCollapse} style={{ marginTop: "7%" }}>
+          <Sidebar collapsed={menuCollapse} style={{ marginTop: "7%", marginLeft: "0" }}>
             <div className="logotext">
               {/* small and big change using menucollapse state */}
               {healthSDisplay.length === 0 ? (

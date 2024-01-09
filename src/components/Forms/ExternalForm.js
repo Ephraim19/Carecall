@@ -83,6 +83,7 @@ const ExternalForm = () => {
       setSave("saving...");
       push(ref(database, "clients"), {
         patient,
+        gender,
         age: dateStrip(3, dueDates),
         blood,
         Phone,
