@@ -590,11 +590,24 @@ const Dashboard = () => {
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
                 <Menu iconShape="square" className="menuItems">
-                  <MenuItem icon={<FiActivity />}>
-                    Current:<b>{hs.cConditions[0].condition}</b>
+                  <MenuItem icon={<FiActivity />}>Current conditions</MenuItem>
+                  <MenuItem>
+                    {hs.cConditions.map((c) => (
+                      <ul>
+                        <li>{c.condition}</li>
+                      </ul>
+                    ))}
                   </MenuItem>
                   <MenuItem icon={<FaImages />}>
-                    Family:<b>{hs.FConditions[0].condition}</b>
+                    Family conditions
+                  </MenuItem>
+
+                  <MenuItem>
+                    {hs.FConditions.map((c) => (
+                      <ul>
+                        <li>{c.condition}</li>
+                      </ul>
+                    ))}
                   </MenuItem>
 
                   <MenuItem icon={<FiAlertCircle />}>

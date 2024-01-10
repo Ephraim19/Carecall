@@ -185,7 +185,7 @@ const HealthStatusForm = () => {
           patient: Cookies.get("patient"),
           task:
             Cookies.get("userName") +
-            " has the following current conditions " +
+            " has the following current conditions: " +
               cConditions.map((c) => c.condition),
           dueDate: dateStrip(3, today),
           completed: "Not started",
@@ -198,7 +198,7 @@ const HealthStatusForm = () => {
             patient: Cookies.get("patient"),
             task:
               Cookies.get("userName") +
-              " has the following conditions in the family " +
+              " has the following conditions in the family: " +
                 FConditions.map((c)=> c.condition ) ,
 
             dueDate: dateStrip(3, today),
