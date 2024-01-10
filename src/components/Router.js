@@ -4,7 +4,6 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import { Patient } from "./Forms/Patient";
 import { HealthGoals } from "./Forms/HealthGoals";
-import { HealthStatus } from "./Forms/HealthStatus";
 import { ActiveCondtions } from "./Forms/ActiveCondtions";
 import { ActiveInterventions } from "./Forms/ActiveInterventions";
 import { NewPatient } from "./Forms/NewPatient";
@@ -30,7 +29,6 @@ const Router = () => {
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/patient" Component={Patient} />
         <Route path="/goals" Component={HealthGoals} />
-        <Route path="/status" Component={HealthStatus} />
         <Route path="/conditions" Component={ActiveCondtions} />
         <Route path="/interventions" Component={ActiveInterventions} />
         <Route path="/new" Component={NewPatient} />

@@ -45,6 +45,14 @@ const HealthStatusForm = () => {
     { condition: "Other" },
     { condition: "None" },
   ];
+
+  const pActivities = [
+    { condition: "Professional" },
+    { condition: " Moderate" },
+    { condition: "Mild" },
+    { condition: "Minimal" },
+  ];
+
   const [checkedState, setCheckedState] = useState(
     new Array(current.length).fill(false)
   );
@@ -55,6 +63,10 @@ const HealthStatusForm = () => {
 
   const [checkedState2, setCheckedState2] = useState(
     new Array(drugs.length).fill(false)
+  );
+
+  const [checkedState3, setCheckedState3] = useState(
+    new Array(pActivities.length).fill(false)
   );
 
   const dateStrip = (numOfHours, date) => {
@@ -132,6 +144,28 @@ const HealthStatusForm = () => {
     );
   };
 
+  //Checkbox_3
+  const handleOnChange3 = (position) => {
+    const updatedCheckedState = checkedState3.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState3(updatedCheckedState);
+
+    var d = [];
+    const AllActivity = updatedCheckedState.reduce(
+      (all, currentState, index, AllTowns2 = []) => {
+        if (currentState === true) {
+          d.push(pActivities[index]);
+          setActivity(d);
+
+          return AllTowns2;
+        }
+        return all;
+      },
+      activity
+    );
+  };
+
   const Push = (event) => {
     event.preventDefault();
 
@@ -152,7 +186,7 @@ const HealthStatusForm = () => {
           task:
             Cookies.get("userName") +
             " has the following current conditions " +
-            cConditions[0],
+              cConditions.map((c) => c.condition),
           dueDate: dateStrip(3, today),
           completed: "Not started",
         });
@@ -164,7 +198,20 @@ const HealthStatusForm = () => {
             patient: Cookies.get("patient"),
             task:
               Cookies.get("userName") +
-              " has the following conditions in the family " + {...FConditions},
+              " has the following conditions in the family " +
+                FConditions.map((c)=> c.condition ) ,
+
+            dueDate: dateStrip(3, today),
+            completed: "Not started",
+          });
+        }
+
+        //Add task of what mbr wants to work on
+        if (improve.length > 0) {
+          const today = new Date();
+          push(ref(database, "tasks"), {
+            patient: Cookies.get("patient"),
+            task: Cookies.get("userName") + " wants to work on " + improve,
 
             dueDate: dateStrip(3, today),
             completed: "Not started",
@@ -255,11 +302,30 @@ const HealthStatusForm = () => {
         <br />
         <label>
           <b>Physical activity levels</b> <br />
-          <input
-            type="text"
-            value={activity}
-            onChange={(e) => setActivity(e.target.value)}
-          />
+          <ul className="toppings-list">
+            {pActivities.map(({ condition }, index) => {
+              return (
+                <li key={index}>
+                  <div className="toppings-list-item">
+                    <label htmlFor={`custom-checkbox-${index}`}>
+                      {condition}
+                    </label>
+
+                    <div className="left-section">
+                      <input
+                        type="checkbox"
+                        id={`custom-checkbox-${index}`}
+                        name={condition}
+                        value={condition}
+                        checked={checkedState3[index]}
+                        onChange={() => handleOnChange3(index)}
+                      />
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </label>
         <br />
         <br />

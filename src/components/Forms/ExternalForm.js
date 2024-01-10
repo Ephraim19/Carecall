@@ -25,7 +25,7 @@ const ExternalForm = () => {
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
-  const [hospital, setHospital] = useState("");
+  const [hospital, setHospital] = useState("EQUITY AFIA - Kitengela");
 
   const [dueDates, setDueDates] = useState(new Date());
   const [hc, setHc] = useState();
@@ -36,6 +36,7 @@ const ExternalForm = () => {
   const [blood, setBlood] = useState("");
 
   const dbRef = ref(database, "HealthCordinator");
+  const dbRef1 = ref(database, "Clients");
 
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
@@ -69,6 +70,28 @@ const ExternalForm = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    const regMembers = (Phone) => {
+      var dataArray;
+
+      get(dbRef1)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+              id,
+              ...data,
+            }));
+
+            const membr = dataArray.find((name) => name.Phone === Phone);
+            if(!membr){
+              console.log("none");
+            }
+          } 
+        })
+
+      return dataArray;
+    };
+
     return dataArray;
   };
 
@@ -78,7 +101,29 @@ const ExternalForm = () => {
 
   const Push = (event) => {
     event.preventDefault();
+
+
+
     if (patient && Phone) {
+    
+      var dataArray;
+
+      get(dbRef1)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+              id,
+              ...data,
+            }));
+
+            const membr = dataArray.find((name) => name.Phone === Phone);
+            console.log(membr);
+            if(!membr){
+              console.log("none");
+            }
+          } 
+        })
+      
       //push data to firebase client
       setSave("saving...");
       push(ref(database, "clients"), {
@@ -111,7 +156,6 @@ const ExternalForm = () => {
         intervention4: "",
 
         goals: "",
-
       }).then((data) => {
         var strToDate = new Date();
 
@@ -208,7 +252,6 @@ const ExternalForm = () => {
             }
           });
         }
-
         //Upload document if available
         if (!file) {
           console.log("fail");
@@ -255,7 +298,9 @@ const ExternalForm = () => {
                   setPatient("");
                   setPhone("");
                   setWeight("");
-                  setHospital("");
+                  setDuration("");
+                  setFile1("");
+                  setFile2("");
                 });
               });
             }

@@ -150,12 +150,18 @@ const Dashboard = () => {
             (name) => name.completed === "complete"
           );
 
-          const IncompletetaskArray = taskArray.filter(
-            (name) => name.completed !== "complete"
+          const cancelledtaskArray = taskArray.filter(
+            (name) => name.completed === "cancelled"
           );
+
+          const IncompletetaskArray = taskArray
+            .filter((name) => name.completed !== "complete")
+            .filter((name) => name.completed !== "cancelled");
+
           dateSort(IncompletetaskArray);
 
-          const allTasksInorder = IncompletetaskArray.concat(completetaskArray);
+          const a1 = cancelledtaskArray.concat(completetaskArray);
+          const allTasksInorder = IncompletetaskArray.concat(a1);
 
           setPatientTasks(allTasksInorder);
           setPatientTasksDisplay([taskArray[taskArray.length - 1]]);
@@ -489,7 +495,10 @@ const Dashboard = () => {
 
       {patientToDisplay ? (
         <div className="dashboard">
-          <Sidebar collapsed={menuCollapse} style={{ marginTop: "7%", marginLeft: "0" }}>
+          <Sidebar
+            collapsed={menuCollapse}
+            style={{ marginTop: "7%", marginLeft: "0" }}
+          >
             <div className="logotext">
               {/* small and big change using menucollapse state */}
               {healthSDisplay.length === 0 ? (
@@ -595,7 +604,7 @@ const Dashboard = () => {
                     Improve:<b>{hs.improve}</b>
                   </MenuItem>
                   <MenuItem icon={<FaBomb />}>
-                    activities:<b>{hs.activity}</b>
+                    activities:<b>{hs.activity[0].condition}</b>
                   </MenuItem>
                   <MenuItem icon={<FaSmile />}>
                     Sleep:<b>{hs.sleep} Hrs</b>
