@@ -22,6 +22,9 @@ const ExternalForm = () => {
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
+  const [duration1, setDuration1] = useState("");
+  const [duration2, setDuration2] = useState("");
+
   const [hospital, setHospital] = useState("");
 
   const [dueDates, setDueDates] = useState(new Date());
@@ -167,13 +170,16 @@ const ExternalForm = () => {
             prescription1: medication2,
             prescription2: medication3,
             daysTaken: duration,
+            daysTaken2: duration2,
+            daysTaken1: duration1,
+
             dueDate: dateStrip(3, strToDate),
           }).then(() => {
             //Create a task
 
             var strToDate1 = new Date();
 
-            strToDate1.setDate(strToDate1.getDate() + parseInt(duration));
+            strToDate1.setDate(strToDate1.getDate() + parseInt(duration1));
 
             push(ref(database, "tasks"), {
               patient: data.key,
@@ -187,6 +193,7 @@ const ExternalForm = () => {
               completed: "Not started",
             });
 
+            strToDate1.setDate(strToDate1.getDate() + parseInt(duration2));
             if(medication2){
               push(ref(database, "tasks"), {
                 patient: data.key,
@@ -329,9 +336,10 @@ const ExternalForm = () => {
                   setPhone("");
                   setWeight("");
                   setDuration("");
+                  
                   setFile1("");
                   setFile2("");
-                  navigate("/");
+                  navigate("/dashboard");
                 });
               });
             }
@@ -414,7 +422,7 @@ const ExternalForm = () => {
           setPhone("");
           setHospital("");
           setWeight("");
-          navigate("/");
+          navigate("/dashboard");
         }
       });
     }
@@ -551,8 +559,8 @@ const ExternalForm = () => {
             <b>Medication duration(in days)</b> <br />
             <input
               type="text"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
+              value={duration1}
+              onChange={(e) => setDuration1(e.target.value)}
             />
           </label>
           <br />
@@ -572,8 +580,8 @@ const ExternalForm = () => {
             <b>Medication duration(in days)</b> <br />
             <input
               type="text"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
+              value={duration2}
+              onChange={(e) => setDuration2(e.target.value)}
             />
           </label>
           <br />
