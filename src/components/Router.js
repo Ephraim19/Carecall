@@ -31,7 +31,7 @@ const Router = () => {
         <Route path="/goals" Component={HealthGoals} />
         <Route path="/conditions" Component={ActiveCondtions} />
         <Route path="/interventions" Component={ActiveInterventions} />
-        <Route path="/new" Component={NewPatient} />
+        <Route path="/new" Component={ExternalForm} />
         <Route path="/task" Component={Tasks} />
         <Route path="/blood" Component={BloodPressure} />
         <Route path="/clinic" Component={Clinicals} />

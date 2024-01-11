@@ -8,16 +8,13 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 const ExternalForm = () => {
   const [patient, setPatient] = useState("");
   const [Phone, setPhone] = useState(0);
   const [gender, setGender] = useState("");
   const [condition, setCondition] = useState("");
-  const [condition1, setCondition1] = useState("");
-  const [condition2, setCondition2] = useState("");
-  const [condition3, setCondition3] = useState("");
-  const [condition4, setCondition4] = useState("");
   const [file, setFile] = useState([]);
   const [file1, setFile1] = useState([]);
   const [file2, setFile2] = useState([]);
@@ -25,7 +22,7 @@ const ExternalForm = () => {
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
-  const [hospital, setHospital] = useState("EQUITY AFIA - Kitengela");
+  const [hospital, setHospital] = useState("");
 
   const [dueDates, setDueDates] = useState(new Date());
   const [hc, setHc] = useState();
@@ -33,10 +30,15 @@ const ExternalForm = () => {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [medication, setMedication] = useState("");
+  const [medication2, setMedication2] = useState("");
+  const [medication3, setMedication3] = useState("");
+
   const [blood, setBlood] = useState("");
 
   const dbRef = ref(database, "HealthCordinator");
   const dbRef1 = ref(database, "Clients");
+
+  const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
@@ -133,11 +135,9 @@ const ExternalForm = () => {
         blood,
         Phone,
         medication,
+        medication2,
+        medication3,
         condition,
-        condition1,
-        condition2,
-        condition3,
-        condition4,
         hospital,
         gender,
         hc: hc.user,
@@ -164,6 +164,8 @@ const ExternalForm = () => {
           push(ref(database, "Prescription"), {
             patient: data.key,
             prescription: medication,
+            prescription1: medication2,
+            prescription2: medication3,
             daysTaken: duration,
             dueDate: dateStrip(3, strToDate),
           }).then(() => {
@@ -184,6 +186,35 @@ const ExternalForm = () => {
               dueDate: dateStrip(3, strToDate1),
               completed: "Not started",
             });
+
+            if(medication2){
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " has finished " +
+                  medication2 +
+                  " on " +
+                  dateStrip(3, strToDate1).slice(0, 17),
+                dueDate: dateStrip(3, strToDate1),
+                completed: "Not started",
+              });
+
+            }
+
+            if (medication3){
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " has finished " +
+                  medication3 +
+                  " on " +
+                  dateStrip(3, strToDate1).slice(0, 17),
+                dueDate: dateStrip(3, strToDate1),
+                completed: "Not started",
+              });
+            }
           });
         }
 
@@ -287,20 +318,20 @@ const ExternalForm = () => {
                   setSave("saved");
                   setBlood("");
                   setCondition("");
-                  setCondition1("");
-                  setCondition2("");
-                  setCondition3("");
-                  setCondition4("");
                   setFile("");
                   setGender("");
                   setHeight("");
                   setMedication(" ");
+                  setMedication2(" ");
+                  setMedication3(" ");
+
                   setPatient("");
                   setPhone("");
                   setWeight("");
                   setDuration("");
                   setFile1("");
                   setFile2("");
+                  navigate("/");
                 });
               });
             }
@@ -372,18 +403,18 @@ const ExternalForm = () => {
 
           setBlood("");
           setCondition("");
-          setCondition1("");
-          setCondition2("");
-          setCondition3("");
-          setCondition4("");
           setFile("");
           setGender("");
           setHeight("");
           setMedication(" ");
+          setMedication2(" ");
+          setMedication3(" ");
+
           setPatient("");
           setPhone("");
           setHospital("");
           setWeight("");
+          navigate("/");
         }
       });
     }
@@ -475,7 +506,7 @@ const ExternalForm = () => {
           <b>Diagnosis</b> <br />
           <br />
           <label>
-            Diagnosis 1: <br />
+            Diagnosis (Separate diagnosis with a comma) <br />
             <input
               type="text"
               value={condition}
@@ -483,52 +514,59 @@ const ExternalForm = () => {
             />
           </label>
           <br />
-          <label>
-            Diagnosis 2: <br />
-            <input
-              type="text"
-              value={condition1}
-              onChange={(e) => setCondition1(e.target.value)}
-            />
-          </label>
           <br />
+
           <label>
-            Diagnosis 3: <br />
+            <b>Medication-1 </b> <br />
             <input
-              type="text"
-              value={condition2}
-              onChange={(e) => setCondition2(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Diagnosis 4: <br />
-            <input
-              type="text"
-              value={condition3}
-              onChange={(e) => setCondition3(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Diagnosis 5: <br />
-            <input
-              type="text"
-              value={condition4}
-              onChange={(e) => setCondition4(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Medication (Include dosage, frequency and duration)</b> <br />
-            <input
+            placeholder="Include dosage and frequency)"
               type="text"
               value={medication}
               onChange={(e) => setMedication(e.target.value)}
             />
           </label>
           <br />
+          <label>
+            <b>Medication duration(in days)</b> <br />
+            <input
+              type="text"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+          <label>
+            <b>Medication-2 </b> <br />
+            <input
+            placeholder="Include dosage and frequency)"
+              type="text"
+              value={medication2}
+              onChange={(e) => setMedication2(e.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            <b>Medication duration(in days)</b> <br />
+            <input
+              type="text"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+          <label>
+            <b>Medication-3 </b> <br />
+            <input
+            placeholder="Include dosage and frequency)"
+              type="text"
+              value={medication3}
+              onChange={(e) => setMedication3(e.target.value)}
+            />
+          </label>
           <br />
           <label>
             <b>Medication duration(in days)</b> <br />

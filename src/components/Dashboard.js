@@ -551,29 +551,8 @@ const Dashboard = () => {
                   <MenuItem icon={<FaCartPlus />}>
                     Hospital: <b>{patient.hospital}</b>
                   </MenuItem>
-                  <br />
-                  <br />
                   <MenuItem icon={<RiAlarmWarningLine />}>
-                    <b>Diagnosis</b>
-                    <div style={{ marginLeft: "10px" }} key={patient.id}>
-                      <p key={1}>{patient.condition}</p>
-                      <p key={2}> {patient.condition1}</p>
-                      <p key={3}> {patient.condition2}</p>
-                      <p key={4}> {patient.condition3}</p>
-                      <p key={5}> {patient.condition4}</p>
-                    </div>
-                    <br />
-                    <br />
-                  </MenuItem>
-                  <MenuItem icon={<BiAlarmExclamation />}>
-                    <b>Active Interventions</b>
-                    <div style={{ marginLeft: "10px" }} key={patient.id}>
-                      <p key={1}>{patient.intervention}</p>
-                      <p key={2}>{patient.intervention1}</p>
-                      <p key={3}>{patient.intervention2}</p>
-                      <p key={4}>{patient.intervention3}</p>
-                      <p key={5}>{patient.intervention4}</p>
-                    </div>
+                    Diagnosis: {patient.condition}
                   </MenuItem>
                 </Menu>
               </div>
@@ -590,7 +569,9 @@ const Dashboard = () => {
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
                 <Menu iconShape="square" className="menuItems">
-                  <MenuItem icon={<FiActivity />}>Current conditions</MenuItem>
+                  <MenuItem icon={<FiActivity />}>
+                    <u>Current conditions</u>
+                  </MenuItem>
                   <MenuItem>
                     {hs.cConditions.map((c) => (
                       <ul>
@@ -599,7 +580,7 @@ const Dashboard = () => {
                     ))}
                   </MenuItem>
                   <MenuItem icon={<FaImages />}>
-                    Family conditions
+                    <u>Family conditions</u>
                   </MenuItem>
 
                   <MenuItem>
