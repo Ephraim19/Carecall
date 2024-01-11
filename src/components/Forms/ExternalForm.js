@@ -15,9 +15,9 @@ const ExternalForm = () => {
   const [Phone, setPhone] = useState(0);
   const [gender, setGender] = useState("");
   const [condition, setCondition] = useState("");
-  const [file, setFile] = useState([]);
-  const [file1, setFile1] = useState([]);
-  const [file2, setFile2] = useState([]);
+  const [file, setFile] = useState("");
+  const [file1, setFile1] = useState("");
+  const [file2, setFile2] = useState("");
 
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
@@ -35,11 +35,12 @@ const ExternalForm = () => {
   const [medication, setMedication] = useState("");
   const [medication2, setMedication2] = useState("");
   const [medication3, setMedication3] = useState("");
+  const [patientData, setPatientData] = useState([]);
 
   const [blood, setBlood] = useState("");
 
   const dbRef = ref(database, "HealthCordinator");
-  const dbRef1 = ref(database, "Clients");
+  const dbRef1 = ref(database, "clients");
 
   const navigate = useNavigate();
 
@@ -76,59 +77,41 @@ const ExternalForm = () => {
         console.log(error);
       });
 
-    const regMembers = (Phone) => {
-      var dataArray;
-
-      get(dbRef1)
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-              id,
-              ...data,
-            }));
-
-            const membr = dataArray.find((name) => name.Phone === Phone);
-            if(!membr){
-              console.log("none");
-            }
-          } 
-        })
-
-      return dataArray;
-    };
-
     return dataArray;
   };
 
   useEffect(() => {
     assignedHN();
+
   }, []);
 
   const Push = (event) => {
     event.preventDefault();
 
+    var dataArray = [];
+    //read user
+    get(dbRef1)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+
+          const membr = dataArray.find((name) => name.Phone === Phone);
+          
+          setPatientData(membr);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
 
-    if (patient && Phone) {
-    
-      var dataArray;
-
-      get(dbRef1)
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-              id,
-              ...data,
-            }));
-
-            const membr = dataArray.find((name) => name.Phone === Phone);
-            console.log(membr);
-            if(!membr){
-              console.log("none");
-            }
-          } 
-        })
-      
+    if (patient && Phone && patientData.length > 0) {
+      console.log('not new')
       //push data to firebase client
       setSave("saving...");
       push(ref(database, "clients"), {
@@ -195,7 +178,7 @@ const ExternalForm = () => {
 
             var strToDate2 = new Date();
             strToDate2.setDate(strToDate2.getDate() + parseInt(duration1));
-            if(medication2){
+            if (medication2) {
               push(ref(database, "tasks"), {
                 patient: data.key,
                 task:
@@ -207,13 +190,12 @@ const ExternalForm = () => {
                 dueDate: dateStrip(3, strToDate2),
                 completed: "Not started",
               });
-
             }
 
             var strToDate3 = new Date();
             strToDate3.setDate(strToDate3.getDate() + parseInt(duration2));
 
-            if (medication3){
+            if (medication3) {
               push(ref(database, "tasks"), {
                 patient: data.key,
                 task:
@@ -295,16 +277,15 @@ const ExternalForm = () => {
           });
         }
         //Upload document if available
+        const storageRef = sRef(storage, `/files/${file.name}`);
+
         if (!file) {
           console.log("fail");
         } else {
-          const storageRef = sRef(storage, `/files/${file.name}`);
           console.log("success");
           // progress can be paused and resumed. It also exposes progress updates.
           // Receives the storage reference and the file to upload.
           const uploadTask = uploadBytesResumable(storageRef, file);
-          const uploadTask1 = uploadBytesResumable(storageRef, file1);
-          const uploadTask2 = uploadBytesResumable(storageRef, file2);
 
           uploadTask.on(
             "state_changed",
@@ -319,6 +300,7 @@ const ExternalForm = () => {
             (err) => console.log(err),
             () => {
               // download url
+              strToDate = new Date();
               getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                 push(ref(database, "Files"), {
                   patient: data.key,
@@ -329,7 +311,6 @@ const ExternalForm = () => {
                   setSave("saved");
                   setBlood("");
                   setCondition("");
-                  setFile("");
                   setGender("");
                   setHeight("");
                   setMedication(" ");
@@ -340,60 +321,65 @@ const ExternalForm = () => {
                   setPhone("");
                   setWeight("");
                   setDuration("");
-                  
-                  setFile1("");
-                  setFile2("");
+
                   navigate("/dashboard");
                 });
               });
             }
           );
 
-          uploadTask1.on(
-            "state_changed",
-            (snapshot) => {
-              const percent = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-            },
-            (err) => console.log(err),
-            () => {
-              // download url1
-              getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
-                push(ref(database, "Files"), {
-                  patient: data.key,
-                  description: "Lab results1",
-                  url,
-                  dueDate: dateStrip(3, strToDate),
-                }).then((data) => {
-                  console.log(data);
+          if (file1) {
+            const uploadTask1 = uploadBytesResumable(storageRef, file1);
+            uploadTask1.on(
+              "state_changed",
+              (snapshot) => {
+                const percent = Math.round(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+              },
+              (err) => console.log(err),
+              () => {
+                // download url1
+                getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
+                  push(ref(database, "Files"), {
+                    patient: data.key,
+                    description: "Lab results1",
+                    url,
+                    dueDate: dateStrip(3, strToDate),
+                  }).then((data) => {
+                    console.log(data);
+                  });
                 });
-              });
-            }
-          );
+              }
+            );
+          }
 
-          uploadTask2.on(
-            "state_changed",
-            (snapshot) => {
-              const percent = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              );
-            },
-            (err) => console.log(err),
-            () => {
-              // download url1
-              getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
-                push(ref(database, "Files"), {
-                  patient: data.key,
-                  description: "Lab results1",
-                  url,
-                  dueDate: dateStrip(3, strToDate),
-                }).then((data) => {
-                  console.log(data);
+          if (file2) {
+            const uploadTask2 = uploadBytesResumable(storageRef, file2);
+
+            uploadTask2.on(
+              "state_changed",
+              (snapshot) => {
+                const percent = Math.round(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+              },
+              (err) => console.log(err),
+              () => {
+                // download url1
+                getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
+                  push(ref(database, "Files"), {
+                    patient: data.key,
+                    description: "Lab results1",
+                    url,
+                    dueDate: dateStrip(3, strToDate),
+                  }).then((data) => {
+                    console.log(data);
+                  });
                 });
-              });
-            }
-          );
+              }
+            );
+          }
         }
 
         //Add a welcoming task
@@ -415,7 +401,6 @@ const ExternalForm = () => {
 
           setBlood("");
           setCondition("");
-          setFile("");
           setGender("");
           setHeight("");
           setMedication(" ");
@@ -429,6 +414,311 @@ const ExternalForm = () => {
           navigate("/dashboard");
         }
       });
+    }
+
+    if(patient && Phone && patientData.length === 0){
+            //push data to firebase client
+            setSave("saving...");
+            push(ref(database, "clients"), {
+              patient,
+              gender,
+              age: dateStrip(3, dueDates),
+              blood,
+              Phone,
+              medication,
+              medication2,
+              medication3,
+              condition,
+              hospital,
+              gender,
+              hc: hc.user,
+              Address1: "",
+              Address: "",
+              condition: "",
+              condition1: "",
+              condition2: "",
+              condition3: "",
+              condition4: "",
+      
+              intervention: "",
+              intervention1: "",
+              intervention2: "",
+              intervention3: "",
+              intervention4: "",
+      
+              goals: "",
+            }).then((data) => {
+              var strToDate = new Date();
+      
+              //Push to prescription
+              if (medication) {
+                push(ref(database, "Prescription"), {
+                  patient: data.key,
+                  prescription: medication,
+                  prescription1: medication2,
+                  prescription2: medication3,
+                  daysTaken: duration,
+                  daysTaken2: duration2,
+                  daysTaken1: duration1,
+      
+                  dueDate: dateStrip(3, strToDate),
+                }).then(() => {
+                  //Create a task
+      
+                  var strToDate1 = new Date();
+      
+                  strToDate1.setDate(strToDate1.getDate() + parseInt(duration));
+      
+                  push(ref(database, "tasks"), {
+                    patient: data.key,
+                    task:
+                      patient +
+                      " has finished " +
+                      medication +
+                      " on " +
+                      dateStrip(3, strToDate1).slice(0, 17),
+                    dueDate: dateStrip(3, strToDate1),
+                    completed: "Not started",
+                  });
+      
+                  var strToDate2 = new Date();
+                  strToDate2.setDate(strToDate2.getDate() + parseInt(duration1));
+                  if (medication2) {
+                    push(ref(database, "tasks"), {
+                      patient: data.key,
+                      task:
+                        patient +
+                        " has finished " +
+                        medication2 +
+                        " on " +
+                        dateStrip(3, strToDate2).slice(0, 17),
+                      dueDate: dateStrip(3, strToDate2),
+                      completed: "Not started",
+                    });
+                  }
+      
+                  var strToDate3 = new Date();
+                  strToDate3.setDate(strToDate3.getDate() + parseInt(duration2));
+      
+                  if (medication3) {
+                    push(ref(database, "tasks"), {
+                      patient: data.key,
+                      task:
+                        patient +
+                        " has finished " +
+                        medication3 +
+                        " on " +
+                        dateStrip(3, strToDate3).slice(0, 17),
+                      dueDate: dateStrip(3, strToDate3),
+                      completed: "Not started",
+                    });
+                  }
+                });
+              }
+      
+              //push to bp
+              if (blood) {
+                push(ref(database, "bloodPressure"), {
+                  patient: data.key,
+                  pressure: blood,
+                  dueDate: dateStrip(3, strToDate),
+                }).then(() => {
+                  //Create a task if bp is high or low
+                  if (blood.split("/")[0] > 120 || blood.split("/")[1] > 80) {
+                    push(ref(database, "tasks"), {
+                      patient: data.key,
+                      task:
+                        patient +
+                        " had a high blood pressure on " +
+                        dateStrip(3, strToDate).slice(0, 17),
+                      dueDate: dateStrip(3, new Date()),
+                      completed: "Not started",
+                    });
+                  } else if (blood.split("/")[1] < 60 || blood.split("/")[0] < 60) {
+                    push(ref(database, "tasks"), {
+                      patient: data.key,
+                      task:
+                        patient +
+                        " had a low blood pressure on " +
+                        dateStrip(3, strToDate).slice(0, 17),
+                      dueDate: dateStrip(3, new Date()),
+                      completed: "Not started",
+                    });
+                  }
+                });
+              }
+      
+              //Push weight & height
+              if (weight && height) {
+                push(ref(database, "Bmi"), {
+                  patient: data.key,
+                  weight,
+                  height,
+                  dueDate: dateStrip(3, strToDate),
+                }).then(() => {
+                  //Create a task if user has abnormal BMI
+      
+                  if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+                    push(ref(database, "tasks"), {
+                      patient: data.key,
+                      task:
+                        patient +
+                        " is under weight on " +
+                        dateStrip(3, strToDate).slice(0, 17),
+                      dueDate: dateStrip(3, new Date()),
+                      completed: "Not started",
+                    });
+                  } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
+                    push(ref(database, "tasks"), {
+                      patient: data.key,
+                      task:
+                        patient +
+                        " is over weight on " +
+                        dateStrip(3, strToDate).slice(0, 17),
+                      dueDate: dateStrip(3, new Date()),
+                      completed: "Not started",
+                    });
+                  }
+                });
+              }
+              //Upload document if available
+              const storageRef = sRef(storage, `/files/${file.name}`);
+      
+              if (!file) {
+                console.log("fail");
+              } else {
+                console.log("success");
+                // progress can be paused and resumed. It also exposes progress updates.
+                // Receives the storage reference and the file to upload.
+                const uploadTask = uploadBytesResumable(storageRef, file);
+      
+                uploadTask.on(
+                  "state_changed",
+                  (snapshot) => {
+                    const percent = Math.round(
+                      (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+      
+                    // update progress
+                    setPercent(percent);
+                  },
+                  (err) => console.log(err),
+                  () => {
+                    // download url
+                    strToDate = new Date();
+                    getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                      push(ref(database, "Files"), {
+                        patient: data.key,
+                        description: "Lab results",
+                        url,
+                        dueDate: dateStrip(3, strToDate),
+                      }).then((data) => {
+                        setSave("saved");
+                        setBlood("");
+                        setCondition("");
+                        setGender("");
+                        setHeight("");
+                        setMedication(" ");
+                        setMedication2(" ");
+                        setMedication3(" ");
+      
+                        setPatient("");
+                        setPhone("");
+                        setWeight("");
+                        setDuration("");
+      
+                        navigate("/dashboard");
+                      });
+                    });
+                  }
+                );
+      
+                if (file1) {
+                  const uploadTask1 = uploadBytesResumable(storageRef, file1);
+                  uploadTask1.on(
+                    "state_changed",
+                    (snapshot) => {
+                      const percent = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                      );
+                    },
+                    (err) => console.log(err),
+                    () => {
+                      // download url1
+                      getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
+                        push(ref(database, "Files"), {
+                          patient: data.key,
+                          description: "Lab results1",
+                          url,
+                          dueDate: dateStrip(3, strToDate),
+                        }).then((data) => {
+                          console.log(data);
+                        });
+                      });
+                    }
+                  );
+                }
+      
+                if (file2) {
+                  const uploadTask2 = uploadBytesResumable(storageRef, file2);
+      
+                  uploadTask2.on(
+                    "state_changed",
+                    (snapshot) => {
+                      const percent = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                      );
+                    },
+                    (err) => console.log(err),
+                    () => {
+                      // download url1
+                      getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
+                        push(ref(database, "Files"), {
+                          patient: data.key,
+                          description: "Lab results1",
+                          url,
+                          dueDate: dateStrip(3, strToDate),
+                        }).then((data) => {
+                          console.log(data);
+                        });
+                      });
+                    }
+                  );
+                }
+              }
+      
+              //Add a welcoming task
+              strToDate.setDate(strToDate.getDate() + 1);
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task: "Call " + patient + " for welcoming",
+                dueDate: dateStrip(3, strToDate),
+                completed: "Not started",
+              });
+      
+              //Add +1 tasks to HC
+              const updates = {};
+              updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
+              update(dbRef, updates);
+      
+              if (!file) {
+                setSave("Saved");
+      
+                setBlood("");
+                setCondition("");
+                setGender("");
+                setHeight("");
+                setMedication(" ");
+                setMedication2(" ");
+                setMedication3(" ");
+      
+                setPatient("");
+                setPhone("");
+                setHospital("");
+                setWeight("");
+                navigate("/dashboard");
+              }
+            });
     }
   };
 
@@ -527,11 +817,10 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-
           <label>
             <b>Medication-1 </b> <br />
             <input
-            placeholder="Include dosage and frequency)"
+              placeholder="Include dosage and frequency)"
               type="text"
               value={medication}
               onChange={(e) => setMedication(e.target.value)}
@@ -548,11 +837,10 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-
           <label>
             <b>Medication-2 </b> <br />
             <input
-            placeholder="Include dosage and frequency)"
+              placeholder="Include dosage and frequency)"
               type="text"
               value={medication2}
               onChange={(e) => setMedication2(e.target.value)}
@@ -569,11 +857,10 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-
           <label>
             <b>Medication-3 </b> <br />
             <input
-            placeholder="Include dosage and frequency)"
+              placeholder="Include dosage and frequency)"
               type="text"
               value={medication3}
               onChange={(e) => setMedication3(e.target.value)}
