@@ -179,7 +179,7 @@ const ExternalForm = () => {
 
             var strToDate1 = new Date();
 
-            strToDate1.setDate(strToDate1.getDate() + parseInt(duration1));
+            strToDate1.setDate(strToDate1.getDate() + parseInt(duration));
 
             push(ref(database, "tasks"), {
               patient: data.key,
@@ -193,7 +193,8 @@ const ExternalForm = () => {
               completed: "Not started",
             });
 
-            strToDate1.setDate(strToDate1.getDate() + parseInt(duration2));
+            var strToDate2 = new Date();
+            strToDate2.setDate(strToDate2.getDate() + parseInt(duration1));
             if(medication2){
               push(ref(database, "tasks"), {
                 patient: data.key,
@@ -202,12 +203,15 @@ const ExternalForm = () => {
                   " has finished " +
                   medication2 +
                   " on " +
-                  dateStrip(3, strToDate1).slice(0, 17),
-                dueDate: dateStrip(3, strToDate1),
+                  dateStrip(3, strToDate2).slice(0, 17),
+                dueDate: dateStrip(3, strToDate2),
                 completed: "Not started",
               });
 
             }
+
+            var strToDate3 = new Date();
+            strToDate3.setDate(strToDate3.getDate() + parseInt(duration2));
 
             if (medication3){
               push(ref(database, "tasks"), {
@@ -217,8 +221,8 @@ const ExternalForm = () => {
                   " has finished " +
                   medication3 +
                   " on " +
-                  dateStrip(3, strToDate1).slice(0, 17),
-                dueDate: dateStrip(3, strToDate1),
+                  dateStrip(3, strToDate3).slice(0, 17),
+                dueDate: dateStrip(3, strToDate3),
                 completed: "Not started",
               });
             }
