@@ -542,17 +542,16 @@ const Dashboard = () => {
                   <MenuItem icon={<FaRegAddressBook />}>
                     Office:<b>{patient.Address1}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaPlusSquare />}>
-                    Status:<b>{patient.status}</b>
-                  </MenuItem>
-                  <MenuItem icon={<FaCartPlus />}>
-                    Goals: <b>{patient.goals}</b>
-                  </MenuItem>
                   <MenuItem icon={<FaCartPlus />}>
                     Hospital: <b>{patient.hospital}</b>
                   </MenuItem>
                   <MenuItem icon={<RiAlarmWarningLine />}>
-                    Diagnosis: {patient.condition}
+                    Acute diagnosis
+                  </MenuItem>
+                  <MenuItem>
+                    <ul>
+                      <li>{patient.condition}</li>
+                    </ul>
                   </MenuItem>
                 </Menu>
               </div>
@@ -570,7 +569,7 @@ const Dashboard = () => {
               <div key={hs.key}>
                 <Menu iconShape="square" className="menuItems">
                   <MenuItem icon={<FiActivity />}>
-                    <u>Current conditions</u>
+                    <u>Current chronic conditions</u>
                   </MenuItem>
                   <MenuItem>
                     {hs.cConditions.map((c) => (

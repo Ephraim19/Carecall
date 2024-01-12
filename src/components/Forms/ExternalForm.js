@@ -113,35 +113,7 @@ const ExternalForm = () => {
 
       //push data to firebase client
       setSave("saving...");
-      // push(ref(database, "clients"), {
-      //   patient,
-      //   gender,
-      //   age: dateStrip(3, dueDates),
-      //   blood,
-      //   Phone,
-      //   medication,
-      //   medication2,
-      //   medication3,
-      //   condition,
-      //   hospital,
-      //   gender,
-      //   hc: hc.user,
-      //   Address1: "",
-      //   Address: "",
-      //   condition: "",
-      //   condition1: "",
-      //   condition2: "",
-      //   condition3: "",
-      //   condition4: "",
 
-      //   intervention: "",
-      //   intervention1: "",
-      //   intervention2: "",
-      //   intervention3: "",
-      //   intervention4: "",
-
-      //   goals: "",
-      // }).then((data) => {
       var strToDate = new Date();
 
       //Push to prescription
@@ -166,7 +138,6 @@ const ExternalForm = () => {
           push(ref(database, "tasks"), {
             patient: patientData.id,
             task:
-               
               "Member has finished " +
               medication +
               " on " +
@@ -181,7 +152,6 @@ const ExternalForm = () => {
             push(ref(database, "tasks"), {
               patient: patientData.id,
               task:
-                
                 "Member has finished " +
                 medication2 +
                 " on " +
@@ -198,7 +168,6 @@ const ExternalForm = () => {
             push(ref(database, "tasks"), {
               patient: patientData.id,
               task:
-                
                 "Member has finished " +
                 medication3 +
                 " on " +
@@ -207,6 +176,26 @@ const ExternalForm = () => {
               completed: "Not started",
             });
           }
+        });
+      }
+      //create a clinical appointment task
+      if (hospital && condition) {
+        push(ref(database, "Clinic"), {
+          patient: patientData.id,
+          dueDate: dateStrip(3, strToDate),
+          clinic: hospital,
+          diagnosis: condition,
+        }).then((data) => {
+          //Create a task for appointment followup
+          var strToDatey = new Date();
+          strToDatey.setDate(strToDatey.getDate() + 1);
+
+          push(ref(database, "tasks"), {
+            patient: patientData.id,
+            task: "Follow up on member about " + hospital + " appointment ",
+            dueDate: dateStrip(3, strToDatey),
+            completed: "Not started",
+          });
         });
       }
 
@@ -222,7 +211,6 @@ const ExternalForm = () => {
             push(ref(database, "tasks"), {
               patient: patientData.id,
               task:
-                
                 " Member had a high blood pressure on " +
                 dateStrip(3, strToDate).slice(0, 17),
               dueDate: dateStrip(3, new Date()),
@@ -232,7 +220,6 @@ const ExternalForm = () => {
             push(ref(database, "tasks"), {
               patient: patientData.id,
               task:
-                
                 " Member had a low blood pressure on " +
                 dateStrip(3, strToDate).slice(0, 17),
               dueDate: dateStrip(3, new Date()),
@@ -256,7 +243,6 @@ const ExternalForm = () => {
             push(ref(database, "tasks"), {
               patient: patientData.id,
               task:
-        
                 " Member is under weight on " +
                 dateStrip(3, strToDate).slice(0, 17),
               dueDate: dateStrip(3, new Date()),
@@ -320,7 +306,7 @@ const ExternalForm = () => {
                 setWeight("");
                 setDuration("");
 
-                 navigate("/dashboard");
+                navigate("/dashboard");
               });
             });
           }
@@ -380,24 +366,11 @@ const ExternalForm = () => {
         }
       }
 
-      //Add a welcoming task
-      // strToDate.setDate(strToDate.getDate() + 1);
-      // push(ref(database, "tasks"), {
-      //   patient: data.key,
-      //   task: "Call " + patient + " for welcoming",
-      //   dueDate: dateStrip(3, strToDate),
-      //   completed: "Not started",
-      // });
-
-      // //Add +1 tasks to HC
-      // const updates = {};
-      // updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
-      // update(dbRef, updates);
-
       if (!file) {
         setSave("Saved");
 
         setBlood("");
+
         setCondition("");
         setGender("");
         setHeight("");
@@ -447,6 +420,27 @@ const ExternalForm = () => {
         goals: "",
       }).then((data) => {
         var strToDate = new Date();
+
+        //push to clinicals
+        if (hospital && condition) {
+          push(ref(database, "Clinic"), {
+            patient: data.key,
+            dueDate: dateStrip(3, strToDate),
+            clinic: hospital,
+            diagnosis: condition,
+          }).then((data) => {
+            //Create a task for appointment followup
+            var strToDatey = new Date();
+            strToDatey.setDate(strToDatey.getDate() + 1);
+
+            push(ref(database, "tasks"), {
+              patient: patientData.id,
+              task: "Follow up on member about " + hospital + " appointment ",
+              dueDate: dateStrip(3, strToDatey),
+              completed: "Not started",
+            });
+          });
+        }
 
         //Push to prescription
         if (medication) {
@@ -625,7 +619,7 @@ const ExternalForm = () => {
                   setWeight("");
                   setDuration("");
 
-                   navigate("/dashboard");
+                  navigate("/dashboard");
                 });
               });
             }
@@ -714,7 +708,7 @@ const ExternalForm = () => {
           setPhone("");
           setHospital("");
           setWeight("");
-           navigate("/dashboard");
+          navigate("/dashboard");
         }
       });
     }
