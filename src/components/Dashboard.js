@@ -64,7 +64,7 @@ const Dashboard = () => {
   const [visibleRows, setVisibleRows] = useState(5);
   const [healthS, setHealthS] = useState([]);
   const [healthSDisplay, setHealthSDisplay] = useState([]);
-  const [state, setState] = useState({data:"eph"});
+  const [state, setState] = useState({ data: "eph" });
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -92,6 +92,8 @@ const Dashboard = () => {
   //Sort by date
   const dateSort = (x) => {
     x.sort(function (a, b) {
+      if (a.dueDate !== undefined && b.dueDate !== undefined) {
+ 
       var awords = a.dueDate.slice(5, 17).split(" ");
       var bwords = b.dueDate.slice(5, 17).split(" ");
 
@@ -102,6 +104,8 @@ const Dashboard = () => {
       var strToDateb = new Date(bNewdate);
 
       return strToDatea - strToDateb;
+      
+      }
     });
   };
 
@@ -146,6 +150,7 @@ const Dashboard = () => {
             ...data,
           }));
 
+
           //Sort by date & status
           const completetaskArray = taskArray.filter(
             (name) => name.completed === "complete"
@@ -158,6 +163,8 @@ const Dashboard = () => {
           const IncompletetaskArray = taskArray
             .filter((name) => name.completed !== "complete")
             .filter((name) => name.completed !== "cancelled");
+
+            console.log(IncompletetaskArray);
 
           dateSort(IncompletetaskArray);
 
@@ -385,6 +392,7 @@ const Dashboard = () => {
     setPatientToDisplay(dataArray);
     setAssignee(dataArray[0].hc);
     setPatientTasksDisplay(taskArray);
+    console.log(taskArray);
 
     setBpDisplay(Bps);
     setClinicDisplay(clncArray);
@@ -415,14 +423,13 @@ const Dashboard = () => {
   };
 
   const EditClinic = (e) => {
-
     //const eph = clinicDisplay.find((name) => name.id === e.target.id);
     //setClnc(eph);
 
     Cookies.set("editC", e.target.id);
-    
-    navigate("/editclinical")
-  }
+
+    navigate("/editclinical");
+  };
 
   const allTasks = () => {
     navigate("/alltasks");
@@ -665,7 +672,6 @@ const Dashboard = () => {
 
             <h4>BP monitoring </h4>
 
-
             <table className="customers">
               <tr>
                 <th>Date </th>
@@ -726,7 +732,7 @@ const Dashboard = () => {
                   {parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
                   parseInt(b.weight) / parseInt(b.height ^ 2) > 25 ? (
                     <>
-                      <td>{b.dueDate.slice(0, 17)}</td> 
+                      <td>{b.dueDate.slice(0, 17)}</td>
                       <td>{b.weight}</td>
                       <td>{b.height}</td>
                       <td style={{ color: "red" }}>
@@ -841,12 +847,22 @@ const Dashboard = () => {
                 <th>Date </th>
                 <th>Hospital</th>
                 <th>Diagnosis</th>
+                <th>Status</th>
               </tr>
               {clinicDisplay.slice(0, visibleRows).map((cln) => (
                 <tr key={cln.id}>
                   <td>{cln.dueDate.slice(0, 17)}</td>
                   <td>{cln.clinic}</td>
-                  {cln.diagnosis.length > 0 ? <td>{cln.diagnosis}</td> : <td >  <button id={cln.id} onClick={EditClinic}>edit</button> </td>}
+                  {cln.diagnosis.length > 0 ? (
+                    <td>{cln.diagnosis}</td>
+                  ) : (
+                    <td>
+                      {" "}
+                      <button id={cln.id} onClick={EditClinic}>
+                        edit
+                      </button>{" "}
+                    </td>
+                  )}
                 </tr>
               ))}
             </table>
