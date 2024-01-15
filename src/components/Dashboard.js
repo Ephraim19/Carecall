@@ -93,18 +93,16 @@ const Dashboard = () => {
   const dateSort = (x) => {
     x.sort(function (a, b) {
       if (a.dueDate !== undefined && b.dueDate !== undefined) {
- 
-      var awords = a.dueDate.slice(5, 17).split(" ");
-      var bwords = b.dueDate.slice(5, 17).split(" ");
+        var awords = a.dueDate.slice(5, 17).split(" ");
+        var bwords = b.dueDate.slice(5, 17).split(" ");
 
-      var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
-      var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
+        var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
+        var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
 
-      var strToDatea = new Date(aNewdate);
-      var strToDateb = new Date(bNewdate);
+        var strToDatea = new Date(aNewdate);
+        var strToDateb = new Date(bNewdate);
 
-      return strToDatea - strToDateb;
-      
+        return strToDatea - strToDateb;
       }
     });
   };
@@ -150,7 +148,6 @@ const Dashboard = () => {
             ...data,
           }));
 
-
           //Sort by date & status
           const completetaskArray = taskArray.filter(
             (name) => name.completed === "complete"
@@ -164,7 +161,7 @@ const Dashboard = () => {
             .filter((name) => name.completed !== "complete")
             .filter((name) => name.completed !== "cancelled");
 
-            console.log(IncompletetaskArray);
+          console.log(IncompletetaskArray);
 
           dateSort(IncompletetaskArray);
 
@@ -420,6 +417,15 @@ const Dashboard = () => {
     const updates = {};
     updates[e.target.id + "/completed"] = e.target.value;
     update(dbRef2, updates);
+  };
+
+  const handleStatus1 = (e) => {
+    setStatus(e.target.value);
+
+    //Update tasks progress
+    const updates = {};
+    updates[e.target.id + "/status"] = e.target.value;
+    update(dbRef4, updates);
   };
 
   const EditClinic = (e) => {
@@ -863,6 +869,23 @@ const Dashboard = () => {
                       </button>{" "}
                     </td>
                   )}
+                  <td>
+                    <form>
+                      <label htmlFor="status">
+                        <select onChange={handleStatus1} id={cln.id}>
+                          <option className="App-info" value="progress">
+                            {cln.status ? cln.status : "Active"}
+                          </option>
+                          <option className="App-info" value="Active">
+                            Active
+                          </option>
+                          <option className="App-info" value="Inactive">
+                            Inactive
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </td>
                 </tr>
               ))}
             </table>

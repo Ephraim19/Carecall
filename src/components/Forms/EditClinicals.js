@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import carecall from "../carecall.png";
 import DatePicker from "react-datepicker";
-import { ref, update, get} from "firebase/database";
+import { ref, update, get, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { database } from "../Firebase";
 
-const EditClinicals = ( props ) => {
+const EditClinicals = (props) => {
   const [clinic, setClinic] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
   const [diagnosis, setDiagnosis] = useState("");
@@ -15,11 +15,46 @@ const EditClinicals = ( props ) => {
   const dbRef4 = ref(database, "Clinic");
   const navigate = useNavigate();
 
-  const NewClinic = () => {
+  const dateStrip = (numOfHours, date) => {
+    const dateCopy = new Date(date.getTime());
+    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
+    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
+      1,
+      -5
+    );
+    return stringDate;
+  };
+
+  const NewClinic = (e) => {
+    e.preventDefault();
+
     const updates = {};
     updates[Cookies.get("editC") + "/diagnosis"] = diagnosis;
     updates[Cookies.get("editC") + "/clinic"] = clinic;
-    update(dbRef4,updates);
+    update(dbRef4, updates);
+
+    //ADD +7 to date
+    var tody = dateStrip(3, dueDate).slice(5, 17);
+    var words = tody.split(" ");
+    var newdate = words[0] + "/" + words[1] + "/" + words[2];
+    var strToDate = new Date(newdate);
+    strToDate.setDate(strToDate.getDate() + 7);
+
+    //Create a task for diagnosis update
+    push(ref(database, "tasks"), {
+      patient: Cookies.get("patient"),
+      task:
+        "Please check on " +
+        Cookies.get("userName") +
+        " to update diagnosis on " +
+        diagnosis,
+      dueDate: dateStrip(3, strToDate),
+      completed: "Not started",
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    console.log('eph')
     navigate("/dashboard");
   };
 
@@ -40,8 +75,7 @@ const EditClinicals = ( props ) => {
           const toEdit = clinicArray.find((item) => item.id === eph);
           setClinicArray(toEdit);
           setClinic(toEdit.clinic);
-          console.log(toEdit.clinic)
-
+          console.log(toEdit.clinic);
         } else {
           console.log("No data available");
         }
@@ -49,12 +83,10 @@ const EditClinicals = ( props ) => {
       .catch((error) => {
         console.log(error);
       });
-
   }, []);
-  
+
   return (
     <div>
-      
       <div>
         {/* <p>eph:{props.data}</p> */}
         <nav className="App-nav">
@@ -101,6 +133,5 @@ const EditClinicals = ( props ) => {
     </div>
   );
 };
-
 
 export default EditClinicals;

@@ -29,7 +29,7 @@ const Clinicals = () => {
         patient: Cookies.get("patient"),
         clinic,
         diagnosis,
-        status: "Incomplete",
+        status: "Active",
         dueDate: dateStrip(3, dueDate),
       }).then(() => {
         //Create a task for appointment reminder
