@@ -31,6 +31,7 @@ const Prescriptions = () => {
         prescription,
         daysTaken,
         dueDate: dateStrip(3, dueDate),
+        status: "Ongoing"
       }).then(() => {
         var tody = dateStrip(3, dueDate).slice(5, 17);
         var words = tody.split(" ");

@@ -428,6 +428,15 @@ const Dashboard = () => {
     update(dbRef4, updates);
   };
 
+  const handleStatus2 = (e) => {
+    setStatus(e.target.value);
+
+    //Update tasks progress
+    const updates = {};
+    updates[e.target.id + "/status"] = e.target.value;
+    update(dbRef6, updates);
+  };
+
   const EditClinic = (e) => {
     //const eph = clinicDisplay.find((name) => name.id === e.target.id);
     //setClnc(eph);
@@ -916,12 +925,30 @@ const Dashboard = () => {
                 <th>Date </th>
                 <th>Prescription</th>
                 <th>Days</th>
+                <th>Status</th>
               </tr>
               {prescDisplay.slice(0, visibleRows).map((presc) => (
                 <tr>
                   <td>{presc.dueDate.slice(0, 17)}</td>
                   <td>{presc.prescription}</td>
                   <td>{presc.daysTaken}</td>
+                  <td>
+                    <form>
+                      <label htmlFor="status">
+                        <select onChange={handleStatus2} id={presc.id}>
+                          <option className="App-info" value="progress">
+                            {presc.status ? presc.status : "Ongoing"}
+                          </option>
+                          <option className="App-info" value="Ongoing">
+                            Ongoing
+                          </option>
+                          <option className="App-info" value="Complete">
+                            Complete
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </td>
                 </tr>
               ))}
             </table>
