@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
+import { Line } from "react-chartjs-2";
 
 import {
   FaBomb,
@@ -34,7 +35,24 @@ import {
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { onAuthStateChanged } from "firebase/auth";
+import {
+  Chart,
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  CategoryScale,
+} from "chart.js";
 
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  CategoryScale
+);
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
   const [search, setSearch] = useState("");
@@ -105,6 +123,75 @@ const Dashboard = () => {
         return strToDatea - strToDateb;
       }
     });
+  };
+
+  //Line chart data
+
+  const datasi = {
+    labels: bmiDisplay.map((b) => b.dueDate.slice(0, 17)),
+    datasets: [
+      {
+        label: "BM1",
+        data: bmiDisplay.map((b) =>
+          (parseInt(b.weight) / parseInt(b.height ^ 2)).toFixed(0)
+        ),
+        //data: [33, 53, 85, 41, 44, 65],
+        fill: true,
+        backgroundColor: "black",
+        borderColor: "PURPLE",
+      },
+    ],
+  };
+
+  const datasi1 = {
+    labels: bpDisplay.map((b) => b.dueDate.slice(0, 17)),
+    datasets: [
+      {
+        label: "BP high",
+        data: bpDisplay.map((b) => b.pressure.split("/")[0]),
+        //data: [33, 53, 85, 41, 44, 65],
+        fill: true,
+        backgroundColor: "black",
+        borderColor: "rgba(75,192,192,1)",
+      },
+
+      {
+        label: "BP low",
+        data: bpDisplay.map((b) => b.pressure.split("/")[1]),
+        fill: true,
+        backgroundColor: "black",
+        borderColor: "purple",
+      },
+    ],
+  };
+
+  const datasi2 = {
+    labels: sugarDisplay.map((b) => b.dueDate.slice(0, 17)),
+    datasets: [
+      {
+        label: "BS fasting",
+        data: sugarDisplay.map((b) => b.fasting),
+        fill: true,
+        backgroundColor: "black",
+        borderColor: "rgba(75,192,192,1)",
+      },
+
+      {
+        label: "BS random",
+        data: sugarDisplay.map((b) => b.random),
+        fill: true,
+        backgroundColor: "black",
+        borderColor: "purple",
+      },
+
+      {
+        label: "BS random",
+        data: sugarDisplay.map((b) => b.HBA1C),
+        fill: true,
+        backgroundColor: "Yellow",
+        borderColor: "blue",
+      },
+    ],
   };
 
   useEffect(() => {
@@ -972,7 +1059,7 @@ const Dashboard = () => {
             <br />
             <br />
 
-            <h4>Files: </h4>
+            <h4>Files </h4>
 
             <table className="customers">
               <tr>
@@ -1012,6 +1099,7 @@ const Dashboard = () => {
 
             <br />
           </div>
+
           <div style={{ marginTop: "6%" }}>
             {patientToDisplay.map((patient) => (
               <h4 key={patient.id} style={{ textAlign: "center" }}>
@@ -1082,6 +1170,28 @@ const Dashboard = () => {
                   New
                 </Link>
               </button>
+            </table>
+
+            <h4>BMI</h4>
+            <table>
+              <div>
+                <Line data={datasi} />
+              </div>
+            </table>
+
+            <h4>Blood pressure</h4>
+            <table>
+              <div>
+                <Line data={datasi1} />
+              </div>
+            </table>
+
+            <h4>Blood sugar</h4>
+
+            <table>
+              <div>
+                <Line data={datasi2} />
+              </div>
             </table>
           </div>
         </div>
