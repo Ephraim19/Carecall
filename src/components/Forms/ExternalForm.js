@@ -178,14 +178,14 @@ const ExternalForm = () => {
           }
         });
       }
-      //create a clinical appointment task
+      //Push to clinical
       if (hospital && condition) {
         push(ref(database, "Clinic"), {
           patient: patientData.id,
           dueDate: dateStrip(3, strToDate),
           clinic: hospital,
           diagnosis: condition,
-        }).then((data) => {
+        }).then(() => {
           //Create a task for appointment followup
           var strToDatey = new Date();
           strToDatey.setDate(strToDatey.getDate() + 1);
@@ -428,13 +428,13 @@ const ExternalForm = () => {
             dueDate: dateStrip(3, strToDate),
             clinic: hospital,
             diagnosis: condition,
-          }).then((data) => {
+          }).then(() => {
             //Create a task for appointment followup
             var strToDatey = new Date();
             strToDatey.setDate(strToDatey.getDate() + 1);
 
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: data.key,
               task: "Follow up on member about " + hospital + " appointment ",
               dueDate: dateStrip(3, strToDatey),
               completed: "Not started",

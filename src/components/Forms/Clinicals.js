@@ -101,7 +101,7 @@ const Clinicals = () => {
         <b>Date</b>
         <br />
         <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
-
+        <br />
         <br />
         <button className="App-info" onClick={NewClinic}>
           Submit

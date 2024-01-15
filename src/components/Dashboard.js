@@ -7,10 +7,12 @@ import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FileId } from "./services/firebaseapi";
+import EditClinicals from "./Forms/EditClinicals";
 
 import {
   FaBomb,
   FaCartPlus,
+  FaEdit,
   FaHome,
   FaImages,
   FaMale,
@@ -31,8 +33,6 @@ import {
   FiEdit,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
-import { RiAlarmWarningLine } from "react-icons/ri";
-import { BiAlarmExclamation } from "react-icons/bi";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Dashboard = () => {
@@ -64,6 +64,7 @@ const Dashboard = () => {
   const [visibleRows, setVisibleRows] = useState(5);
   const [healthS, setHealthS] = useState([]);
   const [healthSDisplay, setHealthSDisplay] = useState([]);
+  const [state, setState] = useState({data:"eph"});
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -413,6 +414,16 @@ const Dashboard = () => {
     update(dbRef2, updates);
   };
 
+  const EditClinic = (e) => {
+
+    //const eph = clinicDisplay.find((name) => name.id === e.target.id);
+    //setClnc(eph);
+
+    Cookies.set("editC", e.target.id);
+    
+    navigate("/editclinical")
+  }
+
   const allTasks = () => {
     navigate("/alltasks");
   };
@@ -542,17 +553,6 @@ const Dashboard = () => {
                   <MenuItem icon={<FaRegAddressBook />}>
                     Office:<b>{patient.Address1}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaCartPlus />}>
-                    Hospital: <b>{patient.hospital}</b>
-                  </MenuItem>
-                  <MenuItem icon={<RiAlarmWarningLine />}>
-                    Acute diagnosis
-                  </MenuItem>
-                  <MenuItem>
-                    <ul>
-                      <li>{patient.condition}</li>
-                    </ul>
-                  </MenuItem>
                 </Menu>
               </div>
             ))}
@@ -665,6 +665,7 @@ const Dashboard = () => {
 
             <h4>BP monitoring </h4>
 
+
             <table className="customers">
               <tr>
                 <th>Date </th>
@@ -725,7 +726,7 @@ const Dashboard = () => {
                   {parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
                   parseInt(b.weight) / parseInt(b.height ^ 2) > 25 ? (
                     <>
-                      <td>{b.dueDate.slice(0, 17)}</td>
+                      <td>{b.dueDate.slice(0, 17)}</td> 
                       <td>{b.weight}</td>
                       <td>{b.height}</td>
                       <td style={{ color: "red" }}>
@@ -781,12 +782,6 @@ const Dashboard = () => {
               </tr>
               {sugarDisplay.slice(0, visibleRows).map((sug) => (
                 <tr key={sug.id}>
-                  {/* {parseFloat(sug.random) < 10 &&
-                    parseFloat(sug.random) > 4 &&
-                    parseFloat(sug.HBA1C) > 5.7 &&
-                    parseFloat(sug.fasting) < 10 &&
-                    parseFloat(sug.fasting) >
-                      4( */}
                   <>
                     <td>{sug.dueDate.slice(0, 17)}</td>
 
@@ -851,7 +846,7 @@ const Dashboard = () => {
                 <tr key={cln.id}>
                   <td>{cln.dueDate.slice(0, 17)}</td>
                   <td>{cln.clinic}</td>
-                  <td>{cln.diagnosis}</td>
+                  {cln.diagnosis.length > 0 ? <td>{cln.diagnosis}</td> : <td >  <button id={cln.id} onClick={EditClinic}>edit</button> </td>}
                 </tr>
               ))}
             </table>
@@ -1027,6 +1022,7 @@ const Dashboard = () => {
       ) : (
         " "
       )}
+      {/* < EditClinicals data = {state.data} /> */}
     </div>
   );
 };
