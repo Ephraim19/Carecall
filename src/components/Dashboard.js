@@ -201,9 +201,23 @@ const Dashboard = () => {
         min: 0,
         responsive: true,
         maintainAspectRatio: false,
-      }
-    }
-  }
+
+        // grid: {
+        //   display: false,
+        // },
+      },
+
+      x: {
+        // min: 0,
+        // responsive: true,
+        // maintainAspectRatio: false,
+
+        // grid: {
+        //   display: false,
+        // },
+      },
+    },
+  };
 
   useEffect(() => {
     if (!Cookies.get("name")) {
@@ -1186,9 +1200,13 @@ const Dashboard = () => {
             {bmiDisplay.length > 1 ? (
               <>
                 <h4>BMI</h4>
-                  <div>
-                    <Line data={datasi} options={options} style={{maxWidth:'100%'}} />
-                  </div>
+                <div>
+                  <Line
+                    data={datasi}
+                    options={options}
+                    style={{ maxWidth: "100%" }}
+                  />
+                </div>
               </>
             ) : (
               ""
@@ -1197,19 +1215,33 @@ const Dashboard = () => {
             {bpDisplay.length > 1 ? (
               <>
                 <h4>Blood pressure</h4>
-                  <div>
-                    <Line data={datasi1} options={options} style={{maxWidth:'100%'}} />
-                  </div>
+                <div>
+                  <Line
+                    data={datasi1}
+                    options={options}
+                    style={{ maxWidth: "100%" }}
+                  />
+                </div>
               </>
             ) : (
               ""
             )}
 
-            <h4>Blood sugar</h4>
+            {sugarDisplay.length > 1 ? (
+              <>
+                <h4>Blood sugar</h4>
 
-              <div>
-                <Line data={datasi2} options={options} style={{maxWidth:'100%'}}/>
-              </div>
+                <div>
+                  <Line
+                    data={datasi2}
+                    options={options}
+                    style={{ maxWidth: "100%" }}
+                  />
+                </div>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ) : (
