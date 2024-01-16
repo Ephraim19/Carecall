@@ -139,6 +139,7 @@ const Dashboard = () => {
         fill: true,
         backgroundColor: "black",
         borderColor: "PURPLE",
+        borderWidth: 3,
       },
     ],
   };
@@ -1172,19 +1173,44 @@ const Dashboard = () => {
               </button>
             </table>
 
-            <h4>BMI</h4>
-            <table>
-              <div>
-                <Line data={datasi} />
-              </div>
-            </table>
+            {bmiDisplay.length > 1 ? (
+              <>
+                <h4>BMI</h4>
+                <table>
+                  <div>
+                    <Line data={datasi} />
+                  </div>
+                </table>
+              </>
+            ) : (
+              ""
+            )}
 
-            <h4>Blood pressure</h4>
-            <table>
-              <div>
-                <Line data={datasi1} />
-              </div>
-            </table>
+            {bpDisplay.length > 1 ? (
+              <>
+                <h4>Blood pressure</h4>
+                <table>
+                  <div>
+                    <Line data={datasi1} />
+                  </div>
+                </table>
+              </>
+            ) : (
+              ""
+            )}
+
+            {sugarDisplay.length > 1 ? (
+              <>
+                <h4>Blood pressure</h4>
+                <table>
+                  <div>
+                    <Line data={datasi1} />
+                  </div>
+                </table>
+              </>
+            ) : (
+              ""
+            )}
 
             <h4>Blood sugar</h4>
 

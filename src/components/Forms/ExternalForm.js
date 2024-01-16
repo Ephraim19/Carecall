@@ -82,10 +82,6 @@ const ExternalForm = () => {
 
   useEffect(() => {
     assignedHN();
-  }, []);
-
-  const Push = (event) => {
-    event.preventDefault();
 
     //read user
     get(dbRef1)
@@ -97,9 +93,7 @@ const ExternalForm = () => {
               ...data,
             })
           );
-
-          const membr = dataArray.find((name) => name.Phone === Phone);
-          setPatientData(membr);
+          setPatientData(dataArray);
         } else {
           console.log("No data available");
         }
@@ -107,9 +101,16 @@ const ExternalForm = () => {
       .catch((error) => {
         console.log(error);
       });
+  }, []);
 
-    if (patient && Phone && patientData.id) {
-      console.log(patientData.id);
+  const Push = (event) => {
+    event.preventDefault();
+
+    console.log(patientData);
+    const membr = patientData.find((name) => name.Phone === Phone.toString());
+
+    if (patient && Phone && membr) {
+      console.log(membr);
 
       //push data to firebase client
       setSave("saving...");
@@ -119,7 +120,7 @@ const ExternalForm = () => {
       //Push to prescription
       if (medication) {
         push(ref(database, "Prescription"), {
-          patient: patientData.id,
+          patient: membr.id,
           prescription: medication,
           prescription1: medication2,
           prescription2: medication3,
@@ -136,7 +137,7 @@ const ExternalForm = () => {
           strToDate1.setDate(strToDate1.getDate() + parseInt(duration));
 
           push(ref(database, "tasks"), {
-            patient: patientData.id,
+            patient: membr.id,
             task:
               "Member has finished " +
               medication +
@@ -150,7 +151,7 @@ const ExternalForm = () => {
           strToDate2.setDate(strToDate2.getDate() + parseInt(duration1));
           if (medication2) {
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: membr.id,
               task:
                 "Member has finished " +
                 medication2 +
@@ -166,7 +167,7 @@ const ExternalForm = () => {
 
           if (medication3) {
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: membr.id,
               task:
                 "Member has finished " +
                 medication3 +
@@ -181,7 +182,7 @@ const ExternalForm = () => {
       //Push to clinical
       if (hospital && condition) {
         push(ref(database, "Clinic"), {
-          patient: patientData.id,
+          patient: membr.id,
           dueDate: dateStrip(3, strToDate),
           clinic: hospital,
           diagnosis: condition,
@@ -191,7 +192,7 @@ const ExternalForm = () => {
           strToDatey.setDate(strToDatey.getDate() + 1);
 
           push(ref(database, "tasks"), {
-            patient: patientData.id,
+            patient: membr.id,
             task: "Follow up on member about " + hospital + " appointment ",
             dueDate: dateStrip(3, strToDatey),
             completed: "Not started",
@@ -202,14 +203,14 @@ const ExternalForm = () => {
       //push to bp
       if (blood) {
         push(ref(database, "bloodPressure"), {
-          patient: patientData.id,
+          patient: membr.id,
           pressure: blood,
           dueDate: dateStrip(3, strToDate),
         }).then(() => {
           //Create a task if bp is high or low
           if (blood.split("/")[0] > 120 || blood.split("/")[1] > 80) {
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: membr.id,
               task:
                 " Member had a high blood pressure on " +
                 dateStrip(3, strToDate).slice(0, 17),
@@ -218,7 +219,7 @@ const ExternalForm = () => {
             });
           } else if (blood.split("/")[1] < 60 || blood.split("/")[0] < 60) {
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: membr.id,
               task:
                 " Member had a low blood pressure on " +
                 dateStrip(3, strToDate).slice(0, 17),
@@ -232,7 +233,7 @@ const ExternalForm = () => {
       //Push weight & height
       if (weight && height) {
         push(ref(database, "Bmi"), {
-          patient: patientData.id,
+          patient: membr.id,
           weight,
           height,
           dueDate: dateStrip(3, strToDate),
@@ -241,7 +242,7 @@ const ExternalForm = () => {
 
           if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: membr.id,
               task:
                 " Member is under weight on " +
                 dateStrip(3, strToDate).slice(0, 17),
@@ -250,7 +251,7 @@ const ExternalForm = () => {
             });
           } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
             push(ref(database, "tasks"), {
-              patient: patientData.id,
+              patient: membr.id,
               task:
                 " Member is over weight on " +
                 dateStrip(3, strToDate).slice(0, 17),
@@ -287,7 +288,7 @@ const ExternalForm = () => {
             strToDate = new Date();
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               push(ref(database, "Files"), {
-                patient: patientData.id,
+                patient: membr.id,
                 description: "Lab results",
                 url,
                 dueDate: dateStrip(3, strToDate),
@@ -306,7 +307,7 @@ const ExternalForm = () => {
                 setWeight("");
                 setDuration("");
 
-                navigate("/dashboard");
+                //navigate("/dashboard");
               });
             });
           }
@@ -326,7 +327,7 @@ const ExternalForm = () => {
               // download url1
               getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
                 push(ref(database, "Files"), {
-                  patient: patientData.id,
+                  patient: membr.id,
                   description: "Lab results1",
                   url,
                   dueDate: dateStrip(3, strToDate),
@@ -353,7 +354,7 @@ const ExternalForm = () => {
               // download url1
               getDownloadURL(uploadTask2.snapshot.ref).then((url) => {
                 push(ref(database, "Files"), {
-                  patient: patientData.id,
+                  patient: membr.id,
                   description: "Lab results1",
                   url,
                   dueDate: dateStrip(3, strToDate),
@@ -382,12 +383,12 @@ const ExternalForm = () => {
         setPhone("");
         setHospital("");
         setWeight("");
-        navigate("/dashboard");
+        //navigate("/dashboard");
       }
       //});
     }
 
-    if (patient && Phone && !patientData.length) {
+    if (patient && Phone && !membr) {
       //push data to firebase client
       setSave("saving...");
       push(ref(database, "clients"), {
@@ -619,7 +620,7 @@ const ExternalForm = () => {
                   setWeight("");
                   setDuration("");
 
-                  navigate("/dashboard");
+                  //navigate("/dashboard");
                 });
               });
             }
@@ -708,7 +709,7 @@ const ExternalForm = () => {
           setPhone("");
           setHospital("");
           setWeight("");
-          navigate("/dashboard");
+          //navigate("/dashboard");
         }
       });
     }
