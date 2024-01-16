@@ -200,6 +200,7 @@ const Dashboard = () => {
       y: {
         min: 0,
         responsive: true,
+        maintainAspectRatio: false,
       }
     }
   }
@@ -1186,7 +1187,7 @@ const Dashboard = () => {
               <>
                 <h4>BMI</h4>
                   <div>
-                    <Line data={datasi} options={options} />
+                    <Line data={datasi} options={options} style={{maxWidth:'100%'}} />
                   </div>
               </>
             ) : (
@@ -1197,7 +1198,7 @@ const Dashboard = () => {
               <>
                 <h4>Blood pressure</h4>
                   <div>
-                    <Line data={datasi1} options={options} />
+                    <Line data={datasi1} options={options} style={{maxWidth:'100%'}} />
                   </div>
               </>
             ) : (
@@ -1207,7 +1208,7 @@ const Dashboard = () => {
             <h4>Blood sugar</h4>
 
               <div>
-                <Line data={datasi2} options={options}/>
+                <Line data={datasi2} options={options} style={{maxWidth:'100%'}}/>
               </div>
           </div>
         </div>
