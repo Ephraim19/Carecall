@@ -195,6 +195,15 @@ const Dashboard = () => {
     ],
   };
 
+  const options = {
+    scales: {
+      y: {
+        min: 0,
+        responsive: true,
+      }
+    }
+  }
+
   useEffect(() => {
     if (!Cookies.get("name")) {
       navigate("/");
@@ -1176,11 +1185,9 @@ const Dashboard = () => {
             {bmiDisplay.length > 1 ? (
               <>
                 <h4>BMI</h4>
-                <table>
                   <div>
-                    <Line data={datasi} />
+                    <Line data={datasi} options={options} />
                   </div>
-                </table>
               </>
             ) : (
               ""
@@ -1189,24 +1196,9 @@ const Dashboard = () => {
             {bpDisplay.length > 1 ? (
               <>
                 <h4>Blood pressure</h4>
-                <table>
                   <div>
-                    <Line data={datasi1} />
+                    <Line data={datasi1} options={options} />
                   </div>
-                </table>
-              </>
-            ) : (
-              ""
-            )}
-
-            {sugarDisplay.length > 1 ? (
-              <>
-                <h4>Blood pressure</h4>
-                <table>
-                  <div>
-                    <Line data={datasi1} />
-                  </div>
-                </table>
               </>
             ) : (
               ""
@@ -1214,11 +1206,9 @@ const Dashboard = () => {
 
             <h4>Blood sugar</h4>
 
-            <table>
               <div>
-                <Line data={datasi2} />
+                <Line data={datasi2} options={options}/>
               </div>
-            </table>
           </div>
         </div>
       ) : (
