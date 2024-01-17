@@ -3,10 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import { Patient } from "./Forms/Patient";
-import { HealthGoals } from "./Forms/HealthGoals";
-import { ActiveCondtions } from "./Forms/ActiveCondtions";
-import { ActiveInterventions } from "./Forms/ActiveInterventions";
-import { NewPatient } from "./Forms/NewPatient";
 import { Tasks } from "./Forms/Tasks";
 import BloodPressure from "./Forms/BloodPressure";
 import Clinicals from "./Forms/Clinicals";
@@ -29,9 +25,6 @@ const Router = () => {
         <Route path="/" Component={Login} />
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/patient" Component={Patient} />
-        <Route path="/goals" Component={HealthGoals} />
-        <Route path="/conditions" Component={ActiveCondtions} />
-        <Route path="/interventions" Component={ActiveInterventions} />
         <Route path="/new" Component={ExternalForm} />
         <Route path="/task" Component={Tasks} />
         <Route path="/blood" Component={BloodPressure} />

@@ -16,7 +16,7 @@ const HealthStatusEdit = () => {
   const [healthSDisplayId, setHealthSDisplayId] = useState("");
 
   const dbRef = ref(database, "HealthStatus");
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,9 +36,9 @@ const HealthStatusEdit = () => {
         setSleep(obj.sleep);
         setHealthSDisplayId(obj.id);
 
-         setFconditions(obj.FConditions);
-         setCconditions(obj.cConditions);
-         setDrugUse(obj.drugUse);
+        setFconditions(obj.FConditions);
+        setCconditions(obj.cConditions);
+        setDrugUse(obj.drugUse);
       }
     });
   }, []);
@@ -83,6 +83,17 @@ const HealthStatusEdit = () => {
 
   const [checkedState2, setCheckedState2] = useState(
     new Array(drugs.length).fill(false)
+  );
+
+  const pActivities = [
+    { condition: "Professional" },
+    { condition: " Moderate" },
+    { condition: "Mild" },
+    { condition: "Minimal" },
+  ];
+
+  const [checkedState3, setCheckedState3] = useState(
+    new Array(pActivities.length).fill(false)
   );
 
   const dateStrip = (numOfHours, date) => {
@@ -160,6 +171,28 @@ const HealthStatusEdit = () => {
     );
   };
 
+  //Checkbox_3
+  const handleOnChange3 = (position) => {
+    const updatedCheckedState = checkedState3.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState3(updatedCheckedState);
+
+    var d = [];
+    const AllActivity = updatedCheckedState.reduce(
+      (all, currentState, index, AllTowns2 = []) => {
+        if (currentState === true) {
+          d.push(pActivities[index]);
+          setActivity(d);
+
+          return AllTowns2;
+        }
+        return all;
+      },
+      activity
+    );
+  };
+
   const Push = (e) => {
     e.preventDefault();
     //Update user statys
@@ -167,7 +200,6 @@ const HealthStatusEdit = () => {
     updates[healthSDisplayId + "/activity"] = activity;
     updates[healthSDisplayId + "/improve"] = improve;
     updates[healthSDisplayId + "/sleep"] = sleep;
-
 
     update(dbRef, updates);
     navigate("/dashboard");
@@ -180,13 +212,20 @@ const HealthStatusEdit = () => {
         <form className="App-info"></form>
       </nav>
       <div>
-        <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
+        <h3 style={{ textAlign: "center", color: "purple", fontSize: "23px" }}>
           Member Health Status
         </h3>
       </div>
       <form className="newForm">
-        <b>Current conditions</b> <br />
-        <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Current conditions
+        </h4>
         <ul className="toppings-list">
           {current.map(({ condition }, index) => {
             return (
@@ -213,7 +252,15 @@ const HealthStatusEdit = () => {
         </ul>
         <br />
         <br />
-        <b>Family history</b> <br /> <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Family conditions
+        </h4>
         <ul className="toppings-list">
           {Fcurrent.map(({ condition }, index) => {
             return (
@@ -238,29 +285,18 @@ const HealthStatusEdit = () => {
             );
           })}
         </ul>
+
         <br />
         <br />
-        <label>
-          <b>What aspect of your health would you want to work on</b> <br />
-          <input
-            type="text"
-            value={improve}
-            onChange={(e) => setImprove(e.target.value)}
-          />
-        </label>
-        <br />
-        <br />
-        <label>
-          <b>Physical activity levels</b> <br />
-          <input
-            type="text"
-            value={activity}
-            onChange={(e) => setActivity(e.target.value)}
-          />
-        </label>
-        <br />
-        <br />
-        <b>Do you use any of the following?</b> <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Do you use any of the following drugs?
+        </h4>
         <ul className="toppings-list">
           {drugs.map(({ condition }, index) => {
             return (
@@ -288,7 +324,69 @@ const HealthStatusEdit = () => {
         <br />
         <br />
         <label>
-          <b>Hours of sleep per night</b> <br />
+          <h4
+            style={{
+              textAlign: "center",
+              color: "purple",
+              fontSize: "20px",
+            }}
+          >
+            Physical Activity level
+          </h4>
+          <ul className="toppings-list">
+            {pActivities.map(({ condition }, index) => {
+              return (
+                <li key={index}>
+                  <div className="toppings-list-item">
+                    <label htmlFor={`custom-checkbox-${index}`}>
+                      {condition}
+                    </label>
+
+                    <div className="left-section">
+                      <input
+                        type="checkbox"
+                        id={`custom-checkbox-${index}`}
+                        name={condition}
+                        value={condition}
+                        checked={checkedState3[index]}
+                        onChange={() => handleOnChange3(index)}
+                      />
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </label>
+        <br />
+        <br />
+        <label>
+          <h5
+            style={{
+              color: "purple",
+              fontSize: "20px",
+            }}
+          >
+            What aspect of your health would you like to improve on?
+          </h5>
+          <input
+            type="text"
+            value={improve}
+            onChange={(e) => setImprove(e.target.value)}
+          />
+        </label>
+        <br />
+        <br />
+
+        <label>
+          <h5
+            style={{
+              color: "purple",
+              fontSize: "20px",
+            }}
+          >
+            Hours of sleep per night
+          </h5>
           <input
             type="number"
             value={sleep}

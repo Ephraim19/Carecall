@@ -189,7 +189,7 @@ const EditStatus = () => {
           </label>
           <br />
           <br />
-          <label>
+          {/* <label>
             <b>Enter the patients health status:</b> <br />
             <input
               type="radio"
@@ -215,113 +215,8 @@ const EditStatus = () => {
               onChange={onOptionChange}
             />{" "}
             Chronic <br />
-          </label>
-          <br />
-          <label>
-            <b>Enter the patients health goals:</b> <br />
-            <input
-              type="text"
-              value={goals}
-              onChange={(e) => setGoals(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <b>Enter the condition the patients has:</b> <br />
-          <br />
-          <label>
-            Condition 1: <br />
-            <input
-              type="text"
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Condition 2: <br />
-            <input
-              type="text"
-              value={condition1}
-              onChange={(e) => setCondition1(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Condition 3: <br />
-            <input
-              type="text"
-              value={condition2}
-              onChange={(e) => setCondition2(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Condition 4: <br />
-            <input
-              type="text"
-              value={condition3}
-              onChange={(e) => setCondition3(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Condition 5: <br />
-            <input
-              type="text"
-              value={condition4}
-              onChange={(e) => setCondition4(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <b>Enter the interventions to be taken</b>
-          <br />
-          <br />
-          <label>
-            Intervention 1: <br />
-            <input
-              type="text"
-              value={intervention}
-              onChange={(e) => setIntervention(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Intervention 2: <br />
-            <input
-              type="text"
-              value={intervention1}
-              onChange={(e) => setIntervention1(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Intervention 3: <br />
-            <input
-              type="text"
-              value={intervention2}
-              onChange={(e) => setIntervention2(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Intervention 4: <br />
-            <input
-              type="text"
-              value={intervention3}
-              onChange={(e) => setIntervention3(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Intervention 5: <br />
-            <input
-              type="text"
-              value={intervention4}
-              onChange={(e) => setIntervention4(e.target.value)}
-            />
-          </label>
+          </label> */}
+      
           <br />
           <br />
           <button onClick={Push}>Save</button>

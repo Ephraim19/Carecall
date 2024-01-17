@@ -186,7 +186,7 @@ const HealthStatusForm = () => {
           task:
             Cookies.get("userName") +
             " has the following current conditions: " +
-              cConditions.map((c) => c.condition),
+            cConditions.map((c) => c.condition),
           dueDate: dateStrip(3, today),
           completed: "Not started",
         });
@@ -199,7 +199,7 @@ const HealthStatusForm = () => {
             task:
               Cookies.get("userName") +
               " has the following conditions in the family: " +
-                FConditions.map((c)=> c.condition ) ,
+              FConditions.map((c) => c.condition),
 
             dueDate: dateStrip(3, today),
             completed: "Not started",
@@ -229,14 +229,28 @@ const HealthStatusForm = () => {
         <img src={carecall} alt="logo" className="App-logo" />
         <form className="App-info"></form>
       </nav>
-      <div>
-        <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
-          Member Health Status
-        </h3>
-      </div>
+
+      <h3
+        style={{
+          textAlign: "center",
+          color: "purple",
+          fontSize: "23px",
+        }}
+      >
+        Member Health Status
+      </h3>
+      <br />
+
       <form className="newForm">
-        <b>Current conditions</b> <br />
-        <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Current conditions
+        </h4>
         <ul className="toppings-list">
           {current.map(({ condition }, index) => {
             return (
@@ -263,7 +277,15 @@ const HealthStatusForm = () => {
         </ul>
         <br />
         <br />
-        <b>Family history</b> <br /> <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Family conditions 
+        </h4>
         <ul className="toppings-list">
           {Fcurrent.map(({ condition }, index) => {
             return (
@@ -288,20 +310,19 @@ const HealthStatusForm = () => {
             );
           })}
         </ul>
+
         <br />
         <br />
         <label>
-          <b>What aspect of your health would you want to work on</b> <br />
-          <input
-            type="text"
-            value={improve}
-            onChange={(e) => setImprove(e.target.value)}
-          />
-        </label>
-        <br />
-        <br />
-        <label>
-          <b>Physical activity levels</b> <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Physical Activity level
+        </h4>
           <ul className="toppings-list">
             {pActivities.map(({ condition }, index) => {
               return (
@@ -329,7 +350,15 @@ const HealthStatusForm = () => {
         </label>
         <br />
         <br />
-        <b>Do you use any of the following?</b> <br />
+        <h4
+          style={{
+            textAlign: "center",
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Do you use any of the following drugs?
+        </h4>
         <ul className="toppings-list">
           {drugs.map(({ condition }, index) => {
             return (
@@ -357,7 +386,31 @@ const HealthStatusForm = () => {
         <br />
         <br />
         <label>
-          <b>Hours of sleep per night</b> <br />
+        <h5
+          style={{
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          What aspect of your health would you like to improve on?
+        </h5>
+          <input
+            type="text"
+            value={improve}
+            onChange={(e) => setImprove(e.target.value)}
+          />
+        </label>
+        <br />
+        <br />
+        <label>
+        <h5
+          style={{
+            color: "purple",
+            fontSize: "20px",
+          }}
+        >
+          Hours of sleep per night
+        </h5>
           <input
             type="number"
             value={sleep}
