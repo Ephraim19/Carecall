@@ -739,11 +739,17 @@ const ExternalForm = () => {
         <img src={carecall} alt="logo" className="App-logo" />
         <form className="App-info"></form>
       </nav>
-      <div>
-        <h3 style={{ color: "purple", fontSize: "23px", marginLeft: "10%" }}>
-          Member Registration Form
-        </h3>
+
+      <h3 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
+        Member Registration Form
+      </h3>
+      <div className="dashboard">
         <form className="newForm">
+          <h4
+            style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
+          >
+            Member Information
+          </h4>
           <label>
             <b>Hospital name</b> <br />
             <input
@@ -798,7 +804,14 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-          <b>Diagnosis</b> <br />
+        </form>
+
+        <form className="newForm">
+          <h4
+            style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
+          >
+            Diagnosis and Medication
+          </h4>
           <br />
           <label>
             Diagnosis (Separate diagnosis with a comma) <br />
@@ -870,6 +883,14 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
+        </form>
+
+        <form className="newForm">
+          <h4
+            style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
+          >
+            Bp,BMI and Lab results
+          </h4>
           <label>
             <b>Blood pressure:</b> <br />
             <input
@@ -919,11 +940,14 @@ const ExternalForm = () => {
             onChange={handleChange3}
             accept="media_type"
           />{" "}
-          <br />
+        </form>
+      </div>
+      <div className="dashboard">
+        <div>
           <p>Progress: {percent}</p>
           <br />
           <button onClick={Push}>{Save}</button>
-        </form>
+        </div>
       </div>
     </div>
   );
