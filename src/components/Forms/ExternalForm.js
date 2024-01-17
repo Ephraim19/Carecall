@@ -751,7 +751,7 @@ const ExternalForm = () => {
             Member Information
           </h4>
           <label>
-            <b>Hospital name</b> <br />
+            <b>Hospital name*</b> <br />
             <input
               type="text"
               value={hospital}
@@ -761,7 +761,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Enter the patient's full name:</b> <br />
+            <b>Member's full name*</b> <br />
             <input
               type="text"
               value={patient}
@@ -795,7 +795,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Phone number:</b> <br />
+            <b>Phone number*</b> <br />
             <input
               type="number"
               value={Phone}

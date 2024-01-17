@@ -273,8 +273,6 @@ const Dashboard = () => {
             .filter((name) => name.completed !== "complete")
             .filter((name) => name.completed !== "cancelled");
 
-          console.log(IncompletetaskArray);
-
           dateSort(IncompletetaskArray);
 
           const a1 = cancelledtaskArray.concat(completetaskArray);
@@ -315,7 +313,7 @@ const Dashboard = () => {
     get(dbRef4)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const clinicArray = Object.entries(snapshot.val()).map(
+          var clinicArray = Object.entries(snapshot.val()).map(
             ([id, data]) => ({
               id,
               ...data,
@@ -324,6 +322,11 @@ const Dashboard = () => {
           //Sort by date
           dateSort(clinicArray);
 
+          //Move Inactive to the bottom
+          const Inactive = clinicArray.filter((item) => item.status === "Inactive");
+          const Active = clinicArray.filter((item) => item.status === "Active");
+
+          clinicArray = Active.concat(Inactive);
           setClinic(clinicArray);
           setClinicDisplay([clinicArray[clinicArray.length - 1]]);
         } else {
@@ -359,7 +362,7 @@ const Dashboard = () => {
     get(dbRef6)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          const prescArray = Object.entries(snapshot.val()).map(
+          var prescArray = Object.entries(snapshot.val()).map(
             ([id, data]) => ({
               id,
               ...data,
@@ -368,6 +371,12 @@ const Dashboard = () => {
           //Sort by date
           dateSort(prescArray);
 
+          //Move complete to the bottom
+          const complete = prescArray.filter((item) => item.status === "Complete");
+          const ongoing = prescArray.filter((item) => item.status === "Ongoing");
+          console.log(ongoing);
+          
+          prescArray = ongoing.concat(complete);
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
         } else {
