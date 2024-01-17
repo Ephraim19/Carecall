@@ -684,8 +684,22 @@ const ExternalForm = () => {
         strToDate.setDate(strToDate.getDate() + 1);
         push(ref(database, "tasks"), {
           patient: data.key,
-          task: "Call " + patient + " for welcoming",
+          task:
+            "Call " + patient + " for welcoming and fill health status form ",
           dueDate: dateStrip(3, strToDate),
+          completed: "Not started",
+        });
+
+        //Add 30 day check status task
+        var today = new Date();
+        today.setDate(today.getDate() + 30);
+
+        strToDate.setDate(strToDate.getDate() + 1);
+        push(ref(database, "tasks"), {
+          patient: data.key,
+          task:
+            "Update " + patient + " health status ",
+          dueDate: dateStrip(3, today),
           completed: "Not started",
         });
 
@@ -744,7 +758,7 @@ const ExternalForm = () => {
         Member Registration Form
       </h3>
       <div className="dashboard">
-        <form className="newForm">
+        <form>
           <h4
             style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
           >
@@ -806,7 +820,7 @@ const ExternalForm = () => {
           <br />
         </form>
 
-        <form className="newForm">
+        <form>
           <h4
             style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
           >
@@ -885,11 +899,11 @@ const ExternalForm = () => {
           <br />
         </form>
 
-        <form className="newForm">
+        <form>
           <h4
             style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
           >
-            Bp,BMI and Lab results
+            BP,BMI and Lab results
           </h4>
           <label>
             <b>Blood pressure:</b> <br />
