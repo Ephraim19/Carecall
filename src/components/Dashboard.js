@@ -12,16 +12,22 @@ import { Line } from "react-chartjs-2";
 
 import {
   FaBomb,
+  FaBusinessTime,
+  FaCalendarDay,
   FaCartPlus,
   FaEdit,
   FaHome,
   FaImages,
+  FaLanguage,
   FaMale,
   FaPhone,
   FaPlusSquare,
   FaRegAddressBook,
   FaSmile,
+  FaTimes,
+  FaTimesCircle,
   FaUserGraduate,
+  FaUserTimes,
 } from "react-icons/fa";
 import {
   FiLogOut,
@@ -82,7 +88,7 @@ const Dashboard = () => {
   const [visibleRows, setVisibleRows] = useState(5);
   const [healthS, setHealthS] = useState([]);
   const [healthSDisplay, setHealthSDisplay] = useState([]);
-  const [state, setState] = useState({ data: "eph" });
+  const [state, setState] = useState("");
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -211,7 +217,6 @@ const Dashboard = () => {
         // min: 0,
         // responsive: true,
         // maintainAspectRatio: false,
-
         // grid: {
         //   display: false,
         // },
@@ -323,7 +328,9 @@ const Dashboard = () => {
           dateSort(clinicArray);
 
           //Move Inactive to the bottom
-          const Inactive = clinicArray.filter((item) => item.status === "Inactive");
+          const Inactive = clinicArray.filter(
+            (item) => item.status === "Inactive"
+          );
           const Active = clinicArray.filter((item) => item.status === "Active");
 
           clinicArray = Active.concat(Inactive);
@@ -362,20 +369,22 @@ const Dashboard = () => {
     get(dbRef6)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          var prescArray = Object.entries(snapshot.val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            })
-          );
+          var prescArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
           //Sort by date
           dateSort(prescArray);
 
           //Move complete to the bottom
-          const complete = prescArray.filter((item) => item.status === "Complete");
-          const ongoing = prescArray.filter((item) => item.status === "Ongoing");
+          const complete = prescArray.filter(
+            (item) => item.status === "Complete"
+          );
+          const ongoing = prescArray.filter(
+            (item) => item.status === "Ongoing"
+          );
           console.log(ongoing);
-          
+
           prescArray = ongoing.concat(complete);
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
@@ -594,6 +603,30 @@ const Dashboard = () => {
     setVisibleRows(visibleRows + 5);
   };
 
+  //Time preference
+  const prefTime = (e) => {
+    //Update tasks progress
+    const updates = {};
+    updates[patientToDisplay[0].id + "/prefTime"] = e.target.value;
+    update(dbRef, updates);
+  };
+
+  //Day preference
+  const prefDay = (e) => {
+    //Update tasks progress
+    const updates = {};
+    updates[patientToDisplay[0].id + "/prefDay"] = e.target.value;
+    update(dbRef, updates);
+  };
+
+  //Language preference
+  const prefLang = (e) => {
+    //Update tasks progress
+    const updates = {};
+    updates[patientToDisplay[0].id + "/prefLang"] = e.target.value;
+    update(dbRef, updates);
+  };
+
   return (
     <div>
       <nav style={{ position: "fixed" }} className="App-nav">
@@ -695,6 +728,66 @@ const Dashboard = () => {
                   </MenuItem>
                   <MenuItem icon={<FaRegAddressBook />}>
                     Office:<b>{patient.Address1}</b>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaLanguage />}>
+                    <form>
+                      <label htmlFor="language">
+                        <select onChange={prefLang}>
+                          <option className="App-info" value="Preferred language">
+                            {patient.prefLang ? patient.prefLang : "Preferred Language"}
+                          </option>
+                          <option className="App-info" value="Kiswahili">
+                            Kiswahili
+                          </option>
+                          <option className="App-info" value="English">
+                            English
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaBusinessTime />}>
+                    <form>
+                      <label htmlFor="language">
+                        <select onChange={prefTime}>
+                          <option className="App-info" value="Preferred time">
+                            {patient.prefTime ? patient.prefTime : "Preferred Time"}
+                          </option>
+                          <option className="App-info" value="Morning">
+                            Morning
+                          </option>
+                          <option className="App-info" value="Afternoon">
+                            Afternoon
+                          </option>
+                          <option className="App-info" value=" Evening">
+                            Evening
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaCalendarDay />}>
+                    <form>
+                      <label htmlFor="language">
+                        <select onChange={prefDay}>
+                          <option className="App-info" value="Preferred day">
+                            {patient.prefDay ? patient.prefDay : "Preferred Day"}
+                          </option>
+                          <option className="App-info" value="Monday/Tuesday">
+                            Monday/Tuesday
+                          </option>
+                          <option className="App-info" value="Wednesday/Thursday">
+                            Wednesday/Thursday
+                          </option>
+                          <option className="App-info" value="Friday/Saturday">
+                            Friday/Saturday
+                          </option>
+                        </select>
+                      </label>
+                    </form>
                   </MenuItem>
                 </Menu>
               </div>
