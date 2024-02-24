@@ -335,7 +335,7 @@ const Dashboard = () => {
 
           clinicArray = Active.concat(Inactive);
           setClinic(clinicArray);
-          setClinicDisplay([clinicArray[clinicArray.length - 1]]);
+          //setClinicDisplay([clinicArray[clinicArray.length - 1]]);
         } else {
           console.log("No data available");
         }
@@ -387,7 +387,7 @@ const Dashboard = () => {
 
           prescArray = ongoing.concat(complete);
           setPrescription(prescArray);
-          setPrescDisplay([prescArray[prescArray.length - 1]]);
+          //setPrescDisplay([prescArray[prescArray.length - 1]]);
         } else {
           console.log("No data available");
         }
