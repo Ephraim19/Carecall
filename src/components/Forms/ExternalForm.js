@@ -750,8 +750,7 @@ const ExternalForm = () => {
   return (
     <div>
       <nav className="App-nav">
-        <img src={carecall} alt="logo" className="App-logo" />
-        <form className="App-info"></form>
+        <img style={{display: "block", margin: "0 auto"}} src={carecall} alt="logo" className="App-logo" />
       </nav>
 
       <h3 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
