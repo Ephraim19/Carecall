@@ -27,7 +27,7 @@ const ExternalForm = () => {
 
   const [hospital, setHospital] = useState("");
 
-  const [dueDates, setDueDates] = useState(new Date());
+  const [dueDates, setDueDates] = useState("");
   const [hc, setHc] = useState();
 
   const [weight, setWeight] = useState("");
@@ -394,7 +394,7 @@ const ExternalForm = () => {
       push(ref(database, "clients"), {
         patient,
         gender,
-        age: dateStrip(3, dueDates),
+        age: dueDates,
         blood,
         Phone,
         medication,
@@ -784,12 +784,15 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-          <b>Date of birth</b>
-          <br />
-          <DatePicker
-            selected={dueDates}
-            onChange={(date) => setDueDates(date)}
-          />
+          <label>
+            <b>Age</b> <br />
+            <input
+              type="number"
+              value={dueDates}
+              onChange={(e) => setDueDates(e.target.value)}
+            />
+          </label>
+
           <br />
           <br />
           <b>Gender</b> <br />
