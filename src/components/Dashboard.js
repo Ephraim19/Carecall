@@ -5,22 +5,29 @@ import { get, push, ref, update } from "firebase/database";
 import { database, auth } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
 
 import {
   FaBomb,
+  FaBusinessTime,
+  FaCalendarDay,
   FaCartPlus,
   FaEdit,
   FaHome,
   FaImages,
+  FaLanguage,
   FaMale,
   FaPhone,
   FaPlusSquare,
   FaRegAddressBook,
   FaSmile,
+  FaTimes,
+  FaTimesCircle,
   FaUserGraduate,
+  FaUserTimes,
 } from "react-icons/fa";
 import {
   FiLogOut,
@@ -86,9 +93,25 @@ const Dashboard = () => {
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
 
+  const dbRef = ref(database, "clients");
   const dbRef2 = ref(database, "tasks");
+  const dbRef3 = ref(database, "bloodPressure");
   const dbRef4 = ref(database, "Clinic");
+  const dbRef5 = ref(database, "Interaction");
   const dbRef6 = ref(database, "Prescription");
+  const dbRef7 = ref(database, "Files");
+  const dbRef8 = ref(database, "Bmi");
+  const dbRef9 = ref(database, "Bloodsugar");
+  const dbRef10 = ref(database, "HealthStatus");
+
+  //create initial menuCollapse state using useState hook
+  const [menuCollapse, setMenuCollapse] = useState(false);
+
+  //create a custom function that will change menucollapse state from false to true and true to false
+  const menuIconClick = () => {
+    //condition checking to change state from true to false and vice versa
+    menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
+  };
 
   //Sort by date
   const dateSort = (x) => {
@@ -209,34 +232,38 @@ const Dashboard = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
+
         setUser(email);
       }
     });
 
-    //Read the whole database
-    get(ref(database))
+    let dataArray = [];
+    //read user
+    get(dbRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
-          setState(snapshot.val());
-
-          //clients data
-          const dataArray = Object.entries(snapshot.child("clients").val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            })
-          );
-
+          dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
           setPatientData(dataArray);
-          setPatientToDisplay([dataArray[dataArray.length - 1]]);
+          //setPatientToDisplay([dataArray[dataArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //tasks data
-          var taskArray = Object.entries(snapshot.child("tasks").val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            })
-          );
+    //get tasks
+    get(dbRef2)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          var taskArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
 
           //Sort by date & status
           const completetaskArray = taskArray.filter(
@@ -258,11 +285,19 @@ const Dashboard = () => {
 
           setPatientTasks(allTasksInorder);
           setPatientTasksDisplay([taskArray[taskArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //BP data
-          const bpArray = Object.entries(
-            snapshot.child("bloodPressure").val()
-          ).map(([id, data]) => ({
+    //read bp
+    get(dbRef3)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const bpArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
@@ -271,9 +306,19 @@ const Dashboard = () => {
 
           setBp(bpArray);
           setBpDisplay([bpArray[bpArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //Clinical data
-          var clinicArray = Object.entries(snapshot.child("Clinic").val()).map(
+    //read clinical app
+    get(dbRef4)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          var clinicArray = Object.entries(snapshot.val()).map(
             ([id, data]) => ({
               id,
               ...data,
@@ -291,11 +336,19 @@ const Dashboard = () => {
           clinicArray = Active.concat(Inactive);
           setClinic(clinicArray);
           setClinicDisplay([clinicArray[clinicArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //Interaction data
-          const intArray = Object.entries(
-            snapshot.child("Interaction").val()
-          ).map(([id, data]) => ({
+    //read interactions
+    get(dbRef5)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const intArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
@@ -304,11 +357,19 @@ const Dashboard = () => {
 
           setInteraction(intArray);
           setIntDisplay([intArray[intArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //Prescription data
-          var prescArray = Object.entries(
-            snapshot.child("Prescription").val()
-          ).map(([id, data]) => ({
+    //read prescriptions
+    get(dbRef6)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          var prescArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
@@ -322,13 +383,24 @@ const Dashboard = () => {
           const ongoing = prescArray.filter(
             (item) => item.status === "Ongoing"
           );
+          console.log(ongoing);
 
           prescArray = ongoing.concat(complete);
           setPrescription(prescArray);
           setPrescDisplay([prescArray[prescArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //File data
-          const fileArray = Object.entries(snapshot.child("Files").val()).map(
+    //read files
+    get(dbRef7)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const fileArray = Object.entries(snapshot.val()).map(
             ([id, data]) => ({
               id,
               ...data,
@@ -339,48 +411,74 @@ const Dashboard = () => {
 
           setFile(fileArray);
           setFileDispaly([fileArray[fileArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-          //BMI data
-          const bmiArray = Object.entries(snapshot.child("Bmi").val()).map(
+    //read BMI
+    get(dbRef8)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const bmiArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          //Sort by date
+          dateSort(bmiArray);
+
+          setBmi(bmiArray);
+          setBmiDispaly([bmiArray[bmiArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    //read blood sugar
+    get(dbRef9)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const sugarArray = Object.entries(snapshot.val()).map(
             ([id, data]) => ({
               id,
               ...data,
             })
           );
           //Sort by date
-          dateSort(bmiArray);
-
-          setBmi(bmiArray);
-          setBmiDispaly([bmiArray[bmiArray.length - 1]]);
-
-          //Blood sugar data
-          const sugarArray = Object.entries(
-            snapshot.child("BloodSugar").val()
-          ).map(([id, data]) => ({
-            id,
-            ...data,
-          }));
-          //Sort by date
           dateSort(sugarArray);
 
           setSugar(sugarArray);
           setSugarDispaly([sugarArray[sugarArray.length - 1]]);
-
-          //Health status data
-          const statusArray = Object.entries(snapshot.child("HealthStatus").val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            }));
-
-          setHealthS(statusArray);
-          setHealthSDisplay([statusArray[statusArray.length - 1]]);
-          
         } else {
           console.log("No data available");
         }
       })
+      .catch((error) => {
+        console.log(error);
+      });
 
+    //read health status
+    get(dbRef10)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const statusArray = Object.entries(snapshot.val()).map(
+            ([id, data]) => ({
+              id,
+              ...data,
+            })
+          );
+
+          setHealthS(statusArray);
+        } else {
+          console.log("No data available");
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -401,7 +499,6 @@ const Dashboard = () => {
     }
   };
 
-  //Handle clicks on search results
   const handleResultClick = (patient) => {
     setSearch(patient.patient);
     setSearched([]);
@@ -422,6 +519,7 @@ const Dashboard = () => {
     setPatientToDisplay(dataArray);
     setAssignee(dataArray[0].hc);
     setPatientTasksDisplay(taskArray);
+    console.log(taskArray);
 
     setBpDisplay(Bps);
     setClinicDisplay(clncArray);
@@ -431,9 +529,10 @@ const Dashboard = () => {
     setBmiDispaly(bmiArray);
     setSugarDispaly(sugarArray);
     setHealthSDisplay(healthArray);
-    console.log(healthArray);
+
     Cookies.set("patient", patient.id);
     Cookies.set("userName", patient.patient);
+
     // //calculate age
     const bornyr = dataArray[0].age.slice(12, 17);
     const yr = new Date().getFullYear();
@@ -450,10 +549,7 @@ const Dashboard = () => {
     update(dbRef2, updates);
   };
 
-
   const handleStatus1 = (e) => {
-    print(e.target.value);
-    
     setStatus(e.target.value);
 
     //Update tasks progress
@@ -462,7 +558,6 @@ const Dashboard = () => {
     update(dbRef4, updates);
   };
 
-  //Update prescription status
   const handleStatus2 = (e) => {
     setStatus(e.target.value);
 
@@ -484,18 +579,54 @@ const Dashboard = () => {
   const allTasks = () => {
     navigate("/alltasks");
   };
-  //Add new patient to the database and redirect to new page to add more details.
+  const Logout = () => {
+    //remove all cookies first
+    Cookies.remove("user");
+    Cookies.remove("userName");
+    Cookies.remove("patient");
+    navigate("/");
+  };
 
   const New = () => {
     navigate("/new");
   };
 
-  //Show more rows
+  const Edit = () => {
+    navigate("/edit");
+  };
+
+  const EditStatus = () => {
+    navigate("/edit/status");
+  };
+
   const addMoreRows = () => {
     setVisibleRows(visibleRows + 5);
   };
 
-  //return jsx
+  //Time preference
+  const prefTime = (e) => {
+    //Update tasks progress
+    const updates = {};
+    updates[patientToDisplay[0].id + "/prefTime"] = e.target.value;
+    update(dbRef, updates);
+  };
+
+  //Day preference
+  const prefDay = (e) => {
+    //Update tasks progress
+    const updates = {};
+    updates[patientToDisplay[0].id + "/prefDay"] = e.target.value;
+    update(dbRef, updates);
+  };
+
+  //Language preference
+  const prefLang = (e) => {
+    //Update tasks progress
+    const updates = {};
+    updates[patientToDisplay[0].id + "/prefLang"] = e.target.value;
+    update(dbRef, updates);
+  };
+
   return (
     <div>
       <nav style={{ position: "fixed" }} className="App-nav">
@@ -551,10 +682,184 @@ const Dashboard = () => {
 
       {patientToDisplay ? (
         <div className="dashboard">
-          <PatientData
-            patientToDisplay={patientToDisplay}
-            healthSDisplay={healthSDisplay}
-          />
+          <Sidebar
+            collapsed={menuCollapse}
+            style={{ marginTop: "7%", marginLeft: "0" }}
+          >
+            <div className="logotext">
+              {/* small and big change using menucollapse state */}
+              {healthSDisplay.length === 0 ? (
+                <h3 style={{ color: "purple", fontSize: "23px" }}>
+                  {menuCollapse ? (
+                    " "
+                  ) : (
+                    <button>
+                      <Link className="link" to="/forms/status">
+                        Health Status
+                      </Link>
+                    </button>
+                  )}
+                </h3>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="closemenu" onClick={menuIconClick}>
+              {/* changing menu collapse icon on click */}
+              {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
+            </div>
+            {patientToDisplay.map((patient) => (
+              <div key={patient.key}>
+                <Menu iconShape="square" className="menuItems">
+                  <MenuItem active={true} icon={<FaMale />}>
+                    Name: {patient.patient}
+                  </MenuItem>
+                  <MenuItem active={true} icon={<FiCalendar />}>
+                    DOB: {patient.age.slice(4, 17)}
+                  </MenuItem>
+                  <MenuItem icon={<FaMale />}>
+                    Gender:<b>{patient.gender}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaPhone />}>
+                    Phone:<b>{patient.Phone}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaHome />}>
+                    Home:<b>{patient.Address}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaRegAddressBook />}>
+                    Office:<b>{patient.Address1}</b>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaLanguage />}>
+                    <form>
+                      <label htmlFor="language">
+                        <select onChange={prefLang}>
+                          <option className="App-info" value="Preferred language">
+                            {patient.prefLang ? patient.prefLang : "Preferred Language"}
+                          </option>
+                          <option className="App-info" value="Kiswahili">
+                            Kiswahili
+                          </option>
+                          <option className="App-info" value="English">
+                            English
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaBusinessTime />}>
+                    <form>
+                      <label htmlFor="language">
+                        <select onChange={prefTime}>
+                          <option className="App-info" value="Preferred time">
+                            {patient.prefTime ? patient.prefTime : "Preferred Time"}
+                          </option>
+                          <option className="App-info" value="Morning">
+                            Morning
+                          </option>
+                          <option className="App-info" value="Afternoon">
+                            Afternoon
+                          </option>
+                          <option className="App-info" value=" Evening">
+                            Evening
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </MenuItem>
+
+                  <MenuItem icon={<FaCalendarDay />}>
+                    <form>
+                      <label htmlFor="language">
+                        <select onChange={prefDay}>
+                          <option className="App-info" value="Preferred day">
+                            {patient.prefDay ? patient.prefDay : "Preferred Day"}
+                          </option>
+                          <option className="App-info" value="Monday/Tuesday">
+                            Monday/Tuesday
+                          </option>
+                          <option className="App-info" value="Wednesday/Thursday">
+                            Wednesday/Thursday
+                          </option>
+                          <option className="App-info" value="Friday/Saturday">
+                            Friday/Saturday
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ))}
+
+            <Menu iconShape="square">
+              <MenuItem icon={<FiEdit />}>
+                <button className="App-info" onClick={Edit}>
+                  <b>Edit</b>
+                </button>
+              </MenuItem>
+            </Menu>
+
+            {healthSDisplay.map((hs) => (
+              <div key={hs.key}>
+                <Menu iconShape="square" className="menuItems">
+                  <MenuItem icon={<FiActivity />}>
+                    <u>Current chronic conditions</u>
+                  </MenuItem>
+                  <MenuItem>
+                    {hs.cConditions.map((c) => (
+                      <ul>
+                        <li>{c.condition}</li>
+                      </ul>
+                    ))}
+                  </MenuItem>
+                  <MenuItem icon={<FaImages />}>
+                    <u>Family conditions</u>
+                  </MenuItem>
+
+                  <MenuItem>
+                    {hs.FConditions.map((c) => (
+                      <ul>
+                        <li>{c.condition}</li>
+                      </ul>
+                    ))}
+                  </MenuItem>
+
+                  <MenuItem icon={<FiAlertCircle />}>
+                    Drugs:<b>{hs.drugUse[0].condition}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaSmile />}>
+                    Improve:<b>{hs.improve}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaBomb />}>
+                    activities:<b>{hs.activity[0].condition}</b>
+                  </MenuItem>
+                  <MenuItem icon={<FaSmile />}>
+                    Sleep:<b>{hs.sleep} Hrs</b>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ))}
+
+            <Menu iconShape="square">
+              {healthSDisplay.length > 0 && (
+                <MenuItem icon={<FiEdit />}>
+                  <button className="App-info" onClick={EditStatus}>
+                    <b>Edit</b>
+                  </button>
+                </MenuItem>
+              )}
+
+              <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+
+              <MenuItem icon={<FiLogOut />}>
+                <button className="App-info" onClick={Logout}>
+                  <b>Logout</b>
+                </button>
+              </MenuItem>
+            </Menu>
+          </Sidebar>
 
           <div style={{ marginTop: "6%" }}>
             <h4>Interaction log: </h4>
