@@ -697,8 +697,7 @@ const ExternalForm = () => {
         strToDate.setDate(strToDate.getDate() + 1);
         push(ref(database, "tasks"), {
           patient: data.key,
-          task:
-            "Update " + patient + " health status ",
+          task: "Update " + patient + " health status ",
           dueDate: dateStrip(3, today),
           completed: "Not started",
         });
@@ -734,6 +733,11 @@ const ExternalForm = () => {
     console.log(e.target.value);
   };
 
+  const handleHospital = (e) => {
+    setHospital(e.target.value);
+    console.log(e.target.value);
+  };
+
   // Handle file upload event and update state
   function handleChange(event) {
     setFile(event.target.files[0]);
@@ -750,7 +754,12 @@ const ExternalForm = () => {
   return (
     <div>
       <nav className="App-nav">
-        <img style={{display: "block", margin: "0 auto"}} src={carecall} alt="logo" className="App-logo" />
+        <img
+          style={{ display: "block", margin: "0 auto" }}
+          src={carecall}
+          alt="logo"
+          className="App-logo"
+        />
       </nav>
 
       <h3 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
@@ -763,13 +772,42 @@ const ExternalForm = () => {
           >
             Member Information
           </h4>
-          <label>
+          {/* <label>
             <b>Hospital name*</b> <br />
             <input
               type="text"
               value={hospital}
               onChange={(e) => setHospital(e.target.value)}
             />
+          </label> */}
+          <b>Hospital name*</b> <br />
+          <label htmlFor="Gender">
+            <select onChange={handleHospital}>
+              <option className="App-info" value="HS" key={"HS"}>
+                Select Hospital
+              </option>
+              <option
+                className="App-info"
+                value="EQA_Nairobi_Hospital"
+                key={"EQA_Nairobi_Hospital"}
+              >
+                EQA Nairobi Hospital
+              </option>
+              <option
+                className="App-info"
+                value="EQA_South_B"
+                key={"EQA_South_B"}
+              >
+                EQA South B
+              </option>
+              <option
+                className="App-info"
+                value="EQA_Kitengela"
+                key={"EQA_Kitengela"}
+              >
+                EQA Kitengela
+              </option>
+            </select>
           </label>
           <br />
           <br />
@@ -791,7 +829,6 @@ const ExternalForm = () => {
               onChange={(e) => setDueDates(e.target.value)}
             />
           </label>
-
           <br />
           <br />
           <b>Gender</b> <br />
