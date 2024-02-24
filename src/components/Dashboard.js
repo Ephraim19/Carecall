@@ -8,7 +8,30 @@ import { useNavigate } from "react-router-dom";
 import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
-import PatientData from "./dashboardData/PatientData";
+
+import {
+  FaBomb,
+  FaCartPlus,
+  FaEdit,
+  FaHome,
+  FaImages,
+  FaMale,
+  FaPhone,
+  FaPlusSquare,
+  FaRegAddressBook,
+  FaSmile,
+  FaUserGraduate,
+} from "react-icons/fa";
+import {
+  FiLogOut,
+  FiArrowLeftCircle,
+  FiArrowRightCircle,
+  FiCalendar,
+  FiAlertCircle,
+  FiAlertTriangle,
+  FiActivity,
+  FiEdit,
+} from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { onAuthStateChanged } from "firebase/auth";
 import {
