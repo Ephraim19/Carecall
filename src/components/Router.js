@@ -17,6 +17,7 @@ import HealthStatusForm from "./Forms/HealthStatusForm";
 import EditStatus from "./Forms/EditStatus";
 import HealthStatusEdit from "./Forms/HealthStatusEdit";
 import EditClinicals from "./Forms/EditClinicals";
+import NewAdded from "./Forms/NewAdded";
 
 const Router = () => {
   return (
@@ -40,6 +41,8 @@ const Router = () => {
         <Route path="/edit/status" Component={HealthStatusEdit} />
         <Route path="/hospitals/equityafia/form" Component={ExternalForm} />
         <Route path="/editclinical" Component={EditClinicals} />
+        <Route path="/new/added" Component={NewAdded} />
+
 
 
       </Routes>

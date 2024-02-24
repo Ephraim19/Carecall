@@ -307,7 +307,7 @@ const ExternalForm = () => {
                 setWeight("");
                 setDuration("");
 
-                //navigate("/dashboard");
+                navigate("/new/added");
               });
             });
           }
@@ -383,7 +383,7 @@ const ExternalForm = () => {
         setPhone("");
         setHospital("");
         setWeight("");
-        //navigate("/dashboard");
+        navigate("new/added");
       }
       //});
     }
@@ -620,7 +620,7 @@ const ExternalForm = () => {
                   setWeight("");
                   setDuration("");
 
-                  //navigate("/dashboard");
+                  navigate("/new/added");
                 });
               });
             }
@@ -723,7 +723,7 @@ const ExternalForm = () => {
           setPhone("");
           setHospital("");
           setWeight("");
-          //navigate("/dashboard");
+          navigate("/new/added");
         }
       });
     }
