@@ -788,10 +788,10 @@ const ExternalForm = () => {
               </option>
               <option
                 className="App-info"
-                value="EQA_Nairobi_Hospital"
-                key={"EQA_Nairobi_Hospital"}
+                value="EQA_West_Nairobi_Hospital"
+                key={"EQA_West_Nairobi_Hospital"}
               >
-                EQA Nairobi Hospital
+                EQA Nairobi West Hospital
               </option>
               <option
                 className="App-info"
