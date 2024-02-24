@@ -16,16 +16,18 @@ const AllTasks = () => {
   //Sort by date
   const dateSort = (x) => {
     x.sort(function (a, b) {
-      var awords = a.dueDate.slice(5, 17).split(" ");
-      var bwords = b.dueDate.slice(5, 17).split(" ");
+      if (a.dueDate && b.dueDate) {
+        var awords = a.dueDate.slice(5, 17).split(" ");
+        var bwords = b.dueDate.slice(5, 17).split(" ");
 
-      var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
-      var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
+        var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
+        var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
 
-      var strToDatea = new Date(aNewdate);
-      var strToDateb = new Date(bNewdate);
+        var strToDatea = new Date(aNewdate);
+        var strToDateb = new Date(bNewdate);
 
-      return strToDatea - strToDateb;
+        return strToDatea - strToDateb;
+      }
     });
   };
 
@@ -40,6 +42,8 @@ const AllTasks = () => {
           id,
           ...data,
         }));
+
+        console.log(taskArray);
 
         //Sort by date
         dateSort(taskArray);
@@ -99,7 +103,7 @@ const AllTasks = () => {
                     : " "}
                 </td>
 
-                <td>{patient.dueDate.slice(0, 17)}</td>
+                <td> {patient.dueDate ?  patient.dueDate.slice(0, 17) : " "}</td>
 
                 <td key={patient.id}>
                   <form>
