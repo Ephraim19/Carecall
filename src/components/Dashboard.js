@@ -326,15 +326,21 @@ const Dashboard = () => {
           );
           //Sort by date
           dateSort(clinicArray);
+          console.log(clinicArray);
 
           //Move Inactive to the bottom
+          const nones = clinicArray.filter((item) => item.status === undefined);
+
           const Inactive = clinicArray.filter(
             (item) => item.status === "Inactive"
           );
           const Active = clinicArray.filter((item) => item.status === "Active");
 
-          clinicArray = Active.concat(Inactive);
-          setClinic(clinicArray);
+          var clinicArray10 = Active.concat(Inactive);
+          clinicArray = nones.concat(clinicArray10);
+
+          setClinic(clinicArray)
+          
           //setClinicDisplay([clinicArray[clinicArray.length - 1]]);
         } else {
           console.log("No data available");
@@ -377,6 +383,8 @@ const Dashboard = () => {
           dateSort(prescArray);
 
           //Move complete to the bottom
+          const nones = prescArray.filter((item) => item.status === undefined);
+
           const complete = prescArray.filter(
             (item) => item.status === "Complete"
           );
@@ -385,7 +393,8 @@ const Dashboard = () => {
           );
           console.log(ongoing);
 
-          prescArray = ongoing.concat(complete);
+          var prescArray10 = ongoing.concat(complete);
+          prescArray = nones.concat(prescArray10);
           setPrescription(prescArray);
           //setPrescDisplay([prescArray[prescArray.length - 1]]);
         } else {
