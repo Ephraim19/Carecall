@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { database, storage } from "../Firebase";
 import { ref, push, get, update, set } from "firebase/database";
 import carecall from "../carecall.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import DatePicker from "react-datepicker";
 import {
   ref as sRef,
@@ -12,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const ExternalForm = () => {
   const [patient, setPatient] = useState("");
-  const [Phone, setPhone] = useState(0);
+  const [Phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [condition, setCondition] = useState("");
   const [file, setFile] = useState("");
@@ -38,6 +41,7 @@ const ExternalForm = () => {
   const [patientData, setPatientData] = useState([]);
 
   const [blood, setBlood] = useState("");
+  const [phoneErr, setPhoneErr] = useState("");
 
   const dbRef = ref(database, "HealthCordinator");
   const dbRef1 = ref(database, "clients");
@@ -106,12 +110,9 @@ const ExternalForm = () => {
   const Push = (event) => {
     event.preventDefault();
 
-    console.log(patientData);
     const membr = patientData.find((name) => name.Phone === Phone.toString());
 
     if (patient && Phone && membr) {
-      console.log(membr);
-
       //push data to firebase client
       setSave("saving...");
 
@@ -751,6 +752,18 @@ const ExternalForm = () => {
     setFile2(event.target.files[0]);
   }
 
+  //handlephone change
+  const phoneNo = (e) => {
+    setPhone(e.target.value);
+    if (e.target.value.length > 0 && e.target.value.length < 10) {
+      setPhoneErr("Phone number should be 10 digits");
+    } else if (e.target.value.length === 10) {
+      setPhoneErr(" ");
+    }else{
+      setPhoneErr("Please input a valid phone number");
+    }
+  };
+
   return (
     <div>
       <nav className="App-nav">
@@ -850,11 +863,14 @@ const ExternalForm = () => {
           <label>
             <b>Phone number*</b> <br />
             <input
-              type="number"
+              type="text"
               value={Phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={phoneNo}
+              // onChange={(e) => setPhone(e.target.value)}
             />
           </label>
+          <br />
+          <b style={{ color: "red" }}>{phoneErr}</b>
           <br />
           <br />
         </form>
