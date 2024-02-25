@@ -339,8 +339,8 @@ const Dashboard = () => {
           var clinicArray10 = Active.concat(Inactive);
           clinicArray = nones.concat(clinicArray10);
 
-          setClinic(clinicArray)
-          
+          setClinic(clinicArray);
+
           //setClinicDisplay([clinicArray[clinicArray.length - 1]]);
         } else {
           console.log("No data available");
@@ -674,11 +674,11 @@ const Dashboard = () => {
           <div>
             {patientToDisplay.map((patient) => (
               <h3 style={{ color: "purple", fontSize: "23px" }}>
-                {patient.patient}
-                
-                ({parseInt(age) -2024 > 0 ? parseInt(patient.age) + parseInt(age) - 2024  : patient.age})
-                 -
-                 ({patient.gender})
+                {patient.patient}(
+                {parseInt(age) - 2024 > 0
+                  ? parseInt(patient.age) + parseInt(age) - 2024
+                  : patient.age}
+                ) - ({patient.gender})
               </h3>
             ))}
           </div>
@@ -747,8 +747,13 @@ const Dashboard = () => {
                     <form>
                       <label htmlFor="language">
                         <select onChange={prefLang}>
-                          <option className="App-info" value="Preferred language">
-                            {patient.prefLang ? patient.prefLang : "Preferred Language"}
+                          <option
+                            className="App-info"
+                            value="Preferred language"
+                          >
+                            {patient.prefLang
+                              ? patient.prefLang
+                              : "Preferred Language"}
                           </option>
                           <option className="App-info" value="Kiswahili">
                             Kiswahili
@@ -766,7 +771,9 @@ const Dashboard = () => {
                       <label htmlFor="language">
                         <select onChange={prefTime}>
                           <option className="App-info" value="Preferred time">
-                            {patient.prefTime ? patient.prefTime : "Preferred Time"}
+                            {patient.prefTime
+                              ? patient.prefTime
+                              : "Preferred Time"}
                           </option>
                           <option className="App-info" value="Morning">
                             Morning
@@ -787,12 +794,17 @@ const Dashboard = () => {
                       <label htmlFor="language">
                         <select onChange={prefDay}>
                           <option className="App-info" value="Preferred day">
-                            {patient.prefDay ? patient.prefDay : "Preferred Day"}
+                            {patient.prefDay
+                              ? patient.prefDay
+                              : "Preferred Day"}
                           </option>
                           <option className="App-info" value="Monday/Tuesday">
                             Monday/Tuesday
                           </option>
-                          <option className="App-info" value="Wednesday/Thursday">
+                          <option
+                            className="App-info"
+                            value="Wednesday/Thursday"
+                          >
                             Wednesday/Thursday
                           </option>
                           <option className="App-info" value="Friday/Saturday">
@@ -1155,28 +1167,130 @@ const Dashboard = () => {
                 <th>Status</th>
               </tr>
               {prescDisplay.slice(0, visibleRows).map((presc) => (
-                <tr>
-                  <td>{presc.dueDate.slice(0, 17)}</td>
-                  <td>{presc.prescription}</td>
-                  <td>{presc.daysTaken}</td>
-                  <td>
-                    <form>
-                      <label htmlFor="status">
-                        <select onChange={handleStatus2} id={presc.id}>
-                          <option className="App-info" value="progress">
-                            {presc.status ? presc.status : "Ongoing"}
-                          </option>
-                          <option className="App-info" value="Ongoing">
-                            Ongoing
-                          </option>
-                          <option className="App-info" value="Complete">
-                            Complete
-                          </option>
-                        </select>
-                      </label>
-                    </form>
-                  </td>
-                </tr>
+                <>
+                  <tr>
+                    <td>{presc.dueDate.slice(0, 17)}</td>
+                    <td>{presc.prescription}</td>
+                    <td>{presc.daysTaken}</td>
+                    <td>
+                      <form>
+                        <label htmlFor="status">
+                          <select onChange={handleStatus2} id={presc.id}>
+                            <option className="App-info" value="progress">
+                              {presc.status ? presc.status : "Ongoing"}
+                            </option>
+                            <option className="App-info" value="Ongoing">
+                              Ongoing
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
+                  
+                  {presc.prescription1 ? (
+
+                  <tr>
+                    <td>{presc.dueDate.slice(0, 17)}</td>
+                    <td>{presc.prescription1}</td>
+                    <td>{presc.daysTaken1}</td>
+                    <td>
+                      <form>
+                        <label htmlFor="status">
+                          <select onChange={handleStatus2} id={presc.id}>
+                            <option className="App-info" value="progress">
+                              {presc.status ? presc.status : "Ongoing"}
+                            </option>
+                            <option className="App-info" value="Ongoing">
+                              Ongoing
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
+                  ):("")}
+
+                  {presc.prescription2 ? (
+                  <tr>
+                    <td>{presc.dueDate.slice(0, 17)}</td>
+                    <td>{presc.prescription2}</td>
+                    <td>{presc.daysTaken2}</td>
+                    <td>
+                      <form>
+                        <label htmlFor="status">
+                          <select onChange={handleStatus2} id={presc.id}>
+                            <option className="App-info" value="progress">
+                              {presc.status ? presc.status : "Ongoing"}
+                            </option>
+                            <option className="App-info" value="Ongoing">
+                              Ongoing
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
+                  ):("")}
+
+                  {presc.prescription3 ? (
+                  <tr>
+                    <td>{presc.dueDate.slice(0, 17)}</td>
+                    <td>{presc.prescription3}</td>
+                    <td>{presc.daysTaken3}</td>
+                    <td>
+                      <form>
+                        <label htmlFor="status">
+                          <select onChange={handleStatus2} id={presc.id}>
+                            <option className="App-info" value="progress">
+                              {presc.status ? presc.status : "Ongoing"}
+                            </option>
+                            <option className="App-info" value="Ongoing">
+                              Ongoing
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
+                  ):("")}
+                  {presc.prescription4 ? (
+                  <tr>
+                    <td>{presc.dueDate.slice(0, 17)}</td>
+                    <td>{presc.prescription4}</td>
+                    <td>{presc.daysTaken4}</td>
+                    <td>
+                      <form>
+                        <label htmlFor="status">
+                          <select onChange={handleStatus2} id={presc.id}>
+                            <option className="App-info" value="progress">
+                              {presc.status ? presc.status : "Ongoing"}
+                            </option>
+                            <option className="App-info" value="Ongoing">
+                              Ongoing
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
+                  ):("")}
+                </>
               ))}
             </table>
             {visibleRows < prescDisplay.length && (

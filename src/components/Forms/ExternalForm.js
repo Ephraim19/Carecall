@@ -21,12 +21,15 @@ const ExternalForm = () => {
   const [file, setFile] = useState("");
   const [file1, setFile1] = useState("");
   const [file2, setFile2] = useState("");
+  const [note, setNote] = useState("");
 
   const [percent, setPercent] = useState(0);
   const [Save, setSave] = useState("Save");
   const [duration, setDuration] = useState("");
   const [duration1, setDuration1] = useState("");
   const [duration2, setDuration2] = useState("");
+  const [duration3, setDuration3] = useState("");
+  const [duration4, setDuration4] = useState("");
 
   const [hospital, setHospital] = useState("");
 
@@ -38,6 +41,9 @@ const ExternalForm = () => {
   const [medication, setMedication] = useState("");
   const [medication2, setMedication2] = useState("");
   const [medication3, setMedication3] = useState("");
+  const [medication4, setMedication4] = useState("");
+  const [medication5, setMedication5] = useState("");
+
   const [patientData, setPatientData] = useState([]);
 
   const [blood, setBlood] = useState("");
@@ -125,9 +131,14 @@ const ExternalForm = () => {
           prescription: medication,
           prescription1: medication2,
           prescription2: medication3,
+          prescription3: medication4,
+          prescription4: medication5,
+
           daysTaken: duration,
           daysTaken2: duration2,
           daysTaken1: duration1,
+          daysTaken3: duration3,
+          daysTaken4: duration4,
 
           dueDate: dateStrip(3, strToDate),
         }).then(() => {
@@ -175,6 +186,36 @@ const ExternalForm = () => {
                 " on " +
                 dateStrip(3, strToDate3).slice(0, 17),
               dueDate: dateStrip(3, strToDate3),
+              completed: "Not started",
+            });
+          }
+
+          var strToDate4 = new Date();
+          strToDate4.setDate(strToDate4.getDate() + parseInt(duration3));
+          if (medication4) {
+            push(ref(database, "tasks"), {
+              patient: membr.id,
+              task:
+                "Member has finished " +
+                medication4 +
+                " on " +
+                dateStrip(3, strToDate4).slice(0, 17),
+              dueDate: dateStrip(3, strToDate4),
+              completed: "Not started",
+            });
+          }
+
+          var strToDate5 = new Date();
+          strToDate5.setDate(strToDate5.getDate() + parseInt(duration4));
+          if (medication5) {
+            push(ref(database, "tasks"), {
+              patient: membr.id,
+              task:
+                "Member has finished " +
+                medication5 +
+                " on " +
+                dateStrip(3, strToDate5).slice(0, 17),
+              dueDate: dateStrip(3, strToDate5),
               completed: "Not started",
             });
           }
@@ -230,7 +271,15 @@ const ExternalForm = () => {
           }
         });
       }
-
+      //push note interaction
+      if (note) {
+        push(ref(database, "Interaction"), {
+          hc: hospital,
+          interaction: note,
+          dueDate: dateStrip(3, strToDate),
+          patient: membr.id,
+        });
+      }
       //Push weight & height
       if (weight && height) {
         push(ref(database, "Bmi"), {
@@ -401,6 +450,8 @@ const ExternalForm = () => {
         medication,
         medication2,
         medication3,
+        medication4,
+        medication5,
         condition,
         hospital,
         gender,
@@ -451,10 +502,13 @@ const ExternalForm = () => {
             prescription: medication,
             prescription1: medication2,
             prescription2: medication3,
+            prescription3: medication3,
+            prescription4: medication4,
             daysTaken: duration,
             daysTaken2: duration2,
             daysTaken1: duration1,
-
+            daysTaken3: duration3,
+            daysTaken4: duration4,
             dueDate: dateStrip(3, strToDate),
           }).then(() => {
             //Create a task for prescription
@@ -501,6 +555,34 @@ const ExternalForm = () => {
                   patient +
                   " has finished " +
                   medication3 +
+                  " on " +
+                  dateStrip(3, strToDate3).slice(0, 17),
+                dueDate: dateStrip(3, strToDate3),
+                completed: "Not started",
+              });
+            }
+
+            if (medication4) {
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " has finished " +
+                  medication4 +
+                  " on " +
+                  dateStrip(3, strToDate3).slice(0, 17),
+                dueDate: dateStrip(3, strToDate3),
+                completed: "Not started",
+              });
+            }
+
+            if (medication5) {
+              push(ref(database, "tasks"), {
+                patient: data.key,
+                task:
+                  patient +
+                  " has finished " +
+                  medication5 +
                   " on " +
                   dateStrip(3, strToDate3).slice(0, 17),
                 dueDate: dateStrip(3, strToDate3),
@@ -759,7 +841,7 @@ const ExternalForm = () => {
       setPhoneErr("Phone number should be 10 digits");
     } else if (e.target.value.length === 10) {
       setPhoneErr(" ");
-    }else{
+    } else {
       setPhoneErr("Please input a valid phone number");
     }
   };
@@ -952,6 +1034,48 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
+
+          <label>
+            <b>Medication-4 </b> <br />
+            <input
+              placeholder="Include dosage and frequency)"
+              type="text"
+              value={medication4}
+              onChange={(e) => setMedication4(e.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            <b>Medication duration(in days)</b> <br />
+            <input
+              type="text"
+              value={duration3}
+              onChange={(e) => setDuration3(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+          <label>
+            <b>Medication-5 </b> <br />
+            <input
+              placeholder="Include dosage and frequency)"
+              type="text"
+              value={medication5}
+              onChange={(e) => setMedication5(e.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            <b>Medication duration(in days)</b> <br />
+            <input
+              type="text"
+              value={duration4}
+              onChange={(e) => setDuration4(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
         </form>
 
         <form>
@@ -1009,11 +1133,21 @@ const ExternalForm = () => {
             onChange={handleChange3}
             accept="media_type"
           />{" "}
+          <br />
+          <br />
+          <label>
+            <b>Important note</b> <br />
+            <input
+              type="text"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+          </label>
         </form>
       </div>
       <div className="dashboard">
         <div>
-          <p>Progress: {percent}</p>
+          <p>File upload progress: {percent}%</p>
           <br />
           <button onClick={Push}>{Save}</button>
         </div>
