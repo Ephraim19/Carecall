@@ -1136,7 +1136,7 @@ const ExternalForm = () => {
           <br />
           <br />
           <label>
-            <b>Important note</b> <br />
+            <b>Important note*</b> <br />
             <input
               type="text"
               value={note}
