@@ -1378,7 +1378,7 @@ const Dashboard = () => {
 
                       <td>{patient.dueDate.slice(0, 17)}</td>
 
-                      <td>ebemokamba@gmail.com</td>
+                      <td>Ebenezer</td>
                       <td>
                         <form>
                           <label htmlFor="status">
