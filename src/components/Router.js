@@ -49,8 +49,6 @@ const Router = () => {
 
 
 
-
-
       </Routes>
     </BrowserRouter>
   );

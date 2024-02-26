@@ -455,7 +455,7 @@ const ExternalForm = () => {
         condition,
         hospital,
         gender,
-        hc: hc.user,
+        //hc: hc.user,
         Address1: "",
         Address: "",
         condition: "",
@@ -787,7 +787,7 @@ const ExternalForm = () => {
 
         //Add +1 tasks to HC
         const updates = {};
-        updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
+        // updates[hc.id + "/tasks"] = parseInt(hc.tasks) + 1;
         update(dbRef, updates);
 
         if (!file) {
