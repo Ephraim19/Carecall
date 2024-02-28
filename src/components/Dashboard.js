@@ -588,6 +588,11 @@ const Dashboard = () => {
   const allTasks = () => {
     navigate("/alltasks");
   };
+
+  const allMembers = () => {
+    navigate("/allmembers");
+  };
+
   const Logout = () => {
     //remove all cookies first
     Cookies.remove("user");
@@ -689,7 +694,10 @@ const Dashboard = () => {
         </button>
 
         <button className="App-info" onClick={allTasks}>
-          All tasks
+         Tasks
+        </button>
+        <button className="App-info" onClick={allMembers}>
+          Members
         </button>
       </nav>
 

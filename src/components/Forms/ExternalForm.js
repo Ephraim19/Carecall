@@ -455,6 +455,7 @@ const ExternalForm = () => {
         condition,
         hospital,
         gender,
+        joinDate: new Date().toDateString(),
         //hc: hc.user,
         Address1: "",
         Address: "",

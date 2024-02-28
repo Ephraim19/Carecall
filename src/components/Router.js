@@ -12,6 +12,7 @@ import Files from "./Forms/Files";
 import Bmi from "./Forms/Bmi";
 import BloodSugar from "./Forms/BloodSugar";
 import AllTasks from "./Forms/AllTasks";
+import AllMembers from "./Forms/AllMembers";
 import ExternalForm from "./Forms/ExternalForm";
 import HealthStatusForm from "./Forms/HealthStatusForm";
 import EditStatus from "./Forms/EditStatus";
@@ -38,6 +39,8 @@ const Router = () => {
         <Route path="/bmi" Component={Bmi} />
         <Route path="/sugar" Component={BloodSugar} />
         <Route path="/alltasks" Component={AllTasks} />
+        <Route path="/allmembers" Component={AllMembers} />
+
         <Route path="/forms/status" Component={HealthStatusForm} />
         <Route path="/edit" Component={EditStatus} />
         <Route path="/edit/status" Component={HealthStatusEdit} />
