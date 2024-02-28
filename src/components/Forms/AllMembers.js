@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { database, auth } from "../Firebase";
 import { Link } from "react-router-dom";
-
+import DatePicker from "react-datepicker";
 const AllTasks = () => {
   const [patientTasks, setPatientTasks] = useState([]);
   const dbRef2 = ref(database, "tasks");
@@ -73,9 +73,8 @@ const AllTasks = () => {
 
   const handleHospital = (e) => {
     console.log(e.target.value);
-     //setSearch(e.target.value);
-    // setSearched([]);
-     let obj = patientData.filter((name) => name.hospital === e.target.value);
+    let obj = patientData.filter((name) => name.hospital === e.target.value);
+    setSearched(obj);
     setPatientToDisplay(obj);
   };
 
@@ -86,21 +85,11 @@ const AllTasks = () => {
     var searches = patientData.filter((name) =>
       name.patient.toLowerCase().includes(e.target.value.toLowerCase())
     );
-
+    setPatientToDisplay(searches);
     setSearched(searches);
-
-    // } else {
-    //   setSearched([]);
-    // }
+    console.log(searches);
   };
 
-  const handleResultClick = (patient) => {
-    setSearch(patient.patient);
-    setSearched([]);
-    let obj = patientData.find((name) => name.id === patient.id);
-    const dataArray = [obj];
-    setPatientToDisplay(dataArray);
-  };
 
   return (
     <div>
@@ -124,20 +113,6 @@ const AllTasks = () => {
                 />
               </label>
             </form>
-            {searched ? (
-              <ul className="searchable">
-                {searched.map((patient) => (
-                  <div
-                    key={patient.id}
-                    onClick={() => handleResultClick(patient)}
-                  >
-                    {patient.patient} - ({patient.gender})
-                  </div>
-                ))}
-              </ul>
-            ) : (
-              " "
-            )}
           </td>
           <td>
             <form className="App-info">
@@ -179,9 +154,10 @@ const AllTasks = () => {
 
           <th>Date joined</th>
         </tr>
-        {patientData.length > 0 &&
+        {/* {patientData.length > 0 &&
         patientToDisplay.length > 0 &&
-        searched.length === 0
+        searched.length === 0 */}
+        {searched.length > 0
           ? patientToDisplay.map((patient) => (
               <>
                 <tr key={patient.id}>
