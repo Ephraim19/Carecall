@@ -12,6 +12,9 @@ const AllTasks = () => {
   const dbRef = ref(database, "clients");
   const [patientData, setPatientData] = useState([]);
   const [obj, setObj] = useState("");
+  const [search, setSearch] = useState("");
+  const [searched, setSearched] = useState([]);
+  const [patientToDisplay, setPatientToDisplay] = useState([]);
 
   //Sort by date
   const dateSort = (x) => {
@@ -68,6 +71,37 @@ const AllTasks = () => {
     console.log(patientData);
   }, []);
 
+  const handleHospital = (e) => {
+    console.log(e.target.value);
+     //setSearch(e.target.value);
+    // setSearched([]);
+     let obj = patientData.filter((name) => name.hospital === e.target.value);
+    setPatientToDisplay(obj);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+
+    var searches = patientData.filter((name) =>
+      name.patient.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    setSearched(searches);
+
+    // } else {
+    //   setSearched([]);
+    // }
+  };
+
+  const handleResultClick = (patient) => {
+    setSearch(patient.patient);
+    setSearched([]);
+    let obj = patientData.find((name) => name.id === patient.id);
+    const dataArray = [obj];
+    setPatientToDisplay(dataArray);
+  };
+
   return (
     <div>
       <nav className="App-nav">
@@ -77,34 +111,108 @@ const AllTasks = () => {
       <h4>All Members</h4>
       <table key={1} className="customers">
         <tr>
+          <td>
+            {" "}
+            <form className="App-info">
+              <label>
+                <input
+                  className="enlarged-text-box"
+                  type="text"
+                  value={search}
+                  placeholder="Filter member"
+                  onChange={handleSearch}
+                />
+              </label>
+            </form>
+            {searched ? (
+              <ul className="searchable">
+                {searched.map((patient) => (
+                  <div
+                    key={patient.id}
+                    onClick={() => handleResultClick(patient)}
+                  >
+                    {patient.patient} - ({patient.gender})
+                  </div>
+                ))}
+              </ul>
+            ) : (
+              " "
+            )}
+          </td>
+          <td>
+            <form className="App-info">
+              <label htmlFor="Gender">
+                <select onChange={handleHospital}>
+                  <option className="App-info" value="HS" key={"HS"}>
+                    Filter by Hospital
+                  </option>
+                  <option
+                    className="App-info"
+                    value="EQA_West_Nairobi_Hospital"
+                    key={"EQA_West_Nairobi_Hospital"}
+                  >
+                    EQA Nairobi West Hospital
+                  </option>
+                  <option
+                    className="App-info"
+                    value="EQA_South_B"
+                    key={"EQA_South_B"}
+                  >
+                    EQA South B
+                  </option>
+                  <option
+                    className="App-info"
+                    value="EQA_Kitengela"
+                    key={"EQA_Kitengela"}
+                  >
+                    EQA Kitengela
+                  </option>
+                </select>
+              </label>
+            </form>
+          </td>
+          <td>Status</td>
+        </tr>
+        <tr>
           <th>Member</th>
           <th>Hospital</th>
 
           <th>Date joined</th>
-
         </tr>
-        {patientData.map((patient) => (
-          <>
-            {patient && patientData ? (
-              <tr key={patient.id}>
-                <td>
-                  {" "}
-                  <Link className="link" to="/dashboard">
-                    {patient.patient}
-                  </Link>
-                </td>
-                <td>
-                    {patient.hospital}
-                </td>
+        {patientData.length > 0 &&
+        patientToDisplay.length > 0 &&
+        searched.length === 0
+          ? patientToDisplay.map((patient) => (
+              <>
+                <tr key={patient.id}>
+                  <td>
+                    {" "}
+                    <Link className="link" to="/dashboard">
+                      {patient.patient}
+                    </Link>
+                  </td>
+                  <td>{patient.hospital}</td>
 
-                <td> {patient.joinDate ?  patient.joinDate : " "}</td>
+                  <td> {patient.joinDate ? patient.joinDate : " "}</td>
+                </tr>
+              </>
+            ))
+          : patientData.map((patient) => (
+              <>
+                {/* {patient && patientData ? ( */}
+                <tr key={patient.id}>
+                  <td>
+                    {" "}
+                    <Link className="link" to="/dashboard">
+                      {patient.patient}
+                    </Link>
+                  </td>
+                  <td>{patient.hospital}</td>
 
-              </tr>
-            ) : (
-              " "
-            )}
-          </>
-        ))}
+                  <td> {patient.joinDate ? patient.joinDate : " "}</td>
+                </tr>
+              </>
+            ))}
 
         <br />
       </table>

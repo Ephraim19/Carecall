@@ -5,7 +5,6 @@ import carecall from "../carecall.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import DatePicker from "react-datepicker";
 import {
   ref as sRef,
   uploadBytesResumable,
