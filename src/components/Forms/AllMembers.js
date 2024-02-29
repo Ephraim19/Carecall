@@ -90,108 +90,108 @@ const AllTasks = () => {
     console.log(searches);
   };
 
-
   return (
     <div>
       <nav className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
         <form className="App-info"></form>
       </nav>
-      <h4>All Members</h4>
-      <table key={1} className="customers">
-        <tr>
-          <td>
-            {" "}
-            <form className="App-info">
-              <label>
-                <input
-                  className="enlarged-text-box"
-                  type="text"
-                  value={search}
-                  placeholder="Filter member"
-                  onChange={handleSearch}
-                />
-              </label>
-            </form>
-          </td>
-          <td>
-            <form className="App-info">
-              <label htmlFor="Gender">
-                <select onChange={handleHospital}>
-                  <option className="App-info" value="HS" key={"HS"}>
-                    Filter by Hospital
-                  </option>
-                  <option
-                    className="App-info"
-                    value="EQA_West_Nairobi_Hospital"
-                    key={"EQA_West_Nairobi_Hospital"}
-                  >
-                    EQA Nairobi West Hospital
-                  </option>
-                  <option
-                    className="App-info"
-                    value="EQA_South_B"
-                    key={"EQA_South_B"}
-                  >
-                    EQA South B
-                  </option>
-                  <option
-                    className="App-info"
-                    value="EQA_Kitengela"
-                    key={"EQA_Kitengela"}
-                  >
-                    EQA Kitengela
-                  </option>
-                </select>
-              </label>
-            </form>
-          </td>
-          <td>Status</td>
-        </tr>
-        <tr>
-          <th>Member</th>
-          <th>Hospital</th>
-
-          <th>Date joined</th>
-        </tr>
-        {/* {patientData.length > 0 &&
+      <div style={{ width: "80%", display: "block", margin: "0 auto"  }}>
+        <h4>All Members</h4>
+        <table key={1} className="customers">
+          <tr>
+            <td>
+              {" "}
+              <form className="App-info">
+                <label>
+                  <input
+                    className="enlarged-text-box"
+                    type="text"
+                    value={search}
+                    placeholder="Filter member"
+                    onChange={handleSearch}
+                  />
+                </label>
+              </form>
+            </td>
+            <td>
+              <form className="App-info">
+                <label htmlFor="Gender">
+                  <select onChange={handleHospital}>
+                    <option className="App-info" value="HS" key={"HS"}>
+                      Filter by Hospital
+                    </option>
+                    <option
+                      className="App-info"
+                      value="EQA_West_Nairobi_Hospital"
+                      key={"EQA_West_Nairobi_Hospital"}
+                    >
+                      EQA Nairobi West Hospital
+                    </option>
+                    <option
+                      className="App-info"
+                      value="EQA_South_B"
+                      key={"EQA_South_B"}
+                    >
+                      EQA South B
+                    </option>
+                    <option
+                      className="App-info"
+                      value="EQA_Kitengela"
+                      key={"EQA_Kitengela"}
+                    >
+                      EQA Kitengela
+                    </option>
+                  </select>
+                </label>
+              </form>
+            </td>
+            <td>Status</td>
+          </tr>
+          <tr>
+            <th>Member</th>
+            <th>Hospital</th>
+            <th>Date joined</th>
+          </tr>
+          {/* {patientData.length > 0 &&
         patientToDisplay.length > 0 &&
         searched.length === 0 */}
-        {searched.length > 0
-          ? patientToDisplay.map((patient) => (
-              <>
-                <tr key={patient.id}>
-                  <td>
-                    {" "}
-                    <Link className="link" to="/dashboard">
-                      {patient.patient}
-                    </Link>
-                  </td>
-                  <td>{patient.hospital}</td>
+          {searched.length > 0
+            ? patientToDisplay.map((patient) => (
+                <>
+                  <tr key={patient.id}>
+                    <td>
+                      {" "}
+                      <Link className="link" to="/dashboard">
+                        {patient.patient}
+                      </Link>
+                    </td>
+                    <td>{patient.hospital}</td>
 
-                  <td> {patient.joinDate ? patient.joinDate : " "}</td>
-                </tr>
-              </>
-            ))
-          : patientData.map((patient) => (
-              <>
-                {/* {patient && patientData ? ( */}
-                <tr key={patient.id}>
-                  <td>
-                    {" "}
-                    <Link className="link" to="/dashboard">
-                      {patient.patient}
-                    </Link>
-                  </td>
-                  <td>{patient.hospital}</td>
+                    <td> {patient.joinDate ? patient.joinDate : " "}</td>
+                  </tr>
+                </>
+              ))
+            : patientData.map((patient) => (
+                <>
+                  {/* {patient && patientData ? ( */}
+                  <tr key={patient.id}>
+                    <td>
+                      {" "}
+                      <Link className="link" to="/dashboard">
+                        {patient.patient}
+                      </Link>
+                    </td>
+                    <td>{patient.hospital}</td>
 
-                  <td> {patient.joinDate ? patient.joinDate : " "}</td>
-                </tr>
-              </>
-            ))}
+                    <td> {patient.joinDate ? patient.joinDate : " "}</td>
+                  </tr>
+                </>
+              ))}
 
-        <br />
-      </table>
+          <br />
+        </table>
+      </div>
     </div>
   );
 };

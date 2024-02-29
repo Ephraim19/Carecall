@@ -679,7 +679,7 @@ const Dashboard = () => {
           <div>
             {patientToDisplay.map((patient) => (
               <h3 style={{ color: "purple", fontSize: "23px" }}>
-                {patient.patient}(
+                {patient.patient.split(" ")[0]} {patient.patient.split(" ")[1]}(
                 {parseInt(age) - 2024 > 0
                   ? parseInt(patient.age) + parseInt(age) - 2024
                   : patient.age}

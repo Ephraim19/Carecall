@@ -115,6 +115,19 @@ const ExternalForm = () => {
   const Push = (event) => {
     event.preventDefault();
 
+    if(!hospital){
+      toast.error("Please input hospital name");
+      return;
+    }
+    if (!patient){
+      toast.error("Please input member's name");
+      return;
+    }
+
+    if (!Phone){
+      toast.error("Please input member's phone number");
+      return;
+    }
     const membr = patientData.find((name) => name.Phone === Phone.toString());
 
     if (patient && Phone && membr) {
@@ -1152,6 +1165,7 @@ const ExternalForm = () => {
           <button onClick={Push}>{Save}</button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
