@@ -115,16 +115,16 @@ const ExternalForm = () => {
   const Push = (event) => {
     event.preventDefault();
 
-    if(!hospital){
+    if (!hospital) {
       toast.error("Please input hospital name");
       return;
     }
-    if (!patient){
+    if (!patient) {
       toast.error("Please input member's name");
       return;
     }
 
-    if (!Phone){
+    if (!Phone) {
       toast.error("Please input member's phone number");
       return;
     }
@@ -863,16 +863,16 @@ const ExternalForm = () => {
     <div>
       <nav className="App-nav">
         <img
-          style={{ display: "block", margin: "0 auto" }}
+          // style={{ display: "block", margin: "0 auto" }}
           src={carecall}
           alt="logo"
           className="App-logo"
         />
+        <h3 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
+          Member Registration Portal
+        </h3>
       </nav>
 
-      <h3 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
-        Member Registration Form
-      </h3>
       <div className="dashboard">
         <form>
           <h4
