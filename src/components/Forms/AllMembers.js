@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import carecall from "../carecall.png";
 import { ref, get } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { database, auth } from "../Firebase";
 import { Link } from "react-router-dom";
+import { DateRangePicker } from "react-date-range";
 import DatePicker from "react-datepicker";
+
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+
 const AllTasks = () => {
   const [patientTasks, setPatientTasks] = useState([]);
   const dbRef2 = ref(database, "tasks");
@@ -15,7 +19,8 @@ const AllTasks = () => {
   const [search, setSearch] = useState("");
   const [searched, setSearched] = useState([]);
   const [patientToDisplay, setPatientToDisplay] = useState([]);
-
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   //Sort by date
   const dateSort = (x) => {
     x.sort(function (a, b) {
@@ -90,13 +95,32 @@ const AllTasks = () => {
     console.log(searches);
   };
 
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+    let currentDate = new Date(startDate);
+    var dates = [];
+    while (currentDate <= endDate) {
+      dates.push(new Date(currentDate).toDateString());
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    var searches = patientData.filter((name) => dates.includes(name.joinDate));
+
+    setPatientToDisplay(searches);
+    setSearched(searches);
+  };
+
   return (
     <div>
       <nav className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
         <form className="App-info"></form>
       </nav>
-      <div style={{ width: "80%", display: "block", margin: "0 auto"  }}>
+      <div style={{ width: "90%", display: "block", margin: "0 auto" }}>
         <h4>All Members</h4>
         <table key={1} className="customers">
           <tr>
@@ -146,7 +170,27 @@ const AllTasks = () => {
                 </label>
               </form>
             </td>
-            <td>Status</td>
+            <td>
+              {" "}
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateChange}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                placeholderText="Start Date"
+              />
+              <br />
+              <DatePicker
+                selected={endDate}
+                onChange={handleEndDateChange}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                placeholderText="End Date"
+                minDate={startDate}
+              />
+            </td>
           </tr>
           <tr>
             <th>Member</th>
