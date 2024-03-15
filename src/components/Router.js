@@ -24,9 +24,11 @@ import EmailSignup from "./Forms/EmailSignup";
 
 const Router = () => {
   return (
-    <BrowserRouter >
+    <BrowserRouter>
       <Routes>
-        <Route path="/" Component={Login} />
+        {/* //<Route path="/" Component={Login} /> */}
+        <Route path="/" Component={EmailLogin} />
+
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/patient" Component={Patient} />
         <Route path="/new" Component={ExternalForm} />
@@ -49,9 +51,6 @@ const Router = () => {
         <Route path="/new/added" Component={NewAdded} />
         <Route path="/email/login" Component={EmailLogin} />
         <Route path="/email/signup" Component={EmailSignup} />
-
-
-
       </Routes>
     </BrowserRouter>
   );

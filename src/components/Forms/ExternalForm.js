@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { database, storage } from "../Firebase";
+import { database,  storage } from "../Firebase";
 import { ref, push, get, update, set } from "firebase/database";
 import carecall from "../carecall.png";
 import { ToastContainer, toast } from "react-toastify";
@@ -47,6 +47,7 @@ const ExternalForm = () => {
 
   const [blood, setBlood] = useState("");
   const [phoneErr, setPhoneErr] = useState("");
+
 
   const dbRef = ref(database, "HealthCordinator");
   const dbRef1 = ref(database, "clients");
@@ -831,7 +832,7 @@ const ExternalForm = () => {
 
   const handleHospital = (e) => {
     setHospital(e.target.value);
-    console.log(e.target.value);
+    
   };
 
   // Handle file upload event and update state
@@ -880,7 +881,6 @@ const ExternalForm = () => {
           >
             Member Information
           </h4>
-  
           <b>Hospital name*</b> <br />
           <label htmlFor="Gender">
             <select onChange={handleHospital}>
