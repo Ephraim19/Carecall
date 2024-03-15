@@ -880,14 +880,7 @@ const ExternalForm = () => {
           >
             Member Information
           </h4>
-          {/* <label>
-            <b>Hospital name*</b> <br />
-            <input
-              type="text"
-              value={hospital}
-              onChange={(e) => setHospital(e.target.value)}
-            />
-          </label> */}
+  
           <b>Hospital name*</b> <br />
           <label htmlFor="Gender">
             <select onChange={handleHospital}>

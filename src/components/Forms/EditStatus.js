@@ -30,6 +30,10 @@ const EditStatus = () => {
   const [Address1, setAddress1] = useState("");
   const [patientData, setPatientData] = useState([]);
 
+  const [prefDay, setPrefDay] = useState("");
+  const [prefTime, setPrefTime] = useState("");
+  const [prefLang, setPrefLang] = useState("");
+
   const dbRef = ref(database, "clients");
   const navigate = useNavigate();
 
@@ -70,6 +74,10 @@ const EditStatus = () => {
           setIntervention3(obj.intervention3);
           setIntervention4(obj.intervention4);
           setPatientData(obj);
+          
+          setPrefLang(obj.language);
+          setPrefDay(obj.day);
+          setPrefTime(obj.time);
         } else {
           console.log("No data available");
         }
@@ -78,7 +86,7 @@ const EditStatus = () => {
         console.log(error);
       });
   }, []);
-  
+
   const Push = (e) => {
     e.preventDefault();
     //Update user data
@@ -105,6 +113,10 @@ const EditStatus = () => {
     updates[Cookies.get("patient") + "/Address"] = Address;
     updates[Cookies.get("patient") + "/Address1"] = Address1;
 
+    updates[Cookies.get("patient") + "/language"] = prefLang;
+    updates[Cookies.get("patient") + "/day"] = prefDay;
+    updates[Cookies.get("patient") + "/time"] = prefTime;
+
     update(dbRef, updates);
     navigate("/dashboard");
   };
@@ -121,107 +133,100 @@ const EditStatus = () => {
     <div>
       <nav className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
-        <form className="App-info"></form>
+        <h3 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
+          Member Information Update
+        </h3>
       </nav>
-      <div>
-        <form className="newForm">
-          <label>
-            <b>Enter the patient's full name:</b> <br />
-            <input
-              type="text"
-              value={patient}
-              onChange={(e) => setPatient(e.target.value)}
+
+      <form className="newForm">
+        <div className="dashboard">
+          <div>
+            <label>
+              <b>Enter the patient's full name:</b> <br />
+              <input
+                type="text"
+                value={patient}
+                onChange={(e) => setPatient(e.target.value)}
+              />
+            </label>
+            <br />
+            <br />
+            <b>Date of birth</b>
+            <br />
+            <DatePicker
+              selected={dueDates}
+              onChange={(date) => setDueDates(date)}
             />
-          </label>
-          <br />
-          <br />
-          <b>Date of birth</b>
-          <br />
-          <DatePicker
-            selected={dueDates}
-            onChange={(date) => setDueDates(date)}
-          />
-          <br />
-          <br />
-          <b>Gender</b> <br />
-          <label htmlFor="Gender">
-            <select onChange={handleSelect}>
-              <option className="App-info" value="MF" key={"MF"}>
-                Select Gender
-              </option>
-              <option className="App-info" value="M" key={"M"}>
-                Male
-              </option>
-              <option className="App-info" value="F" key={"F"}>
-                Female
-              </option>
-            </select>
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Phone number:</b> <br />
-            <input
-              type="number"
-              value={Phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            Home Address <br />
-            <input
-              type="text"
-              value={Address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            Office Address <br />
-            <input
-              type="text"
-              value={Address1}
-              onChange={(e) => setAddress1(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          {/* <label>
-            <b>Enter the patients health status:</b> <br />
-            <input
-              type="radio"
-              value="Healthy"
-              name="status"
-              checked={status === "Healthy"}
-              onChange={onOptionChange}
-            />{" "}
-            Healthy <br />
-            <input
-              type="radio"
-              value="At risk"
-              name="status"
-              checked={status === "At risk"}
-              onChange={onOptionChange}
-            />{" "}
-            At risk <br />
-            <input
-              type="radio"
-              value="Chronic"
-              name="status"
-              checked={status === "Chronic"}
-              onChange={onOptionChange}
-            />{" "}
-            Chronic <br />
-          </label> */}
-      
-          <br />
-          <br />
-          <button onClick={Push}>Save</button>
-        </form>
-      </div>
+            <br />
+            <br />
+            <label>
+              <b>Phone number:</b> <br />
+              <input
+                type="number"
+                value={Phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </label>
+            <br />
+            <br />
+            <label>
+              Home Address <br />
+              <input
+                type="text"
+                value={Address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </label>
+            <br />
+            <br />
+            <label>
+              Office Address <br />
+              <input
+                type="text"
+                value={Address1}
+                onChange={(e) => setAddress1(e.target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Preferred Language <br />
+              <input
+                type="text"
+                value={prefLang}
+                onChange={(e) => setPrefLang(e.target.value)}
+              />
+            </label>
+
+            <br />
+            <br />
+            <label>
+              Preferred Day
+              <br />
+              <input
+                type="text"
+                value={prefDay}
+                onChange={(e) => setPrefDay(e.target.value)}
+              />
+            </label>
+
+            <br />
+            <br />
+            <label>
+              Preferred Time <br />
+              <input
+                type="text"
+                value={prefTime}
+                onChange={(e) => setPrefTime(e.target.value)}
+              />
+            </label>
+          </div>
+        </div>
+        <div className="dashboard">
+        <button onClick={Push}>Save</button>
+
+        </div>
+      </form>
     </div>
   );
 };

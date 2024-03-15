@@ -694,7 +694,7 @@ const Dashboard = () => {
         </button>
 
         <button className="App-info" onClick={allTasks}>
-         Tasks
+          Tasks
         </button>
         <button className="App-info" onClick={allMembers}>
           Members
@@ -736,7 +736,7 @@ const Dashboard = () => {
                     Name: {patient.patient}
                   </MenuItem>
                   <MenuItem active={true} icon={<FiCalendar />}>
-                    DOB: {patient.age.slice(4, 17)}
+                    Age: {patient.age}
                   </MenuItem>
                   <MenuItem icon={<FaMale />}>
                     Gender:<b>{patient.gender}</b>
@@ -750,77 +750,14 @@ const Dashboard = () => {
                   <MenuItem icon={<FaRegAddressBook />}>
                     Office:<b>{patient.Address1}</b>
                   </MenuItem>
-
-                  <MenuItem icon={<FaLanguage />}>
-                    <form>
-                      <label htmlFor="language">
-                        <select onChange={prefLang}>
-                          <option
-                            className="App-info"
-                            value="Preferred language"
-                          >
-                            {patient.prefLang
-                              ? patient.prefLang
-                              : "Preferred Language"}
-                          </option>
-                          <option className="App-info" value="Kiswahili">
-                            Kiswahili
-                          </option>
-                          <option className="App-info" value="English">
-                            English
-                          </option>
-                        </select>
-                      </label>
-                    </form>
+                  <MenuItem icon={<FaRegAddressBook />}>
+                    Pref Language:<b>{patient.language}</b>
                   </MenuItem>
-
-                  <MenuItem icon={<FaBusinessTime />}>
-                    <form>
-                      <label htmlFor="language">
-                        <select onChange={prefTime}>
-                          <option className="App-info" value="Preferred time">
-                            {patient.prefTime
-                              ? patient.prefTime
-                              : "Preferred Time"}
-                          </option>
-                          <option className="App-info" value="Morning">
-                            Morning
-                          </option>
-                          <option className="App-info" value="Afternoon">
-                            Afternoon
-                          </option>
-                          <option className="App-info" value=" Evening">
-                            Evening
-                          </option>
-                        </select>
-                      </label>
-                    </form>
+                  <MenuItem icon={<FaRegAddressBook />}>
+                    Pref day:<b>{patient.day}</b>
                   </MenuItem>
-
-                  <MenuItem icon={<FaCalendarDay />}>
-                    <form>
-                      <label htmlFor="language">
-                        <select onChange={prefDay}>
-                          <option className="App-info" value="Preferred day">
-                            {patient.prefDay
-                              ? patient.prefDay
-                              : "Preferred Day"}
-                          </option>
-                          <option className="App-info" value="Monday/Tuesday">
-                            Monday/Tuesday
-                          </option>
-                          <option
-                            className="App-info"
-                            value="Wednesday/Thursday"
-                          >
-                            Wednesday/Thursday
-                          </option>
-                          <option className="App-info" value="Friday/Saturday">
-                            Friday/Saturday
-                          </option>
-                        </select>
-                      </label>
-                    </form>
+                  <MenuItem icon={<FaRegAddressBook />}>
+                    Pref time:<b>{patient.time}</b>
                   </MenuItem>
                 </Menu>
               </div>
@@ -1198,106 +1135,113 @@ const Dashboard = () => {
                       </form>
                     </td>
                   </tr>
-                  
-                  {presc.prescription1 ? (
 
-                  <tr>
-                    <td>{presc.dueDate.slice(0, 17)}</td>
-                    <td>{presc.prescription1}</td>
-                    <td>{presc.daysTaken1}</td>
-                    <td>
-                      <form>
-                        <label htmlFor="status">
-                          <select onChange={handleStatus2} id={presc.id}>
-                            <option className="App-info" value="progress">
-                              {presc.status ? presc.status : "Ongoing"}
-                            </option>
-                            <option className="App-info" value="Ongoing">
-                              Ongoing
-                            </option>
-                            <option className="App-info" value="Complete">
-                              Complete
-                            </option>
-                          </select>
-                        </label>
-                      </form>
-                    </td>
-                  </tr>
-                  ):("")}
+                  {presc.prescription1 ? (
+                    <tr>
+                      <td>{presc.dueDate.slice(0, 17)}</td>
+                      <td>{presc.prescription1}</td>
+                      <td>{presc.daysTaken1}</td>
+                      <td>
+                        <form>
+                          <label htmlFor="status">
+                            <select onChange={handleStatus2} id={presc.id}>
+                              <option className="App-info" value="progress">
+                                {presc.status ? presc.status : "Ongoing"}
+                              </option>
+                              <option className="App-info" value="Ongoing">
+                                Ongoing
+                              </option>
+                              <option className="App-info" value="Complete">
+                                Complete
+                              </option>
+                            </select>
+                          </label>
+                        </form>
+                      </td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
 
                   {presc.prescription2 ? (
-                  <tr>
-                    <td>{presc.dueDate.slice(0, 17)}</td>
-                    <td>{presc.prescription2}</td>
-                    <td>{presc.daysTaken2}</td>
-                    <td>
-                      <form>
-                        <label htmlFor="status">
-                          <select onChange={handleStatus2} id={presc.id}>
-                            <option className="App-info" value="progress">
-                              {presc.status ? presc.status : "Ongoing"}
-                            </option>
-                            <option className="App-info" value="Ongoing">
-                              Ongoing
-                            </option>
-                            <option className="App-info" value="Complete">
-                              Complete
-                            </option>
-                          </select>
-                        </label>
-                      </form>
-                    </td>
-                  </tr>
-                  ):("")}
+                    <tr>
+                      <td>{presc.dueDate.slice(0, 17)}</td>
+                      <td>{presc.prescription2}</td>
+                      <td>{presc.daysTaken2}</td>
+                      <td>
+                        <form>
+                          <label htmlFor="status">
+                            <select onChange={handleStatus2} id={presc.id}>
+                              <option className="App-info" value="progress">
+                                {presc.status ? presc.status : "Ongoing"}
+                              </option>
+                              <option className="App-info" value="Ongoing">
+                                Ongoing
+                              </option>
+                              <option className="App-info" value="Complete">
+                                Complete
+                              </option>
+                            </select>
+                          </label>
+                        </form>
+                      </td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
 
                   {presc.prescription3 ? (
-                  <tr>
-                    <td>{presc.dueDate.slice(0, 17)}</td>
-                    <td>{presc.prescription3}</td>
-                    <td>{presc.daysTaken3}</td>
-                    <td>
-                      <form>
-                        <label htmlFor="status">
-                          <select onChange={handleStatus2} id={presc.id}>
-                            <option className="App-info" value="progress">
-                              {presc.status ? presc.status : "Ongoing"}
-                            </option>
-                            <option className="App-info" value="Ongoing">
-                              Ongoing
-                            </option>
-                            <option className="App-info" value="Complete">
-                              Complete
-                            </option>
-                          </select>
-                        </label>
-                      </form>
-                    </td>
-                  </tr>
-                  ):("")}
+                    <tr>
+                      <td>{presc.dueDate.slice(0, 17)}</td>
+                      <td>{presc.prescription3}</td>
+                      <td>{presc.daysTaken3}</td>
+                      <td>
+                        <form>
+                          <label htmlFor="status">
+                            <select onChange={handleStatus2} id={presc.id}>
+                              <option className="App-info" value="progress">
+                                {presc.status ? presc.status : "Ongoing"}
+                              </option>
+                              <option className="App-info" value="Ongoing">
+                                Ongoing
+                              </option>
+                              <option className="App-info" value="Complete">
+                                Complete
+                              </option>
+                            </select>
+                          </label>
+                        </form>
+                      </td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
                   {presc.prescription4 ? (
-                  <tr>
-                    <td>{presc.dueDate.slice(0, 17)}</td>
-                    <td>{presc.prescription4}</td>
-                    <td>{presc.daysTaken4}</td>
-                    <td>
-                      <form>
-                        <label htmlFor="status">
-                          <select onChange={handleStatus2} id={presc.id}>
-                            <option className="App-info" value="progress">
-                              {presc.status ? presc.status : "Ongoing"}
-                            </option>
-                            <option className="App-info" value="Ongoing">
-                              Ongoing
-                            </option>
-                            <option className="App-info" value="Complete">
-                              Complete
-                            </option>
-                          </select>
-                        </label>
-                      </form>
-                    </td>
-                  </tr>
-                  ):("")}
+                    <tr>
+                      <td>{presc.dueDate.slice(0, 17)}</td>
+                      <td>{presc.prescription4}</td>
+                      <td>{presc.daysTaken4}</td>
+                      <td>
+                        <form>
+                          <label htmlFor="status">
+                            <select onChange={handleStatus2} id={presc.id}>
+                              <option className="App-info" value="progress">
+                                {presc.status ? presc.status : "Ongoing"}
+                              </option>
+                              <option className="App-info" value="Ongoing">
+                                Ongoing
+                              </option>
+                              <option className="App-info" value="Complete">
+                                Complete
+                              </option>
+                            </select>
+                          </label>
+                        </form>
+                      </td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
                 </>
               ))}
             </table>

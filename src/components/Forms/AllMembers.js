@@ -97,13 +97,31 @@ const AllTasks = () => {
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
+    console.log("z");
+    let currentDate = new Date(startDate);
+    var dates = [];
+    while (currentDate <= endDate) {
+      console.log("zz");
+
+      dates.push(new Date(currentDate).toDateString());
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    var searches = patientData.filter((name) => dates.includes(name.joinDate));
+
+    setPatientToDisplay(searches);
+    setSearched(searches);
   };
 
   const handleEndDateChange = (date) => {
+    console.log("z");
+
     setEndDate(date);
     let currentDate = new Date(startDate);
     var dates = [];
     while (currentDate <= endDate) {
+      console.log("zz");
+
       dates.push(new Date(currentDate).toDateString());
       currentDate.setDate(currentDate.getDate() + 1);
     }
