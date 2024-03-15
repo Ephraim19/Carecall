@@ -6,6 +6,7 @@ import { database, auth } from "../Firebase";
 import { Link } from "react-router-dom";
 import { DateRangePicker } from "react-date-range";
 import DatePicker from "react-datepicker";
+import Cookies from "js-cookie";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
@@ -21,6 +22,7 @@ const AllTasks = () => {
   const [patientToDisplay, setPatientToDisplay] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
 
   // Function to join arrays based on matching IDs
   function joinArrays(array1, array2) {
@@ -122,13 +124,17 @@ const AllTasks = () => {
     setSearched(searches);
   };
 
+  const openDashboard = (e) => {
+    Cookies.set("currentMember", e.target.innerHTML);
+  }
+  
   return (
     <div>
       <nav className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
         <form className="App-info"></form>
       </nav>
-      <div style={{ width: "90%", display: "block", margin: "0 auto" }}>
+      <div >
         <h4>All Members</h4>
         <table key={1} className="customers">
           <tr>
@@ -178,6 +184,7 @@ const AllTasks = () => {
                 </label>
               </form>
             </td>
+
             <td>
               {" "}
               <DatePicker
@@ -198,6 +205,20 @@ const AllTasks = () => {
                 placeholderText="End Date"
                 minDate={startDate}
               />
+            </td>
+            <td>
+              {" "}
+              <form className="App-info">
+                <label>
+                  <input
+                    className="enlarged-text-box"
+                    type="text"
+                    value={search}
+                    placeholder="Filter by diagnosis"
+                    onChange={handleSearch}
+                  />
+                </label>
+              </form>
             </td>
           </tr>
           <tr>
@@ -243,7 +264,7 @@ const AllTasks = () => {
                   <tr key={patient.id}>
                     <td>
                       {" "}
-                      <Link className="link" to="/dashboard">
+                      <Link className="link" to="/dashboard" onClick={openDashboard}>
                         {patient.patient}
                       </Link>
                     </td>

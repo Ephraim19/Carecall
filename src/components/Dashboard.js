@@ -491,6 +491,41 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    // if (Cookies.get("patient") && patientTasks.length > 0) {
+    //   let obj = patientData.find((name) => name.id === Cookies.get("patient"));
+    //   let taskArray = patientTasks.filter((name) => name.patient === obj.id);
+    //   let Bps = bp.filter((name) => name.patient === obj.id);
+    //   let clncArray = clinic.filter((name) => name.patient === obj.id);
+    //   let intArray = interaction.filter((name) => name.patient === obj.id);
+    //   let prescArray = prescription.filter((name) => name.patient === obj.id);
+    //   let fileArray = file.filter((name) => name.patient === obj.id);
+    //   let bmiArray = bmi.filter((name) => name.patient === obj.id);
+    //   let sugarArray = sugar.filter((name) => name.patient === obj.id);
+    //   let healthArray = healthS.filter((name) => name.patient === obj.id);
+    //   console.log(healthArray);
+
+
+    //   const dataArray = [obj];
+    //   console.log(dataArray);
+
+    //   setPatientToDisplay(dataArray);
+    //   setPatientTasksDisplay(taskArray);
+    //   console.log(taskArray);
+
+    //   setBpDisplay(Bps);
+    //   setClinicDisplay(clncArray);
+    //   setIntDisplay(intArray);
+    //   setPrescDisplay(prescArray);
+    //   setFileDispaly(fileArray);
+    //   setBmiDispaly(bmiArray);
+    //   setSugarDispaly(sugarArray);
+    //   setHealthSDisplay(healthArray);
+
+    //   const bornyr = dataArray[0].age.slice(12, 17);
+    //   const yr = new Date().getFullYear();
+    //   setAge(yr - bornyr);
+    // }
   }, []);
 
   const handleSearch = (e) => {
@@ -509,6 +544,7 @@ const Dashboard = () => {
   };
 
   const handleResultClick = (patient) => {
+    console.log(patient);
     setSearch(patient.patient);
     setSearched([]);
 
@@ -570,9 +606,45 @@ const Dashboard = () => {
   const handleStatus2 = (e) => {
     setStatus(e.target.value);
 
-    //Update tasks progress
+    //Update med progress
     const updates = {};
     updates[e.target.id + "/status"] = e.target.value;
+    update(dbRef6, updates);
+  };
+
+  const handleStatus3 = (e) => {
+    setStatus(e.target.value);
+
+    //Update med progress
+    const updates = {};
+    updates[e.target.id + "/status1"] = e.target.value;
+    update(dbRef6, updates);
+  };
+
+  const handleStatus4 = (e) => {
+    setStatus(e.target.value);
+
+    //Update med progress
+    const updates = {};
+    updates[e.target.id + "/status2"] = e.target.value;
+    update(dbRef6, updates);
+  };
+
+  const handleStatus5 = (e) => {
+    setStatus(e.target.value);
+
+    //Update med progress
+    const updates = {};
+    updates[e.target.id + "/status3"] = e.target.value;
+    update(dbRef6, updates);
+  };
+
+  const handleStatus6 = (e) => {
+    setStatus(e.target.value);
+
+    //Update med progress
+    const updates = {};
+    updates[e.target.id + "/status4"] = e.target.value;
     update(dbRef6, updates);
   };
 
@@ -1144,9 +1216,9 @@ const Dashboard = () => {
                       <td>
                         <form>
                           <label htmlFor="status">
-                            <select onChange={handleStatus2} id={presc.id}>
+                            <select onChange={handleStatus3} id={presc.id}>
                               <option className="App-info" value="progress">
-                                {presc.status ? presc.status : "Ongoing"}
+                                {presc.status1 ? presc.status1 : "Ongoing"}
                               </option>
                               <option className="App-info" value="Ongoing">
                                 Ongoing
@@ -1171,9 +1243,9 @@ const Dashboard = () => {
                       <td>
                         <form>
                           <label htmlFor="status">
-                            <select onChange={handleStatus2} id={presc.id}>
+                            <select onChange={handleStatus4} id={presc.id}>
                               <option className="App-info" value="progress">
-                                {presc.status ? presc.status : "Ongoing"}
+                                {presc.status2 ? presc.status2 : "Ongoing"}
                               </option>
                               <option className="App-info" value="Ongoing">
                                 Ongoing
@@ -1198,9 +1270,9 @@ const Dashboard = () => {
                       <td>
                         <form>
                           <label htmlFor="status">
-                            <select onChange={handleStatus2} id={presc.id}>
+                            <select onChange={handleStatus5} id={presc.id}>
                               <option className="App-info" value="progress">
-                                {presc.status ? presc.status : "Ongoing"}
+                                {presc.status3 ? presc.status3 : "Ongoing"}
                               </option>
                               <option className="App-info" value="Ongoing">
                                 Ongoing
@@ -1224,9 +1296,9 @@ const Dashboard = () => {
                       <td>
                         <form>
                           <label htmlFor="status">
-                            <select onChange={handleStatus2} id={presc.id}>
+                            <select onChange={handleStatus6} id={presc.id}>
                               <option className="App-info" value="progress">
-                                {presc.status ? presc.status : "Ongoing"}
+                                {presc.status4 ? presc.status4 : "Ongoing"}
                               </option>
                               <option className="App-info" value="Ongoing">
                                 Ongoing
@@ -1328,12 +1400,14 @@ const Dashboard = () => {
                     <tr>
                       <td>{patient.task}</td>
 
-                      {new Date(patient.dueDate) <= new Date() && patient.completed !== "complete"  ? (
-                        <td style={{ color: "red" }}>{patient.dueDate.slice(0, 17)}</td>
+                      {new Date(patient.dueDate) <= new Date() &&
+                      patient.completed !== "complete" ? (
+                        <td style={{ color: "red" }}>
+                          {patient.dueDate.slice(0, 17)}
+                        </td>
                       ) : (
                         <td>{patient.dueDate.slice(0, 17)}</td>
                       )}
-
 
                       <td>Ebenezer</td>
                       <td>
