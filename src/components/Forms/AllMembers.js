@@ -11,8 +11,8 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
 const AllTasks = () => {
-  const [patientTasks, setPatientTasks] = useState([]);
-  const dbRef2 = ref(database, "tasks");
+  const [patientDiagnosis, setPatientDiagnosis] = useState([]);
+  const dbRef2 = ref(database, "Clinic");
   const dbRef = ref(database, "clients");
   const [patientData, setPatientData] = useState([]);
   const [obj, setObj] = useState("");
@@ -21,42 +21,32 @@ const AllTasks = () => {
   const [patientToDisplay, setPatientToDisplay] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  //Sort by date
-  const dateSort = (x) => {
-    x.sort(function (a, b) {
-      if (a.dueDate && b.dueDate) {
-        var awords = a.dueDate.slice(5, 17).split(" ");
-        var bwords = b.dueDate.slice(5, 17).split(" ");
 
-        var aNewdate = awords[0] + "/" + awords[1] + "/" + awords[2];
-        var bNewdate = bwords[0] + "/" + bwords[1] + "/" + bwords[2];
-
-        var strToDatea = new Date(aNewdate);
-        var strToDateb = new Date(bNewdate);
-
-        return strToDatea - strToDateb;
+  // Function to join arrays based on matching IDs
+  function joinArrays(array1, array2) {
+    return array1.map((obj1) => {
+      let matchedObj = array2.find((obj2) => obj2.id === obj1.id);
+      if (matchedObj) {
+        return { ...obj1, ...matchedObj };
+      } else {
+        return obj1;
       }
     });
-  };
+  }
 
   useEffect(() => {
-    //get tasks
+    //get clinic
 
-    var taskArray = [];
+    var diagnosisArray = [];
 
     get(dbRef2).then((snapshot) => {
       if (snapshot.exists()) {
-        taskArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+        diagnosisArray = Object.entries(snapshot.val()).map(([id, data]) => ({
           id,
           ...data,
         }));
-
-        console.log(taskArray);
-
-        //Sort by date
-        dateSort(taskArray);
-
-        setPatientTasks(taskArray);
+        console.log(diagnosisArray);
+        setPatientDiagnosis(diagnosisArray);
       }
     });
 
@@ -69,11 +59,14 @@ const AllTasks = () => {
           id,
           ...data,
         }));
+        console.log(dataArray);
         setPatientData(dataArray);
       }
     });
 
-    console.log(patientData);
+    // Joining arrays
+    let joinedArray = joinArrays(dataArray, diagnosisArray);
+    console.log(joinedArray);
   }, []);
 
   const handleHospital = (e) => {
@@ -100,7 +93,6 @@ const AllTasks = () => {
     let currentDate = new Date(startDate);
     var dates = [];
     while (currentDate <= endDate) {
-
       dates.push(new Date(currentDate).toDateString());
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -211,11 +203,11 @@ const AllTasks = () => {
           <tr>
             <th>Member</th>
             <th>Hospital</th>
+
             <th>Date joined</th>
+            <th>Diagnosis</th>
           </tr>
-          {/* {patientData.length > 0 &&
-        patientToDisplay.length > 0 &&
-        searched.length === 0 */}
+
           {searched.length > 0
             ? patientToDisplay.map((patient) => (
                 <>
@@ -229,6 +221,19 @@ const AllTasks = () => {
                     <td>{patient.hospital}</td>
 
                     <td> {patient.joinDate ? patient.joinDate : " "}</td>
+                    <td>
+                      {patientDiagnosis.filter(
+                        (name) => name.patient === patient.id
+                      ).length > 0
+                        ? patientDiagnosis.filter(
+                            (name) => name.patient === patient.id
+                          )[
+                            patientDiagnosis.filter(
+                              (name) => name.patient === patient.id
+                            ).length - 1
+                          ].diagnosis
+                        : ""}
+                    </td>
                   </tr>
                 </>
               ))
@@ -245,6 +250,20 @@ const AllTasks = () => {
                     <td>{patient.hospital}</td>
 
                     <td> {patient.joinDate ? patient.joinDate : " "}</td>
+
+                    <td>
+                      {patientDiagnosis.filter(
+                        (name) => name.patient === patient.id
+                      ).length > 0
+                        ? patientDiagnosis.filter(
+                            (name) => name.patient === patient.id
+                          )[
+                            patientDiagnosis.filter(
+                              (name) => name.patient === patient.id
+                            ).length - 1
+                          ].diagnosis
+                        : ""}
+                    </td>
                   </tr>
                 </>
               ))}

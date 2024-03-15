@@ -1326,13 +1326,14 @@ const Dashboard = () => {
                 <>
                   {patient ? (
                     <tr>
+                      <td>{patient.task}</td>
+
                       {new Date(patient.dueDate) <= new Date() && patient.completed !== "complete"  ? (
-                        <td style={{ color: "red" }}>{patient.task}</td>
+                        <td style={{ color: "red" }}>{patient.dueDate.slice(0, 17)}</td>
                       ) : (
-                        <td>{patient.task}</td>
+                        <td>{patient.dueDate.slice(0, 17)}</td>
                       )}
 
-                      <td>{patient.dueDate.slice(0, 17)}</td>
 
                       <td>Ebenezer</td>
                       <td>

@@ -109,7 +109,6 @@ const AllTasks = () => {
     setPatientToDisplay(searches);
     setSearched(searches);
   };
-  
 
   const handleHospital = (e) => {
     console.log(e.target.value);
@@ -117,7 +116,7 @@ const AllTasks = () => {
     setSearched(obj);
     setPatientToDisplay(obj);
   };
-  
+
   return (
     <div>
       <nav className="App-nav">
@@ -204,12 +203,8 @@ const AllTasks = () => {
           <>
             {patient && patientData && patientTasks ? (
               <tr key={patient.id}>
-                <td>
-                  {" "}
-                  <Link className="link" to="/dashboard">
-                    {patient.task}
-                  </Link>
-                </td>
+                <td> {patient.task}</td>
+
                 <td>
                   {patientData.filter((name) => name.id === patient.patient)
                     .length > 0
@@ -219,7 +214,16 @@ const AllTasks = () => {
                     : " "}
                 </td>
 
-                <td> {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}</td>
+                {new Date(patient.dueDate) <= new Date() &&
+                patient.completed !== "complete" ? (
+                  <td style={{ color: "red" }}>
+                    {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                  </td>
+                ) : (
+                  <td>
+                    {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                  </td>
+                )}
 
                 <td key={patient.id}>
                   <form>
