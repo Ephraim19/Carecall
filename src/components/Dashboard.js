@@ -360,6 +360,7 @@ const Dashboard = () => {
           }));
           //Sort by date
           dateSort(intArray);
+          intArray.reverse();
 
           setInteraction(intArray);
           setIntDisplay([intArray[intArray.length - 1]]);
@@ -1000,12 +1001,14 @@ const Dashboard = () => {
               </tr>
               {bmiDisplay.slice(0, visibleRows).map((b) => (
                 <tr key={b.id}>
-                  {parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
+                  
+                  { parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
                   parseInt(b.weight) / parseInt(b.height ^ 2) > 25 ? (
                     <>
                       <td>{b.dueDate.slice(0, 17)}</td>
                       <td>{b.weight}</td>
                       <td>{b.height}</td>
+
                       <td style={{ color: "red" }}>
                         {(parseInt(b.weight) / parseInt(b.height ^ 2)).toFixed(
                           2
@@ -1024,6 +1027,7 @@ const Dashboard = () => {
                       </td>
                     </>
                   )}
+                  
                 </tr>
               ))}
             </table>

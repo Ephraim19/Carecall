@@ -24,15 +24,19 @@ const Bmi = () => {
 
   const NewBmi = (event) => {
     event.preventDefault();
-    if (weight && height && dueDate) {
-      push(ref(database, "Bmi"), {
-        patient: Cookies.get("patient"),
-        weight,
-        height,
-        dueDate: dateStrip(3, dueDate),
-      }).then(() => {
-        //Create a task if user has abnormal BMI
 
+    push(ref(database, "Bmi"), {
+      patient: Cookies.get("patient"),
+      weight,
+      height,
+      dueDate: dateStrip(3, dueDate),
+    }).then(() => {
+      //Create a task if user has abnormal BMI
+      if (height === "" || weight === "") {
+        console.log("Please fill in all fields");
+        navigate("/dashboard");
+
+      } else {
         if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
           push(ref(database, "tasks"), {
             patient: Cookies.get("patient"),
@@ -55,8 +59,8 @@ const Bmi = () => {
           });
         }
         navigate("/dashboard");
-      });
-    }
+      }
+    });
   };
 
   return (
