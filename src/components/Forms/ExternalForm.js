@@ -454,7 +454,7 @@ const ExternalForm = () => {
     if (patient && Phone && !membr) {
       //push data to firebase client
       setSave("saving...");
-      push(ref(database, "clients"), {
+      push(ref(database, hospital + "/" + "clients"), {
         patient,
         gender,
         age: dueDates,
@@ -889,8 +889,8 @@ const ExternalForm = () => {
               </option>
               <option
                 className="App-info"
-                value="EQA_West_Nairobi_Hospital"
-                key={"EQA_West_Nairobi_Hospital"}
+                value="EQA_Nairobi_West_Hospital"
+                key={"EQA_Nairobi_West_Hospital"}
               >
                 EQA Nairobi West Hospital
               </option>

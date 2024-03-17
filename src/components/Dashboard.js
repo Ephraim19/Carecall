@@ -9,6 +9,7 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
+import { Resend } from 'resend';
 
 import {
   FaBomb,
@@ -280,6 +281,15 @@ const Dashboard = () => {
 
           dateSort(IncompletetaskArray);
 
+          //Send Email to admin
+          const resend = new Resend('re_MmGJ3gdH_HqMt2ez3pn982MEZ25YbQZKf');
+          
+          // resend.emails.send({
+          //   from: 'onboarding@resend.dev',
+          //   to: 'machayoephraim@gmail.com',
+          //   subject: 'Hello World',
+          //   html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+          // });
           const a1 = cancelledtaskArray.concat(completetaskArray);
           const allTasksInorder = IncompletetaskArray.concat(a1);
 
