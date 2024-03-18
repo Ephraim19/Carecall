@@ -892,7 +892,7 @@ const ExternalForm = () => {
                 value="EQA_Nairobi_West_Hospital"
                 key={"EQA_Nairobi_West_Hospital"}
               >
-                EQA Nairobi West Hospital
+                EQA Nairobi West
               </option>
               <option
                 className="App-info"

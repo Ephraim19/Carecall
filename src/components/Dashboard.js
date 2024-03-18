@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import { get, push, ref, update } from "firebase/database";
@@ -9,7 +9,7 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
-import { Resend } from 'resend';
+import { Resend } from "resend";
 
 import {
   FaBomb,
@@ -89,12 +89,20 @@ const Dashboard = () => {
   const [visibleRows, setVisibleRows] = useState(5);
   const [healthS, setHealthS] = useState([]);
   const [healthSDisplay, setHealthSDisplay] = useState([]);
-  const [state, setState] = useState("");
+  const [hospitalAdmin, setHospitalAdmin] = useState("");
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
 
-  const dbRef = ref(database, "clients");
+  const hs = Cookies.get("hos_admin");
+  console.log(hs);
+  const cl = hs + "/" + "clients";
+
+  const admin1 = "EQA_Kitengela" + "/" + "Admins";
+  const admin2 = "EQA_Nairobi_West_Hospital" + "/" + "Admins";
+  const admin3 = "EQA_South_B" + "/" + "Admins";
+
+  const dbRef = ref(database, cl);
   const dbRef2 = ref(database, "tasks");
   const dbRef3 = ref(database, "bloodPressure");
   const dbRef4 = ref(database, "Clinic");
@@ -104,6 +112,9 @@ const Dashboard = () => {
   const dbRef8 = ref(database, "Bmi");
   const dbRef9 = ref(database, "Bloodsugar");
   const dbRef10 = ref(database, "HealthStatus");
+  const dbRef11 = ref(database, admin1);
+  const dbRef12 = ref(database, admin2);
+  const dbRef13 = ref(database, admin3);
 
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -226,18 +237,91 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (!Cookies.get("name")) {
-      navigate("/");
-    }
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
+        console.log(email);
+        //read admins
+        get(dbRef11)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const adminArray1 = Object.entries(snapshot.val()).map(
+                ([id, data]) => ({
+                  id,
+                  ...data,
+                })
+              );
+              const adminHos = adminArray1.filter(
+                (name) => name.admin === email
+              );
+
+              if (adminHos.length > 0) {
+                console.log(adminHos[0].hospital);
+                setHospitalAdmin(adminHos[0].hospital);
+                Cookies.set("hos_admin", adminHos[0].hospital);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        get(dbRef12)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const adminArray1 = Object.entries(snapshot.val()).map(
+                ([id, data]) => ({
+                  id,
+                  ...data,
+                })
+              );
+              const adminHos = adminArray1.filter(
+                (name) => name.admin === email
+              );
+
+              if (adminHos.length > 0) {
+                console.log(adminHos[0].hospital);
+                setHospitalAdmin(adminHos[0].hospital);
+                Cookies.set("hos_admin", adminHos[0].hospital);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+          get(dbRef13)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const adminArray1 = Object.entries(snapshot.val()).map(
+                ([id, data]) => ({
+                  id,
+                  ...data,
+                })
+              );
+              const adminHos = adminArray1.filter(
+                (name) => name.admin === email
+              );
+
+              if (adminHos.length > 0) {
+                console.log(adminHos[0].hospital);
+                setHospitalAdmin(adminHos[0].hospital);
+                Cookies.set("hos_admin", adminHos[0].hospital);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
 
         setUser(email);
+      } else {
+        navigate("/");
       }
     });
 
+    
+    
     let dataArray = [];
     //read user
     get(dbRef)
@@ -282,8 +366,8 @@ const Dashboard = () => {
           dateSort(IncompletetaskArray);
 
           //Send Email to admin
-          const resend = new Resend('re_MmGJ3gdH_HqMt2ez3pn982MEZ25YbQZKf');
-          
+          const resend = new Resend("re_MmGJ3gdH_HqMt2ez3pn982MEZ25YbQZKf");
+
           // resend.emails.send({
           //   from: 'onboarding@resend.dev',
           //   to: 'machayoephraim@gmail.com',
@@ -515,7 +599,6 @@ const Dashboard = () => {
     //   let sugarArray = sugar.filter((name) => name.patient === obj.id);
     //   let healthArray = healthS.filter((name) => name.patient === obj.id);
     //   console.log(healthArray);
-
 
     //   const dataArray = [obj];
     //   console.log(dataArray);
@@ -815,6 +898,9 @@ const Dashboard = () => {
             {patientToDisplay.map((patient) => (
               <div key={patient.key}>
                 <Menu iconShape="square" className="menuItems">
+                <MenuItem active={true} icon={<FaHome />} style={{color:"red", fontSize: "23", fontWeight:"bold"}}>
+                    {hs}
+                  </MenuItem>
                   <MenuItem active={true} icon={<FaMale />}>
                     Name: {patient.patient}
                   </MenuItem>
@@ -1011,8 +1097,7 @@ const Dashboard = () => {
               </tr>
               {bmiDisplay.slice(0, visibleRows).map((b) => (
                 <tr key={b.id}>
-                  
-                  { parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
+                  {parseInt(b.weight) / parseInt(b.height ^ 2) < 18.5 ||
                   parseInt(b.weight) / parseInt(b.height ^ 2) > 25 ? (
                     <>
                       <td>{b.dueDate.slice(0, 17)}</td>
@@ -1037,7 +1122,6 @@ const Dashboard = () => {
                       </td>
                     </>
                   )}
-                  
                 </tr>
               ))}
             </table>
