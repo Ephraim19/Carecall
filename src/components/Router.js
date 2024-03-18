@@ -26,7 +26,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* //<Route path="/" Component={Login} /> */}
+        <Route path="/google" Component={Login} />
         <Route path="/" Component={EmailLogin} />
 
         <Route path="/dashboard" Component={Dashboard} />
