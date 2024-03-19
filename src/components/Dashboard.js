@@ -62,6 +62,8 @@ Chart.register(
 );
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
+  const [patientData111, setPatientData111] = useState([]);
+
   const [search, setSearch] = useState("");
   const [patientToDisplay, setPatientToDisplay] = useState([]);
   const [patientTasks, setPatientTasks] = useState([]);
@@ -95,7 +97,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const hs = Cookies.get("hos_admin");
-  console.log(hs);
   const cl = hs + "/" + "clients";
 
   const admin1 = "EQA_Kitengela" + "/" + "Admins";
@@ -103,6 +104,8 @@ const Dashboard = () => {
   const admin3 = "EQA_South_B" + "/" + "Admins";
 
   const dbRef = ref(database, cl);
+  const dbRef111 = ref(database, "clients");
+
   const dbRef2 = ref(database, "tasks");
   const dbRef3 = ref(database, "bloodPressure");
   const dbRef4 = ref(database, "Clinic");
@@ -290,7 +293,7 @@ const Dashboard = () => {
             console.log(error);
           });
 
-          get(dbRef13)
+        get(dbRef13)
           .then((snapshot) => {
             if (snapshot.exists()) {
               const adminArray1 = Object.entries(snapshot.val()).map(
@@ -320,10 +323,11 @@ const Dashboard = () => {
       }
     });
 
-    
-    
     let dataArray = [];
-    //read user
+    let dataArray111 = [];
+
+    //read users
+
     get(dbRef)
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -340,6 +344,27 @@ const Dashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    get(dbRef111)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray111 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          console.log(dataArray111);
+
+          setPatientData111(dataArray111);
+          //setPatientToDisplay([dataArray[dataArray.length - 1]]);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    dataArray = dataArray.concat(dataArray111);
 
     //get tasks
     get(dbRef2)
@@ -598,14 +623,11 @@ const Dashboard = () => {
     //   let bmiArray = bmi.filter((name) => name.patient === obj.id);
     //   let sugarArray = sugar.filter((name) => name.patient === obj.id);
     //   let healthArray = healthS.filter((name) => name.patient === obj.id);
-    //   console.log(healthArray);
 
     //   const dataArray = [obj];
-    //   console.log(dataArray);
 
     //   setPatientToDisplay(dataArray);
     //   setPatientTasksDisplay(taskArray);
-    //   console.log(taskArray);
 
     //   setBpDisplay(Bps);
     //   setClinicDisplay(clncArray);
@@ -626,23 +648,44 @@ const Dashboard = () => {
     e.preventDefault();
     setSearch(e.target.value);
 
-    if (search.length > 1) {
-      var searches = patientData.filter((name) =>
-        name.patient.toLowerCase().includes(e.target.value.toLowerCase())
-      );
+    if (Cookies.get("hos_admin") === undefined) {
+      console.log("No hospital admin");
+      if (search.length > 1) {
+        var allPatients = patientData.concat(patientData111);
+        var searches = allPatients.filter((name) =>
+          name.patient.toLowerCase().includes(e.target.value.toLowerCase())
+        );
 
-      setSearched(searches);
+        setSearched(searches);
+      } else {
+        setSearched([]);
+      }
     } else {
-      setSearched([]);
+      if (search.length > 1) {
+        var searches = patientData.filter((name) =>
+          name.patient.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+
+        setSearched(searches);
+      } else {
+        setSearched([]);
+      }
     }
   };
 
   const handleResultClick = (patient) => {
-    console.log(patient);
     setSearch(patient.patient);
     setSearched([]);
 
-    let obj = patientData.find((name) => name.id === patient.id);
+    let obj = [];
+    if (Cookies.get("hos_admin") === undefined) {
+      let obj1 = patientData.find((name) => name.id === patient.id);
+      let obj111 = patientData111.find((name) => name.id === patient.id);
+      obj = obj1 ? obj1 : obj111;
+    } else {
+      obj = patientData.find((name) => name.id === patient.id);
+    }
+
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
     let Bps = bp.filter((name) => name.patient === patient.id);
     let clncArray = clinic.filter((name) => name.patient === patient.id);
@@ -658,7 +701,6 @@ const Dashboard = () => {
     setPatientToDisplay(dataArray);
     setAssignee(dataArray[0].hc);
     setPatientTasksDisplay(taskArray);
-    console.log(taskArray);
 
     setBpDisplay(Bps);
     setClinicDisplay(clncArray);
@@ -898,7 +940,11 @@ const Dashboard = () => {
             {patientToDisplay.map((patient) => (
               <div key={patient.key}>
                 <Menu iconShape="square" className="menuItems">
-                <MenuItem active={true} icon={<FaHome />} style={{color:"red", fontSize: "23", fontWeight:"bold"}}>
+                  <MenuItem
+                    active={true}
+                    icon={<FaHome />}
+                    style={{ color: "red", fontSize: "23", fontWeight: "bold" }}
+                  >
                     {hs}
                   </MenuItem>
                   <MenuItem active={true} icon={<FaMale />}>
