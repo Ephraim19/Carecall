@@ -803,10 +803,14 @@ const Dashboard = () => {
 
   const Logout = () => {
     //remove all cookies first
-    Cookies.remove("user");
-    Cookies.remove("userName");
-    Cookies.remove("patient");
-    navigate("/");
+
+    auth.signOut().then(() => {
+      Cookies.remove("user");
+      Cookies.remove("hos_admin");
+      Cookies.remove("userName");
+      Cookies.remove("patient");
+      navigate("/");
+    });
   };
 
   const New = () => {

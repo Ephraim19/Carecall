@@ -16,6 +16,8 @@ const AllTasks = () => {
   const dbRef2 = ref(database, "Clinic");
   const dbRef = ref(database, "clients");
   const [patientData, setPatientData] = useState([]);
+  const [patientData111, setPatientData111] = useState([]);
+
   const [obj, setObj] = useState("");
   const [search, setSearch] = useState("");
   const [searched, setSearched] = useState([]);
@@ -23,6 +25,10 @@ const AllTasks = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const hs = Cookies.get("hos_admin");
+  const cl = hs + "/" + "clients";
+
+  const dbRef111 = ref(database, cl);
 
   // Function to join arrays based on matching IDs
   function joinArrays(array1, array2) {
@@ -53,22 +59,51 @@ const AllTasks = () => {
     });
 
     var dataArray = [];
+    var dataArray111 = [];
+    var dataArray11 = [];
 
     //read user
-    get(dbRef).then((snapshot) => {
+    get(dbRef111).then((snapshot) => {
       if (snapshot.exists()) {
         dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
           id,
           ...data,
         }));
-        console.log(dataArray);
         setPatientData(dataArray);
       }
     });
 
+    if(Cookies.get("hos_admin") === "EQA_South_B"){
+      get(dbRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          dataArray11 = dataArray11.filter((name) => name.hospital === "EQA_South_B");
+          dataArray111 = dataArray11.concat(dataArray);
+          setPatientData(dataArray111);
+        }
+      });
+    }
+
+    // get(dbRef111).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     dataArray111 = Object.entries(snapshot.val()).map(([id, data]) => ({
+    //       id,
+    //       ...data,
+    //     }));
+
+    //     setPatientData111(dataArray111);
+    //   }
+    //   dataArray = dataArray.concat(dataArray111);
+    //   console.log(dataArray);
+
+    // });
+
     // Joining arrays
-    let joinedArray = joinArrays(dataArray, diagnosisArray);
-    console.log(joinedArray);
+    // let joinedArray = joinArrays(dataArray11, diagnosisArray);
+    // console.log(joinedArray);
   }, []);
 
   const handleHospital = (e) => {
@@ -126,15 +161,15 @@ const AllTasks = () => {
 
   const openDashboard = (e) => {
     Cookies.set("currentMember", e.target.innerHTML);
-  }
-  
+  };
+
   return (
     <div>
       <nav className="App-nav">
         <img src={carecall} alt="logo" className="App-logo" />
         <form className="App-info"></form>
       </nav>
-      <div >
+      <div>
         <h4>All Members</h4>
         <table key={1} className="customers">
           <tr>
@@ -264,7 +299,11 @@ const AllTasks = () => {
                   <tr key={patient.id}>
                     <td>
                       {" "}
-                      <Link className="link" to="/dashboard" onClick={openDashboard}>
+                      <Link
+                        className="link"
+                        to="/dashboard"
+                        onClick={openDashboard}
+                      >
                         {patient.patient}
                       </Link>
                     </td>
