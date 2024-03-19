@@ -87,23 +87,20 @@ const AllTasks = () => {
       });
     }
 
-    // get(dbRef111).then((snapshot) => {
-    //   if (snapshot.exists()) {
-    //     dataArray111 = Object.entries(snapshot.val()).map(([id, data]) => ({
-    //       id,
-    //       ...data,
-    //     }));
+    // if(Cookies.get("hos_admin") === undefined){
+    //   get(dbRef).then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //       dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
+    //         id,
+    //         ...data,
+    //       }));
+    //       dataArray11 = dataArray11.filter((name) => name.hospital === "EQA_South_B");
+    //       dataArray111 = dataArray11.concat(dataArray);
+    //       setPatientData(dataArray111);
+    //     }
+    //   });
+    // }
 
-    //     setPatientData111(dataArray111);
-    //   }
-    //   dataArray = dataArray.concat(dataArray111);
-    //   console.log(dataArray);
-
-    // });
-
-    // Joining arrays
-    // let joinedArray = joinArrays(dataArray11, diagnosisArray);
-    // console.log(joinedArray);
   }, []);
 
   const handleHospital = (e) => {

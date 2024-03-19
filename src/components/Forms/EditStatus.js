@@ -34,7 +34,9 @@ const EditStatus = () => {
   const [prefTime, setPrefTime] = useState("");
   const [prefLang, setPrefLang] = useState("");
 
-  const dbRef = ref(database, "clients");
+  const hs = Cookies.get("hos_admin");
+  const cl = hs + "/" + "clients";
+  const dbRef = ref(database, cl);
   const navigate = useNavigate();
 
   useEffect(() => {
