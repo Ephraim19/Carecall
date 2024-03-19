@@ -16,7 +16,12 @@ const AllTasks = () => {
   const dbRef2 = ref(database, "Clinic");
   const dbRef = ref(database, "clients");
   const [patientData, setPatientData] = useState([]);
-  const [patientData111, setPatientData111] = useState([]);
+  const [patientData1, setPatientData1] = useState([]);
+  const [patientData2, setPatientData2] = useState([]);
+  const [patientData3, setPatientData3] = useState([]);
+  const [patientData4, setPatientData4] = useState([]);
+
+
 
   const [obj, setObj] = useState("");
   const [search, setSearch] = useState("");
@@ -30,17 +35,13 @@ const AllTasks = () => {
 
   const dbRef111 = ref(database, cl);
 
-  // Function to join arrays based on matching IDs
-  function joinArrays(array1, array2) {
-    return array1.map((obj1) => {
-      let matchedObj = array2.find((obj2) => obj2.id === obj1.id);
-      if (matchedObj) {
-        return { ...obj1, ...matchedObj };
-      } else {
-        return obj1;
-      }
-    });
-  }
+  const admin1 = "EQA_Kitengela" + "/" + "clients";
+  const admin2 = "EQA_Nairobi_West_Hospital" + "/" + "clients";
+  const admin3 = "EQA_South_B" + "/" + "clients";
+
+  const dbRef11 = ref(database, admin1);
+  const dbRef12 = ref(database, admin2);
+  const dbRef13 = ref(database, admin3);
 
   useEffect(() => {
     //get clinic
@@ -73,34 +74,75 @@ const AllTasks = () => {
       }
     });
 
-    if(Cookies.get("hos_admin") === "EQA_South_B"){
+    if (Cookies.get("hos_admin") === "EQA_South_B") {
       get(dbRef).then((snapshot) => {
         if (snapshot.exists()) {
           dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
-          dataArray11 = dataArray11.filter((name) => name.hospital === "EQA_South_B");
+          dataArray11 = dataArray11.filter(
+            (name) => name.hospital === "EQA_South_B"
+          );
           dataArray111 = dataArray11.concat(dataArray);
           setPatientData(dataArray111);
         }
       });
     }
 
-    // if(Cookies.get("hos_admin") === undefined){
-    //   get(dbRef).then((snapshot) => {
-    //     if (snapshot.exists()) {
-    //       dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
-    //         id,
-    //         ...data,
-    //       }));
-    //       dataArray11 = dataArray11.filter((name) => name.hospital === "EQA_South_B");
-    //       dataArray111 = dataArray11.concat(dataArray);
-    //       setPatientData(dataArray111);
-    //     }
-    //   });
-    // }
+    if (Cookies.get("hos_admin") === undefined) {
+      let dataArray = [];
+      let dataArray111 = [];
+      let dataArray11 = [];
+      let dataArray1111 = [];
 
+
+      get(dbRef11).then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          setPatientData1(dataArray);
+        }
+      });
+
+      get(dbRef12).then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          setPatientData2(dataArray11);
+        }
+      });
+
+      get(dbRef13).then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray111 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          setPatientData3(dataArray111);
+        }
+      });
+
+      get(dbRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray1111 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          setPatientData4(dataArray1111);
+        }
+      });
+      
+      var patients = patientData1.concat(patientData2);
+      var patient1 = patients.concat(patientData3);
+      var patient2 = patient1.concat(patientData4);
+      console.log(patient2);
+      setPatientData(patient2);
+    }
   }, []);
 
   const handleHospital = (e) => {
