@@ -201,7 +201,6 @@ const AllTasks = () => {
   };
 
   const handleEndDateChange = (date) => {
-    console.log("z");
 
     setEndDate(date);
     let currentDate = new Date(startDate);

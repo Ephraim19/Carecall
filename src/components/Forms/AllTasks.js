@@ -75,12 +75,9 @@ const AllTasks = () => {
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
-    console.log("z");
     let currentDate = new Date(startDate);
     var dates = [];
     while (currentDate <= endDate) {
-      console.log("zz");
-
       dates.push(new Date(currentDate).toDateString());
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -92,14 +89,11 @@ const AllTasks = () => {
   };
 
   const handleEndDateChange = (date) => {
-    console.log("z");
 
     setEndDate(date);
     let currentDate = new Date(startDate);
     var dates = [];
     while (currentDate <= endDate) {
-      console.log("zz");
-
       dates.push(new Date(currentDate).toDateString());
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -111,7 +105,6 @@ const AllTasks = () => {
   };
 
   const handleHospital = (e) => {
-    console.log(e.target.value);
     let obj = patientTasks.filter((name) => name.completed === e.target.value);
     setSearched(obj);
     setPatientToDisplay(obj);
@@ -199,66 +192,127 @@ const AllTasks = () => {
 
           <th>status</th>
         </tr>
-        {/* {searched.length > 0 ? ():(" ")} */}
-        {patientTasks.map((patient) => (
+        {searched.length > 0 ? (
           <>
-            {patient && patientData && patientTasks ? (
-              <tr key={patient.id}>
-                <td> {patient.task}</td>
+            {patientToDisplay.map((patient) => (
+              <>
+                {patient && patientData && patientTasks ? (
+                  <tr key={patient.id}>
+                    <td> {patient.task}</td>
 
-                <td>
-                  {patientData.filter((name) => name.id === patient.patient)
-                    .length > 0
-                    ? patientData.filter(
-                        (name) => name.id === patient.patient
-                      )[0].patient
-                    : " "}
-                </td>
+                    <td>
+                      {patientData.filter((name) => name.id === patient.patient)
+                        .length > 0
+                        ? patientData.filter(
+                            (name) => name.id === patient.patient
+                          )[0].patient
+                        : " "}
+                    </td>
 
-                {new Date(patient.dueDate) <= new Date() &&
-                patient.completed !== "complete" ? (
-                  <td style={{ color: "red" }}>
-                    {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
-                  </td>
+                    {new Date(patient.dueDate) <= new Date() &&
+                    patient.completed !== "complete" ? (
+                      <td style={{ color: "red" }}>
+                        {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                      </td>
+                    ) : (
+                      <td>
+                        {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                      </td>
+                    )}
+
+                    <td key={patient.id}>
+                      <form>
+                        <label htmlFor="status">
+                          <select>
+                            <option className="App-info" value="Not started">
+                              {patient.completed
+                                ? patient.completed
+                                : "Not started"}
+                            </option>
+                            <option className="App-info" value="Not started">
+                              Not started
+                            </option>
+                            <option className="App-info" value="Inprogress">
+                              Inprogress
+                            </option>
+                            <option className="App-info" value="incomplete">
+                              Incomplete
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
                 ) : (
-                  <td>
-                    {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
-                  </td>
+                  " "
                 )}
-
-                <td key={patient.id}>
-                  <form>
-                    <label htmlFor="status">
-                      <select>
-                        <option className="App-info" value="Not started">
-                          {patient.completed
-                            ? patient.completed
-                            : "Not started"}
-                        </option>
-                        <option className="App-info" value="Not started">
-                          Not started
-                        </option>
-                        <option className="App-info" value="Inprogress">
-                          Inprogress
-                        </option>
-                        <option className="App-info" value="Incomplete">
-                          Incomplete
-                        </option>
-                        <option className="App-info" value="Complete">
-                          Complete
-                        </option>
-                      </select>
-                    </label>
-                  </form>
-                </td>
-              </tr>
-            ) : (
-              " "
-            )}
+              </>
+            ))}
           </>
-        ))}
+        ) : (
+          <>
+          {patientTasks.map((patient) => (
+            <>
+              {patient && patientData && patientTasks ? (
+                <tr key={patient.id}>
+                  <td> {patient.task}</td>
 
-        <br />
+                  <td>
+                    {patientData.filter((name) => name.id === patient.patient)
+                      .length > 0
+                      ? patientData.filter(
+                          (name) => name.id === patient.patient
+                        )[0].patient
+                      : " "}
+                  </td>
+
+                  {new Date(patient.dueDate) <= new Date() &&
+                  patient.completed !== "complete" ? (
+                    <td style={{ color: "red" }}>
+                      {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                    </td>
+                  ) : (
+                    <td>
+                      {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                    </td>
+                  )}
+
+                  <td key={patient.id}>
+                    <form>
+                      <label htmlFor="status">
+                        <select>
+                          <option className="App-info" value="Not started">
+                            {patient.completed
+                              ? patient.completed
+                              : "Not started"}
+                          </option>
+                          <option className="App-info" value="Not started">
+                            Not started
+                          </option>
+                          <option className="App-info" value="Inprogress">
+                            Inprogress
+                          </option>
+                          <option className="App-info" value="Incomplete">
+                            Incomplete
+                          </option>
+                          <option className="App-info" value="Complete">
+                            Complete
+                          </option>
+                        </select>
+                      </label>
+                    </form>
+                  </td>
+                </tr>
+              ) : (
+                " "
+              )}
+            </>
+          ))}
+        </>
+        )}
       </table>
     </div>
   );
