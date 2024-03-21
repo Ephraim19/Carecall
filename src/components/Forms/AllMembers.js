@@ -16,17 +16,17 @@ const AllTasks = () => {
   const dbRef2 = ref(database, "Clinic");
   const dbRef = ref(database, "clients");
   const [patientData, setPatientData] = useState([]);
+
   const [patientData1, setPatientData1] = useState([]);
   const [patientData2, setPatientData2] = useState([]);
   const [patientData3, setPatientData3] = useState([]);
   const [patientData4, setPatientData4] = useState([]);
 
-
-
-  const [obj, setObj] = useState("");
+  const [obj, setObj] = useState([]);
   const [search, setSearch] = useState("");
   const [searched, setSearched] = useState([]);
   const [patientToDisplay, setPatientToDisplay] = useState([]);
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -42,6 +42,13 @@ const AllTasks = () => {
   const dbRef11 = ref(database, admin1);
   const dbRef12 = ref(database, admin2);
   const dbRef13 = ref(database, admin3);
+
+
+  const dateSort = (x) => {
+    x.sort(function (a, b) {
+      return a.joinDate - b.joinDate;
+    });
+  };
 
   useEffect(() => {
     //get clinic
@@ -59,89 +66,103 @@ const AllTasks = () => {
       }
     });
 
-    var dataArray = [];
-    var dataArray111 = [];
-    var dataArray11 = [];
-
     //read user
-    get(dbRef111).then((snapshot) => {
-      if (snapshot.exists()) {
-        dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id,
-          ...data,
-        }));
-        setPatientData(dataArray);
-      }
-    });
+    if (Cookies.get("hos_admin")) {
+      var dataArray = [];
+      var dataArray111 = [];
+      var dataArray11 = [];
 
-    if (Cookies.get("hos_admin") === "EQA_South_B") {
-      get(dbRef).then((snapshot) => {
-        if (snapshot.exists()) {
-          dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
-            id,
-            ...data,
-          }));
-          dataArray11 = dataArray11.filter(
-            (name) => name.hospital === "EQA_South_B"
-          );
-          dataArray111 = dataArray11.concat(dataArray);
-          setPatientData(dataArray111);
-        }
-      });
-    }
-
-    if (Cookies.get("hos_admin") === undefined) {
-      let dataArray = [];
-      let dataArray111 = [];
-      let dataArray11 = [];
-      let dataArray1111 = [];
-
-
-      get(dbRef11).then((snapshot) => {
+      get(dbRef111).then((snapshot) => {
         if (snapshot.exists()) {
           dataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
-          setPatientData1(dataArray);
+          setPatientData(dataArray);
         }
       });
 
-      get(dbRef12).then((snapshot) => {
-        if (snapshot.exists()) {
-          dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
-            id,
-            ...data,
-          }));
-          setPatientData2(dataArray11);
-        }
-      });
+      if (Cookies.get("hos_admin") === "EQA_South_B") {
+        get(dbRef).then((snapshot) => {
+          if (snapshot.exists()) {
+            dataArray11 = Object.entries(snapshot.val()).map(([id, data]) => ({
+              id,
+              ...data,
+            }));
+            dataArray11 = dataArray11.filter(
+              (name) => name.hospital === "EQA_South_B"
+            );
+            dataArray111 = dataArray11.concat(dataArray);
+            setPatientData(dataArray111);
+          }
+        });
+      }
+    }
+    if (Cookies.get("hos_admin") === undefined) {
+      let dataArray2 = [];
 
-      get(dbRef13).then((snapshot) => {
-        if (snapshot.exists()) {
-          dataArray111 = Object.entries(snapshot.val()).map(([id, data]) => ({
-            id,
-            ...data,
-          }));
-          setPatientData3(dataArray111);
-        }
-      });
+      let dataArray3 = [];
+      let dataArray4 = [];
+      let dataArray1111 = [];
 
-      get(dbRef).then((snapshot) => {
-        if (snapshot.exists()) {
-          dataArray1111 = Object.entries(snapshot.val()).map(([id, data]) => ({
-            id,
-            ...data,
-          }));
-          setPatientData4(dataArray1111);
-        }
-      });
-      
-      var patients = patientData1.concat(patientData2);
-      var patient1 = patients.concat(patientData3);
-      var patient2 = patient1.concat(patientData4);
-      console.log(patient2);
-      setPatientData(patient2);
+      get(dbRef11)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            dataArray2 = Object.entries(snapshot.val()).map(([id, data]) => ({
+              id,
+              ...data,
+            }));
+            setPatientData1(dataArray2);
+          }
+        })
+        .then(() => {
+          get(dbRef12)
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                dataArray3 = Object.entries(snapshot.val()).map(
+                  ([id, data]) => ({
+                    id,
+                    ...data,
+                  })
+                );
+                setPatientData2(dataArray3);
+              }
+            })
+            .then(() => {
+              get(dbRef13)
+                .then((snapshot) => {
+                  if (snapshot.exists()) {
+                    dataArray4 = Object.entries(snapshot.val()).map(
+                      ([id, data]) => ({
+                        id,
+                        ...data,
+                      })
+                    );
+                    setPatientData3(dataArray4);
+                  }
+                })
+                .then(() => {
+                  get(dbRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                      dataArray1111 = Object.entries(snapshot.val()).map(
+                        ([id, data]) => ({
+                          id,
+                          ...data,
+                        })
+                      );
+                      setPatientData4(dataArray1111);
+
+                      var patients = dataArray2.concat(dataArray3);
+
+                      var patient1 = patients.concat(dataArray4);
+                      var patient2 = patient1.concat(dataArray1111);
+                      dateSort(patient2);
+                      setPatientData(patient2);
+                    }
+                  });
+                });
+            });
+        });
     }
   }, []);
 

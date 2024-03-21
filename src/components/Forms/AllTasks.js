@@ -177,7 +177,7 @@ const AllTasks = () => {
                     value="Incomplete"
                     key={"Incomplete"}
                   >
-                    EQA Kitengela
+                    Incomplete
                   </option>
                   <option
                     className="App-info"
@@ -199,6 +199,7 @@ const AllTasks = () => {
 
           <th>status</th>
         </tr>
+        {/* {searched.length > 0 ? ():(" ")} */}
         {patientTasks.map((patient) => (
           <>
             {patient && patientData && patientTasks ? (
