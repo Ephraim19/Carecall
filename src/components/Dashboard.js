@@ -769,6 +769,10 @@ const Dashboard = () => {
     navigate("/allmembers");
   };
 
+  const medicalCamp = () => {
+    navigate("/camp");
+  };
+
   const Logout = () => {
     //remove all cookies first
 
@@ -1012,7 +1016,7 @@ const Dashboard = () => {
               <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
 
               <MenuItem icon={<FiCast />}>
-                <button className="App-info" onClick={Logout}>
+                <button className="App-info" onClick={medicalCamp}>
                   <b>Medical camp</b>
                 </button>
               </MenuItem>

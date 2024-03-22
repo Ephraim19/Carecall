@@ -23,7 +23,7 @@ const ExternalForm = () => {
   const [note, setNote] = useState("");
 
   const [percent, setPercent] = useState(0);
-  const [Save, setSave] = useState("Save");
+  const [Save, setSave] = useState("Submit");
   const [duration, setDuration] = useState("");
   const [duration1, setDuration1] = useState("");
   const [duration2, setDuration2] = useState("");
@@ -356,7 +356,7 @@ const ExternalForm = () => {
                 url,
                 dueDate: dateStrip(3, strToDate),
               }).then((data) => {
-                setSave("saved");
+                setSave("submitted");
                 setBlood("");
                 setCondition("");
                 setGender("");
@@ -431,7 +431,7 @@ const ExternalForm = () => {
       }
 
       if (!file) {
-        setSave("Saved");
+        setSave("Submitted");
 
         setBlood("");
 
@@ -827,7 +827,6 @@ const ExternalForm = () => {
 
   const handleSelect = (e) => {
     setGender(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleHospital = (e) => {

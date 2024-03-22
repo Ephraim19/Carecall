@@ -21,6 +21,8 @@ import EditClinicals from "./Forms/EditClinicals";
 import NewAdded from "./Forms/NewAdded";
 import EmailLogin from "./Forms/EmailLogin";
 import EmailSignup from "./Forms/EmailSignup";
+import Home from "./Camps/Home";
+import Registration from "./Camps/Registration";
 
 const Router = () => {
   return (
@@ -51,6 +53,15 @@ const Router = () => {
         <Route path="/new/added" Component={NewAdded} />
         <Route path="/email/login" Component={EmailLogin} />
         <Route path="/email/signup" Component={EmailSignup} />
+
+        <Route path="/camp" Component={Home} />
+        <Route path="camp/registration" Component={Registration} />
+        {/* <Route path="/camp" Component={Home} />
+        <Route path="/camp" Component={Home} />
+        <Route path="/camp" Component={Home} />
+        <Route path="/camp" Component={Home} /> */}
+
+        
       </Routes>
     </BrowserRouter>
   );

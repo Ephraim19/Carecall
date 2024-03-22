@@ -48,8 +48,6 @@ const AllTasks = () => {
           ...data,
         }));
 
-        console.log(taskArray);
-
         //Sort by date
         dateSort(taskArray);
 
@@ -69,7 +67,6 @@ const AllTasks = () => {
         setPatientData(dataArray);
       }
     });
-
   }, []);
 
   const handleStartDateChange = (date) => {
@@ -88,7 +85,6 @@ const AllTasks = () => {
   };
 
   const handleEndDateChange = (date) => {
-
     setEndDate(date);
     let currentDate = new Date(startDate);
     var dates = [];
@@ -253,64 +249,64 @@ const AllTasks = () => {
           </>
         ) : (
           <>
-          {patientTasks.map((patient) => (
-            <>
-              {patient && patientData && patientTasks ? (
-                <tr key={patient.id}>
-                  <td> {patient.task}</td>
+            {patientTasks.map((patient) => (
+              <>
+                {patient && patientData && patientTasks ? (
+                  <tr key={patient.id}>
+                    <td> {patient.task}</td>
 
-                  <td>
-                    {patientData.filter((name) => name.id === patient.patient)
-                      .length > 0
-                      ? patientData.filter(
-                          (name) => name.id === patient.patient
-                        )[0].patient
-                      : " "}
-                  </td>
-
-                  {new Date(patient.dueDate) <= new Date() &&
-                  patient.completed !== "complete" ? (
-                    <td style={{ color: "red" }}>
-                      {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
-                    </td>
-                  ) : (
                     <td>
-                      {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                      {patientData.filter((name) => name.id === patient.patient)
+                        .length > 0
+                        ? patientData.filter(
+                            (name) => name.id === patient.patient
+                          )[0].patient
+                        : " "}
                     </td>
-                  )}
 
-                  <td key={patient.id}>
-                    <form>
-                      <label htmlFor="status">
-                        <select>
-                          <option className="App-info" value="Not started">
-                            {patient.completed
-                              ? patient.completed
-                              : "Not started"}
-                          </option>
-                          <option className="App-info" value="Not started">
-                            Not started
-                          </option>
-                          <option className="App-info" value="Inprogress">
-                            Inprogress
-                          </option>
-                          <option className="App-info" value="Incomplete">
-                            Incomplete
-                          </option>
-                          <option className="App-info" value="Complete">
-                            Complete
-                          </option>
-                        </select>
-                      </label>
-                    </form>
-                  </td>
-                </tr>
-              ) : (
-                " "
-              )}
-            </>
-          ))}
-        </>
+                    {new Date(patient.dueDate) <= new Date() &&
+                    patient.completed !== "complete" ? (
+                      <td style={{ color: "red" }}>
+                        {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                      </td>
+                    ) : (
+                      <td>
+                        {patient.dueDate ? patient.dueDate.slice(0, 17) : " "}
+                      </td>
+                    )}
+
+                    <td key={patient.id}>
+                      <form>
+                        <label htmlFor="status">
+                          <select>
+                            <option className="App-info" value="Not started">
+                              {patient.completed
+                                ? patient.completed
+                                : "Not started"}
+                            </option>
+                            <option className="App-info" value="Not started">
+                              Not started
+                            </option>
+                            <option className="App-info" value="Inprogress">
+                              Inprogress
+                            </option>
+                            <option className="App-info" value="Incomplete">
+                              Incomplete
+                            </option>
+                            <option className="App-info" value="Complete">
+                              Complete
+                            </option>
+                          </select>
+                        </label>
+                      </form>
+                    </td>
+                  </tr>
+                ) : (
+                  " "
+                )}
+              </>
+            ))}
+          </>
         )}
       </table>
     </div>
