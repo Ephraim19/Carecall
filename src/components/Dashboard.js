@@ -39,6 +39,7 @@ import {
   FiAlertTriangle,
   FiActivity,
   FiEdit,
+  FiCast,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { onAuthStateChanged } from "firebase/auth";
@@ -243,7 +244,6 @@ const Dashboard = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
-        console.log(email);
         //read admins
         get(dbRef11)
           .then((snapshot) => {
@@ -259,7 +259,6 @@ const Dashboard = () => {
               );
 
               if (adminHos.length > 0) {
-                console.log(adminHos[0].hospital);
                 setHospitalAdmin(adminHos[0].hospital);
                 Cookies.set("hos_admin", adminHos[0].hospital);
               }
@@ -283,7 +282,6 @@ const Dashboard = () => {
               );
 
               if (adminHos.length > 0) {
-                console.log(adminHos[0].hospital);
                 setHospitalAdmin(adminHos[0].hospital);
                 Cookies.set("hos_admin", adminHos[0].hospital);
               }
@@ -307,7 +305,6 @@ const Dashboard = () => {
               );
 
               if (adminHos.length > 0) {
-                console.log(adminHos[0].hospital);
                 setHospitalAdmin(adminHos[0].hospital);
                 Cookies.set("hos_admin", adminHos[0].hospital);
               }
@@ -352,7 +349,6 @@ const Dashboard = () => {
             id,
             ...data,
           }));
-          console.log(dataArray111);
 
           setPatientData111(dataArray111);
           //setPatientToDisplay([dataArray[dataArray.length - 1]]);
@@ -445,7 +441,6 @@ const Dashboard = () => {
           );
           //Sort by date
           dateSort(clinicArray);
-          console.log(clinicArray);
 
           //Move Inactive to the bottom
           const nones = clinicArray.filter((item) => item.status === undefined);
@@ -511,7 +506,6 @@ const Dashboard = () => {
           const ongoing = prescArray.filter(
             (item) => item.status === "Ongoing"
           );
-          console.log(ongoing);
 
           var prescArray10 = ongoing.concat(complete);
           prescArray = nones.concat(prescArray10);
@@ -612,36 +606,12 @@ const Dashboard = () => {
         console.log(error);
       });
 
-    // if (Cookies.get("patient") && patientTasks.length > 0) {
-    //   let obj = patientData.find((name) => name.id === Cookies.get("patient"));
-    //   let taskArray = patientTasks.filter((name) => name.patient === obj.id);
-    //   let Bps = bp.filter((name) => name.patient === obj.id);
-    //   let clncArray = clinic.filter((name) => name.patient === obj.id);
-    //   let intArray = interaction.filter((name) => name.patient === obj.id);
-    //   let prescArray = prescription.filter((name) => name.patient === obj.id);
-    //   let fileArray = file.filter((name) => name.patient === obj.id);
-    //   let bmiArray = bmi.filter((name) => name.patient === obj.id);
-    //   let sugarArray = sugar.filter((name) => name.patient === obj.id);
-    //   let healthArray = healthS.filter((name) => name.patient === obj.id);
-
-    //   const dataArray = [obj];
-
-    //   setPatientToDisplay(dataArray);
-    //   setPatientTasksDisplay(taskArray);
-
-    //   setBpDisplay(Bps);
-    //   setClinicDisplay(clncArray);
-    //   setIntDisplay(intArray);
-    //   setPrescDisplay(prescArray);
-    //   setFileDispaly(fileArray);
-    //   setBmiDispaly(bmiArray);
-    //   setSugarDispaly(sugarArray);
-    //   setHealthSDisplay(healthArray);
-
-    //   const bornyr = dataArray[0].age.slice(12, 17);
-    //   const yr = new Date().getFullYear();
-    //   setAge(yr - bornyr);
-    // }
+    //Auto read data
+    if (Cookies.get("currentMember")) {
+      var c_member = Cookies.get("currentMember");
+      setSearch(c_member);
+      Cookies.remove("currentMember");
+    }
   }, []);
 
   const handleSearch = (e) => {
@@ -649,7 +619,6 @@ const Dashboard = () => {
     setSearch(e.target.value);
 
     if (Cookies.get("hos_admin") === undefined) {
-      console.log("No hospital admin");
       if (search.length > 1) {
         var allPatients = patientData.concat(patientData111);
         var searches = allPatients.filter((name) =>
@@ -722,7 +691,6 @@ const Dashboard = () => {
 
   const handleStatus = (e) => {
     setStatus(e.target.value);
-    console.log(e.target.id);
 
     //Update tasks progress
     const updates = {};
@@ -870,6 +838,7 @@ const Dashboard = () => {
               />
             </label>
           </form>
+          
 
           {searched ? (
             <ul className="searchable">
@@ -944,13 +913,13 @@ const Dashboard = () => {
             {patientToDisplay.map((patient) => (
               <div key={patient.key}>
                 <Menu iconShape="square" className="menuItems">
-                  <MenuItem
+                  {/* <MenuItem
                     active={true}
                     icon={<FaHome />}
                     style={{ color: "red", fontSize: "23", fontWeight: "bold" }}
                   >
                     {hs}
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem active={true} icon={<FaMale />}>
                     Name: {patient.patient}
                   </MenuItem>
@@ -1041,6 +1010,12 @@ const Dashboard = () => {
               )}
 
               <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
+
+              <MenuItem icon={<FiCast />}>
+                <button className="App-info" onClick={Logout}>
+                  <b>Medical camp</b>
+                </button>
+              </MenuItem>
 
               <MenuItem icon={<FiLogOut />}>
                 <button className="App-info" onClick={Logout}>

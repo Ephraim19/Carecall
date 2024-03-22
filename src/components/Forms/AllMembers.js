@@ -30,6 +30,9 @@ const AllTasks = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const [memberSearch, setMemberSearch] = useState("");
+
+
   const hs = Cookies.get("hos_admin");
   const cl = hs + "/" + "clients";
 

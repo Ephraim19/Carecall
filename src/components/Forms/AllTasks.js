@@ -70,7 +70,6 @@ const AllTasks = () => {
       }
     });
 
-    console.log(patientData);
   }, []);
 
   const handleStartDateChange = (date) => {
