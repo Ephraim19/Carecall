@@ -4,13 +4,15 @@ import { ref, push } from "firebase/database";
 import Cookies from "js-cookie";
 import { database } from "../Firebase";
 
-const Registration = () => {
+const Registration = (props) => {
   const [member, setMember] = React.useState("");
   const [age, setAge] = React.useState("");
   const [gender, setGender] = React.useState("");
   const [Phone, setPhone] = React.useState("");
   const [phoneErr, setPhoneErr] = React.useState("");
   const [occupation, setOccupation] = React.useState("");
+  const [edit, setEdit] = React.useState("");
+  const [search, setSearch] = React.useState("");
 
   const handleSelect = (e) => {
     setGender(e.target.value);
@@ -18,8 +20,8 @@ const Registration = () => {
 
   // React.useEffect(() => {
   //   const camp = Cookies.get("camp");
-
-  // });
+  //   console.log(props.campData);
+  // },[props.campData]);
 
   //handlephone change
   const phoneNo = (e) => {
@@ -56,6 +58,18 @@ const Registration = () => {
         });
     } else {
       toast.error("Please fill all fields");
+    }
+  };
+
+  const Edit = (e) => {
+    setEdit(e.target.value);
+
+    if (props.campData.length > 0 && e.target.value.length > 2) {
+      setSearch(
+        props.campData.filter((name) =>
+          name.member.toLowerCase().includes(e.target.value.toLowerCase())
+        )
+      );
     }
   };
 
@@ -130,16 +144,33 @@ const Registration = () => {
         <h4 style={{ color: "purple", fontSize: "23px", textAlign: "center" }}>
           Data
         </h4>
+
+        <label>
+          <b>Edit members</b> <br />
+          <input
+            type="text"
+            value={edit}
+            onChange={Edit}
+            placeholder="Search a member to edit"
+          />
+        </label>
+        <br />
+        {search &&
+          search.map((data) => (
+            <div key={data.id}>
+              <p>Name:{data.member}</p>
+              {/* <p>Phone number:{data.Phone}</p>
+              <p>Age:{data.age}</p> */}
+            </div>
+          ))}
+        <br />
         <p>Name:{member}</p>
         <p>Phone number:{Phone}</p>
         <p>Age:{age}</p>
         <p>Gender:{gender}</p>
         <p>Occupation:{occupation}</p>
-
-        <button onClick={Push}>Edit</button>
         <br />
         <br />
-        <button onClick={Push}>Add Members</button>
       </div>
       <ToastContainer />
     </div>

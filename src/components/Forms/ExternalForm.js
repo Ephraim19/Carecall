@@ -47,6 +47,7 @@ const ExternalForm = () => {
 
   const [blood, setBlood] = useState("");
   const [phoneErr, setPhoneErr] = useState("");
+  const [labResults , setLabResults] = useState("");
 
 
   const dbRef = ref(database, "HealthCordinator");
@@ -241,6 +242,7 @@ const ExternalForm = () => {
           dueDate: dateStrip(3, strToDate),
           clinic: hospital,
           diagnosis: condition,
+          labResults,
         }).then(() => {
           //Create a task for appointment followup
           var strToDatey = new Date();
@@ -468,6 +470,8 @@ const ExternalForm = () => {
         condition,
         hospital,
         gender,
+        
+
         joinDate: new Date().toDateString(),
         //hc: hc.user,
         Address1: "",
@@ -495,6 +499,7 @@ const ExternalForm = () => {
             dueDate: dateStrip(3, strToDate),
             clinic: hospital,
             diagnosis: condition,
+            labResults,
           }).then(() => {
             //Create a task for appointment followup
             var strToDatey = new Date();
@@ -1115,6 +1120,16 @@ const ExternalForm = () => {
               type="text"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            <b>Lab results</b> <br />
+            <input
+              type="text"
+              value={labResults}
+              onChange={(e) => setLabResults(e.target.value)}
             />
           </label>
           <br />
