@@ -33,7 +33,7 @@ const Triage = (props) => {
 
   const Push = (e) => {
     e.preventDefault();
-    setMember1("Triage");
+    setMember("Triage");
     //Update triage data
     const updates = {};
     updates["/weight"] = weight;

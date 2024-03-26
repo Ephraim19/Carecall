@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import carecall from "../carecall.png";
 import Registration from "./Registration";
 import Triage from "./Triage";
@@ -147,7 +147,7 @@ const Home = () => {
 
       {member === "Registration" && <Registration campData={campData} />}
       {member === "Triage" && <Triage campData={campData} />}
-      {member === "Doctor" && <Doctor />}
+      {member === "Doctor" && <Doctor campData={campData} />}
       {member === "Nutritionist" && <Nutritionist />}
       {member === "Optical" && <Optical />}
       {member === "Dental" && <Dental />}
