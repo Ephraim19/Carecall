@@ -104,6 +104,10 @@ const Dashboard = () => {
   const admin2 = "EQA_Nairobi_West_Hospital" + "/" + "Admins";
   const admin3 = "EQA_South_B" + "/" + "Admins";
 
+  const client1 = "EQA_Kitengela" + "/" + "clients";
+  const client2 = "EQA_Nairobi_West_Hospital" + "/" + "clients";
+  const client3 = "EQA_South_B" + "/" + "clients";
+
   const dbRef = ref(database, cl);
   const dbRef111 = ref(database, "clients");
 
@@ -119,6 +123,9 @@ const Dashboard = () => {
   const dbRef11 = ref(database, admin1);
   const dbRef12 = ref(database, admin2);
   const dbRef13 = ref(database, admin3);
+  const dbRef14 = ref(database, client1);
+  const dbRef15 = ref(database, client2);
+  const dbRef16 = ref(database, client3);
 
   //create initial menuCollapse state using useState hook
   const [menuCollapse, setMenuCollapse] = useState(false);
@@ -349,8 +356,9 @@ const Dashboard = () => {
             id,
             ...data,
           }));
-
+          console.log(dataArray111);
           setPatientData111(dataArray111);
+          //dataArray = dataArray.concat(dataArray111);
           //setPatientToDisplay([dataArray[dataArray.length - 1]]);
         } else {
           console.log("No data available");
@@ -360,7 +368,61 @@ const Dashboard = () => {
         console.log(error);
       });
 
-    dataArray = dataArray.concat(dataArray111);
+      var dataArray14 = [];
+      get(dbRef14)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray14 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      var dataArray15 = [];
+      get(dbRef15)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray15 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      var dataArray16 = [];
+      get(dbRef16)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          dataArray16 = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          
+        } else {
+          console.log("No data available");
+        }
+        var aa1 = dataArray14.concat(dataArray15);
+        var aa2 = aa1.concat(dataArray16);
+        var aa3 = aa2.concat(dataArray111);
+        setPatientData111(aa3);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     //get tasks
     get(dbRef2)
@@ -1245,7 +1307,10 @@ const Dashboard = () => {
                 <th>Date </th>
                 <th>Hospital</th>
                 <th>Diagnosis</th>
+                <th>Lab</th>
+
                 <th>Status</th>
+
               </tr>
               {clinicDisplay.slice(0, visibleRows).map((cln) => (
                 <tr key={cln.id}>
@@ -1261,6 +1326,7 @@ const Dashboard = () => {
                       </button>{" "}
                     </td>
                   )}
+                  <td>{cln.labResults}</td>
                   <td>
                     <form>
                       <label htmlFor="status">
