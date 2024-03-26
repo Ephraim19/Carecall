@@ -7,21 +7,23 @@ import { ref, push, get, update, set } from "firebase/database";
 import { database } from "../Firebase";
 import Doctor from "./Doctor";
 import Nutritionist from "./Nutritionist";
+import Optical from "./Optical";
+import Dental from "./Dental";
 const Home = () => {
   const [member, setMember] = React.useState("");
   const [camp, setCamp] = React.useState("");
   const [campData, setCampData] = React.useState([]);
+  const [currentCamp, setCurrentCamp] = React.useState("");
 
   React.useEffect(() => {
     const camp1 = Cookies.get("camp");
     if (camp1) {
-      setCamp(camp1);
+      setCurrentCamp(camp1);
 
-      const dbRef = ref(database, "camps/" + camp);
+      const dbRef = ref(database, "camps/" + camp1);
       get(dbRef)
         .then((snapshot) => {
           if (snapshot.exists()) {
-
             const data = Object.entries(snapshot.val()).map(([id, data]) => ({
               id,
               ...data,
@@ -49,6 +51,12 @@ const Home = () => {
     }
     if (e.target.innerText === "Nutritionist") {
       setMember("Nutritionist");
+    }
+    if (e.target.innerText === "Optical") {
+      setMember("Optical");
+    }
+    if (e.target.innerText === "Dental") {
+      setMember("Dental");
     }
   };
 
@@ -82,10 +90,9 @@ const Home = () => {
         <button className="App-info" onClick={Reg}>
           Pharmacy
         </button>
-        
       </nav>
 
-      {!member ? (
+      {!member && !currentCamp ? (
         <form className="dashboard">
           <div>
             <h4
@@ -109,11 +116,41 @@ const Home = () => {
       ) : (
         " "
       )}
-      {member === "Registration" && <Registration campData = {campData} />}
-      {member === "Triage" && <Triage />}
+
+      {!member && currentCamp ? (
+        <form className="dashboard">
+          <div>
+            <h4
+              style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
+            >
+              Camp Details
+            </h4>
+            <b>Current camp: {currentCamp}</b>
+            <br />
+            <br />
+            <label>
+              <b>Add a new medical camp name*</b> <br />
+              <input
+                type="text"
+                value={camp}
+                onChange={(e) => setCamp(e.target.value)}
+              />
+            </label>
+            <br />
+            <br />
+            <button onClick={submit}>Submit</button>
+          </div>
+        </form>
+      ) : (
+        " "
+      )}
+
+      {member === "Registration" && <Registration campData={campData} />}
+      {member === "Triage" && <Triage campData={campData} />}
       {member === "Doctor" && <Doctor />}
       {member === "Nutritionist" && <Nutritionist />}
-
+      {member === "Optical" && <Optical />}
+      {member === "Dental" && <Dental />}
     </div>
   );
 };
