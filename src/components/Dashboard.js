@@ -10,6 +10,7 @@ import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
 import { Resend } from "resend";
+// import africastalking from "africastalking";
 
 import {
   FaBomb,
@@ -52,6 +53,7 @@ import {
   Title,
   CategoryScale,
 } from "chart.js";
+import Call from "./Forms/Call";
 
 Chart.register(
   LineController,
@@ -368,15 +370,14 @@ const Dashboard = () => {
         console.log(error);
       });
 
-      var dataArray14 = [];
-      get(dbRef14)
+    var dataArray14 = [];
+    get(dbRef14)
       .then((snapshot) => {
         if (snapshot.exists()) {
           dataArray14 = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
-          
         } else {
           console.log("No data available");
         }
@@ -385,15 +386,14 @@ const Dashboard = () => {
         console.log(error);
       });
 
-      var dataArray15 = [];
-      get(dbRef15)
+    var dataArray15 = [];
+    get(dbRef15)
       .then((snapshot) => {
         if (snapshot.exists()) {
           dataArray15 = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
-          
         } else {
           console.log("No data available");
         }
@@ -402,15 +402,14 @@ const Dashboard = () => {
         console.log(error);
       });
 
-      var dataArray16 = [];
-      get(dbRef16)
+    var dataArray16 = [];
+    get(dbRef16)
       .then((snapshot) => {
         if (snapshot.exists()) {
           dataArray16 = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
             ...data,
           }));
-          
         } else {
           console.log("No data available");
         }
@@ -418,7 +417,6 @@ const Dashboard = () => {
         var aa2 = aa1.concat(dataArray16);
         var aa3 = aa2.concat(dataArray111);
         setPatientData111(aa3);
-        
       })
       .catch((error) => {
         console.log(error);
@@ -863,28 +861,23 @@ const Dashboard = () => {
     setVisibleRows(visibleRows + 5);
   };
 
-  //Time preference
-  const prefTime = (e) => {
-    //Update tasks progress
-    const updates = {};
-    updates[patientToDisplay[0].id + "/prefTime"] = e.target.value;
-    update(dbRef, updates);
-  };
-
-  //Day preference
-  const prefDay = (e) => {
-    //Update tasks progress
-    const updates = {};
-    updates[patientToDisplay[0].id + "/prefDay"] = e.target.value;
-    update(dbRef, updates);
-  };
-
-  //Language preference
-  const prefLang = (e) => {
-    //Update tasks progress
-    const updates = {};
-    updates[patientToDisplay[0].id + "/prefLang"] = e.target.value;
-    update(dbRef, updates);
+  const callMember = () => {
+    //   const call = africastalking({
+    //     username: "sandbox",
+    //     apiKey:
+    //       "8a8cea68964d4f105a13932aa5861c8acbe1745919211afc51b75366cb6bef4a",
+    //   });
+    //   africastalking.SMS.send ({
+    //     to: "+254727903857",
+    //     message: "Hello, this is a test message from Africastalking",
+    //     from: "CARECALL",
+    //   }).then(response => {
+    //     console.log(response);
+    //   }
+    //   ).catch(error => {
+    //     console.log(error);
+    //   }
+    //   );
   };
 
   return (
@@ -904,7 +897,6 @@ const Dashboard = () => {
               />
             </label>
           </form>
-          
 
           {searched ? (
             <ul className="searchable">
@@ -946,16 +938,21 @@ const Dashboard = () => {
         <button className="App-info" onClick={allMembers}>
           Members
         </button>
+        <button className="App-info" onClick={callMember}>
+          Call
+        </button>
       </nav>
 
       {patientToDisplay ? (
         <div className="dashboard">
+          {/* small and big change using menucollapse state */}
+
           <Sidebar
-            collapsed={menuCollapse}
+            collapsed = {menuCollapse}
+            
             style={{ marginTop: "7%", marginLeft: "0" }}
           >
             <div className="logotext">
-              {/* small and big change using menucollapse state */}
               {healthSDisplay.length === 0 ? (
                 <h3 style={{ color: "purple", fontSize: "23px" }}>
                   {menuCollapse ? (
@@ -1135,6 +1132,7 @@ const Dashboard = () => {
               <tr>
                 <th>Date </th>
                 <th>Blood pressure</th>
+                <th>pulse</th>
               </tr>
 
               {bpDisplay.slice(0, visibleRows).map((bps) => (
@@ -1146,11 +1144,13 @@ const Dashboard = () => {
                     <>
                       <td>{bps.dueDate.slice(0, 17)}</td>
                       <td style={{ color: "red" }}>{bps.pressure}</td>
+                      <td>{bps.pulse}</td>
                     </>
                   ) : (
                     <>
                       <td>{bps.dueDate.slice(0, 17)}</td>
                       <td>{bps.pressure}</td>
+                      <td>{bps.pulse}</td>
                     </>
                   )}
                 </tr>
@@ -1310,7 +1310,6 @@ const Dashboard = () => {
                 <th>Lab</th>
 
                 <th>Status</th>
-
               </tr>
               {clinicDisplay.slice(0, visibleRows).map((cln) => (
                 <tr key={cln.id}>
@@ -1572,11 +1571,8 @@ const Dashboard = () => {
           </div>
 
           <div style={{ marginTop: "6%" }}>
-            {patientToDisplay.map((patient) => (
-              <h4 key={patient.id} style={{ textAlign: "center" }}>
-                Tasks to do for {patient.patient}
-              </h4>
-            ))}
+            <h4 style={{ textAlign: "center" }}>Tasks</h4>
+
             <table className="customers">
               <tr>
                 <th>Task</th>

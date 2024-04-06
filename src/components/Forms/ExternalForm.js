@@ -48,6 +48,7 @@ const ExternalForm = () => {
   const [blood, setBlood] = useState("");
   const [phoneErr, setPhoneErr] = useState("");
   const [labResults , setLabResults] = useState("");
+  const [pulse, setPulse] = useState("");
 
 
   const dbRef = ref(database, "HealthCordinator");
@@ -262,6 +263,7 @@ const ExternalForm = () => {
         push(ref(database, "bloodPressure"), {
           patient: membr.id,
           pressure: blood,
+          pulse:pulse,
           dueDate: dateStrip(3, strToDate),
         }).then(() => {
           //Create a task if bp is high or low
@@ -461,6 +463,7 @@ const ExternalForm = () => {
         gender,
         age: dueDates,
         blood,
+        pulse,
         Phone,
         medication,
         medication2,
@@ -966,6 +969,97 @@ const ExternalForm = () => {
           <br />
         </form>
 
+        
+
+        <form>
+          <h4
+            style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
+          >
+            BP,BMI and Lab results
+          </h4>
+          <label>
+            <b>Blood pressure:</b> <br />
+            <input
+              type="text"
+              value={blood}
+              onChange={(e) => setBlood(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+          <label>
+            <b>Pulse rate:</b> <br />
+            <input
+              type="text"
+              value={pulse}
+              onChange={(e) => setPulse(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+
+          <label>
+            <b>Height(meters)</b> <br />
+            <input
+              type="text"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            <b>Weight(kgs)</b> <br />
+            <input
+              type="text"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            <b>Lab results</b> <br />
+            <input
+              type="text"
+              value={labResults}
+              onChange={(e) => setLabResults(e.target.value)}
+            />
+          </label>
+          <br />
+          <br />
+          <b>Lab results1 (file)</b>
+          <br />
+          <input type="file" onChange={handleChange} accept="media_type" />{" "}
+          <br />
+          <b>Lab results2 (file)</b>
+          <br />
+          <input
+            type="file"
+            onChange={handleChange2}
+            accept="media_type"
+          />{" "}
+          <br />
+          <b>Lab results3 (file)</b>
+          <br />
+          <input
+            type="file"
+            onChange={handleChange3}
+            accept="media_type"
+          />{" "}
+          <br />
+          <br />
+          <label>
+            <b>Important note*</b> <br />
+            <input
+              type="text"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+          </label>
+        </form>
+
         <form>
           <h4
             style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
@@ -1087,82 +1181,6 @@ const ExternalForm = () => {
           <br />
         </form>
 
-        <form>
-          <h4
-            style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
-          >
-            BP,BMI and Lab results
-          </h4>
-          <label>
-            <b>Blood pressure:</b> <br />
-            <input
-              type="text"
-              value={blood}
-              onChange={(e) => setBlood(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Height(meters)</b> <br />
-            <input
-              type="text"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Weight(kgs)</b> <br />
-            <input
-              type="text"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <label>
-            <b>Lab results</b> <br />
-            <input
-              type="text"
-              value={labResults}
-              onChange={(e) => setLabResults(e.target.value)}
-            />
-          </label>
-          <br />
-          <br />
-          <b>Lab results1 (file)</b>
-          <br />
-          <input type="file" onChange={handleChange} accept="media_type" />{" "}
-          <br />
-          <b>Lab results2 (file)</b>
-          <br />
-          <input
-            type="file"
-            onChange={handleChange2}
-            accept="media_type"
-          />{" "}
-          <br />
-          <b>Lab results3 (file)</b>
-          <br />
-          <input
-            type="file"
-            onChange={handleChange3}
-            accept="media_type"
-          />{" "}
-          <br />
-          <br />
-          <label>
-            <b>Important note*</b> <br />
-            <input
-              type="text"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-            />
-          </label>
-        </form>
       </div>
       <div className="dashboard">
         <div>
