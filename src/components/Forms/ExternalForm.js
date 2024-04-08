@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { database,  storage } from "../Firebase";
+import { database, storage } from "../Firebase";
 import { ref, push, get, update, set } from "firebase/database";
 import carecall from "../carecall.png";
 import { ToastContainer, toast } from "react-toastify";
@@ -47,9 +47,8 @@ const ExternalForm = () => {
 
   const [blood, setBlood] = useState("");
   const [phoneErr, setPhoneErr] = useState("");
-  const [labResults , setLabResults] = useState("");
+  const [labResults, setLabResults] = useState("");
   const [pulse, setPulse] = useState("");
-
 
   const dbRef = ref(database, "HealthCordinator");
   const dbRef1 = ref(database, "clients");
@@ -263,7 +262,7 @@ const ExternalForm = () => {
         push(ref(database, "bloodPressure"), {
           patient: membr.id,
           pressure: blood,
-          pulse:pulse,
+          pulse: pulse,
           dueDate: dateStrip(3, strToDate),
         }).then(() => {
           //Create a task if bp is high or low
@@ -473,7 +472,7 @@ const ExternalForm = () => {
         condition,
         hospital,
         gender,
-        
+
         joinDate: new Date().toDateString(),
         //hc: hc.user,
         Address1: "",
@@ -838,7 +837,6 @@ const ExternalForm = () => {
 
   const handleHospital = (e) => {
     setHospital(e.target.value);
-    
   };
 
   // Handle file upload event and update state
@@ -969,8 +967,6 @@ const ExternalForm = () => {
           <br />
         </form>
 
-        
-
         <form>
           <h4
             style={{ color: "purple", fontSize: "23px", textAlign: "center" }}
@@ -987,7 +983,6 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-
           <label>
             <b>Pulse rate:</b> <br />
             <input
@@ -998,7 +993,6 @@ const ExternalForm = () => {
           </label>
           <br />
           <br />
-
           <label>
             <b>Height(meters)</b> <br />
             <input
@@ -1180,10 +1174,12 @@ const ExternalForm = () => {
           <br />
           <br />
         </form>
-
       </div>
       <div className="dashboard">
         <div>
+          <p style={{ color: "red", "fontWeight":"bold" }}>
+            Incase of any challange filling the form, kindly call 0727857903 (Ebenezer){" "}
+          </p>
           <p>File upload progress: {percent}%</p>
           <br />
           <button onClick={Push}>{Save}</button>

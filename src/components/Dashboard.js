@@ -10,7 +10,7 @@ import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
 import { Resend } from "resend";
-// import africastalking from "africastalking";
+//import africastalking from "africastalking";
 
 import {
   FaBomb,
