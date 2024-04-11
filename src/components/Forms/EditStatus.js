@@ -38,9 +38,17 @@ const EditStatus = () => {
   const cl = hs + "/" + "clients";
   const dbRef = ref(database, cl);
   const navigate = useNavigate();
+  const dbRef111 = ref(database, "clients");
+  const client1 = "EQA_Kitengela" + "/" + "clients";
+  const client2 = "EQA_Nairobi_West_Hospital" + "/" + "clients";
+  const client3 = "EQA_South_B" + "/" + "clients";
+  const dbRef14 = ref(database, client1);
+  const dbRef15 = ref(database, client2);
+  const dbRef16 = ref(database, client3);
 
   useEffect(() => {
     //read user
+  
     get(dbRef)
       .then((snapshot) => {
         if (snapshot.exists()) {

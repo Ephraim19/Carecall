@@ -948,8 +948,7 @@ const Dashboard = () => {
           {/* small and big change using menucollapse state */}
 
           <Sidebar
-            collapsed = {menuCollapse}
-            
+            collapsed={menuCollapse}
             style={{ marginTop: "7%", marginLeft: "0" }}
           >
             <div className="logotext">
@@ -976,13 +975,13 @@ const Dashboard = () => {
             {patientToDisplay.map((patient) => (
               <div key={patient.key}>
                 <Menu iconShape="square" className="menuItems">
-                  {/* <MenuItem
+                  <MenuItem
                     active={true}
-                    icon={<FaHome />}
-                    style={{ color: "red", fontSize: "23", fontWeight: "bold" }}
+                    icon={<FaMale />}
+                    style={{ fontWeight: "bold" }}
                   >
-                    {hs}
-                  </MenuItem> */}
+                    {patient.hospital}
+                  </MenuItem>
                   <MenuItem active={true} icon={<FaMale />}>
                     Name: {patient.patient}
                   </MenuItem>
