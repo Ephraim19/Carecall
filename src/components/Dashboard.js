@@ -10,7 +10,7 @@ import { FileId } from "./services/firebaseapi";
 import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
 import { Resend } from "resend";
-//import africastalking from "africastalking";
+//import africasTalking from "africastalking";
 
 import {
   FaBomb,
@@ -864,6 +864,22 @@ const Dashboard = () => {
   };
 
   const callMember = () => {
+    // const africastalking = AfricasTalking({
+    //   apiKey: '', 
+    //   username: 'sandbox'
+    // });
+
+    // try {
+    //   const result= africastalking.SMS.send({
+    //     to: '0705018725', 
+    //     message: 'Hey AT Ninja! Wassup...',
+    //     from: '[+254111052352]'
+    //   });
+    //   console.log(result);
+    // } catch(ex) {
+    //   console.error(ex);
+    // } 
+    
     //   const call = africastalking({
     //     username: "sandbox",
     //     apiKey:
@@ -1098,13 +1114,11 @@ const Dashboard = () => {
             <table className="customers">
               <tr>
                 <th>Date </th>
-                <th>mode of outreach</th>
                 <th>Conversation </th>
               </tr>
               {intDisplay.slice(0, visibleRows).map((int) => (
                 <tr>
                   <td>{int.dueDate}</td>
-                  <td>{int.mode}</td>
                   <td>
                     {int.interaction} ({int.Hc})
                   </td>
