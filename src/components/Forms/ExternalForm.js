@@ -53,6 +53,8 @@ const ExternalForm = () => {
   const dbRef = ref(database, "HealthCordinator");
   const dbRef1 = ref(database, "clients");
 
+  const [camp, setCamp] = useState("No");
+
   const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
@@ -472,6 +474,7 @@ const ExternalForm = () => {
         condition,
         hospital,
         gender,
+        camp,
 
         joinDate: new Date().toDateString(),
         //hc: hc.user,
@@ -835,6 +838,10 @@ const ExternalForm = () => {
     setGender(e.target.value);
   };
 
+  const handleSelect1 = (e) => {
+    setCamp(e.target.value);
+  };
+
   const handleHospital = (e) => {
     setHospital(e.target.value);
   };
@@ -963,6 +970,19 @@ const ExternalForm = () => {
           </label>
           <br />
           <b style={{ color: "red" }}>{phoneErr}</b>
+          <br />
+          <br />
+          <b>Medical camp member ?</b> <br />
+          <label htmlFor="Gender">
+            <select onChange={handleSelect1}>
+              <option className="App-info" value="No" key={"No"}>
+                No
+              </option>
+              <option className="App-info" value="F" key={"Yes"}>
+                Yes
+              </option>
+            </select>
+          </label>
           <br />
           <br />
         </form>
@@ -1177,8 +1197,9 @@ const ExternalForm = () => {
       </div>
       <div className="dashboard">
         <div>
-          <p style={{ color: "red", "fontWeight":"bold" }}>
-            Incase of any challange filling the form, kindly call 0727857903 (Ebenezer){" "}
+          <p style={{ color: "red", fontWeight: "bold" }}>
+            Incase of any challange filling the form, kindly call 0727857903
+            (Ebenezer){" "}
           </p>
           <p>File upload progress: {percent}%</p>
           <br />

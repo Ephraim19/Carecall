@@ -16,9 +16,11 @@ import {
   FaBomb,
   FaBusinessTime,
   FaCalendarDay,
+  FaCampground,
   FaCartPlus,
   FaEdit,
   FaHome,
+  FaHospital,
   FaImages,
   FaLanguage,
   FaMale,
@@ -977,10 +979,13 @@ const Dashboard = () => {
                 <Menu iconShape="square" className="menuItems">
                   <MenuItem
                     active={true}
-                    icon={<FaMale />}
+                    icon={<FaHospital />}
                     style={{ fontWeight: "bold" }}
                   >
                     {patient.hospital}
+                  </MenuItem>
+                  <MenuItem active={true} icon={<FaCampground />}>
+                    Camp: {patient.camp}
                   </MenuItem>
                   <MenuItem active={true} icon={<FaMale />}>
                     Name: {patient.patient}
