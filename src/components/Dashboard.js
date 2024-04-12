@@ -18,6 +18,8 @@ import {
   FaCalendarDay,
   FaCampground,
   FaCartPlus,
+  FaClock,
+  FaDailymotion,
   FaEdit,
   FaHome,
   FaHospital,
@@ -865,21 +867,19 @@ const Dashboard = () => {
 
   const callMember = () => {
     // const africastalking = AfricasTalking({
-    //   apiKey: '', 
+    //   apiKey: '',
     //   username: 'sandbox'
     // });
-
     // try {
     //   const result= africastalking.SMS.send({
-    //     to: '0705018725', 
+    //     to: '0705018725',
     //     message: 'Hey AT Ninja! Wassup...',
     //     from: '[+254111052352]'
     //   });
     //   console.log(result);
     // } catch(ex) {
     //   console.error(ex);
-    // } 
-    
+    // }
     //   const call = africastalking({
     //     username: "sandbox",
     //     apiKey:
@@ -964,28 +964,11 @@ const Dashboard = () => {
       {patientToDisplay ? (
         <div className="dashboard">
           {/* small and big change using menucollapse state */}
-
           <Sidebar
             collapsed={menuCollapse}
             style={{ marginTop: "7%", marginLeft: "0" }}
           >
-            <div className="logotext">
-              {healthSDisplay.length === 0 ? (
-                <h3 style={{ color: "purple", fontSize: "23px" }}>
-                  {menuCollapse ? (
-                    " "
-                  ) : (
-                    <button>
-                      <Link className="link" to="/forms/status">
-                        Health Status
-                      </Link>
-                    </button>
-                  )}
-                </h3>
-              ) : (
-                ""
-              )}
-            </div>
+
             <div className="closemenu" onClick={menuIconClick}>
               {/* changing menu collapse icon on click */}
               {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
@@ -1021,13 +1004,13 @@ const Dashboard = () => {
                   <MenuItem icon={<FaRegAddressBook />}>
                     Office:<b>{patient.Address1}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaRegAddressBook />}>
+                  <MenuItem icon={<FaLanguage />}>
                     Pref Language:<b>{patient.language}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaRegAddressBook />}>
+                  <MenuItem icon={<FaDailymotion />}>
                     Pref day:<b>{patient.day}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaRegAddressBook />}>
+                  <MenuItem icon={<FaClock />}>
                     Pref time:<b>{patient.time}</b>
                   </MenuItem>
                 </Menu>
@@ -1041,6 +1024,27 @@ const Dashboard = () => {
                 </button>
               </MenuItem>
             </Menu>
+            <div className="logotext">
+              {healthSDisplay.length === 0 ? (
+                <h3 style={{ color: "purple", fontSize: "23px" }}>
+                  {menuCollapse ? (
+                    " "
+                  ) : (
+                    <Menu>
+                      <MenuItem icon={<FiEdit />}>
+                        <button>
+                          <Link className="link" to="/forms/status">
+                            Health Status
+                          </Link>
+                        </button>
+                      </MenuItem>
+                    </Menu>
+                  )}
+                </h3>
+              ) : (
+                ""
+              )}
+            </div>
 
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
@@ -1092,13 +1096,13 @@ const Dashboard = () => {
                 </MenuItem>
               )}
 
-              <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
-
               <MenuItem icon={<FiCast />}>
                 <button className="App-info" onClick={medicalCamp}>
                   <b>Medical camp</b>
                 </button>
               </MenuItem>
+
+              <MenuItem icon={<FaUserGraduate />}>{cookie}</MenuItem>
 
               <MenuItem icon={<FiLogOut />}>
                 <button className="App-info" onClick={Logout}>
