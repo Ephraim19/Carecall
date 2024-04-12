@@ -67,7 +67,7 @@ const Interactions = () => {
         <label htmlFor="status">
           <select onChange={handleStatus} >
             <option className="App-info" value={"outreach"}>
-              Mode of outreach
+              Select the mode of outreach 
             </option>
             <option className="App-info" value={call}>
               Phone call
