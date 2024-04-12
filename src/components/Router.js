@@ -23,6 +23,7 @@ import EmailLogin from "./Forms/EmailLogin";
 import EmailSignup from "./Forms/EmailSignup";
 import Home from "./Camps/Home";
 import Registration from "./Camps/Registration";
+import Analytic from "./Analytics/Analytic";
 
 const Router = () => {
   return (
@@ -55,6 +56,8 @@ const Router = () => {
         <Route path="/email/signup" Component={EmailSignup} />
 
         <Route path="/camp" Component={Home} />
+        <Route path="/analytics" Component={Analytic} />
+
         <Route path="camp/registration" Component={Registration} />
         {/* <Route path="/camp" Component={Home} />
         <Route path="/camp" Component={Home} />

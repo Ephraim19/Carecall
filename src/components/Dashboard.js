@@ -45,6 +45,7 @@ import {
   FiActivity,
   FiEdit,
   FiCast,
+  FiDatabase,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { onAuthStateChanged } from "firebase/auth";
@@ -254,6 +255,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    setMenuCollapse(true);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
@@ -837,6 +839,11 @@ const Dashboard = () => {
     navigate("/camp");
   };
 
+  const analytics = () => {
+    
+    navigate("/analytics");
+  };
+
   const Logout = () => {
     //remove all cookies first
 
@@ -1013,6 +1020,7 @@ const Dashboard = () => {
                   <MenuItem icon={<FaClock />}>
                     Pref time:<b>{patient.time}</b>
                   </MenuItem>
+                  
                 </Menu>
               </div>
             ))}
@@ -1099,6 +1107,12 @@ const Dashboard = () => {
               <MenuItem icon={<FiCast />}>
                 <button className="App-info" onClick={medicalCamp}>
                   <b>Medical camp</b>
+                </button>
+              </MenuItem>
+
+              <MenuItem icon={<FiDatabase />}>
+                <button className="App-info" onClick={analytics}>
+                  <b>Analytics</b>
                 </button>
               </MenuItem>
 
