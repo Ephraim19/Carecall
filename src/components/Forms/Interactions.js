@@ -9,6 +9,12 @@ import { database } from "../Firebase";
 const Interactions = () => {
   const [interaction, setInteraction] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
+  const [mode, setMode] = useState("");
+  const [call, setCall] = useState("Phone call");
+  const [sms, setSms] = useState("SMS");
+  const [whatsapp, setWhatsapp] = useState("WhatsApp");
+  const [email, setEmail] = useState("Email");
+
   const navigate = useNavigate();
 
   const dateStrip = (numOfHours, date) => {
@@ -27,6 +33,7 @@ const Interactions = () => {
       push(ref(database, "Interaction"), {
         patient: Cookies.get("patient"),
         interaction,
+        mode,
         Hc: Cookies.get("name"),
         dueDate: dateStrip(3, dueDate),
       }).then((data) => {
@@ -36,6 +43,10 @@ const Interactions = () => {
     }
   };
 
+  const handleStatus = (e) => {
+    setMode(e.target.value);
+    console.log(e.target.value);
+  }
   return (
     <div>
       <nav className="App-nav">
@@ -53,11 +64,34 @@ const Interactions = () => {
         </label>
         <br />
         <br />
+        <label htmlFor="status">
+          <select onChange={handleStatus} >
+            <option className="App-info" value={"outreach"}>
+              Mode of outreach
+            </option>
+            <option className="App-info" value={call}>
+              Phone call
+            </option>
+            <option className="App-info" value={sms}>
+              SMS
+            </option>
+            <option className="App-info" value={whatsapp}>
+              WhatsApp
+            </option>
+            <option className="App-info" value={email}>
+              Email
+            </option>
+          </select>
+        </label>
+        <br />
+        <br />
         <b>Date</b>
         <br />
         <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
 
         <br />
+        <br />
+        
         <button className="App-info" onClick={NewInteraction}>
           Submit
         </button>

@@ -1093,11 +1093,13 @@ const Dashboard = () => {
             <table className="customers">
               <tr>
                 <th>Date </th>
+                <th>mode of outreach</th>
                 <th>Conversation </th>
               </tr>
               {intDisplay.slice(0, visibleRows).map((int) => (
                 <tr>
                   <td>{int.dueDate}</td>
+                  <td>{int.mode}</td>
                   <td>
                     {int.interaction} ({int.Hc})
                   </td>
