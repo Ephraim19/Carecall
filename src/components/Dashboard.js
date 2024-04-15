@@ -1028,13 +1028,17 @@ const Dashboard = () => {
               </div>
             ))}
 
-            <Menu iconShape="square">
-              <MenuItem icon={<FiEdit />}>
-                <button className="App-info" onClick={Edit}>
-                  <b>Edit</b>
-                </button>
-              </MenuItem>
-            </Menu>
+            {Cookies.get("hos_admin") === undefined ? (
+              " "
+            ) : (
+              <Menu iconShape="square">
+                <MenuItem icon={<FiEdit />}>
+                  <button className="App-info" onClick={Edit}>
+                    <b>Edit</b>
+                  </button>
+                </MenuItem>
+              </Menu>
+            )}
             <div className="logotext">
               {healthSDisplay.length === 0 ? (
                 <h3 style={{ color: "purple", fontSize: "23px" }}>
@@ -1120,15 +1124,15 @@ const Dashboard = () => {
               </MenuItem>
 
               <MenuItem icon={<FaFunnelDollar />}>
-                <button className="App-info" >
-                <a
-                style={{textDecoration:"none",color:"black"}}
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://airtable.com/app9yt7YeSJQerH1c/pagSrk4BdsnEvHa3E/form"
-                >
-                  Feedback
-                </a>
+                <button className="App-info">
+                  <a
+                    style={{ textDecoration: "none", color: "black" }}
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://airtable.com/app9yt7YeSJQerH1c/pagSrk4BdsnEvHa3E/form"
+                  >
+                    Feedback
+                  </a>
                 </button>
               </MenuItem>
 

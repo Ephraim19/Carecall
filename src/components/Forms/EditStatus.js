@@ -37,6 +37,7 @@ const EditStatus = () => {
   const hs = Cookies.get("hos_admin");
   const cl = hs + "/" + "clients";
   const dbRef = ref(database, cl);
+
   const navigate = useNavigate();
   const dbRef111 = ref(database, "clients");
   const client1 = "EQA_Kitengela" + "/" + "clients";
@@ -61,6 +62,7 @@ const EditStatus = () => {
           const obj = dataArray.find(
             (name) => name.id === Cookies.get("patient")
           );
+
           setPatient(obj.patient);
           setPhone(obj.Phone);
           setAddress(obj.Address);
@@ -131,14 +133,7 @@ const EditStatus = () => {
     navigate("/dashboard");
   };
 
-  const onOptionChange = (e) => {
-    setStatus(e.target.value);
-  };
-
-  const handleSelect = (e) => {
-    setGender(e.target.value);
-    console.log(e.target.value);
-  };
+  
   return (
     <div>
       <nav className="App-nav">
