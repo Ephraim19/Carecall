@@ -54,6 +54,7 @@ const ExternalForm = () => {
   const dbRef1 = ref(database, "clients");
 
   const [camp, setCamp] = useState("No");
+  const [campName, setCampName] = useState("");
 
   const navigate = useNavigate();
 
@@ -475,6 +476,7 @@ const ExternalForm = () => {
         hospital,
         gender,
         camp,
+        campName,
 
         joinDate: new Date().toDateString(),
         //hc: hc.user,
@@ -983,6 +985,20 @@ const ExternalForm = () => {
               </option>
             </select>
           </label>
+          <br />
+          <br />
+          {camp === "Yes" ? (
+          <label>
+            <b>Medical camp name*</b> <br />
+            <input
+              type="text"
+              value={campName}
+              onChange={(e)=>setCampName(e.target.value)}
+              
+            />
+          </label>
+          ):(" ")}
+
           <br />
           <br />
         </form>
