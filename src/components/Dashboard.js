@@ -21,6 +21,7 @@ import {
   FaClock,
   FaDailymotion,
   FaEdit,
+  FaFunnelDollar,
   FaHome,
   FaHospital,
   FaImages,
@@ -59,6 +60,7 @@ import {
   CategoryScale,
 } from "chart.js";
 import Call from "./Forms/Call";
+import Analytic from "./Analytics/Analytic";
 
 Chart.register(
   LineController,
@@ -840,8 +842,11 @@ const Dashboard = () => {
   };
 
   const analytics = () => {
-    
     navigate("/analytics");
+  };
+
+  const feedback = () => {
+    navigate("https://airtable.com/app9yt7YeSJQerH1c/pagSrk4BdsnEvHa3E/form");
   };
 
   const Logout = () => {
@@ -975,7 +980,6 @@ const Dashboard = () => {
             collapsed={menuCollapse}
             style={{ marginTop: "7%", marginLeft: "0" }}
           >
-
             <div className="closemenu" onClick={menuIconClick}>
               {/* changing menu collapse icon on click */}
               {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
@@ -1020,7 +1024,6 @@ const Dashboard = () => {
                   <MenuItem icon={<FaClock />}>
                     Pref time:<b>{patient.time}</b>
                   </MenuItem>
-                  
                 </Menu>
               </div>
             ))}
@@ -1113,6 +1116,19 @@ const Dashboard = () => {
               <MenuItem icon={<FiDatabase />}>
                 <button className="App-info" onClick={analytics}>
                   <b>Analytics</b>
+                </button>
+              </MenuItem>
+
+              <MenuItem icon={<FaFunnelDollar />}>
+                <button className="App-info" >
+                <a
+                style={{textDecoration:"none",color:"black"}}
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://airtable.com/app9yt7YeSJQerH1c/pagSrk4BdsnEvHa3E/form"
+                >
+                  Feedback
+                </a>
                 </button>
               </MenuItem>
 

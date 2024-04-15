@@ -24,6 +24,7 @@ import EmailSignup from "./Forms/EmailSignup";
 import Home from "./Camps/Home";
 import Registration from "./Camps/Registration";
 import Analytic from "./Analytics/Analytic";
+import Feedbackform from "./Forms/Feedbackform";
 
 const Router = () => {
   return (
@@ -57,6 +58,8 @@ const Router = () => {
 
         <Route path="/camp" Component={Home} />
         <Route path="/analytics" Component={Analytic} />
+        <Route path="/feedback" Component={Feedbackform} />
+
 
         <Route path="camp/registration" Component={Registration} />
         {/* <Route path="/camp" Component={Home} />
