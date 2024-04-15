@@ -973,12 +973,12 @@ const ExternalForm = () => {
           <br />
           <br />
           <b>Medical camp member ?</b> <br />
-          <label htmlFor="Gender">
+          <label htmlFor="Camp">
             <select onChange={handleSelect1}>
               <option className="App-info" value="No" key={"No"}>
                 No
               </option>
-              <option className="App-info" value="F" key={"Yes"}>
+              <option className="App-info" value="Yes" key={"Yes"}>
                 Yes
               </option>
             </select>
