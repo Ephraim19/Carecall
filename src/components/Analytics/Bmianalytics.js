@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { get, push, ref, update } from "firebase/database";
-import { database } from "../Firebase";
 import { Pie, Line } from "react-chartjs-2";
 import { ArcElement, Tooltip, Legend } from "chart.js";
 import DatePicker from "react-datepicker";
@@ -15,8 +13,15 @@ import {
   CategoryScale,
 } from "chart.js";
 
+const Bmianalytics = (allData) => {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [hospital, setHospital] = useState("");
+  const [bmi, setBmi] = useState([]);
+  const [Hbmi, setHbmi] = useState(0);
+  const [Nbmi, setNbmi] = useState(0);
+  const [Lbmi, setLbmi] = useState(0);
 
-const Bpanalytics = (allData) => {
   Chart.register(
     ArcElement,
     Tooltip,
@@ -29,33 +34,14 @@ const Bpanalytics = (allData) => {
     CategoryScale
   );
 
-  const dbRef3 = ref(database, "bloodPressure");
-  const [bp, setBp] = useState([]);
-  const [bp1, setBp1] = useState([]);
-
-  const [Hbp, setHpb] = useState(0);
-  const [Nbp, setNpb] = useState(0);
-  const [Lbp, setLpb] = useState(0);
-
-  const [Sbp, setSbp] = useState([]);
-  const [Kbp, setKbp] = useState([]);
-  const [Wbp, setWbp] = useState([]);
-
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
   //pie chart
   const data = {
-    labels: [
-      "High blood pressure",
-      "Normal blood pressure",
-      "Low blood pressure",
-    ],
+    labels: ["Overweight", "Normal weight", "Underweight"],
     datasets: [
       {
-        label: "Blood pressure",
+        label: "BMI",
 
-        data: [Hbp, Nbp, Lbp],
+        data: [Hbmi, Nbmi, Lbmi],
         backgroundColor: ["red", "blue", "green"],
         // hoverBackgroundColor: [
         //   "rgba(255, 99, 132, 1)",
@@ -71,108 +57,45 @@ const Bpanalytics = (allData) => {
   };
 
   const datasi1 = {
-    labels: Wbp.map((b) => b.dueDate.slice(0, 17)),
+    labels: bmi.map((b) => b.dueDate.slice(0, 17)),
     datasets: [
       {
-        label: "BP high",
-        data: Wbp.map((b) => b.pressure.split("/")[0]),
+        label: "BMI",
+        data: bmi.map((b) => parseFloat(b.weight) / parseFloat(b.height ^ 2)),
         //data: [33, 53, 85, 41, 44, 65],
         fill: true,
         backgroundColor: "red",
         borderColor: "rgba(75,192,192,1)",
       },
-
-      {
-        label: "BP low",
-        data: Wbp.map((b) => b.pressure.split("/")[1]),
-        fill: true,
-        backgroundColor: "green",
-        borderColor: "purple",
-      },
     ],
   };
 
   useEffect(() => {
-    //blood pressure
-    var dbBp = allData.allData.filter((data) => data.id === "bloodPressure");
+    var dbBmi = allData.allData.filter((data) => data.id === "Bmi");
 
-    var bpArray = Object.entries(dbBp[0]).map(([id, data]) => ({
+    var bmiArray = Object.entries(dbBmi[0]).map(([id, data]) => ({
       id,
       ...data,
     }));
+    bmiArray.shift();
+    setBmi(bmiArray);
 
-    bpArray.shift();
-
-    setBp(bpArray);
-
-    const Hbp1 = bpArray.filter(
-      (bps) =>
-        bps.pressure.split("/")[0] >= 130 &&
-        //bps.pressure.split("/")[0] < 60 ||
-        //bps.pressure.split("/")[1] < 60 ||
-        bps.pressure.split("/")[1] >= 80
-    );
-    const Nbp1 = bpArray.filter(
-      (bps) =>
-        bps.pressure.split("/")[0] > 80 ||
-        bps.pressure.split("/")[0] < 130 ||
-        (bps.pressure.split("/")[1] > 60 && bps.pressure.split("/")[1] < 90)
-    );
-
-    const Lbp1 = bpArray.filter(
-      (bps) =>
-        bps.pressure.split("/")[0] < 90 &&
-        //bps.pressure.split("/")[0] < 60 ||
-        //bps.pressure.split("/")[1] < 60 ||
-        bps.pressure.split("/")[1] < 60
-    );
-    setHpb(Hbp1.length);
-    setNpb(Nbp1.length);
-    setLpb(Lbp1.length);
+    var Hbmi = bmiArray.filter(
+      (b) => parseFloat(b.weight) / parseFloat(b.height ^ 2) > 25
+    ).length;
+    var Nbmi = bmiArray.filter(
+      (b) =>
+        parseFloat(b.weight) / parseFloat(b.height ^ 2) >= 18.5 &&
+        parseFloat(b.weight) / parseFloat(b.height ^ 2) <= 25
+    ).length;
+    var Lbmi = bmiArray.filter(
+      (b) => parseFloat(b.weight) / parseFloat(b.height ^ 2) < 18.5
+    ).length;
+    console.log(Hbmi, Nbmi, Lbmi);
+    setHbmi(Hbmi);
+    setNbmi(Nbmi);
+    setLbmi(Lbmi);
   }, []);
-
-  const handleHospital = (e) => {
-    var Members = allData.allData.filter((data) => data.id === e.target.value);
-
-    var mArray = Object.entries(Members[0].clients).map(([id, data]) => ({
-      id,
-      ...data,
-    }));
-    setSbp(mArray);
-
-    //get the bp
-    let data = [];
-
-    mArray.forEach((element) => {
-      let realData = bp.find((data) => data.patient === element.id);
-
-      realData !== undefined ? data.push(realData) : (realData = null);
-    });
-    setWbp(data);
-
-    const Hbp1 = data.filter(
-      (bps) =>
-        bps.pressure.split("/")[0] >= 130 || bps.pressure.split("/")[1] >= 80
-    );
-    const Nbp1 = data.filter(
-      (bps) =>
-        bps.pressure.split("/")[0] > 80 ||
-        (bps.pressure.split("/")[0] < 130 && bps.pressure.split("/")[1] > 60) ||
-        bps.pressure.split("/")[1] < 90
-    );
-
-    const Lbp1 = data.filter(
-      (bps) =>
-        bps.pressure.split("/")[0] < 90 ||
-        //bps.pressure.split("/")[0] < 60 ||
-        //bps.pressure.split("/")[1] < 60 ||
-        bps.pressure.split("/")[1] < 60
-    );
-    console.log(Lbp1);
-    setHpb(Hbp1.length);
-    setNpb(Nbp1.length);
-    setLpb(Lbp1.length);
-  };
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
@@ -182,10 +105,44 @@ const Bpanalytics = (allData) => {
     setEndDate(date);
   };
 
+  const handleHospital = (e) => {
+    var Members = allData.allData.filter((data) => data.id === e.target.value);
+
+    var mArray = Object.entries(Members[0].clients).map(([id, data]) => ({
+      id,
+      ...data,
+    }));
+
+    //get the bmi
+    let data = [];
+
+    mArray.forEach((element) => {
+      let realData = bmi.find((data) => data.patient === element.id);
+
+      realData !== undefined ? data.push(realData) : (realData = null);
+    });
+
+    setBmi(data);
+    var Hbmi = data.filter(
+      (b) => parseFloat(b.weight) / parseFloat(b.height ^ 2) > 25
+    ).length;
+    var Nbmi = data.filter(
+      (b) =>
+        parseFloat(b.weight) / parseFloat(b.height ^ 2) >= 18.5 &&
+        parseFloat(b.weight) / parseFloat(b.height ^ 2) <= 25
+    ).length;
+    var Lbmi = data.filter(
+      (b) => parseFloat(b.weight) / parseFloat(b.height ^ 2) < 18.5
+    ).length;
+    console.log(Hbmi, Nbmi, Lbmi);
+    setHbmi(Hbmi);
+    setNbmi(Nbmi);
+    setLbmi(Lbmi);
+  };
+
   return (
     <div>
-      <h4>Blood Pressure Analytics </h4>
-
+      <h4>BMI Analytics</h4>
       <div className="dashboard">
         <div>
           <label htmlFor="Gender">
@@ -237,18 +194,16 @@ const Bpanalytics = (allData) => {
           minDate={startDate}
         />
       </div>
-
       <div className="dashboard">
         <Pie
           style={{ maxHeight: "350PX", maxWidth: "300PX" }}
           data={data}
           options={options}
         />
-
         <Line data={datasi1} options={options} style={{ maxWidth: "30%" }} />
       </div>
     </div>
   );
 };
 
-export default Bpanalytics;
+export default Bmianalytics;

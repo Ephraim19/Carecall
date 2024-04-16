@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import Bpanalytics from "./Bpanalytics";
 import { get, push, ref, update } from "firebase/database";
 import { database } from "../Firebase";
+import Bmianalytics from "./Bmianalytics";
+import carecall from "../carecall.png";
 
 const Analytic = () => {
   const dbAll = ref(database);
   const [allData, setAllData] = useState([]);
+  const [hospital, setHospital] = useState("");
+
+  const handleHospital = (e) => {
+    setHospital(e.target.value);
+  }
 
   useEffect(() => {
     get(dbAll).then((snapshot) => {
@@ -23,10 +30,19 @@ const Analytic = () => {
 
   return (
     <div>
+      <nav className="App-nav">
+        <img src={carecall} alt="logo" className="App-logo" />
+        <h4>Analytics</h4>
+      </nav>
       {allData.length > 0 ? (
-        <div>
-          <Bpanalytics allData={allData} />
-        </div>
+        <>
+          <div>
+            <Bpanalytics allData={allData} />
+          </div>
+          <div>
+            <Bmianalytics allData={allData} />
+          </div>
+        </>
       ) : (
         <div>
           <h1>Loading...</h1>

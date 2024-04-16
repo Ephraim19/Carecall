@@ -1,3 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Istok+Web:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+body {
+  margin: 0;
+  line-height: normal;
+}
+:root {
+  /* fonts */
+  --font-inter: Inter;
+  --font-istok-web: "Istok Web";
+
+  /* font sizes */
+  --font-size-xs: 12px;
+  --font-size-mini: 15px;
+  --font-size-smi: 13px;
+  --font-size-mid: 17px;
+  --font-size-6xs: 7px;
+  --font-size-23xl: 42px;
+  --font-size-6xl: 25px;
+  --font-size-15xl: 34px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-dodgerblue: #118afa;
+  --color-black: #000;
+  --color-gainsboro: rgba(217, 217, 217, 0.59);
+  --color-silver: #b9b9b9;
+  --color-darkblue: #3a02b1;
+
+  /* Gaps */
+  --gap-22xl: 41px;
+  --gap-xl: 20px;
+  --gap-57xl: 76px;
+  --gap-19xl: 38px;
+  --gap-11xl: 30px;
+  --gap-3xs: 10px;
+
+  /* Paddings */
+  --padding-xl: 20px;
+  --padding-35xl: 54px;
+  --padding-27xl: 46px;
+  --padding-16xl: 35px;
+  --padding-4xl: 23px;
+  --padding-11xs: 2px;
+  --padding-xs: 12px;
+  --padding-smi: 13px;
+  --padding-3xs-4: 9.4px;
+  --padding-2xs-5: 10.5px;
+  --padding-9xs: 4px;
+  --padding-6xs: 7px;
+  --padding-lgi-5: 19.5px;
+  --padding-6xs-2: 6.2px;
+  --padding-2xs: 11px;
+  --padding-7xs: 6px;
+  --padding-3xs: 10px;
+  --padding-15xl: 34px;
+
+  /* Border radiuses */
+  --br-11xl: 30px;
+}
+
 * {
   box-sizing: border-box;
   font-size: 17px;
@@ -222,3 +284,6 @@ h4 {
     width: 90%;
   }
 }
+
+
+
