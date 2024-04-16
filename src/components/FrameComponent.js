@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import styles from "./FrameComponent.module.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -14,7 +14,6 @@ const FrameComponent = () => {
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
   const [errorCode, setErrorCode] = React.useState("");
-
 
   const onLogin = (e) => {
     console.log("login clicked");
@@ -76,15 +75,14 @@ const FrameComponent = () => {
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FaEyeSlash className={styles.seeunseePasswordIcon} />
+            <FaEye className={styles.seeunseePasswordIcon} />
           </div>
 
           <button className={styles.loginButtonloginButton} onClick={onLogin}>
             <button className={styles.buttonIcon} />
             <b className={styles.logIn}>LOG IN</b>
           </button>
-        <b style={{ color: "red" }}>{errorCode}</b>
-
+          <b style={{ color: "red" }}>{errorCode}</b>
         </form>
       </div>
       <div className={styles.loginButton}>

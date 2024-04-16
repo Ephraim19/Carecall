@@ -184,7 +184,7 @@
     max-width: 100%;
     overflow: hidden;
     max-height: 100%;
-    background-color: var(--color-dodgerblue);
+    background-color: var(--color-darkblue);
   }
   .logIn,
   .loginButtonloginButton {
