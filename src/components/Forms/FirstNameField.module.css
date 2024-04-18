@@ -1,0 +1,379 @@
+.carecall,
+.connectedContinuousCare {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.carecall {
+  margin: 0;
+  height: 37px;
+  font-size: var(--font-size-23xl);
+  font-weight: 700;
+  font-family: var(--font-istok-web);
+  color: var(--color-darkblue);
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.connectedContinuousCare {
+  flex: 1;
+  font-size: var(--font-size-6xs);
+  font-family: var(--font-inter);
+  color: var(--color-dodgerblue);
+  text-align: right;
+}
+
+.connectedContinuousCareLabe {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 var(--padding-4xs) 0 var(--padding-15xl);
+  margin-top: -2px;
+}
+
+.carecallBranding,
+.createNewCarecall {
+  position: absolute;
+  margin: 0 !important;
+  display: flex;
+}
+
+.carecallBranding {
+  width: 174px;
+  top: calc(50% - 331.5px);
+  left: calc(50% - 234.5px);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.createNewCarecall {
+  height: 27px;
+  width: 361px;
+  top: 148px;
+  left: 70px;
+  font-size: var(--font-size-mid);
+  font-family: var(--font-inter);
+  color: var(--color-black);
+  text-align: left;
+  align-items: center;
+}
+
+.firstNameField1 {
+  width: 220px;
+  background-color: var(--color-gainsboro);
+  height: 41px;
+  top: calc(50% - 175.5px);
+  left: calc(50% - 234.5px);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
+.firstNameField1,
+.lastNameField,
+.phoneNumber {
+  border: 0;
+  outline: 0;
+  margin: 0 !important;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+
+.lastNameField {
+  width: 220px;
+  background-color: var(--color-gainsboro);
+  height: 41px;
+  top: calc(50% - 175.5px);
+  left: calc(50% + 14.5px);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.phoneNumber {
+  top: calc(50% - 93.5px);
+  left: calc(50% - 234.5px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+.emailAddress,
+.newPasswordField,
+.phoneNumber {
+  height: 41px;
+  width: 469px;
+  background-color: var(--color-gainsboro);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.emailAddress {
+  border: 0;
+  outline: 0;
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% - 11.5px);
+  left: calc(50% - 234.5px);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-2xs);
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+
+.newPasswordField {
+  position: relative;
+  display: none;
+  max-width: 100%;
+}
+.newPasswordChild {
+  width: 291px;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) 0 0;
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+
+
+.seeunseePasswordIcon {
+  height: 33px;
+  width: 38px;
+  position: relative;
+  object-fit: cover;
+  z-index: 1;
+}
+.hospitalField,
+.confirmPasswordField,
+.newPassword {
+  width: 469px;
+  background-color: var(--color-gainsboro);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  max-width: 100%;
+}
+.newPassword {
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 70.5px);
+  left: calc(50% - 234.5px);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-9xs) var(--padding-base) var(--padding-9xs)
+    var(--padding-2xs);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+}
+.hospitalField
+.confirmPasswordField {
+  height: 41px;
+  position: relative;
+  display: none;
+}
+.hospitalChild {
+  margin-top: 20%;
+  width: 291px;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) 0 0;
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+.confirmPasswordChild {
+  width: 291px;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) 0 0;
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+
+.seeunseePasswordIcon1 {
+  height: 33px;
+  width: 38px;
+  position: relative;
+  object-fit: cover;
+  z-index: 1;
+}
+.hospital,
+.confirmPassword,
+.signUpButtonChild {
+  width: 469px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  max-width: 100%;
+}
+.hospital,
+.confirmPassword {
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 152.5px);
+  left: calc(50% - 234.5px);
+  background-color: var(--color-gainsboro);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-9xs) var(--padding-base) var(--padding-9xs)
+    var(--padding-2xs);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+}
+
+.signUpButtonChild {
+  height: 41px;
+  position: relative;
+  background-color: var(--color-darkblue);
+  display: none;
+}
+.createAccount {
+  width: 291px;
+  position: relative;
+  font-size: var(--font-size-mini);
+  display: flex;
+  font-family: var(--font-inter);
+  color: var(--color-white);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.signUpButton,
+.signUpButton1 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.signUpButton1 {
+  flex: 1;
+  background-color: var(--color-darkblue);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-xl) var(--padding-xs)
+    var(--padding-13xl);
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.signUpButton {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 469px;
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 234.5px);
+  left: calc(50% - 234.5px);
+  justify-content: flex-start;
+}
+
+.alreadyHaveAn,
+.logIn {
+  position: relative;
+  font-size: var(--font-size-xs);
+  font-family: var(--font-inter);
+  color: var(--color-black);
+  text-align: left;
+}
+.logIn {
+  color: var(--color-dodgerblue);
+  display: inline-block;
+  min-width: 35px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.firstNameField,
+.logInPrompt {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.logInPrompt {
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 316.5px);
+  left: calc(50% - 234.5px);
+  align-items: flex-start;
+  gap: var(--gap-8xs);
+}
+
+ .firstNameField {
+  margin: 0;
+  height: 783px;
+  width: 609px;
+  border-radius: var(--br-11xl);
+  background-color: var(--color-white);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: var(--padding-41xl) var(--padding-51xl);
+  box-sizing: border-box;
+ position: relative; 
+  gap: 41px 27px;
+  
+} 
+ 
+ 
+@media screen and (max-width: 950px) {
+  .carecall {
+    font-size: var(--font-size-15xl);
+  }
+  .hospital,
+  .confirmPassword,
+  .newPassword {
+    flex-wrap: wrap;
+  }
+  .firstNameField {
+    height: auto;
+    min-height: 783;
+  }
+}
+@media screen and (max-width: 700px) {
+  .logInPrompt {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 450px) {
+  .carecall {
+    font-size: var(--font-size-6xl);
+  }
+} 

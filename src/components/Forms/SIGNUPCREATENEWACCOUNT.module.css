@@ -1,0 +1,36 @@
+.signUpcreateNewAccount {
+  margin-top: -100px;
+  margin-left: -25%;
+    width: 125%;
+    height: 1080px;
+    position: relative;
+    background-color: var(--color-whitesmoke);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 155px 650px 142px;
+    box-sizing: border-box;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  @media screen and (max-width: 975px) {
+    .signUpcreateNewAccount {
+      padding-left: var(--padding-306xl);
+      padding-right: var(--padding-306xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 950px) {
+    .signUpcreateNewAccount {
+      height: auto;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    .signUpcreateNewAccount {
+      padding-left: var(--padding-143xl);
+      padding-right: var(--padding-143xl);
+      box-sizing: border-box;
+    }
+  }
+  

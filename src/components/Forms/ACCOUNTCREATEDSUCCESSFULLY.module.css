@@ -1,0 +1,227 @@
+.carecall {
+    margin: 0;
+    height: 37px;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .connectedContinuousCare {
+    flex: 1;
+    position: relative;
+  }
+  .carecallParent,
+  .connectedContinuousCareWrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .connectedContinuousCareWrapper {
+    align-self: stretch;
+    flex-direction: row;
+    padding: 0 0 0 var(--padding-15xl);
+    margin-top: -2px;
+    text-align: right;
+    font-size: var(--font-size-6xs);
+    color: var(--color-dodgerblue);
+    font-family: var(--font-inter);
+  }
+  .carecallParent {
+    width: 165px;
+    flex-direction: column;
+  }
+  .resetPasswordFieldInner {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 var(--padding-8xs) 0 0;
+  }
+  .yourAccountHas {
+    flex: 1;
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+  }
+  .li {
+    align-self: stretch;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs) 7.5px;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .clickHere {
+    position: relative;
+    display: inline-block;
+    min-width: 60px;
+    cursor: pointer;
+  }
+  .toLogIn {
+    flex: 1;
+    position: relative;
+    color: var(--color-black);
+  }
+  .bottomNavigation,
+  .bottomNavigationWrapper,
+  .liParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .bottomNavigation {
+    width: 201px;
+    overflow: hidden;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    padding: var(--padding-10xs) 38.5px;
+    box-sizing: border-box;
+    gap: 4px;
+  }
+  .bottomNavigationWrapper,
+  .liParent {
+    align-self: stretch;
+    justify-content: center;
+    text-align: left;
+    font-size: var(--font-size-xs);
+    color: var(--color-dodgerblue);
+  }
+  .liParent {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--gap-xl);
+    max-width: 100%;
+    text-align: center;
+    font-size: var(--font-size-mini);
+    color: var(--color-black);
+    font-family: var(--font-inter);
+  }
+  .accountCreatedSuccessfully,
+  .resetPasswordField {
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+  .resetPasswordField {
+    width: 466px;
+    border-radius: var(--br-11xl);
+    background-color: var(--color-white);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 65px 41px 53px;
+    gap: 32px;
+    max-width: 100%;
+  }
+  .accountCreatedSuccessfully {
+    margin-top: -25%;
+    width: 100%;
+    position: relative;
+    background-color: var(--color-whitesmoke);
+    flex-direction: row;
+    justify-content: center;
+    padding: 400px var(--padding-xl);
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    font-size: var(--font-size-23xl);
+    color: var(--color-darkblue);
+    font-family: var(--font-istok-web);
+  }
+  @media screen and (max-width: 750px) {
+    .carecall {
+      font-size: var(--font-size-15xl);
+    }
+  }
+  @media screen and (max-width: 675px) {
+    .resetPasswordField {
+      gap: 16px;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .carecall {
+      font-size: var(--font-size-6xl);
+    }
+  }
+
+  .frameWrapper,
+  .logInToYourCarecallAccounParent {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .logInTo {
+    width: 361px;
+    height: 27px;
+    font-size: var(--font-size-mid);
+    display: flex;
+    color: var(--color-black);
+    align-items: center;
+    flex-shrink: 0;
+    max-width: 100%;
+  }
+
+  .logInTo {
+    position: relative;
+    font-family: var(--font-inter);
+    text-align: left;
+  }
+  .emailFieldForLogin,
+  .emailParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .div,
+  .email,
+  .logInTo {
+    position: relative;
+    font-family: var(--font-inter);
+    text-align: left;
+    
+  }
+  .email {
+    font-size: var(--font-size-mini);
+    color: var(--color-black);
+    display: inline-block;
+    min-width: 40px;
+  }
+
+  .emailFieldForLogin,
+  .emailParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .emailFieldForLogin {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background-color: var(--color-gainsboro);
+    align-self: stretch;
+    height: 41px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: var(--padding-smi) var(--padding-xl) var(--padding-2xs);
+    box-sizing: border-box;
+    font-family: var(--font-inter);
+    font-size: var(--font-size-mini);
+    color: var(--color-silver);
+    min-width: 250px;
+    color: black;
+  }
+  

@@ -33,11 +33,11 @@ const FrameComponent = () => {
 
   const onCreateAnAccountClick = useCallback((e) => {
     // Please sync "SIGN UP/CREATE NEW ACCOUNT" to the project
-    navigate("/email/signup");
+    navigate("/partner");
   }, []);
 
   const onResetPasswordPromptClick = useCallback(() => {
-    // Please sync "RESET PASSWORD" to the project
+    navigate("/reset");
   }, []);
 
   return (

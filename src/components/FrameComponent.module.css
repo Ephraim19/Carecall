@@ -213,6 +213,7 @@
     align-items: flex-start;
     gap: var(--gap-3xs);
   }
+  
   .frameWrapper,
   .logInToYourCarecallAccounParent {
     display: flex;

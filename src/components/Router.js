@@ -25,6 +25,8 @@ import Home from "./Camps/Home";
 import Registration from "./Camps/Registration";
 import Analytic from "./Analytics/Analytic";
 import Feedbackform from "./Forms/Feedbackform";
+import RESETPASSWORD from "./Forms/RESETPASSWORD";
+import ACCOUNTCREATEDSUCCESSFULLY from "./Forms/ACCOUNTCREATEDSUCCESSFULLY";
 
 const Router = () => {
   return (
@@ -32,6 +34,8 @@ const Router = () => {
       <Routes>
         <Route path="/google" Component={Login} />
         <Route path="/" Component={EmailLogin} />
+        <Route path="/reset" Component={RESETPASSWORD} />
+        <Route path="/partner" Component={ACCOUNTCREATEDSUCCESSFULLY} />
 
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/patient" Component={Patient} />
