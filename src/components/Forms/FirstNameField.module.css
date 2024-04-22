@@ -160,7 +160,6 @@
   object-fit: cover;
   z-index: 1;
 }
-.hospitalField,
 .confirmPasswordField,
 .newPassword {
   width: 469px;
@@ -182,29 +181,12 @@
   box-sizing: border-box;
   gap: var(--gap-xl);
 }
-.hospitalField
 .confirmPasswordField {
   height: 41px;
   position: relative;
   display: none;
 }
-.hospitalChild {
-  margin-top: 20%;
-  width: 291px;
-  border: 0;
-  outline: 0;
-  background-color: transparent;
-  height: 25px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: var(--padding-5xs) 0 0;
-  box-sizing: border-box;
-  font-family: var(--font-inter);
-  font-size: var(--font-size-mini);
-  color: var(--color-black);
-}
+
 .confirmPasswordChild {
   width: 291px;
   border: 0;
@@ -229,14 +211,12 @@
   object-fit: cover;
   z-index: 1;
 }
-.hospital,
 .confirmPassword,
 .signUpButtonChild {
   width: 469px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   max-width: 100%;
 }
-.hospital,
 .confirmPassword {
   margin: 0 !important;
   position: absolute;
@@ -357,7 +337,6 @@
   .carecall {
     font-size: var(--font-size-15xl);
   }
-  .hospital,
   .confirmPassword,
   .newPassword {
     flex-wrap: wrap;

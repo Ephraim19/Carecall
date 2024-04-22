@@ -125,7 +125,7 @@ const FirstNameField = () => {
             value={password1}
             onChange={(e) => setPassword1(e.target.value)}
           />
-          <FaEye className={styles.seeunseePasswordIcon1} />
+          <FaEye className={styles.seeunseePasswordIcon} />
         </div>
 
         <button className={styles.signUpButton} onClick={onSubmit}>
