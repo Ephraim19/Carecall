@@ -27,11 +27,6 @@ const FirstNameField = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    //Send verification email
-    sendEmailVerification(auth.currentUser).then(() => {
-      // Email verification sent!
-      // ...
-    });
     
     if (password !== password1) {
       setPasswordErrorCode("Passwords do not match!");
