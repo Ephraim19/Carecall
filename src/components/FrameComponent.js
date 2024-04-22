@@ -33,7 +33,6 @@ const FrameComponent = () => {
   };
 
   const onCreateAnAccountClick = useCallback((e) => {
-    // Please sync "SIGN UP/CREATE NEW ACCOUNT" to the project
     navigate("/partner");
   }, []);
 
@@ -106,7 +105,7 @@ const FrameComponent = () => {
       </div>
       <div className={styles.frameGroup}>
         <div className={styles.newHereParent}>
-          <div className={styles.newHere}>New ?</div>
+          <div className={styles.newHere}>New Here?</div>
           <div
             className={styles.createAnAccount}
             onClick={onCreateAnAccountClick}

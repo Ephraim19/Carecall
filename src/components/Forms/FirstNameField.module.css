@@ -159,6 +159,7 @@
   position: relative;
   object-fit: cover;
   z-index: 1;
+  color: var(--color-darkblue);
 }
 .confirmPasswordField,
 .newPassword {
@@ -210,6 +211,7 @@
   position: relative;
   object-fit: cover;
   z-index: 1;
+  color: aqua;
 }
 .confirmPassword,
 .signUpButtonChild {

@@ -12,7 +12,7 @@
   .connectedContinuousCare {
     flex: 1;
     position: absolute;
-    font-size: 12px;
+    font-size: 10px;
   }
   .carecallParent,
   .connectedContinuousCareWrapper {
@@ -309,7 +309,6 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    debug_commit: 1de1738;
   }
   .frameGroup,
   .frameParent,

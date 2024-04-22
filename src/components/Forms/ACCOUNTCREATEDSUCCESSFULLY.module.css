@@ -142,13 +142,12 @@
     max-width: 100%;
   }
   .accountCreatedSuccessfully {
-    margin-top: -25%;
     width: 100%;
     position: relative;
     background-color: var(--color-whitesmoke);
     flex-direction: row;
     justify-content: center;
-    padding: 400px var(--padding-xl);
+    padding: 50px var(--padding-xl);
     line-height: normal;
     letter-spacing: normal;
     text-align: left;

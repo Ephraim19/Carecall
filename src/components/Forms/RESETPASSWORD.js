@@ -1,7 +1,6 @@
 import ResetPasswordField from "./ResetPasswordField";
 import styles from "./RESETPASSWORD.module.css";
-import { getAuth,sendCustomPasswordResetEmail } from "firebase/auth";
-import React, { useState } from "react";
+import React from "react";
 
 const RESETPASSWORD = () => {
 
