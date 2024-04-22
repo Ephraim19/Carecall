@@ -96,7 +96,7 @@ const FrameComponent = () => {
             <button className={styles.buttonIcon} />
             <b className={styles.logIn}>LOG IN</b>
           </button>
-          <b style={{ color: "red" }}>{errorCode}</b>
+          <b style={{ color: "red", fontSize:"15px" }}>{errorCode}</b>
         </form>
       </div>
       <div className={styles.loginButton}>
