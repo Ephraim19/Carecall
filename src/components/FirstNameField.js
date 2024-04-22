@@ -1,10 +1,10 @@
-import React, { useCallback,useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Forms/FirstNameField.module.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, database } from "./Firebase";
-import { ref, push} from "firebase/database";
-import { FaEye } from "react-icons/fa";
+import { ref, push } from "firebase/database";
+import { FaEye,FaEyeSlash } from "react-icons/fa";
 import Cookies from "js-cookie";
 
 const FirstNameField = () => {
@@ -14,25 +14,23 @@ const FirstNameField = () => {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
-  const [hospital,setHospital] = React.useState("");
+  const [hospital, setHospital] = React.useState("");
   const [errorCode, setErrorCode] = React.useState("");
   const [passwordErrorCode, setPasswordErrorCode] = React.useState("");
   const navigate = useNavigate();
+  const [seePassword, setSeePassword] = React.useState(false);
+  const [seePassword1, setSeePassword1] = React.useState(false);
 
   useEffect(() => {
     setHospital(Cookies.get("hospital"));
-  }
-  ,[])
-
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (password !== password1) {
       setPasswordErrorCode("Passwords do not match!");
     } else {
-      
-
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           push(ref(database, Cookies.get("hospital") + "/" + "Admins"), {
@@ -57,6 +55,14 @@ const FirstNameField = () => {
           // ..
         });
     }
+  };
+
+  const seePass = () => {
+    setSeePassword(!seePassword);
+  };
+
+  const seePass1 = () => {
+    setSeePassword1(!seePassword1);
   };
 
   const onLogInTextClick = useCallback(() => {
@@ -108,24 +114,37 @@ const FirstNameField = () => {
           <input
             className={styles.newPasswordChild}
             placeholder="Enter New Password"
-            type="password"
+            type={seePassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FaEye className={styles.seeunseePasswordIcon} />
+          {seePassword ? (
+            <FaEyeSlash
+              className={styles.seeunseePasswordIcon}
+              onClick={seePass}
+            />
+          ) : (
+            <FaEye className={styles.seeunseePasswordIcon} onClick={seePass} />
+          )}
         </div>
-
 
         <div className={styles.confirmPassword}>
           <div className={styles.confirmPasswordField} />
           <input
             className={styles.confirmPasswordChild}
             placeholder="Confirm Password"
-            type="password"
+            type={seePassword1 ? "text" : "password"}
             value={password1}
             onChange={(e) => setPassword1(e.target.value)}
           />
-          <FaEye className={styles.seeunseePasswordIcon} />
+          {seePassword1 ? (
+            <FaEyeSlash
+              className={styles.seeunseePasswordIcon}
+              onClick={seePass1}
+            />
+          ) : (
+            <FaEye className={styles.seeunseePasswordIcon} onClick={seePass1} />
+          )}
         </div>
 
         <button className={styles.signUpButton} onClick={onSubmit}>
