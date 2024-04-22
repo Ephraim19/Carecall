@@ -32,7 +32,6 @@ const AllTasks = () => {
 
   const [memberSearch, setMemberSearch] = useState("");
 
-
   const hs = Cookies.get("hos_admin");
   const cl = hs + "/" + "clients";
 
@@ -45,7 +44,6 @@ const AllTasks = () => {
   const dbRef11 = ref(database, admin1);
   const dbRef12 = ref(database, admin2);
   const dbRef13 = ref(database, admin3);
-
 
   const dateSort = (x) => {
     x.sort(function (a, b) {
@@ -204,13 +202,10 @@ const AllTasks = () => {
   };
 
   const handleEndDateChange = (date) => {
-
     setEndDate(date);
     let currentDate = new Date(startDate);
     var dates = [];
     while (currentDate <= endDate) {
-      console.log("zz");
-
       dates.push(new Date(currentDate).toDateString());
       currentDate.setDate(currentDate.getDate() + 1);
     }

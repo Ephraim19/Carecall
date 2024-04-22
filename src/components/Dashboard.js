@@ -990,17 +990,9 @@ const Dashboard = () => {
                     {patient.hospital}
                   </MenuItem>
                   <MenuItem active={true} icon={<FaCampground />}>
-                    Camp: {patient.camp}
+                    Camp: {patient.campName}
                   </MenuItem>
-                  <MenuItem active={true} icon={<FaMale />}>
-                    Name: {patient.patient}
-                  </MenuItem>
-                  <MenuItem active={true} icon={<FiCalendar />}>
-                    Age: {patient.age}
-                  </MenuItem>
-                  <MenuItem icon={<FaMale />}>
-                    Gender:<b>{patient.gender}</b>
-                  </MenuItem>
+
                   <MenuItem icon={<FaPhone />}>
                     Phone:<b>{patient.Phone}</b>
                   </MenuItem>
