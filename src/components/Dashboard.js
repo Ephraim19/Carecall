@@ -366,7 +366,7 @@ const Dashboard = () => {
             id,
             ...data,
           }));
-          console.log(dataArray111);
+          console.log(dataArray111.length);
           setPatientData111(dataArray111);
           //dataArray = dataArray.concat(dataArray111);
           //setPatientToDisplay([dataArray[dataArray.length - 1]]);
@@ -425,6 +425,8 @@ const Dashboard = () => {
         var aa2 = aa1.concat(dataArray16);
         var aa3 = aa2.concat(dataArray111);
         setPatientData111(aa3);
+        console.log(aa3.length);
+
       })
       .catch((error) => {
         console.log(error);
@@ -443,6 +445,7 @@ const Dashboard = () => {
           const completetaskArray = taskArray.filter(
             (name) => name.completed === "complete"
           );
+          console.log(completetaskArray.length);
 
           const cancelledtaskArray = taskArray.filter(
             (name) => name.completed === "cancelled"
@@ -453,16 +456,7 @@ const Dashboard = () => {
             .filter((name) => name.completed !== "cancelled");
 
           dateSort(IncompletetaskArray);
-
-          //Send Email to admin
-          const resend = new Resend("re_MmGJ3gdH_HqMt2ez3pn982MEZ25YbQZKf");
-
-          // resend.emails.send({
-          //   from: 'onboarding@resend.dev',
-          //   to: 'machayoephraim@gmail.com',
-          //   subject: 'Hello World',
-          //   html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
-          // });
+   
           const a1 = cancelledtaskArray.concat(completetaskArray);
           const allTasksInorder = IncompletetaskArray.concat(a1);
 
@@ -535,6 +529,7 @@ const Dashboard = () => {
     //read interactions
     get(dbRef5)
       .then((snapshot) => {
+        console.log(snapshot.val());
         if (snapshot.exists()) {
           const intArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,

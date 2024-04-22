@@ -4,6 +4,7 @@ import { get, push, ref, update } from "firebase/database";
 import { database } from "../Firebase";
 import Bmianalytics from "./Bmianalytics";
 import carecall from "../carecall.png";
+import Tasksanalytics from "./Tasksanalytics";
 
 const Analytic = () => {
   const dbAll = ref(database);
@@ -12,7 +13,7 @@ const Analytic = () => {
 
   const handleHospital = (e) => {
     setHospital(e.target.value);
-  }
+  };
 
   useEffect(() => {
     get(dbAll).then((snapshot) => {
@@ -36,6 +37,9 @@ const Analytic = () => {
       </nav>
       {allData.length > 0 ? (
         <>
+          <div>
+            <Tasksanalytics allData={allData} />
+          </div>
           <div>
             <Bpanalytics allData={allData} />
           </div>

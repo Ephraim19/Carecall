@@ -21,18 +21,22 @@ const FirstNameField = () => {
 
   useEffect(() => {
     setHospital(Cookies.get("hospital"));
-    console.log(Cookies.get("hospital"))
   }
   ,[])
 
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('qq')
+    //Send verification email
+    sendEmailVerification(auth.currentUser).then(() => {
+      // Email verification sent!
+      // ...
+    });
+    
     if (password !== password1) {
       setPasswordErrorCode("Passwords do not match!");
     } else {
-      console.log("aa1")
+      
 
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {

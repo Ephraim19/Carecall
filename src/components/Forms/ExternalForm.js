@@ -465,7 +465,6 @@ const ExternalForm = () => {
         gender,
         age: dueDates,
         blood,
-        pulse,
         Phone,
         medication,
         medication2,
@@ -622,6 +621,7 @@ const ExternalForm = () => {
           push(ref(database, "bloodPressure"), {
             patient: data.key,
             pressure: blood,
+            pulse,
             dueDate: dateStrip(3, strToDate),
           }).then(() => {
             //Create a task if bp is high or low

@@ -168,7 +168,6 @@ const Bpanalytics = (allData) => {
         //bps.pressure.split("/")[1] < 60 ||
         bps.pressure.split("/")[1] < 60
     );
-    console.log(Lbp1);
     setHpb(Hbp1.length);
     setNpb(Nbp1.length);
     setLpb(Lbp1.length);

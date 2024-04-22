@@ -13,6 +13,21 @@ const ResetPasswordField = () => {
     navigate("/");
   }, [navigate]);
 
+//   const reset = useCallback(() => {
+//     // Admin SDK API to generate the password reset link.
+// const userEmail = 'user@example.com';
+// getAuth()
+//   .generatePasswordResetLink(userEmail, actionCodeSettings)
+//   .then((link) => {
+//     // Construct password reset email template, embed the link and send
+//     // using custom SMTP server.
+//     return sendCustomPasswordResetEmail(userEmail, displayName, link);
+//   })
+//   .catch((error) => {
+//     // Some error occurred.
+//   });
+//   }, []);
+
   return (
     <div className={styles.resetPasswordField}>
       <div className={styles.resetPasswordFieldInner}>
@@ -40,9 +55,9 @@ const ResetPasswordField = () => {
         type="text"
       />
       <div className={styles.sendResetCodeWrapper}>
-        <button className={styles.sendResetCode}>
+        <button className={styles.sendResetCode} >
           <img className={styles.buttonIcon} alt="" src="/button.svg" />
-          <b className={styles.sendCode}>SEND RESET CODE</b>
+          <b className={styles.sendCode}>SEND RESET LINK</b>
         </button>
       </div>
       <div className={styles.bottomNavigation}>
