@@ -14,6 +14,7 @@ const FrameComponent = () => {
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
   const [errorCode, setErrorCode] = React.useState("");
+  const [seePassword, setSeePassword] = React.useState(false);
 
   const onLogin = (e) => {
     console.log("login clicked");
@@ -39,6 +40,10 @@ const FrameComponent = () => {
   const onResetPasswordPromptClick = useCallback(() => {
     navigate("/reset");
   }, []);
+
+  const seePass = (e) => {
+    setSeePassword(!seePassword);
+  };
 
   return (
     <div className={styles.frameParent}>
@@ -72,10 +77,20 @@ const FrameComponent = () => {
             <input
               className={styles.passwordFieldChild}
               placeholder="Enter your password"
-              type="password"
+              type={seePassword ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FaEye className={styles.seeunseePasswordIcon} />
+            {seePassword ? (
+              <FaEyeSlash
+                className={styles.seeunseePasswordIcon}
+                onClick={seePass}
+              />
+            ) : (
+              <FaEye
+                className={styles.seeunseePasswordIcon}
+                onClick={seePass}
+              />
+            )}
           </div>
 
           <button className={styles.loginButtonloginButton} onClick={onLogin}>

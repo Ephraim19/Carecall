@@ -193,7 +193,7 @@ const Tasksanalytics = (allData) => {
       </div>
       <div className="dashboard">
         <div>
-          <h5>Total tasks Created:{tsArray.length}</h5>
+          <p style={{fontWeight:"bold",fontSize:"33"}}>Total tasks: {tsArray.length}</p>
           <h5>
             Total tasks Completed:
             {tsArray.filter((t) => t.completed === "complete").length}
