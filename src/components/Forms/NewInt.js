@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import styles from "../FrameComponent.module.css";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../Firebase";
-import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ref, push } from "firebase/database";
 import { database } from "../Firebase";
+
 const NewInt = () => {
   const [interaction, setInteraction] = useState("");
   const [dueDate, setDueDate] = useState(new Date());

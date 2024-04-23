@@ -1,18 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { get, push, ref, update } from "firebase/database";
+import { get, onValue, ref, update } from "firebase/database";
 import { database, auth } from "./Firebase";
 import carecall from "./carecall.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { FileId } from "./services/firebaseapi";
-import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
-import { Resend } from "resend";
-//import africasTalking from "africastalking";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import BloodPressure from "./Forms/BloodPressure";
 
 import {
   FaBomb,
@@ -93,6 +90,9 @@ const Dashboard = () => {
   const [healthS, setHealthS] = useState([]);
   const [healthSDisplay, setHealthSDisplay] = useState([]);
   const [hospitalAdmin, setHospitalAdmin] = useState("");
+
+  const dbAll = ref(database);
+  const [allData, setAllData] = useState([]);
 
   const cookie = Cookies.get("name");
   const navigate = useNavigate();
@@ -249,6 +249,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setMenuCollapse(true);
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const email = user.email;
@@ -275,6 +276,20 @@ const Dashboard = () => {
           .catch((error) => {
             console.log(error);
           });
+
+        //read the whole database
+        get(dbAll).then((snapshot) => {
+          if (snapshot.exists()) {
+            const allDataArray = Object.entries(snapshot.val()).map(
+              ([id, data]) => ({
+                id,
+                ...data,
+              })
+            );
+            setAllData(allDataArray);
+            console.log(allDataArray);
+          }
+        });
 
         get(dbRef12)
           .then((snapshot) => {
@@ -517,6 +532,7 @@ const Dashboard = () => {
       });
 
     //read interactions
+
     get(dbRef5)
       .then((snapshot) => {
         console.log(snapshot.val());
@@ -830,10 +846,6 @@ const Dashboard = () => {
     navigate("/analytics");
   };
 
-  const feedback = () => {
-    navigate("https://airtable.com/app9yt7YeSJQerH1c/pagSrk4BdsnEvHa3E/form");
-  };
-
   const Logout = () => {
     //remove all cookies first
 
@@ -860,39 +872,6 @@ const Dashboard = () => {
 
   const addMoreRows = () => {
     setVisibleRows(visibleRows + 5);
-  };
-
-  const callMember = () => {
-    // const africastalking = AfricasTalking({
-    //   apiKey: '',
-    //   username: 'sandbox'
-    // });
-    // try {
-    //   const result= africastalking.SMS.send({
-    //     to: '0705018725',
-    //     message: 'Hey AT Ninja! Wassup...',
-    //     from: '[+254111052352]'
-    //   });
-    //   console.log(result);
-    // } catch(ex) {
-    //   console.error(ex);
-    // }
-    //   const call = africastalking({
-    //     username: "sandbox",
-    //     apiKey:
-    //       "8a8cea68964d4f105a13932aa5861c8acbe1745919211afc51b75366cb6bef4a",
-    //   });
-    //   africastalking.SMS.send ({
-    //     to: "+254727903857",
-    //     message: "Hello, this is a test message from Africastalking",
-    //     from: "CARECALL",
-    //   }).then(response => {
-    //     console.log(response);
-    //   }
-    //   ).catch(error => {
-    //     console.log(error);
-    //   }
-    //   );
   };
 
   return (
@@ -960,7 +939,7 @@ const Dashboard = () => {
           {/* small and big change using menucollapse state */}
           <Sidebar
             collapsed={menuCollapse}
-            style={{ marginTop: "7%", marginLeft: "0" }}
+            style={{ marginTop: "9%", marginLeft: "0" }}
           >
             <div className="closemenu" onClick={menuIconClick}>
               {/* changing menu collapse icon on click */}
@@ -977,11 +956,11 @@ const Dashboard = () => {
                     {patient.hospital}
                   </MenuItem>
                   <MenuItem active={true} icon={<FaCampground />}>
-                    Camp: {patient.campName}
+                    <b>{patient.campName}</b>
                   </MenuItem>
 
                   <MenuItem icon={<FaPhone />}>
-                    Phone:<b>{patient.Phone}</b>
+                    <b>{patient.Phone}</b>
                   </MenuItem>
                   <MenuItem icon={<FaHome />}>
                     Home:<b>{patient.Address}</b>
@@ -989,7 +968,7 @@ const Dashboard = () => {
                   <MenuItem icon={<FaRegAddressBook />}>
                     Office:<b>{patient.Address1}</b>
                   </MenuItem>
-                  <MenuItem icon={<FaLanguage />}>
+                  {/* <MenuItem icon={<FaLanguage />}>
                     Pref Language:<b>{patient.language}</b>
                   </MenuItem>
                   <MenuItem icon={<FaDailymotion />}>
@@ -997,23 +976,8 @@ const Dashboard = () => {
                   </MenuItem>
                   <MenuItem icon={<FaClock />}>
                     Pref time:<b>{patient.time}</b>
-                  </MenuItem>
-                </Menu>
-              </div>
-            ))}
-
-            {Cookies.get("hos_admin") === undefined ? (
-              " "
-            ) : (
-              <Menu iconShape="square">
-                <MenuItem icon={<FiEdit />}>
-                  <button className="App-info" onClick={Edit}>
-                    <b>Edit</b>
-                  </button>
-                </MenuItem>
-              </Menu>
-            )}
-            <div className="logotext">
+                  </MenuItem> */}
+                              <div className="logotext">
               {healthSDisplay.length === 0 ? (
                 <h3 style={{ color: "purple", fontSize: "23px" }}>
                   {menuCollapse ? (
@@ -1034,6 +998,22 @@ const Dashboard = () => {
                 ""
               )}
             </div>
+                </Menu>
+              </div>
+            ))}
+
+            {Cookies.get("hos_admin") === undefined ? (
+              " "
+            ) : (
+              <Menu iconShape="square">
+                <MenuItem icon={<FiEdit />}>
+                  <button className="App-info" onClick={Edit}>
+                    <b>Edit</b>
+                  </button>
+                </MenuItem>
+              </Menu>
+            )}
+
 
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
@@ -1210,11 +1190,19 @@ const Dashboard = () => {
 
               <br />
               <br />
-              <button>
+              <Popup
+                trigger={<button>New</button>}
+                position="right center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <BloodPressure />
+              </Popup>
+
+              {/* <button>
                 <Link className="link" to="/blood">
                   Add
                 </Link>
-              </button>
+              </button> */}
             </table>
 
             <br />
@@ -1621,8 +1609,6 @@ const Dashboard = () => {
 
                 <th>Due</th>
 
-                <th>Assignee</th>
-
                 <th>Status</th>
               </tr>
               {patientTasksDisplay.slice(0, visibleRows).map((patient) => (
@@ -1640,7 +1626,6 @@ const Dashboard = () => {
                         <td>{patient.dueDate.slice(0, 17)}</td>
                       )}
 
-                      <td>Ebenezer</td>
                       <td>
                         <form>
                           <label htmlFor="status">

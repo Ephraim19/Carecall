@@ -5,6 +5,7 @@ import { ref, push } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { database } from "../Firebase";
+import styles from "../FrameComponent.module.css";
 
 const BloodPressure = () => {
   const [pressure, setPressure] = useState("");
@@ -37,7 +38,7 @@ const BloodPressure = () => {
               Cookies.get("userName") +
               " had a high blood pressure on " +
               dateStrip(3, dueDate).slice(0, 17),
-            dueDate: dateStrip(3, new Date),
+            dueDate: dateStrip(3, new Date()),
             completed: "Not started",
           });
         } else if (pressure.split("/")[1] < 60 || pressure.split("/")[0] < 60) {
@@ -57,32 +58,29 @@ const BloodPressure = () => {
   };
 
   return (
-    <div>
-      <nav className="App-nav">
-        <img src={carecall} alt="logo" className="App-logo" />
-        <form className="App-info"></form>
-      </nav>
-      <form className="newForm">
-        <label>
-          <b>Blood pressure:</b> <br />
+    <div className={styles.frameParent}>
+      <div className={styles.frameWrapper}>
+        <form className={styles.logInToYourCarecallAccounParent}>
+          <b className={styles.logInTo}>BLOOD PRESSURE</b>
+          <div className={styles.emailParent}>
+            <div className={styles.email}>Blood pressure</div>
+            <div className={styles.div}>*</div>
+          </div>
           <input
-            type="text"
+            className={styles.emailFieldForLogin}
             placeholder="i.e 120/80"
+            type="text"
             value={pressure}
             onChange={(e) => setPressure(e.target.value)}
           />
-        </label>
 
-        <br />
-        <br />
-        <b>Date</b>
-        <br />
-        <DatePicker selected={dueDate} onChange={(date) => setDueDate(date)} />
-        <br />
-        <button className="App-info" onClick={NewBp}>
-          Submit
-        </button>
-      </form>
+          <button className={styles.loginButtonloginButton} onClick={NewBp}>
+            <button className={styles.buttonIcon} />
+            <b className={styles.logIn}>SUBMIT</b>
+          </button>
+          {/* <b style={{ color: "red", fontSize: "15px" }}>{errorCode}</b> */}
+        </form>
+      </div>
     </div>
   );
 };
