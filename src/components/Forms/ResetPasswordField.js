@@ -1,32 +1,34 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ResetPasswordField.module.css";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ResetPasswordField = () => {
   const navigate = useNavigate();
 
   const onCreateAnAccountClick = useCallback(() => {
-    navigate("/email/signup");
+    navigate("/partner");
   }, [navigate]);
 
   const onLogInTextClick = useCallback(() => {
     navigate("/");
   }, [navigate]);
 
-//   const reset = useCallback(() => {
-//     // Admin SDK API to generate the password reset link.
-// const userEmail = 'user@example.com';
-// getAuth()
-//   .generatePasswordResetLink(userEmail, actionCodeSettings)
-//   .then((link) => {
-//     // Construct password reset email template, embed the link and send
-//     // using custom SMTP server.
-//     return sendCustomPasswordResetEmail(userEmail, displayName, link);
-//   })
-//   .catch((error) => {
-//     // Some error occurred.
-//   });
-//   }, []);
+  const reset = useCallback(() => {
+    console.log("Resetting password");
+    const auth = getAuth();
+    sendPasswordResetEmail(auth)
+      .then(() => {
+        toast.success("Password reset email sent. Check your inbox.");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  });
 
   return (
     <div className={styles.resetPasswordField}>
@@ -55,7 +57,7 @@ const ResetPasswordField = () => {
         type="text"
       />
       <div className={styles.sendResetCodeWrapper}>
-        <button className={styles.sendResetCode} >
+        <button className={styles.sendResetCode} onClick={reset}>
           <img className={styles.buttonIcon} alt="" src="/button.svg" />
           <b className={styles.sendCode}>SEND RESET LINK</b>
         </button>
@@ -77,6 +79,7 @@ const ResetPasswordField = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

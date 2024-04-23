@@ -11,38 +11,29 @@ import EditClinicals from "./Forms/EditClinicals";
 import { Line } from "react-chartjs-2";
 import { Resend } from "resend";
 //import africasTalking from "africastalking";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 import {
   FaBomb,
-  FaBusinessTime,
-  FaCalendarDay,
   FaCampground,
-  FaCartPlus,
   FaClock,
   FaDailymotion,
-  FaEdit,
   FaFunnelDollar,
   FaHome,
   FaHospital,
   FaImages,
   FaLanguage,
-  FaMale,
   FaPhone,
-  FaPlusSquare,
   FaRegAddressBook,
   FaSmile,
-  FaTimes,
-  FaTimesCircle,
   FaUserGraduate,
-  FaUserTimes,
 } from "react-icons/fa";
 import {
   FiLogOut,
   FiArrowLeftCircle,
   FiArrowRightCircle,
-  FiCalendar,
   FiAlertCircle,
-  FiAlertTriangle,
   FiActivity,
   FiEdit,
   FiCast,
@@ -59,8 +50,7 @@ import {
   Title,
   CategoryScale,
 } from "chart.js";
-import Call from "./Forms/Call";
-import Analytic from "./Analytics/Analytic";
+import Interactions from "./Forms/Interactions";
 
 Chart.register(
   LineController,
@@ -73,6 +63,7 @@ Chart.register(
 const Dashboard = () => {
   const [patientData, setPatientData] = useState([]);
   const [patientData111, setPatientData111] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [search, setSearch] = useState("");
   const [patientToDisplay, setPatientToDisplay] = useState([]);
@@ -426,7 +417,6 @@ const Dashboard = () => {
         var aa3 = aa2.concat(dataArray111);
         setPatientData111(aa3);
         console.log(aa3.length);
-
       })
       .catch((error) => {
         console.log(error);
@@ -456,7 +446,7 @@ const Dashboard = () => {
             .filter((name) => name.completed !== "cancelled");
 
           dateSort(IncompletetaskArray);
-   
+
           const a1 = cancelledtaskArray.concat(completetaskArray);
           const allTasksInorder = IncompletetaskArray.concat(a1);
 
@@ -1162,11 +1152,21 @@ const Dashboard = () => {
               <br />
               <br />
 
-              <button>
+              <Popup
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
+                trigger={<button onClick={() => setIsOpen(true)} >New</button>}
+                position="right center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <Interactions />
+              </Popup>
+
+              {/* <button>
                 <Link className="link" to="/interaction">
                   Add
                 </Link>
-              </button>
+              </button> */}
             </table>
 
             <br />

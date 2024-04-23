@@ -1,11 +1,18 @@
 import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Forms/FirstNameField.module.css";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth, database } from "./Firebase";
 import { ref, push } from "firebase/database";
-import { FaEye,FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Toast } from "react-bootstrap";
 
 const FirstNameField = () => {
   const [email, setEmail] = React.useState("");
@@ -20,6 +27,7 @@ const FirstNameField = () => {
   const navigate = useNavigate();
   const [seePassword, setSeePassword] = React.useState(false);
   const [seePassword1, setSeePassword1] = React.useState(false);
+  const auth = getAuth();
 
   useEffect(() => {
     setHospital(Cookies.get("hospital"));
@@ -33,6 +41,12 @@ const FirstNameField = () => {
     } else {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          sendEmailVerification(auth.currentUser).then(() => {
+            toast.success("Verification email sent! Please verify your email.");
+          }).catch((error) => {
+            toast.error(error.message);
+          });
+
           push(ref(database, Cookies.get("hospital") + "/" + "Admins"), {
             admin: userCredential.user.email,
             hospital: Cookies.get("hospital"),
@@ -49,9 +63,11 @@ const FirstNameField = () => {
           // ...
         })
         .catch((error) => {
-          setErrorCode(error.message);
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
+          toast.error(errorMessage);
+          setErrorCode(errorMessage);
+
           // ..
         });
     }
@@ -162,6 +178,7 @@ const FirstNameField = () => {
           </div>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
