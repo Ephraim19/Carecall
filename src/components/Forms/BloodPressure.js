@@ -11,6 +11,7 @@ const BloodPressure = () => {
   const [pressure, setPressure] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
   const navigate = useNavigate();
+  const [errorCode, setErrorCode] = useState("");
 
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
@@ -30,6 +31,8 @@ const BloodPressure = () => {
         pressure,
         dueDate: dateStrip(3, dueDate),
       }).then((data) => {
+        setErrorCode("Successfully added blood pressure. click anywhere to close");
+
         //Create a task if bp is high or low
         if (pressure.split("/")[0] > 120 || pressure.split("/")[1] > 80) {
           push(ref(database, "tasks"), {
@@ -78,7 +81,7 @@ const BloodPressure = () => {
             <button className={styles.buttonIcon} />
             <b className={styles.logIn}>SUBMIT</b>
           </button>
-          {/* <b style={{ color: "red", fontSize: "15px" }}>{errorCode}</b> */}
+          <b style={{ color: "red", fontSize: "15px" }}>{errorCode}</b>
         </form>
       </div>
     </div>

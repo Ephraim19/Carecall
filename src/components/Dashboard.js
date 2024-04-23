@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { Audio } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { get, onValue, ref, update } from "firebase/database";
 import { database, auth } from "./Firebase";
@@ -35,6 +36,7 @@ import {
   FiEdit,
   FiCast,
   FiDatabase,
+  FiCommand,
 } from "react-icons/fi";
 //ffjjn,vtdyygkvv
 import { onAuthStateChanged } from "firebase/auth";
@@ -934,7 +936,7 @@ const Dashboard = () => {
         </button>
       </nav>
 
-      {patientToDisplay ? (
+      {intDisplay ? (
         <div className="dashboard">
           {/* small and big change using menucollapse state */}
           <Sidebar
@@ -977,27 +979,27 @@ const Dashboard = () => {
                   <MenuItem icon={<FaClock />}>
                     Pref time:<b>{patient.time}</b>
                   </MenuItem> */}
-                              <div className="logotext">
-              {healthSDisplay.length === 0 ? (
-                <h3 style={{ color: "purple", fontSize: "23px" }}>
-                  {menuCollapse ? (
-                    " "
-                  ) : (
-                    <Menu>
-                      <MenuItem icon={<FiEdit />}>
-                        <button>
-                          <Link className="link" to="/forms/status">
-                            Health Status
-                          </Link>
-                        </button>
-                      </MenuItem>
-                    </Menu>
-                  )}
-                </h3>
-              ) : (
-                ""
-              )}
-            </div>
+                  <div className="logotext">
+                    {healthSDisplay.length === 0 ? (
+                      <h3 style={{ color: "purple", fontSize: "23px" }}>
+                        {menuCollapse ? (
+                          " "
+                        ) : (
+                          <Menu>
+                            <MenuItem icon={<FiEdit />}>
+                              <button>
+                                <Link className="link" to="/forms/status">
+                                  Health Status
+                                </Link>
+                              </button>
+                            </MenuItem>
+                          </Menu>
+                        )}
+                      </h3>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </Menu>
               </div>
             ))}
@@ -1013,7 +1015,6 @@ const Dashboard = () => {
                 </MenuItem>
               </Menu>
             )}
-
 
             {healthSDisplay.map((hs) => (
               <div key={hs.key}>
@@ -1721,7 +1722,16 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-        " "
+          // <Audio
+          //   height="80"
+          //   width="80"
+          //   radius="9"
+          //   color="darkblue"
+          //   ariaLabel="loading"
+          //   wrapperStyle
+          //   wrapperClass
+          // />
+        <h1>wedjkdkjdjkjsdjskjks</h1>
       )}
       {/* < EditClinicals data = {state.data} /> */}
     </div>

@@ -274,6 +274,11 @@ h4 {
   margin-top: 0.3rem;
   vertical-align: text-bottom;
 }
+.loading-icon {
+  color: teal;
+  font-size: 2rem;
+  animation: animate 2s infinite;
+}
 
 .result {
   margin-top: 1rem;
