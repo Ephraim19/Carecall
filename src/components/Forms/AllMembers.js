@@ -319,6 +319,7 @@ const AllTasks = () => {
 
             <th>Date joined</th>
             <th>Diagnosis</th>
+            <th>Camp</th>
           </tr>
 
           {searched.length > 0
@@ -347,6 +348,7 @@ const AllTasks = () => {
                           ].diagnosis
                         : ""}
                     </td>
+                    <td>{patient.campName}</td>
                   </tr>
                 </>
               ))
@@ -381,6 +383,7 @@ const AllTasks = () => {
                           ].diagnosis
                         : ""}
                     </td>
+                    <td>{patient.campName}</td>
                   </tr>
                 </>
               ))}

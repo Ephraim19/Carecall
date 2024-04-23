@@ -953,9 +953,6 @@ const Dashboard = () => {
         <button className="App-info" onClick={allMembers}>
           Members
         </button>
-        <button className="App-info" onClick={callMember}>
-          Call
-        </button>
       </nav>
 
       {patientToDisplay ? (
@@ -1155,7 +1152,7 @@ const Dashboard = () => {
               <Popup
                 open={isOpen}
                 onClose={() => setIsOpen(false)}
-                trigger={<button onClick={() => setIsOpen(true)} >New</button>}
+                trigger={<button onClick={() => setIsOpen(true)}>New</button>}
                 position="right center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
