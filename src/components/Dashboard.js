@@ -936,7 +936,7 @@ const Dashboard = () => {
         </button>
       </nav>
 
-      {intDisplay ? (
+      {interaction.length > 0 ? (
         <div className="dashboard">
           {/* small and big change using menucollapse state */}
           <Sidebar
@@ -1722,16 +1722,15 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-          // <Audio
-          //   height="80"
-          //   width="80"
-          //   radius="9"
-          //   color="darkblue"
-          //   ariaLabel="loading"
-          //   wrapperStyle
-          //   wrapperClass
-          // />
-        <h1>wedjkdkjdjkjsdjskjks</h1>
+        <Audio
+          height="80"
+          width="80"
+          radius="9"
+          color="darkblue"
+          ariaLabel="loading"
+          wrapperStyle
+          wrapperClass
+        />
       )}
       {/* < EditClinicals data = {state.data} /> */}
     </div>

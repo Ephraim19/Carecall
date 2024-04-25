@@ -1,0 +1,195 @@
+.insurance-employer {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+}
+.department,
+.employer {
+  position: relative;
+  font-weight: 500;
+  display: inline-block;
+  min-width: 84px;
+}
+.department {
+  min-width: 106px;
+}
+.employer-parent {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  font-size: var(--font-size-mini);
+  color: var(--color-gray-100);
+}
+.insurance-employer-parent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-mid);
+  min-width: 172px;
+}
+.frame-child3 {
+  height: 17px;
+  width: 38px;
+  position: relative;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--br-mini);
+  background-color: var(--color-whitesmoke);
+  display: none;
+}
+.edit2 {
+  position: relative;
+  font-weight: 500;
+  display: inline-block;
+  min-width: 23px;
+  z-index: 1;
+}
+.rectangle-parent2 {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--br-mini);
+  background-color: var(--color-whitesmoke);
+  flex-direction: row;
+  padding: var(--padding-10xs) var(--padding-7xs) var(--padding-11xs)
+    var(--padding-4xs);
+}
+.frame-parent18,
+.frame-wrapper9,
+.rectangle-parent2 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.frame-wrapper9 {
+  flex-direction: column;
+  padding: var(--padding-5xs) 0 0;
+  font-size: var(--font-size-4xs);
+}
+.frame-parent18 {
+  align-self: stretch;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gap-26xl);
+  font-size: var(--font-size-3xl);
+  color: var(--color-steelblue);
+}
+.carecall1,
+.insurer {
+  position: relative;
+  font-weight: 500;
+  display: inline-block;
+}
+.carecall1 {
+  min-width: 76px;
+}
+.insurer {
+  width: 68px;
+  height: 20px;
+  font-size: var(--font-size-mini);
+  color: var(--color-gray-100);
+}
+.carecall-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-xl);
+}
+.insurance-id,
+.motivational-design {
+  position: relative;
+  font-weight: 500;
+}
+.insurance-id {
+  width: 109px;
+  height: 20px;
+  font-size: var(--font-size-mini);
+  color: var(--color-gray-100);
+  display: inline-block;
+}
+.frame-parent19,
+.motivational-design-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-lgi);
+}
+.frame-parent19 {
+  align-self: stretch;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+.britam {
+  align-self: stretch;
+  height: 25px;
+  position: relative;
+  font-weight: 500;
+  display: inline-block;
+}
+.britam-wrapper {
+  height: 3px;
+  width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-12xs) 0 0;
+  box-sizing: border-box;
+}
+.ins077t7t6r76290 {
+  height: 25px;
+  width: 178px;
+  position: relative;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.frame-parent17,
+.frame-parent20 {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.frame-parent20 {
+  width: 337px;
+  height: 3px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0;
+  gap: var(--gap-xl);
+}
+.frame-parent17 {
+  align-self: stretch;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: var(--br-3xs);
+  background-color: var(--color-dodgerblue-300);
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-11xs) var(--padding-3xs) var(--padding-13xl);
+  gap: var(--gap-10xs-5);
+  text-align: left;
+  font-size: var(--font-size-lgi);
+  color: var(--color-darkslategray-200);
+  font-family: var(--font-roboto-slab);
+}
+@media screen and (max-width: 450px) {
+  .insurance-employer {
+    font-size: var(--font-size-lg);
+  }
+  .frame-parent18 {
+    gap: var(--gap-3xl);
+  }
+  .frame-parent19 {
+    flex-wrap: wrap;
+  }
+}

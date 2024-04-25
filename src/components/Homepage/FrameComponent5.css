@@ -1,0 +1,123 @@
+.felix-wandera {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+ }
+ 
+.felix-wandera-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-8xs) 0 0;
+}
+.group-icon {
+  height: 32px;
+  width: 32px;
+  position: relative;
+}
+.frame-parent16 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  font-size: var(--font-size-10xl);
+  color: var(--color-darkslategray-200);
+}
+.span2 {
+  color: var(--color-black);
+}
+.span3 {
+  color: var(--color-darkslategray-200);
+}
+.id-20387 {
+  position: relative;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 86px;
+}
+.span4 {
+  color: var(--color-black);
+}
+.y {
+  color: var(--color-darkslategray-200);
+}
+.age-37-y-container {
+  position: relative;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 85px;
+}
+.span5 {
+  color: var(--color-black);
+}
+.m {
+  color: var(--color-darkslategray-200);
+}
+.gender-m {
+  position: relative;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 97px;
+}
+.id-20387-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-8xl);
+  max-width: 100%;
+}
+.span6 {
+  color: var(--color-black);
+}
+.eqa-nairobi-west {
+  color: var(--color-darkslategray-200);
+}
+.facility-eqa-nairobi-container {
+  position: relative;
+  font-weight: 600;
+}
+.frame-parent15 {
+  align-self: stretch;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: var(--br-xl);
+  background-color: var(--color-dodgerblue-300);
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-9xs) var(--padding-3xs) var(--padding-lg);
+  box-sizing: border-box;
+  gap: var(--gap-lg);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-100);
+  font-family: var(--font-roboto-slab);
+}
+@media screen and (max-width: 450px) {
+  .felix-wandera {
+    font-size: var(--font-size-4xl);
+  }
+  .frame-parent16 {
+    flex-wrap: wrap;
+  }
+  .age-37-y-container,
+  .gender-m,
+  .id-20387 {
+    font-size: var(--font-size-base);
+  }
+  .id-20387-parent {
+    flex-wrap: wrap;
+  }
+  .facility-eqa-nairobi-container {
+    font-size: var(--font-size-base);
+  }
+}

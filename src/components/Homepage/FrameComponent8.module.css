@@ -1,0 +1,339 @@
+.engagement {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 500;
+    font-family: inherit;
+  }
+  .frameChild {
+    height: 1px;
+    width: 130px;
+    position: relative;
+    object-fit: contain;
+  }
+  .engagementParent,
+  .lineWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 var(--padding-12xs);
+  }
+  .engagementParent {
+    flex-direction: column;
+    padding: 0 var(--padding-8xs) 0 0;
+    gap: var(--gap-7xs);
+  }
+  .forms,
+  .workflow {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 300;
+    font-family: inherit;
+    display: inline-block;
+  }
+  .forms {
+    color: var(--color-darkslategray-100);
+    min-width: 67px;
+  }
+  .workflow {
+    min-width: 102px;
+  }
+  .workflowWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 var(--padding-8xs) 0 0;
+    color: var(--color-darkslategray-100);
+  }
+  .h1 {
+    margin: 0;
+    position: relative;
+    font-size: var(--font-size-16xl);
+    font-weight: 300;
+    font-family: inherit;
+    display: inline-block;
+    min-width: 19px;
+  }
+  .frameGroup {
+    align-self: stretch;
+    height: 42px;
+    border-radius: var(--br-3xs);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0 var(--padding-15xl) var(--padding-7xs) var(--padding-3xl);
+    box-sizing: border-box;
+    gap: var(--gap-xl);
+    color: var(--color-navy);
+  }
+  .tasks {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    line-height: 25.3px;
+    font-weight: 700;
+    font-family: inherit;
+    display: inline-block;
+    min-width: 63px;
+    z-index: 1;
+  }
+  .frameItem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-xl);
+    background-color: var(--color-whitesmoke-100);
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+  .expandSvgrepocomIcon {
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .rectangleParent {
+    width: 47px;
+    height: 26px;
+    position: relative;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-xl);
+    background-color: var(--color-whitesmoke-100);
+  }
+  .frameWrapper,
+  .tasksParent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-12xs) 0 0;
+  }
+  .tasksParent {
+    align-self: stretch;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-mini);
+    background-color: var(--color-dodgerblue-300);
+    overflow: hidden;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--padding-6xs) var(--padding-xs) var(--padding-172xl)
+      var(--padding-3xl);
+    gap: var(--gap-xl);
+  }
+  .memberJourney {
+    position: relative;
+    z-index: 1;
+  }
+  .frameInner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-xl);
+    background-color: var(--color-whitesmoke-100);
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+  .expandSvgrepocomIcon1 {
+    position: absolute;
+    top: 3px;
+    left: 14px;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .rectangleGroup {
+    height: 26px;
+    width: 47px;
+    position: relative;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-xl);
+    background-color: var(--color-whitesmoke-100);
+  }
+  .memberJourneyParent {
+    align-self: stretch;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-mini);
+    background-color: var(--color-dodgerblue-300);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--padding-8xs) var(--padding-xs) var(--padding-76xl)
+      var(--padding-3xl);
+    gap: var(--gap-xl);
+  }
+  .rectangleDiv {
+    height: 26px;
+    width: 47px;
+    position: relative;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-xl);
+    background-color: var(--color-whitesmoke-100);
+    display: none;
+    z-index: 0;
+  }
+  .expandSvgrepocomIcon2 {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    margin: 0 !important;
+    top: calc(50% - 10px);
+    right: 13px;
+    overflow: hidden;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .rectangleContainer {
+    height: 26px;
+    width: 47px;
+    margin: 0 !important;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-xl);
+    background-color: var(--color-whitesmoke-100);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .appointments {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+    z-index: 1;
+  }
+  .frameContainer {
+    align-self: stretch;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: var(--br-mini);
+    background-color: var(--color-dodgerblue-300);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-11xs) var(--padding-3xl) var(--padding-177xl);
+    position: relative;
+  }
+  .groupIcon {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+  }
+  .engagementPanel {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+    z-index: 1;
+  }
+  .frameParent,
+  .groupDiv {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .groupDiv {
+    align-self: stretch;
+    flex-direction: row;
+    padding: var(--padding-7xs) var(--padding-3xl) var(--padding-101xl);
+    position: relative;
+  }
+  .frameParent {
+    width: 500px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: var(--br-6xl);
+    background-color: var(--color-dodgerblue-400);
+    overflow-y: auto;
+    flex-shrink: 0;
+    flex-direction: column;
+    padding: var(--padding-lg) var(--padding-10xs) var(--padding-399xl);
+    box-sizing: border-box;
+    gap: var(--gap-2xl-3);
+    max-width: calc(100% - 1372px);
+    text-align: left;
+    font-size: var(--font-size-3xl);
+    color: var(--color-steelblue);
+    font-family: var(--font-roboto-slab);
+  }
+  @media screen and (max-width: 1650px) {
+    .frameParent {
+      display: none;
+      max-width: 100%;
+    }
+  }
+  @media screen and (max-width: 1300px) {
+    .frameParent {
+      padding-top: var(--padding-xl);
+      padding-bottom: var(--padding-253xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 900px) {
+    .h1 {
+      font-size: var(--font-size-9xl);
+    }
+    .frameParent {
+      padding-bottom: var(--padding-158xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .engagement,
+    .forms,
+    .workflow {
+      font-size: var(--font-size-lg);
+    }
+    .h1 {
+      font-size: var(--font-size-2xl);
+    }
+    .tasks {
+      font-size: var(--font-size-lg);
+      line-height: 20px;
+    }
+    .tasksParent {
+      flex-wrap: wrap;
+    }
+    .memberJourney {
+      font-size: var(--font-size-lg);
+    }
+    .memberJourneyParent {
+      flex-wrap: wrap;
+    }
+    .appointments,
+    .engagementPanel {
+      font-size: var(--font-size-lg);
+    }
+  }
+  

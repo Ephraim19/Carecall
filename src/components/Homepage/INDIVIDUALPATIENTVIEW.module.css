@@ -1,0 +1,84 @@
+.frame5defaultChild,
+.frameChild {
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+}
+.frameChild {
+  height: 1323px;
+  width: 468px;
+  border-radius: var(--br-11xl);
+  background-color: var(--color-dodgerblue-400);
+  flex-shrink: 0;
+  max-width: calc(100% - 1404px);
+}
+.frame5defaultChild {
+  align-self: stretch;
+  flex: 1;
+  border-radius: var(--br-6xl);
+  background-color: rgba(245, 245, 245, 0.75);
+}
+.frame5default,
+.frame5defaultWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.frame5default {
+  align-self: stretch;
+  flex: 1;
+}
+.frame5defaultWrapper {
+  height: 1280px;
+  width: 937px;
+  max-width: calc(100% - 935px);
+  flex-shrink: 0;
+  z-index: 1;
+}
+.frameItem {
+  height: 1299px;
+  width: 530px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: var(--br-11xl);
+  background-color: var(--color-dodgerblue-400);
+  overflow-y: auto;
+  flex-shrink: 0;
+  max-width: calc(100% - 1342px);
+  z-index: 2;
+}
+.frameParent,
+.individualPatientView {
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+.frameParent {
+  align-self: stretch;
+  height: 920px;
+  flex-shrink: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--padding-sm) var(--padding-3xl) 0;
+  gap: -31.5px;
+  max-width: 100%;
+}
+.individualPatientView {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-whitesmoke-100);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-9xl) var(--padding-11xs);
+  gap: var(--gap-sm);
+  line-height: normal;
+  letter-spacing: normal;
+}
+@media screen and (max-width: 1750px) {
+  .frame5defaultWrapper,
+  .frameChild,
+  .frameItem {
+    display: none;
+    max-width: 100%;
+  }
+}

@@ -27,6 +27,8 @@ import Analytic from "./Analytics/Analytic";
 import Feedbackform from "./Forms/Feedbackform";
 import RESETPASSWORD from "./Forms/RESETPASSWORD";
 import ACCOUNTCREATEDSUCCESSFULLY from "./Forms/ACCOUNTCREATEDSUCCESSFULLY";
+import INDIVIDUALPATIENTVIEW from "./Homepage/INDIVIDUALPATIENTVIEW";
+import HOMEPAGE from "./Homepage/HOMEPAGE";
 
 const Router = () => {
   return (
@@ -63,13 +65,9 @@ const Router = () => {
         <Route path="/camp" Component={Home} />
         <Route path="/analytics" Component={Analytic} />
         <Route path="/feedback" Component={Feedbackform} />
-
-
         <Route path="camp/registration" Component={Registration} />
-        {/* <Route path="/camp" Component={Home} />
-        <Route path="/camp" Component={Home} />
-        <Route path="/camp" Component={Home} />
-        <Route path="/camp" Component={Home} /> */}
+        <Route path="/homepage" Component={HOMEPAGE} />
+        <Route path="/individual" Component={INDIVIDUALPATIENTVIEW} />
 
         
       </Routes>
