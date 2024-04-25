@@ -1,6 +1,6 @@
 .navigation-svgrepocom-icon {
-  width: 48px;
-  height: 48px;
+  width: 35px;
+  height: 35px;
   position: relative;
   border-radius: var(--br-6xs);
   overflow: hidden;
@@ -15,8 +15,8 @@
   padding: var(--padding-2xs) 0 0;
 }
 .carecall-logo-icon {
-  height: 50px;
-  width: 50px;
+  height: 35px;
+  width: 35px;
   position: relative;
   flex-shrink: 0;
   object-fit: contain;
@@ -65,7 +65,7 @@
   padding: 0 var(--padding-smi) 0 0;
 }
 .frame-wrapper4 {
-  width: 137px;
+  width: 155px;
   flex-shrink: 0;
   flex-direction: column;
   align-items: flex-start;
@@ -85,7 +85,7 @@
   gap: var(--gap-mini);
 }
 .frame-parent12 {
-  width: 360px;
+  width: 300px;
   justify-content: space-between;
   padding: 0 10px 0 0;
   box-sizing: border-box;
@@ -93,8 +93,9 @@
   max-width: 100%;
 }
 .vector-icon {
-  width: 30px;
-  height: 30px;
+  margin-left:-45px;
+  width: 35px;
+  height: 35px;
   position: relative;
 }
 .vector-wrapper {
@@ -105,7 +106,7 @@
   padding: var(--padding-11xs) 0 0;
 }
 .search-by-patient {
-  width: 195px;
+  width: 320px;
   border: 0;
   outline: 0;
   font-family: var(--font-istok-web);
@@ -133,7 +134,8 @@
   flex-direction: row;
   justify-content: flex-start;
   padding: var(--padding-2xs) var(--padding-40xl) var(--padding-7xs);
-  gap: var(--gap-smi-5);
+  gap: var(--gap-11xs);
+
 }
 .frame-wrapper5 {
   flex-direction: column;
@@ -143,8 +145,8 @@
   max-width: 100%;
 }
 .frame-child1 {
-  height: 46px;
-  width: 214px;
+  height: 25px;
+  width: 50px;
   position: relative;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
   border-radius: var(--br-11xl);
@@ -153,7 +155,7 @@
 }
 .view-all-members {
   position: relative;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-base);
   font-weight: 600;
   font-family: var(--font-roboto-slab);
   color: var(--color-navy);
@@ -196,7 +198,7 @@
 }
 .add-new-member {
   position: relative;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-mini);
   font-weight: 600;
   font-family: var(--font-roboto-slab);
   color: var(--color-navy);
@@ -219,7 +221,7 @@
   white-space: nowrap;
 }
 .frame-wrapper8 {
-  width: 180px;
+  width: 155px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -228,8 +230,8 @@
   box-sizing: border-box;
 }
 .profile-circle-svgrepocom-icon {
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -264,7 +266,7 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: var(--br-xl);
   background-color: var(--color-dodgerblue-300);
-  /* overflow: hidden; */
+  overflow: hidden; 
   align-items: flex-end;
   padding: var(--padding-2xs) var(--padding-8xl);
   gap: var(--gap-34xl);

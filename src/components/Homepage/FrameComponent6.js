@@ -1,15 +1,61 @@
+import React, { useEffect, useState } from "react";
 import "./FrameComponent6.css";
 import carecall from "../carecall.png";
-import {FaBars,FaSearch,FaCircle } from "react-icons/fa"
-const FrameComponent6 = () => {
+import { FaBars, FaSearch, FaCircle,FaUser } from "react-icons/fa";
+const FrameComponent6 = (allData) => {
+  const [searched, setSearched] = useState([]);
+  const [allMembers,setAllMembers] = useState([]);
+
+  useEffect(() => {
+    //get the members
+    //partner hospitals
+    var EQA_Nairobi_West_Hospital = allData.allData.filter(
+      (data) => data.id === "EQA_Nairobi_West_Hospital"
+    );
+    var EQA_South_B = allData.allData.filter(
+      (data) => data.id === "EQA_South_B"
+    );
+    var EQA_Kitengela = allData.allData.filter(
+      (data) => data.id === "EQA_Kitengela"
+    );
+    var dataArray, dataArray1, dataArray2,dataArray3;
+
+    if (EQA_Kitengela.length > 0) {
+      dataArray = Object.entries(EQA_Kitengela[0].clients).map(([id, data]) => ({
+        id,
+        ...data,
+      }));
+    }
+    if (EQA_Nairobi_West_Hospital.length > 0) {
+      dataArray1 = Object.entries(EQA_Nairobi_West_Hospital [0].clients).map(([id, data]) => ({
+        id,
+        ...data,
+      }));
+    }
+    if (EQA_South_B.length > 0) {
+      dataArray2 = Object.entries(EQA_South_B[0].clients).map(([id, data]) => ({
+        id,
+        ...data,
+      }));
+    }
+    // var a1 = dataArray.concat(dataArray1);
+    // var dataArray3 = a1.concat(dataArray2);
+    // setAllMembers(dataArray3)
+    // console.log(dataArray3);
+
+  }, []);
+
+  const handleSearch=(e)=>{
+    e.preventDefault();
+    console.log(e.target.value);
+  }
+
   return (
     <header className="home-page-inner">
       <div className="frame-parent11">
         <div className="frame-parent12">
           <div className="navigation-svgrepocom-wrapper">
-            <FaBars
-              className="navigation-svgrepocom-icon"
-            />
+            <FaBars className="navigation-svgrepocom-icon" />
           </div>
           <div className="carecall-logo-parent">
             <img
@@ -38,15 +84,16 @@ const FrameComponent6 = () => {
             <div className="vector-wrapper">
               <FaSearch className="vector-icon" />
             </div>
-            
+
             <input
               className="search-by-patient"
               placeholder="name, phone or CareCall ID "
               type="text"
+              onChange={handleSearch}
             />
           </div>
         </div>
-        
+
         <div className="frame-wrapper6">
           <button className="frame-button">
             <div className="frame-child1" />
@@ -61,10 +108,7 @@ const FrameComponent6 = () => {
                 <div className="add-new-member">New Member</div>
               </button>
             </div>
-            <FaCircle
-              className="profile-circle-svgrepocom-icon"
-
-            />
+            <FaUser className="profile-circle-svgrepocom-icon" />
           </div>
         </div>
       </div>

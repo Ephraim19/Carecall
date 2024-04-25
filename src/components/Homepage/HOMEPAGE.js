@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import FrameComponent6 from "./FrameComponent6";
 import FrameComponent5 from "./FrameComponent5";
 import FrameComponent4 from "./FrameComponent4";
@@ -7,18 +8,47 @@ import FrameComponent1 from "./FrameComponent1";
 import FrameComponent from "./FrameComponent";
 import "./HOMEPAGE.css";
 import { FiActivity } from "react-icons/fi";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth,database } from "../Firebase";
+import { useNavigate } from "react-router-dom";
+import { get, onValue, ref, update } from "firebase/database";
+
 const HOMEPAGE = () => {
+  const navigate = useNavigate();
+  const [allData, setAllData] = useState([]);
+  const dbAll = ref(database);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/");
+      }
+    });
+    //read the whole database
+    get(dbAll).then((snapshot) => {
+      if (snapshot.exists()) {
+        const allDataArray = Object.entries(snapshot.val()).map(
+          ([id, data]) => ({
+            id,
+            ...data,
+          })
+        );
+        setAllData(allDataArray);
+        console.log(allDataArray);
+      }
+    });
+  },[]);
+
   return (
     <div className="home-page">
-      
-      <FrameComponent6 />
+      <FrameComponent6 allData={allData} />
       <main className="frame-parent">
         <div className="frame-group">
           <FrameComponent5 />
           <div className="frame-container">
             <div className="rectangle-parent">
               <div className="frame-child" />
-              
+
               <div className="personal">Personal</div>
             </div>
             <div className="rectangle-group">
@@ -26,7 +56,7 @@ const HOMEPAGE = () => {
               <div className="clinical">Clinical</div>
             </div>
           </div>
-          
+
           <div className="frame-div">
             <div className="frame-parent1">
               <div className="program-status-assignees-parent">
@@ -45,9 +75,7 @@ const HOMEPAGE = () => {
                       <div className="eraser-tool">
                         <div className="active">Active</div>
                         <div className="data-hub-wrapper">
-                          <FiActivity
-                            className="data-hub-icon"
-                          />
+                          <FiActivity className="data-hub-icon" />
                         </div>
                       </div>
                       <div className="care-manager">CARE MANAGER</div>
@@ -134,13 +162,11 @@ const HOMEPAGE = () => {
           <FrameComponent4 />
           <FrameComponent3 />
           <FrameComponent2 />
-        
         </div>
         <div className="frame-wrapper3">
           <FrameComponent1 />
         </div>
         <FrameComponent />
-        
       </main>
     </div>
   );

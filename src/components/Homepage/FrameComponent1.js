@@ -13,11 +13,12 @@ const FrameComponent1 = () => {
         </div>
       </div>
       <div className="conditions-wrapper">
+
         <h3 className="conditions">Conditions</h3>
       </div>
-      {/* <div className="interventions-wrapper">
+      <div className="interventions-wrapper">
         <h3 className="interventions">Interventions</h3>
-      </div> */}
+      </div>
       {/* <div className="input-filter">
         <h3 className="interactions">Interactions</h3>
       </div> */}

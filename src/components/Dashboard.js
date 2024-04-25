@@ -394,6 +394,7 @@ const Dashboard = () => {
             id,
             ...data,
           }));
+          console.log(dataArray14);
         } else {
           console.log("No data available");
         }
@@ -695,7 +696,7 @@ const Dashboard = () => {
         var searches = allPatients.filter((name) =>
           name.patient.toLowerCase().includes(e.target.value.toLowerCase())
         );
-
+        
         setSearched(searches);
       } else {
         setSearched([]);
