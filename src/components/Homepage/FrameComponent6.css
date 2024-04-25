@@ -6,6 +6,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .navigation-svgrepocom-wrapper {
   display: flex;
   flex-direction: column;

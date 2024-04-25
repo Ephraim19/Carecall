@@ -1,13 +1,14 @@
 import "./FrameComponent5.css";
-
+import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 const FrameComponent5 = () => {
+  
   return (
     <div className="frame-parent15">
       <div className="frame-parent16">
         <div className="felix-wandera-wrapper">
           <h2 className="felix-wandera">Felix Wandera</h2>
         </div>
-        <img className="group-icon" loading="lazy" alt="" src="/group-9.svg" />
+        <FiArrowLeftCircle className="group-icon"/>
       </div>
       <div className="id-20387-parent">
         <div className="id-20387">
@@ -34,5 +35,6 @@ const FrameComponent5 = () => {
     </div>
   );
 };
+
 
 export default FrameComponent5;

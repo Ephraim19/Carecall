@@ -6,10 +6,11 @@ import FrameComponent2 from "./FrameComponent2";
 import FrameComponent1 from "./FrameComponent1";
 import FrameComponent from "./FrameComponent";
 import "./HOMEPAGE.css";
-
+import { FiActivity } from "react-icons/fi";
 const HOMEPAGE = () => {
   return (
     <div className="home-page">
+      
       <FrameComponent6 />
       <main className="frame-parent">
         <div className="frame-group">
@@ -44,10 +45,8 @@ const HOMEPAGE = () => {
                       <div className="eraser-tool">
                         <div className="active">Active</div>
                         <div className="data-hub-wrapper">
-                          <img
+                          <FiActivity
                             className="data-hub-icon"
-                            alt=""
-                            src="/vector-1.svg"
                           />
                         </div>
                       </div>
@@ -135,11 +134,13 @@ const HOMEPAGE = () => {
           <FrameComponent4 />
           <FrameComponent3 />
           <FrameComponent2 />
+        
         </div>
         <div className="frame-wrapper3">
           <FrameComponent1 />
         </div>
         <FrameComponent />
+        
       </main>
     </div>
   );

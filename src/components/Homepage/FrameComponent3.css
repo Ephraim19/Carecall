@@ -250,6 +250,7 @@
   font-size: var(--font-size-mini);
   color: var(--color-gray-100);
   font-family: var(--font-roboto-slab);
+  margin-bottom: 25px;
 }
 @media screen and (max-width: 450px) {
   .addresses {

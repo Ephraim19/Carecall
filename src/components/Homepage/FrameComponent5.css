@@ -17,6 +17,7 @@
   height: 32px;
   width: 32px;
   position: relative;
+  color:var(--color-steelblue);
 }
 .frame-parent16 {
   align-self: stretch;
@@ -101,6 +102,7 @@
   font-size: var(--font-size-xl);
   color: var(--color-gray-100);
   font-family: var(--font-roboto-slab);
+  margin-bottom: 25px;
 }
 @media screen and (max-width: 450px) {
   .felix-wandera {

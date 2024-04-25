@@ -1,6 +1,7 @@
 import "./FrameComponent.css";
 
 const FrameComponent = () => {
+  
   return (
     <div className="frame-parent25">
       <div className="frame-parent26">

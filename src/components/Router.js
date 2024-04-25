@@ -27,7 +27,6 @@ import Analytic from "./Analytics/Analytic";
 import Feedbackform from "./Forms/Feedbackform";
 import RESETPASSWORD from "./Forms/RESETPASSWORD";
 import ACCOUNTCREATEDSUCCESSFULLY from "./Forms/ACCOUNTCREATEDSUCCESSFULLY";
-import INDIVIDUALPATIENTVIEW from "./Homepage/INDIVIDUALPATIENTVIEW";
 import HOMEPAGE from "./Homepage/HOMEPAGE";
 
 const Router = () => {
@@ -67,7 +66,6 @@ const Router = () => {
         <Route path="/feedback" Component={Feedbackform} />
         <Route path="camp/registration" Component={Registration} />
         <Route path="/homepage" Component={HOMEPAGE} />
-        <Route path="/individual" Component={INDIVIDUALPATIENTVIEW} />
 
         
       </Routes>

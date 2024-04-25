@@ -312,6 +312,7 @@
   box-sizing: border-box;
   gap: var(--gap-11xs);
   max-width: 100%;
+  margin-bottom: 25px;
 }
 .contacts {
   margin: 0;
@@ -514,7 +515,11 @@
   line-height: normal;
   letter-spacing: normal;
 }
-/* 
+@media screen and (max-width: 900px) {
+  .frame-parent {
+    gap: var(--gap-base);
+  }
+
 @media screen and (max-width: 1650px) {
   .frame-group,
   .frame-wrapper3 {
@@ -522,10 +527,6 @@
     max-width: 100%;
   }
 }
-@media screen and (max-width: 900px) {
-  .frame-parent {
-    gap: var(--gap-base);
-  }
 }
 @media screen and (max-width: 450px) {
   .frame-container {
@@ -552,4 +553,4 @@
   .frame-parent {
     height: auto;
   }
-} */
+}

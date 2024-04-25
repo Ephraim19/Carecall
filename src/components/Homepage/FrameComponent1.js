@@ -14,15 +14,12 @@ const FrameComponent1 = () => {
       <div className="conditions-wrapper">
         <h3 className="conditions">Conditions</h3>
       </div>
-      <div className="conditions-container">
-        <h3 className="conditions1">Conditions</h3>
-      </div>
-      <div className="interventions-wrapper">
+      {/* <div className="interventions-wrapper">
         <h3 className="interventions">Interventions</h3>
       </div>
       <div className="input-filter">
         <h3 className="interactions">Interactions</h3>
-      </div>
+      </div> */}
       <h1 className="h1">{`>`}</h1>
     </div>
   );
