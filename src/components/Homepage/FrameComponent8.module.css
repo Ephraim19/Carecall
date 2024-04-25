@@ -258,6 +258,7 @@
     font-family: inherit;
     z-index: 1;
   }
+  
   .frameParent,
   .groupDiv {
     display: flex;

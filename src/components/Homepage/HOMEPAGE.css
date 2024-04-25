@@ -64,6 +64,7 @@
   flex-shrink: 0;
   padding: var(--padding-7xs) var(--padding-smi) var(--padding-4xs);
   gap: var(--gap-23xl);
+  margin-bottom: 25px;
 }
 .program-status {
   margin: 0;
@@ -124,6 +125,7 @@
 .data-hub-icon {
   width: 25.1px;
   height: 25.7px;
+  color:green;
 }
 .data-hub-wrapper,
 .eraser-tool {
@@ -482,6 +484,7 @@
   gap: var(--gap-11xs);
   font-size: var(--font-size-mini);
   color: var(--color-gray-100);
+  margin-bottom:25px;
 }
 .frame-parent,
 .frame-wrapper3,
