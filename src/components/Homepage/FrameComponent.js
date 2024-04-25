@@ -17,7 +17,7 @@ const FrameComponent = () => {
         <h1 className="h11">{`>`}</h1>
       </div>
       <div className="tasks-parent">
-        <h3 className="tasks">Tasks</h3>
+        <h3 className="tasks1">Tasks</h3>
         <div className="frame-wrapper15">
           <div className="rectangle-parent8">
             <div className="frame-child11" />
@@ -46,12 +46,14 @@ const FrameComponent = () => {
         </div>
         <h3 className="appointments">Appointments</h3>
       </div>
-      <div className="frame-parent28">
-        <FiExternalLink
-          className="frame-child14"
-          
-        />
-        <h3 className="engagement-panel">Engagement Panel</h3>
+      <div className="frame-parent27">
+        <div className="rectangle-parent10">
+          <div className="frame-child13" />
+          <FiExternalLink
+            className="expand-svgrepocom-icon2"
+          />
+        </div>
+        <h3 className="appointments">Engagement Panel</h3>
       </div>
     </div>
   );
