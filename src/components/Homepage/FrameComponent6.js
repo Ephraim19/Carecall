@@ -52,6 +52,7 @@ const FrameComponent6 = (allData) => {
 
   return (
     <header className="home-page-inner">
+      
       <div className="frame-parent11">
         <div className="frame-parent12">
           <div className="navigation-svgrepocom-wrapper">

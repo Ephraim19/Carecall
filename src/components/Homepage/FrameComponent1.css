@@ -119,7 +119,7 @@
     var(--padding-9xl);
   box-sizing: border-box;
   max-width: 100%;
-  gap: var(--gap-xl);
+  gap: var(--gap-3xs);
   text-align: left;
   font-size: var(--font-size-3xl);
   color: var(--color-darkslategray-100);

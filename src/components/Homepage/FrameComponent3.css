@@ -81,7 +81,7 @@
   width: 322px;
   height: 25px;
   position: relative;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   font-weight: 500;
   color: var(--color-darkslategray-200);
   display: flex;
@@ -112,7 +112,7 @@
 .th-ave-suits {
   align-self: stretch;
   height: 25px;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .office-parent {
@@ -136,7 +136,7 @@
 .open-in-maps {
   align-self: stretch;
   height: 25px;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   font-weight: 800;
   color: var(--color-navy);
 }
@@ -161,7 +161,7 @@
 .nairobi-county {
   align-self: stretch;
   height: 25px;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .county-parent,
@@ -192,7 +192,7 @@
 .nairobi {
   align-self: stretch;
   height: 25px;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .path-exclusion,
@@ -223,7 +223,7 @@
 .always-deliver-at {
   align-self: stretch;
   height: 50px;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .frame-parent21,
@@ -245,12 +245,12 @@
     var(--padding-3xs);
   box-sizing: border-box;
   gap: var(--gap-xl);
-  max-width: 100%;
   text-align: left;
   font-size: var(--font-size-mini);
   color: var(--color-gray-100);
   font-family: var(--font-roboto-slab);
   margin-bottom: 25px;
+  max-width: 325px;
 }
 @media screen and (max-width: 450px) {
   .addresses {

@@ -9,7 +9,7 @@ import FrameComponent from "./FrameComponent";
 import "./HOMEPAGE.css";
 import { FiActivity } from "react-icons/fi";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth,database } from "../Firebase";
+import { auth, database } from "../Firebase";
 import { useNavigate } from "react-router-dom";
 import { get, onValue, ref, update } from "firebase/database";
 
@@ -37,7 +37,7 @@ const HOMEPAGE = () => {
         console.log(allDataArray);
       }
     });
-  },[]);
+  }, []);
 
   return (
     <div className="home-page">
@@ -48,7 +48,6 @@ const HOMEPAGE = () => {
           <div className="frame-container">
             <div className="rectangle-parent">
               <div className="frame-child" />
-
               <div className="personal">Personal</div>
             </div>
             <div className="rectangle-group">
@@ -112,6 +111,7 @@ const HOMEPAGE = () => {
           <div className="frame-parent5">
             <div className="frame-parent6">
               <div className="contacts-parent">
+                
                 <h3 className="contacts">Contacts</h3>
                 <div className="frame-parent7">
                   <div className="frame-parent8">

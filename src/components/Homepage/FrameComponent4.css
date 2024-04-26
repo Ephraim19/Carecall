@@ -1,7 +1,7 @@
 .insurance-employer {
   margin: 0;
   position: relative;
-  font-size: inherit;
+  font-size: 17px;
   font-weight: 400;
   font-family: inherit;
 }
@@ -21,7 +21,7 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--gap-xl);
+  gap: var(--gap-57xl);
   font-size: var(--font-size-mini);
   color: var(--color-gray-100);
 }
@@ -31,7 +31,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: var(--gap-mid);
+  gap: var(--gap-mini);
   min-width: 172px;
 }
 .frame-child3 {
@@ -178,10 +178,11 @@
   padding: var(--padding-11xs) var(--padding-3xs) var(--padding-13xl);
   gap: var(--gap-10xs-5);
   text-align: left;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
   font-family: var(--font-roboto-slab);
   margin-bottom: 25px;
+  max-width: 325px;
   /* width:400px; */
 }
 @media screen and (max-width: 450px) {

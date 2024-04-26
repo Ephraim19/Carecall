@@ -63,8 +63,9 @@
   overflow-y: auto;
   flex-shrink: 0;
   padding: var(--padding-7xs) var(--padding-smi) var(--padding-4xs);
-  gap: var(--gap-23xl);
+  gap: var(--gap-7xl);
   margin-bottom: 25px;
+  max-width: 300px;
 }
 .program-status {
   margin: 0;
@@ -99,7 +100,7 @@
   min-width: 117px;
 }
 .stage {
-  font-size: var(--font-size-mini);
+  font-size: var(--font-size-xs);
   color: var(--color-gray-100);
   min-width: 48px;
 }
@@ -143,7 +144,7 @@
 }
 .care-manager {
   position: relative;
-  font-size: var(--font-size-mini);
+  font-size: var(--font-size-xs);
   font-weight: 500;
   color: var(--color-gray-100);
   display: inline-block;
@@ -162,7 +163,7 @@
 .frame-parent3 {
   flex-direction: row;
   gap: var(--gap-23xl);
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .frame-parent2,
@@ -174,7 +175,7 @@
 }
 .frame-parent2 {
   gap: var(--gap-10xs);
-  font-size: var(--font-size-mini);
+  font-size: var(--font-size-xs);
   color: var(--color-gray-100);
 }
 .program-status-assignees-parent {
@@ -237,13 +238,13 @@
   min-width: 111px;
 }
 .alice-akoth {
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
   min-width: 107px;
 }
 .nutritionist-parent {
   gap: var(--gap-10xs);
-  font-size: var(--font-size-mini);
+  font-size: var(--font-size-xs);
   color: var(--color-gray-100);
 }
 .frame-wrapper1,
@@ -267,13 +268,13 @@
   font-weight: 500;
 }
 .aaron-macharia {
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .engagement-lead-parent {
   flex-direction: column;
   gap: var(--gap-10xs);
-  font-size: var(--font-size-mini);
+  font-size: var(--font-size-xs);
   color: var(--color-gray-100);
 }
 .ebenezer-mokamba-parent,
@@ -291,12 +292,12 @@
   flex-direction: row;
   gap: 48px;
   max-width: 100%;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
 }
 .contacts,
 .frame-div {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-lg);
   color: var(--color-steelblue);
 }
 .frame-div {
@@ -313,7 +314,7 @@
   padding: var(--padding-11xs) var(--padding-3xs) var(--padding-4xs);
   box-sizing: border-box;
   gap: var(--gap-11xs);
-  max-width: 100%;
+  max-width: 325px;
   margin-bottom: 25px;
 }
 .contacts {
@@ -334,7 +335,7 @@
   min-width: 64px;
 }
 .div {
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
   white-space: nowrap;
 }
@@ -369,7 +370,7 @@
   min-width: 65px;
 }
 .div1 {
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   color: var(--color-darkslategray-200);
   white-space: nowrap;
 }
@@ -390,7 +391,7 @@
 }
 .felixwandera398gmailcom {
   position: relative;
-  font-size: var(--font-size-lgi);
+  font-size: var(--font-size-mini);
   font-weight: 500;
   color: var(--color-darkslategray-200);
   white-space: nowrap;
@@ -474,8 +475,7 @@
   background-color: var(--color-dodgerblue-300);
   overflow-y: auto;
   flex-shrink: 0;
-  flex-direction: column;
-  
+  flex-direction: column; 
 }
 .frame-parent5 {
   align-self: stretch;
@@ -483,10 +483,10 @@
   border-radius: var(--br-3xs);
   padding: var(--padding-12xs) var(--padding-3xs) var(--padding-3xs);
   gap: var(--gap-11xs);
-  font-size: var(--font-size-mini);
+  font-size: var(--font-size-xs);
   color: var(--color-gray-100);
   margin-bottom:25px;
-  /* width:350px; */
+  max-width: 310px;
 }
 .frame-parent,
 .frame-wrapper3,
@@ -503,7 +503,7 @@
   flex-shrink: 0;
   flex-direction: row;
   padding: var(--padding-sm) var(--padding-3xl) 0;
-  gap: 32px;
+  gap: 1px;
   max-width: 100%;
   text-align: left;
   font-size: var(--font-size-base);

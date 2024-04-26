@@ -272,6 +272,7 @@
   gap: var(--gap-34xl);
 }
 .home-page-inner {
+  margin-top: -22px;
   align-items: flex-start;
   padding: 0 5px;
   text-align: left;

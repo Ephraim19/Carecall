@@ -59,7 +59,7 @@
 }
 .frame-parent26 {
   align-self: stretch;
-  height: 42px;
+  height: 32px;
   border-radius: var(--br-3xs);
   overflow: hidden;
   flex-shrink: 0;
@@ -69,7 +69,7 @@
   justify-content: space-between;
   padding: 0 var(--padding-15xl) var(--padding-7xs) var(--padding-3xl);
   box-sizing: border-box;
-  gap: var(--gap-xl);
+  gap: var(--gap-12xs);
   color: var(--color-navy);
 }
  .tasks1 {
@@ -277,7 +277,7 @@
   position: relative;
 }
 .frame-parent25 {
-  width: 310px;
+  width: 325px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: var(--br-6xl);
   background-color: var(--color-dodgerblue-300);
@@ -293,6 +293,7 @@
   color: var(--color-steelblue);
   font-family: var(--font-roboto-slab);
   margin-bottom: 25px;
+  /* margin-left: 40px; */
 }
 @media screen and (max-width: 450px) {
   .engagement,

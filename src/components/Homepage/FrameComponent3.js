@@ -1,6 +1,7 @@
 import "./FrameComponent3.css";
 
 const FrameComponent3 = () => {
+  
   return (
     <div className="frame-parent21">
       <div className="layout-combinator-parent">

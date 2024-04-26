@@ -57,7 +57,7 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
-  gap: var(--gap-xl);
+  gap: var(--gap-sm);
 }
 .frame-child6 {
   height: 48px;
@@ -150,14 +150,14 @@
   flex-wrap: wrap;
   padding: var(--padding-12xs) var(--padding-7xs) var(--padding-11xs);
   box-sizing: border-box;
-  gap: var(--gap-34xl);
-  font-size: var(--font-size-lgi);
+  gap: 2px;
+  font-size: var(--font-size-base);
   color: var(--color-darkslategray-200);
 }
 .frame-parent23 {
   flex-direction: column;
   gap: var(--gap-sm);
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-lg);
   color: var(--color-steelblue);
 }
 .frame-child7 {
@@ -179,6 +179,7 @@
 .mary-akinyi-35 {
   align-self: stretch;
   height: 25px;
+  font-size: var(--font-size-base);
 }
 .spouse {
   width: 52px;
@@ -192,7 +193,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: var(--gap-12xs);
+  gap: 2px;
 }
 .frame-child8 {
   height: 33px;
@@ -268,6 +269,7 @@
 .henry-wandera-10 {
   align-self: stretch;
   height: 25px;
+  font-size: var(--font-size-base);
 }
 .child {
   width: 38px;
@@ -357,6 +359,7 @@
   color: var(--color-darkslategray-200);
   font-family: var(--font-roboto-slab);
   margin-bottom: 25px;
+  max-width: 325px;
 }
 @media screen and (max-width: 450px) {
   .household {
