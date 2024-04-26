@@ -81,8 +81,8 @@
 .carecall-logo-parent {
   overflow-x: auto;
   justify-content: flex-start;
-  padding: var(--padding-3xs) var(--padding-7xs) var(--padding-8xs-5);
-  gap: var(--gap-mini);
+  /* padding: var(--padding-3xs) var(--padding-7xs) var(--padding-8xs-5); */
+  gap: var(--gap-smi-5);
 }
 .frame-parent12 {
   width: 300px;
@@ -106,7 +106,7 @@
   padding: var(--padding-11xs) 0 0;
 }
 .search-by-patient {
-  width: 320px;
+  width: 420px;
   border: 0;
   outline: 0;
   font-family: var(--font-istok-web);
@@ -133,14 +133,14 @@
   overflow-x: auto;
   flex-direction: row;
   justify-content: flex-start;
-  padding: var(--padding-2xs) var(--padding-40xl) var(--padding-7xs);
-  gap: var(--gap-11xs);
+  padding: var(--padding-9xs) var(--padding-40xl) var(--padding-7xs);
+  gap: var(--gap-11xs)
 
 }
 .frame-wrapper5 {
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 var(--padding-4xl) var(--padding-5xs) 0;
+  padding: 0 var(--padding-lgi-5) var(--padding-7xs) 0;
   box-sizing: border-box;
   max-width: 100%;
 }
@@ -269,7 +269,7 @@
   overflow: hidden; 
   align-items: flex-end;
   padding: var(--padding-2xs) var(--padding-8xl);
-  gap: var(--gap-34xl);
+  gap: var(--gap-2xl);
 }
 .home-page-inner {
   margin-top: -22px;

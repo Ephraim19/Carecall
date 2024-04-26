@@ -51,20 +51,19 @@ const FrameComponent6 = (allData) => {
   }
 
   return (
-    <header className="home-page-inner">
-      
+    <header className="home-page-inner"> 
       <div className="frame-parent11">
         <div className="frame-parent12">
           <div className="navigation-svgrepocom-wrapper">
             <FaBars className="navigation-svgrepocom-icon" />
           </div>
           <div className="carecall-logo-parent">
-            <img
+            {/* <img
               className="carecall-logo-icon"
               loading="lazy"
               alt=""
               src={carecall}
-            />
+            /> */}
             <div className="frame-wrapper4">
               <div className="carecall-parent">
                 <h1 className="carecall">
