@@ -895,6 +895,7 @@ const Dashboard = () => {
             </label>
           </form>
 
+
           {searched ? (
             <ul className="searchable">
               {searched.map((patient) => (

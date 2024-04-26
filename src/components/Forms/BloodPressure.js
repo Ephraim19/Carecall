@@ -12,6 +12,8 @@ const BloodPressure = () => {
   const [dueDate, setDueDate] = useState(new Date());
   const navigate = useNavigate();
   const [errorCode, setErrorCode] = useState("");
+  const [pulse, setPulse] = useState("");
+
 
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
@@ -29,9 +31,12 @@ const BloodPressure = () => {
       push(ref(database, "bloodPressure"), {
         patient: Cookies.get("patient"),
         pressure,
+        pulse,
         dueDate: dateStrip(3, dueDate),
       }).then((data) => {
-        setErrorCode("Successfully added blood pressure. click anywhere to close");
+        setErrorCode(
+          "Successfully added blood pressure. click anywhere to close"
+        );
 
         //Create a task if bp is high or low
         if (pressure.split("/")[0] > 120 || pressure.split("/")[1] > 80) {
@@ -76,6 +81,20 @@ const BloodPressure = () => {
             value={pressure}
             onChange={(e) => setPressure(e.target.value)}
           />
+
+          <div className={styles.passwordParent}>
+            <div className={styles.password}>Pulse</div>
+            <div className={styles.div1}>*</div>
+          </div>
+          <div className={styles.passwordField}>
+            <div className={styles.passwordField1} />
+            <input
+              className={styles.passwordFieldChild}
+              placeholder="Enter the password rate"
+              type="text"
+              onChange={(e) => setPulse(e.target.value)}
+            />
+          </div>
 
           <button className={styles.loginButtonloginButton} onClick={NewBp}>
             <button className={styles.buttonIcon} />

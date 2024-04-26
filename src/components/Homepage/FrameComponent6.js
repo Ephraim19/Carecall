@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./FrameComponent6.css";
 import carecall from "../carecall.png";
-import { FaBars, FaSearch, FaCircle,FaUser } from "react-icons/fa";
+import { FaBars, FaSearch, FaCircle, FaUser } from "react-icons/fa";
 const FrameComponent6 = (allData) => {
   const [searched, setSearched] = useState([]);
-  const [allMembers,setAllMembers] = useState([]);
+  const [dataKitengela, setDataKitengela] = useState([]);
+  const [dataNairobiWestHospital, setDataNairobiWestHospital] = useState([]);
+  const [dataSouthB, setDataSouthB] = useState([]);
 
   useEffect(() => {
     //get the members
@@ -18,40 +20,59 @@ const FrameComponent6 = (allData) => {
     var EQA_Kitengela = allData.allData.filter(
       (data) => data.id === "EQA_Kitengela"
     );
-    var dataArray, dataArray1, dataArray2,dataArray3;
+    var dataArray, dataArray1, dataArray2, dataArray3;
 
     if (EQA_Kitengela.length > 0) {
-      dataArray = Object.entries(EQA_Kitengela[0].clients).map(([id, data]) => ({
-        id,
-        ...data,
-      }));
+      dataArray = Object.entries(EQA_Kitengela[0].clients).map(
+        ([id, data]) => ({
+          id,
+          ...data,
+        })
+      );
+      setDataKitengela(dataArray);
     }
     if (EQA_Nairobi_West_Hospital.length > 0) {
-      dataArray1 = Object.entries(EQA_Nairobi_West_Hospital [0].clients).map(([id, data]) => ({
-        id,
-        ...data,
-      }));
+      dataArray1 = Object.entries(EQA_Nairobi_West_Hospital[0].clients).map(
+        ([id, data]) => ({
+          id,
+          ...data,
+        })
+      );
+      setDataNairobiWestHospital(dataArray1);
     }
     if (EQA_South_B.length > 0) {
       dataArray2 = Object.entries(EQA_South_B[0].clients).map(([id, data]) => ({
         id,
         ...data,
       }));
+      setDataSouthB(dataArray2);
     }
-    // var a1 = dataArray.concat(dataArray1);
-    // var dataArray3 = a1.concat(dataArray2);
-    // setAllMembers(dataArray3)
-    // console.log(dataArray3);
-
   }, []);
 
-  const handleSearch=(e)=>{
+  const handleSearch = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+    if (e.target.value.length > 4) {
+      var allPatients = dataKitengela.concat(
+        dataNairobiWestHospital,
+        dataSouthB
+      );
+      var searches = allPatients.filter(
+        (name) =>
+          name.patient.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          name.Phone.includes(e.target.value)
+      );
+      setSearched(searches);
+    } else {
+      setSearched([]);
+    }
+  };
+
+  const handleResultClick = (patient) => {
+    console.log(patient);
   }
 
   return (
-    <header className="home-page-inner"> 
+    <header className="home-page-inner">
       <div className="frame-parent11">
         <div className="frame-parent12">
           <div className="navigation-svgrepocom-wrapper">
@@ -92,6 +113,22 @@ const FrameComponent6 = (allData) => {
               onChange={handleSearch}
             />
           </div>
+          <div>
+          {searched ? (
+            <ul className="searchable">
+              {searched.map((patient) => (
+                <li
+                  key={patient.id}
+                  onClick={() => handleResultClick(patient)}
+                >
+                  {patient.patient}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            " "
+          )}
+        </div>
         </div>
 
         <div className="frame-wrapper6">

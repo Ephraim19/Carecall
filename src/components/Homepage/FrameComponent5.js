@@ -36,5 +36,4 @@ const FrameComponent5 = () => {
   );
 };
 
-
 export default FrameComponent5;

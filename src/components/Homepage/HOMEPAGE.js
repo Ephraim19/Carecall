@@ -16,6 +16,7 @@ import { get, onValue, ref, update } from "firebase/database";
 const HOMEPAGE = () => {
   const navigate = useNavigate();
   const [allData, setAllData] = useState([]);
+  const [patientData, setPatientData] = useState([]);
   const dbAll = ref(database);
 
   useEffect(() => {
@@ -38,6 +39,10 @@ const HOMEPAGE = () => {
       }
     });
   }, []);
+
+  // const handleDataFromChild = (data) => {
+  //   setDataFromChild(data);
+  // }
 
   return (
     <div className="home-page">
