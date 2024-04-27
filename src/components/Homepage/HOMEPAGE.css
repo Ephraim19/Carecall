@@ -198,6 +198,7 @@
   display: inline-block;
   min-width: 23px;
   z-index: 1;
+  pointer:cursor;
 }
 .rectangle-container {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
@@ -206,6 +207,8 @@
   flex-direction: row;
   padding: var(--padding-10xs) var(--padding-7xs) var(--padding-11xs)
     var(--padding-4xs);
+  border: none;
+  color: var(--color-steelblue);
 }
 .frame-parent1,
 .frame-wrapper,
