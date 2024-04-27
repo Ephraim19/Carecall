@@ -509,6 +509,7 @@
   font-size: var(--font-size-base);
   color: var(--color-whitesmoke);
   font-family: var(--font-roboto-slab);
+  margin-top: -27px;
 }
 .home-page {
   width: 100%;
