@@ -43,24 +43,39 @@ const Program = (patientData) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // const updates = {};
-    // updates[e.target.id + "/completed"] = e.target.value;
-    // update(dbRef2, updates);
-    push(ref(database, "programStatus"), {
-      member: patientData.patientData.patientData.id,
-      program: program,
-      status: status,
-      stage: stage,
-      careManager: careManager,
-      nutritionist: nutritionist,
-      engagementLead: engagementLead,
-    })
-      .then(() => {
-        toast.success("Successfully submitted data! ");
+    console.log(programStatusData);
+    if (programStatusData.id !== undefined) {
+      const updates = {};
+      updates[programStatusData.id + "/program"] = program;
+      updates[programStatusData.id + "/status"] = status;
+      updates[programStatusData.id + "/stage"] = stage;
+      updates[programStatusData.id + "/careManager"] = careManager;
+      updates[programStatusData.id + "/nutritionist"] = nutritionist;
+      updates[programStatusData.id + "/engagementLead"] = engagementLead;
+      update(dbRef, updates)
+        .then(() => {
+          toast.success("Successfully updated data! ");
+        })
+        .catch((error) => {
+          toast.error("Error updating document: ", error);
+        });
+    } else {
+      push(ref(database, "programStatus"), {
+        member: patientData.patientData.patientData.id,
+        program: program,
+        status: status,
+        stage: stage,
+        careManager: careManager,
+        nutritionist: nutritionist,
+        engagementLead: engagementLead,
       })
-      .catch((error) => {
-        toast.error("Error adding document: ", error);
-      });
+        .then(() => {
+          toast.success("Successfully submitted data! ");
+        })
+        .catch((error) => {
+          toast.error("Error adding document: ", error);
+        });
+    }
   };
 
   return (
@@ -137,7 +152,7 @@ const Program = (patientData) => {
             onChange={(e) => setStage(e.target.value)}
           >
             <option value={stage} key={"HS2"}>
-                {stage.length > 0 ? stage : "SELECT THE STAGE"}
+              {stage.length > 0 ? stage : "SELECT THE STAGE"}
             </option>
             <option className="App-info" value="Discovery" key={"Discovery"}>
               Discovery
@@ -178,7 +193,7 @@ const Program = (patientData) => {
         <button className={styles.signUpButton} onClick={onSubmit}>
           <div className={styles.signUpButton1}>
             <div className={styles.signUpButtonChild} />
-            <b className={styles.createAccount}>CREATE ACCOUNT</b>
+            <b className={styles.createAccount}>SUBMIT DATA</b>
           </div>
         </button>
       </form>
