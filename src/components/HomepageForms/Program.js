@@ -5,53 +5,42 @@ import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Program = (patientData) => {
+const Program = (programStatusData) => {
   const [program, setProgram] = React.useState("");
   const [status, setStatus] = React.useState("");
   const [stage, setStage] = React.useState("");
   const [careManager, setCareManager] = React.useState("");
   const [nutritionist, setNutritionist] = React.useState("");
   const [engagementLead, setEngagementLead] = React.useState("");
-  const [programStatusData, setProgramStatusData] = React.useState([]);
+  // const [programStatusData, setProgramStatusData] = React.useState([]);
   const dbRef = ref(database, "programStatus");
 
   useEffect(() => {
-    var allDataArray = [];
-
-    //get program data
-    get(dbRef).then((snapshot) => {
-      if (snapshot.exists()) {
-        allDataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
-          id,
-          ...data,
-        }));
-        const patientDataArray = allDataArray.find(
-          (name) => name.member === patientData.patientData.patientData.id
-        );
-        if (patientDataArray !== undefined) {
-          setProgramStatusData(patientDataArray);
-          setProgram(patientDataArray.program);
-          setStatus(patientDataArray.status);
-          setStage(patientDataArray.stage);
-          setCareManager(patientDataArray.careManager);
-          setNutritionist(patientDataArray.nutritionist);
-          setEngagementLead(patientDataArray.engagementLead);
-        }
-      }
-    });
-  }, [patientData]);
+    console.log("programStatusData", programStatusData.programStatusData);
+    if (programStatusData.programStatusData !== undefined) {
+      // setProgramStatusData(patientDataArray);
+      setProgram(programStatusData.programStatusData.program);
+      setStatus(programStatusData.programStatusData.status);
+      setStage(programStatusData.programStatusData.stage);
+      setCareManager(programStatusData.programStatusData.careManager);
+      setNutritionist(programStatusData.programStatusData.nutritionist);
+      setEngagementLead(programStatusData.programStatusData.engagementLead);
+    }
+  }, [programStatusData]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(programStatusData);
-    if (programStatusData.id !== undefined) {
+    if (programStatusData) {
       const updates = {};
-      updates[programStatusData.id + "/program"] = program;
-      updates[programStatusData.id + "/status"] = status;
-      updates[programStatusData.id + "/stage"] = stage;
-      updates[programStatusData.id + "/careManager"] = careManager;
-      updates[programStatusData.id + "/nutritionist"] = nutritionist;
-      updates[programStatusData.id + "/engagementLead"] = engagementLead;
+      updates[programStatusData.programStatusData.id + "/program"] = program;
+      updates[programStatusData.programStatusData.id + "/status"] = status;
+      updates[programStatusData.programStatusData.id + "/stage"] = stage;
+      updates[programStatusData.programStatusData.id + "/careManager"] =
+        careManager;
+      updates[programStatusData.programStatusDataid + "/nutritionist"] =
+        nutritionist;
+      updates[programStatusData.programStatusData.id + "/engagementLead"] =
+        engagementLead;
       update(dbRef, updates)
         .then(() => {
           toast.success("Successfully updated data! ");
@@ -61,7 +50,7 @@ const Program = (patientData) => {
         });
     } else {
       push(ref(database, "programStatus"), {
-        member: patientData.patientData.patientData.id,
+        member: programStatusData.programStatusData.id,
         program: program,
         status: status,
         stage: stage,
