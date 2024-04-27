@@ -10,7 +10,6 @@ const FrameContacts = (patientData) => {
       ...data,
     }));
     setPatientData1(patientArray);
-    console.log(patientArray[0].id);
   }, [patientData]);
 
   return (

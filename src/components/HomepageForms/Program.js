@@ -1,42 +1,53 @@
-import React, { useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import styles from "./Program.module.css";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  sendEmailVerification,
-} from "firebase/auth";
 import { database } from "../Firebase";
-import { ref, push } from "firebase/database";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Cookies from "js-cookie";
+import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Toast } from "react-bootstrap";
 
-const Program = () => {
-  const [email, setEmail] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [phoneNumber, setPhoneNumber] = React.useState("");
-  const [hospital, setHospital] = React.useState("");
-  const [passwordErrorCode, setPasswordErrorCode] = React.useState("");
-  
+const Program = (patientData) => {
   const [program, setProgram] = React.useState("");
   const [status, setStatus] = React.useState("");
   const [stage, setStage] = React.useState("");
   const [careManager, setCareManager] = React.useState("");
   const [nutritionist, setNutritionist] = React.useState("");
   const [engagementLead, setEngagementLead] = React.useState("");
+  const [programStatusData, setProgramStatusData] = React.useState([]);
+  const dbRef = ref(database, "programStatus");
 
   useEffect(() => {
-    setHospital(Cookies.get("hospital"));
-  }, []);
+    var allDataArray = [];
+
+    //get program data
+    get(dbRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        allDataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        const patientDataArray = allDataArray.find(
+          (name) => name.member === patientData.patientData.patientData.id
+        );
+        if (patientDataArray !== undefined) {
+          setProgramStatusData(patientDataArray);
+          setProgram(patientDataArray.program);
+          setStatus(patientDataArray.status);
+          setStage(patientDataArray.stage);
+          setCareManager(patientDataArray.careManager);
+          setNutritionist(patientDataArray.nutritionist);
+          setEngagementLead(patientDataArray.engagementLead);
+        }
+      }
+    });
+  }, [patientData]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    push(ref(database), {
+    // const updates = {};
+    // updates[e.target.id + "/completed"] = e.target.value;
+    // update(dbRef2, updates);
+    push(ref(database, "programStatus"), {
+      member: patientData.patientData.patientData.id,
       program: program,
       status: status,
       stage: stage,
@@ -44,9 +55,8 @@ const Program = () => {
       nutritionist: nutritionist,
       engagementLead: engagementLead,
     })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        toast.success("Document written with ID: " + docRef.id);
+      .then(() => {
+        toast.success("Successfully submitted data! ");
       })
       .catch((error) => {
         toast.error("Error adding document: ", error);
@@ -57,27 +67,91 @@ const Program = () => {
     <div>
       <form className={styles.firstNameField}>
         <b className={styles.createNewCarecall}>Program, Status & Assignees</b>
-        <input
-          className={styles.firstNameField1}
-          placeholder="PROGRAM"
-          type="text"
-          value={program}
-          onChange={(e) => setProgram(e.target.value)}
-        />
-        <input
-          className={styles.lastNameField}
-          placeholder="STATUS"
-          type="text"
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        />
-        <input
-          className={styles.phoneNumber}
-          placeholder="STAGE"
-          type="text"
-          value={stage}
-          onChange={(e) => setStage(e.target.value)}
-        />
+
+        <label htmlFor="Program">
+          <select
+            className={styles.firstNameField1}
+            onChange={(e) => setProgram(e.target.value)}
+          >
+            <option value={program} key={"HS"}>
+              {program.length > 0 ? program : "SELECT THE PROGRAM"}
+            </option>
+            <option className="App-info" value="AcuteCare" key={"AcuteCare"}>
+              AcuteCare
+            </option>
+
+            <option
+              className="App-info"
+              value="VitalCare360"
+              key={"VitalCare360"}
+            >
+              VitalCare360
+            </option>
+
+            <option
+              className="App-info"
+              value="ChronicCare"
+              key={"ChronicCare"}
+            >
+              ChronicCare
+            </option>
+
+            <option className="App-info" value="Wellness" key={"Wellness"}>
+              Wellness
+            </option>
+
+            <option
+              className="App-info"
+              value="MedicalCamp"
+              key={"MedicalCamp"}
+            >
+              MedicalCamp
+            </option>
+          </select>
+        </label>
+
+        <label htmlFor="Status">
+          <select
+            className={styles.lastNameField}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value={status} key={"HS1"}>
+              {status.length > 0 ? status : "SELECT THE STATUS"}
+            </option>
+            <option className="App-info" value="Active" key={"Active"}>
+              Active
+            </option>
+
+            <option className="App-info" value="inactive" key={"Inactive"}>
+              Inactive
+            </option>
+            <option className="App-info" value="Discharged" key={"Discharged"}>
+              Discharged
+            </option>
+          </select>
+        </label>
+
+        <label htmlFor="Stage">
+          <select
+            className={styles.phoneNumber}
+            onChange={(e) => setStage(e.target.value)}
+          >
+            <option value={stage} key={"HS2"}>
+                {stage.length > 0 ? stage : "SELECT THE STAGE"}
+            </option>
+            <option className="App-info" value="Discovery" key={"Discovery"}>
+              Discovery
+            </option>
+
+            <option className="App-info" value="Onboarded" key={"Onboarded"}>
+              Onboarded
+            </option>
+            <option className="App-info" value="Discharged" key={"Discharged"}>
+              Discharged
+            </option>
+          </select>
+        </label>
+
         <input
           className={styles.emailAddress}
           placeholder="CARE MANAGER"
@@ -106,7 +180,6 @@ const Program = () => {
             <div className={styles.signUpButtonChild} />
             <b className={styles.createAccount}>CREATE ACCOUNT</b>
           </div>
-          <b style={{ color: "red" }}>{passwordErrorCode}</b>
         </button>
       </form>
       <ToastContainer />

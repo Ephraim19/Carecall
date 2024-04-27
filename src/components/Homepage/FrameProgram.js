@@ -6,14 +6,6 @@ import "reactjs-popup/dist/index.css";
 import Program from "../HomepageForms/Program";
 
 const FrameProgram = (patientData) => {
-  const [patientDataId, setPatientDataId] = useState([]);
-  useEffect(() => {
-    setPatientDataId(patientData.patientData.id);
-  }, [patientData]);
-
-  const handleAddEdit = () => {
-    console.log("Add/Edit button clicked");
-  };
 
   return (
     <div>
@@ -46,7 +38,7 @@ const FrameProgram = (patientData) => {
           <div className="frame-wrapper">
             <Popup
               trigger={
-                <button onClick={handleAddEdit} className="rectangle-container">
+                <button className="rectangle-container">
                   <div className="frame-inner" />
                   <div className="edit">ADD/EDIT</div>
                 </button>
@@ -54,7 +46,7 @@ const FrameProgram = (patientData) => {
               position="right center"
               contentStyle={{ width: "auto", maxWidth: "600px" }}
             >
-              <Program />
+              <Program patientData={patientData} />
             </Popup>
           </div>
         </div>

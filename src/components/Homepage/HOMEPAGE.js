@@ -27,7 +27,6 @@ const HOMEPAGE = () => {
   const [dataSouthB, setDataSouthB] = useState([]);
   const [allPatient, setAllPatient] = useState([]);
   const [member, setMember] = useState("");
-  const [data, setData] = useState("ephraim");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
