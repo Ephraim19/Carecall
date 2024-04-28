@@ -4,8 +4,9 @@ import { database } from "../Firebase";
 import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
 
-const Program = (programStatusData) => {
+const Program = (programStatusDisplay) => {
   const [program, setProgram] = React.useState("");
   const [status, setStatus] = React.useState("");
   const [stage, setStage] = React.useState("");
@@ -15,31 +16,31 @@ const Program = (programStatusData) => {
   // const [programStatusData, setProgramStatusData] = React.useState([]);
   const dbRef = ref(database, "programStatus");
 
-  useEffect(() => {
-    console.log("programStatusData", programStatusData.programStatusData);
-    if (programStatusData.programStatusData !== undefined) {
-      // setProgramStatusData(patientDataArray);
-      setProgram(programStatusData.programStatusData.program);
-      setStatus(programStatusData.programStatusData.status);
-      setStage(programStatusData.programStatusData.stage);
-      setCareManager(programStatusData.programStatusData.careManager);
-      setNutritionist(programStatusData.programStatusData.nutritionist);
-      setEngagementLead(programStatusData.programStatusData.engagementLead);
+  useEffect(() => {    
+    if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
+
+      setProgram(programStatusDisplay.programStatusDisplay.programStatusDisplay.program);
+      setStatus(programStatusDisplay.programStatusDisplay.programStatusDisplay.status);
+      setStage(programStatusDisplay.programStatusDisplay.programStatusDisplay.stage);
+      setCareManager(programStatusDisplay.programStatusDisplay.programStatusDisplay.careManager);
+      setNutritionist(programStatusDisplay.programStatusDisplay.programStatusDisplay.nutritionist);
+      setEngagementLead(programStatusDisplay.programStatusDisplay.programStatusDisplay.engagementLead);
     }
-  }, [programStatusData]);
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (programStatusData) {
+
+    if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
       const updates = {};
-      updates[programStatusData.programStatusData.id + "/program"] = program;
-      updates[programStatusData.programStatusData.id + "/status"] = status;
-      updates[programStatusData.programStatusData.id + "/stage"] = stage;
-      updates[programStatusData.programStatusData.id + "/careManager"] =
+      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/program"] = program;
+      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/status"] = status;
+      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/stage"] = stage;
+      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/careManager"] =
         careManager;
-      updates[programStatusData.programStatusDataid + "/nutritionist"] =
+      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/nutritionist"] =
         nutritionist;
-      updates[programStatusData.programStatusData.id + "/engagementLead"] =
+      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/engagementLead"] =
         engagementLead;
       update(dbRef, updates)
         .then(() => {
@@ -50,7 +51,7 @@ const Program = (programStatusData) => {
         });
     } else {
       push(ref(database, "programStatus"), {
-        member: programStatusData.programStatusData.id,
+        member: Cookies.get("memberId"),
         program: program,
         status: status,
         stage: stage,

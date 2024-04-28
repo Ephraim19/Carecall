@@ -7,8 +7,10 @@ import FrameComponent1 from "./FrameComponent1";
 import FrameComponent from "./FrameComponent";
 import FrameContacts from "./FrameContacts";
 import "./HOMEPAGE.css";
-import { FaBars, FaSearch, FaUser } from "react-icons/fa";
+import { FaBars, FaSearch } from "react-icons/fa";
 import "./FrameComponent6.css";
+import Cookies from "js-cookie";
+
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "../Firebase";
@@ -27,25 +29,127 @@ const HOMEPAGE = () => {
   const [dataSouthB, setDataSouthB] = useState([]);
   const [allPatient, setAllPatient] = useState([]);
   const [member, setMember] = useState("");
+  const [adminPhoto, setAdminPhoto] = useState("");
+  const [patientTasks, setPatientTasks] = useState([]);
+  const [bp, setBp] = useState([]);
+  const [clinic, setClinic] = useState([]);
+  const [interaction, setInteraction] = useState([]);
+  const [prescription, setPrescription] = useState([]);
+  const [bmi, setBmi] = useState([]);
+  const [sugar, setSugar] = useState([]);
+  const [programStatus, setProgramStatus] = useState([]);
+
+  const [programStatusDisplay, setProgramStatusDisplay] = React.useState("");
+  const [sugarDisplay, setSugarDisplay] = React.useState([]);
+  const [bmiDisplay, setBmiDisplay] = React.useState([]);
+  const [prescriptionDisplay, setPrescriptionDisplay] = React.useState([]);
+  const [interactionDisplay, setInteractionDisplay] = React.useState([]);
+  const [clinicDisplay, setClinicDisplay] = React.useState([]);
+  const [bpDisplay, setBpDisplay] = React.useState([]);
+  const [taskDisplay, setTaskDisplay] = React.useState([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      setAdminPhoto(user.photoURL);
       if (!user) {
         navigate("/");
       }
     });
+
     //read the whole database
-    get(dbAll).then((snapshot) => {
-      if (snapshot.exists()) {
-        const allDataArray = Object.entries(snapshot.val()).map(
+    var allDataArray = [];
+    get(dbAll)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          allDataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+            id,
+            ...data,
+          }));
+          setAllData(allDataArray);
+        }
+      })
+      .then(() => {
+        //get tasks
+        var allTasks = allDataArray.filter((data) => data.id === "tasks");
+        var tsArray1 = Object.entries(allTasks[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        tsArray1.shift();
+        setPatientTasks(tsArray1);
+
+        //get interaction
+        var allInteraction = allDataArray.filter(
+          (data) => data.id === "Interaction"
+        );
+        var intArray1 = Object.entries(allInteraction[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        intArray1.shift();
+        setInteraction(intArray1);
+
+        //get clinic
+        var allClinic = allDataArray.filter((data) => data.id === "Clinic");
+        var clncArray1 = Object.entries(allClinic[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        clncArray1.shift();
+        setClinic(clncArray1);
+
+        //get prescription
+        var allPrescription = allDataArray.filter(
+          (data) => data.id === "Prescription"
+        );
+        var prescArray1 = Object.entries(allPrescription[0]).map(
           ([id, data]) => ({
             id,
             ...data,
           })
         );
-        setAllData(allDataArray);
-      }
-    });
+        prescArray1.shift();
+        setPrescription(prescArray1);
+
+        //get bmi
+        var allBmi = allDataArray.filter((data) => data.id === "Bmi");
+        var bmiArray1 = Object.entries(allBmi[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        bmiArray1.shift();
+        setBmi(bmiArray1);
+
+        //get sugar
+        var allSugar = allDataArray.filter((data) => data.id === "Bloodsugar");
+        var sugarArray1 = Object.entries(allSugar[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        sugarArray1.shift();
+        setSugar(sugarArray1);
+
+        //get bp
+        // var allBp = allDataArray.filter((data) => data.id === "bloodpressure");
+        // var bpArray1 = Object.entries(allBp[0]).map(([id, data]) => ({
+        //   id,
+        //   ...data,
+        // }));
+        // bpArray1.shift();
+
+        //get programStatus
+        var allProgramStatus = allDataArray.filter(
+          (data) => data.id === "programStatus"
+        );
+        var psArray1 = Object.entries(allProgramStatus[0]).map(
+          ([id, data]) => ({
+            id,
+            ...data,
+          })
+        );
+        psArray1.shift();
+        setProgramStatus(psArray1);
+      });
   }, []);
 
   const handleSearch = (e) => {
@@ -108,7 +212,30 @@ const HOMEPAGE = () => {
   const handleResultClick = (patient) => {
     setMember(patient.patient);
     setPatientData(patient);
+    Cookies.set("memberId", patient.id, { expires: 1 })
+
     setSearched([]);
+
+    let taskArray = patientTasks.filter((name) => name.patient === patient.id);
+    setTaskDisplay(taskArray);
+    // let Bps = bp.filter((name) => name.patient === patient.id);
+    let clncArray = clinic.filter((name) => name.patient === patient.id);
+    setClinicDisplay(clncArray);
+    let intArray = interaction.filter((name) => name.patient === patient.id);
+    setInteractionDisplay(intArray);
+    let prescArray = prescription.filter((name) => name.patient === patient.id);
+    setPrescriptionDisplay(prescArray);
+    let bmiArray = bmi.filter((name) => name.patient === patient.id);
+    setBmiDisplay(bmiArray);
+    let sugarArray = sugar.filter((name) => name.patient === patient.id);
+    setSugarDisplay(sugarArray);
+    let programStatusArray = programStatus.filter(
+      (name) => name.member === patient.id
+    );
+
+    // programStatusArray[0].member = patient.id;
+    // console.log("programStatusArray", programStatusArray[0]);
+    setProgramStatusDisplay(programStatusArray[0]);
   };
 
   return (
@@ -187,7 +314,10 @@ const HOMEPAGE = () => {
                   <div className="add-new-member">New Member</div>
                 </button>
               </div>
-              <FaUser className="profile-circle-svgrepocom-icon" />
+              <img
+                className="profile-circle-svgrepocom-icon"
+                src={adminPhoto}
+              />
             </div>
           </div>
         </div>
@@ -207,7 +337,7 @@ const HOMEPAGE = () => {
               </div>
             </div>
 
-            <FrameProgram patientData={patientData} />
+            <FrameProgram programStatusDisplay={programStatusDisplay} patientData={patientData} />
             <FrameContacts patientData={patientData} />
             <FrameComponent4 />
             <FrameComponent3 />
