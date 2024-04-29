@@ -61,6 +61,7 @@ const HOMEPAGE = () => {
     var allDataArray = [];
     get(dbAll)
       .then((snapshot) => {
+
         if (snapshot.exists()) {
           allDataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
@@ -121,6 +122,21 @@ const HOMEPAGE = () => {
         bmiArray1.shift();
         setBmi(bmiArray1);
 
+        //get programStatus
+        var allProgramStatus = allDataArray.filter(
+          (data) => data.id === "programStatus"
+        );
+        console.log(allProgramStatus[0]);
+        var psArray1 = Object.entries(allProgramStatus[0]).map(
+          ([id, data]) => ({
+            id,
+            ...data,
+          })
+        );
+        psArray1.shift();
+        console.log(psArray1);
+        setProgramStatus(psArray1);
+        
         //get sugar
         var allSugar = allDataArray.filter((data) => data.id === "Bloodsugar");
         var sugarArray1 = Object.entries(allSugar[0]).map(([id, data]) => ({
@@ -134,28 +150,17 @@ const HOMEPAGE = () => {
         var allInsurance = allDataArray.filter(
           (data) => data.id === "InsuranceEmployer"
         );
+        
         var InsuranceArray1 = Object.entries(allInsurance[0]).map(([id, data]) => ({
           id,
           ...data,
         }));
         InsuranceArray1.shift();
         setInsuranceDisplay(InsuranceArray1);
-        console.log("InsuranceArray1", InsuranceArray1);
-
-        //get programStatus
-        var allProgramStatus = allDataArray.filter(
-          (data) => data.id === "programStatus"
-        );
-        var psArray1 = Object.entries(allProgramStatus[0]).map(
-          ([id, data]) => ({
-            id,
-            ...data,
-          })
-        );
-        psArray1.shift();
-        setProgramStatus(psArray1);
+        
+        
       });
-  }, [programStatus]);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -237,7 +242,7 @@ const HOMEPAGE = () => {
     let programStatusArray = programStatus.filter(
       (name) => name.member === patient.id
     );
-
+    console.log(programStatusArray[0]);
     // programStatusArray[0].member = patient.id;
     // console.log("programStatusArray", programStatusArray[0]);
     setProgramStatusDisplay(programStatusArray[0]);

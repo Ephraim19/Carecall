@@ -16,56 +16,56 @@ const InsuranceEmployer = () => {
   // const [programStatusData, setProgramStatusData] = React.useState([]);
   const dbRef = ref(database, "programStatus");
 
-  useEffect(() => {    
-    if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
+  // useEffect(() => {
+  //   if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
 
-      setProgram(programStatusDisplay.programStatusDisplay.programStatusDisplay.program);
-      setStatus(programStatusDisplay.programStatusDisplay.programStatusDisplay.status);
-      setStage(programStatusDisplay.programStatusDisplay.programStatusDisplay.stage);
-      setCareManager(programStatusDisplay.programStatusDisplay.programStatusDisplay.careManager);
-      setNutritionist(programStatusDisplay.programStatusDisplay.programStatusDisplay.nutritionist);
-      setEngagementLead(programStatusDisplay.programStatusDisplay.programStatusDisplay.engagementLead);
-    }
-  }, []);
+  //     setProgram(programStatusDisplay.programStatusDisplay.programStatusDisplay.program);
+  //     setStatus(programStatusDisplay.programStatusDisplay.programStatusDisplay.status);
+  //     setStage(programStatusDisplay.programStatusDisplay.programStatusDisplay.stage);
+  //     setCareManager(programStatusDisplay.programStatusDisplay.programStatusDisplay.careManager);
+  //     setNutritionist(programStatusDisplay.programStatusDisplay.programStatusDisplay.nutritionist);
+  //     setEngagementLead(programStatusDisplay.programStatusDisplay.programStatusDisplay.engagementLead);
+  //   }
+  // }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
-      const updates = {};
-      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/program"] = program;
-      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/status"] = status;
-      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/stage"] = stage;
-      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/careManager"] =
-        careManager;
-      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/nutritionist"] =
-        nutritionist;
-      updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/engagementLead"] =
-        engagementLead;
-      update(dbRef, updates)
-        .then(() => {
-          toast.success("Successfully updated data! ");
-        })
-        .catch((error) => {
-          toast.error("Error updating document: ", error);
-        });
-    } else {
-      push(ref(database, "programStatus"), {
-        member: Cookies.get("memberId"),
-        program: program,
-        status: status,
-        stage: stage,
-        careManager: careManager,
-        nutritionist: nutritionist,
-        engagementLead: engagementLead,
+    // if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
+    //   const updates = {};
+    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/program"] = program;
+    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/status"] = status;
+    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/stage"] = stage;
+    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/careManager"] =
+    //     careManager;
+    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/nutritionist"] =
+    //     nutritionist;
+    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/engagementLead"] =
+    //     engagementLead;
+    //   update(dbRef, updates)
+    //     .then(() => {
+    //       toast.success("Successfully updated data! ");
+    //     })
+    //     .catch((error) => {
+    //       toast.error("Error updating document: ", error);
+    //     });
+    // } else {
+    push(ref(database, "programStatus"), {
+      member: Cookies.get("memberId"),
+      program: program,
+      status: status,
+      stage: stage,
+      careManager: careManager,
+      nutritionist: nutritionist,
+      engagementLead: engagementLead,
+    })
+      .then(() => {
+        toast.success("Successfully submitted data! ");
       })
-        .then(() => {
-          toast.success("Successfully submitted data! ");
-        })
-        .catch((error) => {
-          toast.error("Error adding document: ", error);
-        });
-    }
+      .catch((error) => {
+        toast.error("Error adding document: ", error);
+      });
+    // }
   };
 
   return (

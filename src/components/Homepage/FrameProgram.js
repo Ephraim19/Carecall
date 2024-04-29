@@ -30,30 +30,22 @@ const FrameProgram = (programStatusDisplay) => {
                   <div className="eraser-tool">
                     <div className="active">
                       {programStatusDisplay.programStatusDisplay
-                        ? programStatusDisplay.programStatusDisplay.status
+                        ? programStatusDisplay.programStatusDisplay.nutritionist
                         : "--"}
                     </div>
                     <div className="data-hub-wrapper">
-                      {programStatusDisplay.programStatusDisplay
-                        ? (programStatusDisplay.programStatusDisplay.status ===
-                          "Active" ? (
-                            <FiActivity className="data-hub-icon" />
-                          ) : (
-                            " "
-                          ),
-                          programStatusDisplay.programStatusDisplay.status ===
-                          "inactive" ? (
-                            <FiEyeOff className="data-hub-icon" />
-                          ) : (
-                            " "
-                          ),
-                          programStatusDisplay.programStatusDisplay.status ===
-                          "Discharged" ? (
-                            <FiScissors className="data-hub-icon" />
-                          ) : (
-                            " "
-                          ))
-                        : " "}
+                      {/* {programStatusDisplay.programStatusDisplay.nu ===
+                      "Active" ? (
+                      <FiActivity className="data-hub-icon" />
+                    ) : programStatusDisplay.programStatusDisplay.status ===
+                      "inactive" ? (
+                      <FiEyeOff className="data-hub-icon" />
+                    ) : programStatusDisplay.programStatusDisplay.status ===
+                      "Discharged" ? (
+                      <FiScissors className="data-hub-icon" />
+                    ) : (
+                      <FiActivity className="data-hub-icon" />
+                    )} */}
                     </div>
                   </div>
                   <div className="care-manager">CARE MANAGER</div>
