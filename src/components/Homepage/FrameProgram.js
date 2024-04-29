@@ -1,6 +1,6 @@
 import React from "react";
 import "./HOMEPAGE.css";
-import { FiActivity } from "react-icons/fi";
+import { FiActivity, FiScissors,FiEyeOff } from "react-icons/fi";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Program from "../HomepageForms/Program";
@@ -32,7 +32,11 @@ const FrameProgram = (programStatusDisplay) => {
                   <div className="eraser-tool">
                     <div className="active">{programStatusDisplay.programStatusDisplay ? programStatusDisplay.programStatusDisplay.status : "--" }</div>
                     <div className="data-hub-wrapper">
-                      <FiActivity className="data-hub-icon" />
+                      {programStatusDisplay.programStatusDisplay.status === "Active" ? <FiActivity className="data-hub-icon" /> : " " }
+                      {programStatusDisplay.programStatusDisplay.status === "inactive" ? <FiEyeOff className="data-hub-icon" /> : " " }
+                      {programStatusDisplay.programStatusDisplay.status === "Discharged" ? <FiScissors className="data-hub-icon" /> : " " }
+
+                      
                     </div>
                   </div>
                   <div className="care-manager">CARE MANAGER</div>
@@ -45,7 +49,7 @@ const FrameProgram = (programStatusDisplay) => {
               trigger={
                 <button className="rectangle-container">
                   <div className="frame-inner" />
-                  <div className="edit">ADD/EDIT</div>
+                  <div className="edit">{ programStatusDisplay.programStatusDisplay ? "EDIT" : "ADD" }</div>
                 </button>
               }
               position="right center"

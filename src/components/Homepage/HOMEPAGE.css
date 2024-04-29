@@ -191,6 +191,7 @@
   border-radius: var(--br-mini);
   background-color: var(--color-whitesmoke);
   display: none;
+
 }
 .edit {
   position: relative;
@@ -444,6 +445,8 @@
   flex-direction: row;
   padding: var(--padding-10xs) var(--padding-7xs) var(--padding-11xs)
     var(--padding-4xs);
+  color: var(--color-steelblue);
+
 }
 .frame-parent6,
 .frame-wrapper2,

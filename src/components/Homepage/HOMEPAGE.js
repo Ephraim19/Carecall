@@ -11,7 +11,6 @@ import { FaBars, FaSearch } from "react-icons/fa";
 import "./FrameComponent6.css";
 import Cookies from "js-cookie";
 
-
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "../Firebase";
 import { useNavigate } from "react-router-dom";
@@ -150,7 +149,7 @@ const HOMEPAGE = () => {
         psArray1.shift();
         setProgramStatus(psArray1);
       });
-  }, []);
+  }, [programStatus]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -317,6 +316,7 @@ const HOMEPAGE = () => {
               <img
                 className="profile-circle-svgrepocom-icon"
                 src={adminPhoto}
+                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
               />
             </div>
           </div>
@@ -324,7 +324,7 @@ const HOMEPAGE = () => {
       </header>
       <div className="home-page">
         <main className="frame-parent">
-          <div className="frame-group">
+          <div className="frame-group" style={{overflow: 'scroll',height:"600px" }}>
             <FrameComponent5 patientData={patientData} />
             <div className="frame-container">
               <div className="rectangle-parent">
@@ -337,16 +337,18 @@ const HOMEPAGE = () => {
               </div>
             </div>
 
-            <FrameProgram programStatusDisplay={programStatusDisplay} patientData={patientData} />
+            <FrameProgram programStatusDisplay={programStatusDisplay} />
             <FrameContacts patientData={patientData} />
             <FrameComponent4 />
             <FrameComponent3 />
             <FrameComponent2 />
           </div>
-          <div className="frame-wrapper3">
+          <div className="frame-wrapper3" >
             <FrameComponent1 />
           </div>
+          <div  >
           <FrameComponent />
+          </div>
         </main>
       </div>
     </div>

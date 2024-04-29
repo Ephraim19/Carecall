@@ -51,13 +51,13 @@
 }
 
 .createNewCarecall {
-  height: 27px;
-  width: 361px;
-  top: 148px;
-  left: 70px;
+  height: 5px;
+  width: 250px;
+  top: 15px;
+  left: 110px;
   font-size: var(--font-size-mid);
   font-family: var(--font-inter);
-  color: var(--color-black);
+  color: var(--color-navy);
   text-align: left;
   align-items: center;
 }
@@ -333,8 +333,8 @@
 
 .firstNameField {
   margin: 0;
-  height: 783px;
-  width: 609px;
+  height: 450px;
+  width: 509px;
   border-radius: var(--br-11xl);
   background-color: var(--color-white);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
