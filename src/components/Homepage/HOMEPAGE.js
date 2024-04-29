@@ -16,6 +16,7 @@ import { auth, database } from "../Firebase";
 import { useNavigate } from "react-router-dom";
 import { get, onValue, ref, update } from "firebase/database";
 import FrameProgram from "./FrameProgram";
+import InsuranceEmployer from "../HomepageForms/InsuranceEmployer";
 
 const HOMEPAGE = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const HOMEPAGE = () => {
   const [clinicDisplay, setClinicDisplay] = React.useState([]);
   const [bpDisplay, setBpDisplay] = React.useState([]);
   const [taskDisplay, setTaskDisplay] = React.useState([]);
+  const [insuranceDisplay, setInsuranceDisplay] = React.useState([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -128,13 +130,17 @@ const HOMEPAGE = () => {
         sugarArray1.shift();
         setSugar(sugarArray1);
 
-        //get bp
-        // var allBp = allDataArray.filter((data) => data.id === "bloodpressure");
-        // var bpArray1 = Object.entries(allBp[0]).map(([id, data]) => ({
-        //   id,
-        //   ...data,
-        // }));
-        // bpArray1.shift();
+        //get insurance
+        var allInsurance = allDataArray.filter(
+          (data) => data.id === "InsuranceEmployer"
+        );
+        var InsuranceArray1 = Object.entries(allInsurance[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        InsuranceArray1.shift();
+        setInsuranceDisplay(InsuranceArray1);
+        console.log("InsuranceArray1", InsuranceArray1);
 
         //get programStatus
         var allProgramStatus = allDataArray.filter(
@@ -211,7 +217,7 @@ const HOMEPAGE = () => {
   const handleResultClick = (patient) => {
     setMember(patient.patient);
     setPatientData(patient);
-    Cookies.set("memberId", patient.id, { expires: 1 })
+    Cookies.set("memberId", patient.id, { expires: 1 });
 
     setSearched([]);
 
@@ -324,7 +330,10 @@ const HOMEPAGE = () => {
       </header>
       <div className="home-page">
         <main className="frame-parent">
-          <div className="frame-group" style={{overflow: 'scroll',height:"600px" }}>
+          <div
+            className="frame-group"
+            style={{ overflow: "scroll", height: "600px" }}
+          >
             <FrameComponent5 patientData={patientData} />
             <div className="frame-container">
               <div className="rectangle-parent">
@@ -339,15 +348,15 @@ const HOMEPAGE = () => {
 
             <FrameProgram programStatusDisplay={programStatusDisplay} />
             <FrameContacts patientData={patientData} />
-            <FrameComponent4 />
+            <FrameComponent4 insuranceDisplay={InsuranceEmployer} />
             <FrameComponent3 />
             <FrameComponent2 />
           </div>
-          <div className="frame-wrapper3" >
+          <div className="frame-wrapper3">
             <FrameComponent1 />
           </div>
-          <div  >
-          <FrameComponent />
+          <div>
+            <FrameComponent />
           </div>
         </main>
       </div>

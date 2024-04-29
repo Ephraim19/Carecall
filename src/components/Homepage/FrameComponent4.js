@@ -1,6 +1,9 @@
 import "./FrameComponent4.css";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import InsuranceEmployer from "../HomepageForms/InsuranceEmployer";
 
-const FrameComponent4 = () => {
+const FrameComponent4 = (InsuranceEmployer) => {
   return (
     <div className="frame-parent17">
       <div className="frame-parent18">
@@ -12,10 +15,18 @@ const FrameComponent4 = () => {
           </div>
         </div>
         <div className="frame-wrapper9">
-          <div className="rectangle-parent2">
-            <div className="frame-child3" />
-            <div className="edit2">EDIT</div>
-          </div>
+          <Popup
+            trigger={
+              <button className="rectangle-parent2">
+                <div className="frame-child3" />
+                <div className="edit2">EDIT</div>
+              </button>
+            }
+            position="right center"
+            contentStyle={{ width: "auto", maxWidth: "600px" }}
+          >
+            <InsuranceEmployer InsuranceEmployer={InsuranceEmployer} />
+          </Popup>
         </div>
       </div>
       <div className="frame-parent19">
