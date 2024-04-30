@@ -1,17 +1,104 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import styles from "./Program.module.css";
 import { database } from "../Firebase";
-import { ref, push, update, get } from "firebase/database";
+import { ref, push } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import DatePicker from "react-datepicker";
 
 const BloodSugar = () => {
-  const dbRef = ref(database, "Family");
-  const [primaryMember, setPrimaryMember] = React.useState("");
-  const [spouse, setSpouse] = React.useState("");
-  const [age1, setAge1] = React.useState("");
-  const [age2, setAge2] = React.useState("");
+  const [fasting, setFasting] = useState("");
+  const [random, setRandom] = useState("");
+  const [HBA1C, setHBA1C] = useState("");
+  const [dueDate, setDueDate] = useState(new Date());
+
+
+  const dateStrip = (numOfHours, date) => {
+    const dateCopy = new Date(date.getTime());
+    dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
+    const stringDate = JSON.stringify(dateCopy.toUTCString().toString()).slice(
+      1,
+      -5
+    );
+    return stringDate;
+  };
+
+  const NewSugar = (event) => {
+    event.preventDefault();
+    if (fasting || random || (HBA1C && dueDate)) {
+      push(ref(database, "Bloodsugar"), {
+        patient: Cookies.get("memberId"),
+        random,
+        fasting,
+        HBA1C,
+        dueDate: dateStrip(3, dueDate),
+      }).then(() => {
+        toast.success("Data submitted successfully");
+        //Create a task if user has abnormal Blood sugar
+        //   if (HBA1C && parseFloat(HBA1C > 5.7) ) {
+        //     push(ref(database, "tasks"), {
+        //       patient: Cookies.get("patient"),
+        //       task:
+        //         Cookies.get("userName") +
+        //         " has high HBA1C on " +
+        //         dateStrip(3, dueDate).slice(0, 17),
+        //       dueDate: dateStrip(3, new Date()),
+        //       completed: "Not started",
+        //     });
+        //   }
+        //   if (fasting && parseFloat(fasting) > 10) {
+        //     push(ref(database, "tasks"), {
+        //       patient: Cookies.get("patient"),
+        //       task:
+        //         Cookies.get("userName") +
+        //         " has high fasting blood sugar on " +
+        //         dateStrip(3, dueDate).slice(0, 17),
+        //       dueDate: dateStrip(3, new Date()),
+        //       completed: "Not started",
+        //     });
+        //   }
+        //   if (fasting && parseFloat(fasting) < 4) {
+        //     push(ref(database, "tasks"), {
+        //       patient: Cookies.get("patient"),
+        //       task:
+        //         Cookies.get("userName") +
+        //         " has low fasting blood sugar on " +
+        //         dateStrip(3, dueDate).slice(0, 17),
+        //       dueDate: dateStrip(3, new Date()),
+        //       completed: "Not started",
+        //     });
+        //   }
+        //   if (random && parseFloat(random) > 10) {
+        //     push(ref(database, "tasks"), {
+        //       patient: Cookies.get("patient"),
+        //       task:
+        //         Cookies.get("userName") +
+        //         " has high random blood sugar on " +
+        //         dateStrip(3, dueDate).slice(0, 17),
+        //       dueDate: dateStrip(3, new Date()),
+        //       completed: "Not started",
+        //     });
+        //   }
+        //   if (random && parseFloat(random) < 10) {
+        //     push(ref(database, "tasks"), {
+        //       patient: Cookies.get("patient"),
+        //       task:
+        //         Cookies.get("userName") +
+        //         " has low random blood sugar on " +
+        //         dateStrip(3, dueDate).slice(0, 17),
+        //       dueDate: dateStrip(3, new Date()),
+        //       completed: "Not started",
+        //     });
+        //   }
+        //   navigate("/dashboard");
+      }).catch((error) => {
+        toast.error("Error submitting data");
+      });
+    }else{
+      toast.error("Please fill in all fields");
+    }
+  };
 
   return (
     <div>
@@ -20,34 +107,36 @@ const BloodSugar = () => {
 
         <input
           className={styles.firstNameField1}
-          placeholder="Normal"
+          placeholder="Fasting"
           type="text"
-          value={primaryMember}
-          onChange={(e) => setPrimaryMember(e.target.value)}
+          value={fasting}
+          onChange={(e) => setFasting(e.target.value)}
         />
         <input
           className={styles.lastNameField}
-          placeholder="Fasting"
+          placeholder="Random"
           type="text"
-          value={age1}
-          onChange={(e) => setAge1(e.target.value)}
+          value={random}
+          onChange={(e) => setRandom(e.target.value)}
         />
         <input
           className={styles.phoneNumber}
           placeholder="HBA1C"
           type="text"
-          value={spouse}
-          onChange={(e) => setSpouse(e.target.value)}
+          value={HBA1C}
+          onChange={(e) => setHBA1C(e.target.value)}
         />
-        <input
+        <div
           className={styles.emailAddress}
-          placeholder="Date"
-          type="text"
-          value={age2}
-          onChange={(e) => setAge2(e.target.value)}
-        />
+          
+        >
+          <DatePicker
+            selected={dueDate}
+            onChange={(date) => setDueDate(date)}
+          />
+        </div>
 
-        <button className={styles.signUpButton}>
+        <button className={styles.signUpButton} type="button" onClick={NewSugar} >
           <div className={styles.signUpButton1}>
             <div className={styles.signUpButtonChild} />
             <b className={styles.createAccount}>SUBMIT DATA</b>
