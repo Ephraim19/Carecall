@@ -16,13 +16,13 @@ const FrameComponent3 = (addressDisplay) => {
           <div className="layout-combinator-inner">
             <Popup
               trigger={
-                <button className="rectangle-parent3">
+                <div className="rectangle-parent3">
                   <div className="frame-child4" />
                   <div className="edit3">
                     {" "}
                     {addressDisplay.addressDisplay ? "EDIT" : "ADD"}
                   </div>
-                </button>
+                </div>
               }
               position="right center"
               contentStyle={{ width: "auto", maxWidth: "600px" }}

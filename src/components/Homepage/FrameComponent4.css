@@ -51,6 +51,7 @@
   z-index: 1;
 }
 .rectangle-parent2 {
+  cursor: pointer;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
   border-radius: var(--br-mini);
   background-color: var(--color-whitesmoke);

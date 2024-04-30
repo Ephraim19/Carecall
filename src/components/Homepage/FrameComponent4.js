@@ -23,10 +23,10 @@ const FrameComponent4 = (insuranceDisplay) => {
         <div className="frame-wrapper9">
           <Popup
             trigger={
-              <button className="rectangle-parent2">
+              <div className="rectangle-parent2">
                 <div className="frame-child3" />
                 <div className="edit2">{insDisplay ? "EDIT":"ADD"}</div>
-              </button>
+              </div>
             }
             position="right center"
             contentStyle={{ width: "auto", maxWidth: "600px" }}

@@ -17,10 +17,10 @@ const FrameComponent2 = (familyDisplay) => {
           <div className="frame-wrapper10">
             <Popup
               trigger={
-                <button className="rectangle-parent4">
+                <div className="rectangle-parent4">
                   <div className="frame-child5" />
                   <div className="edit4">{familyDisplay.familyDisplay.length > 0 ? "EDIT":"ADD"}</div>
-                </button>
+                </div>
               }
               position="right center"
               contentStyle={{ width: "auto", maxWidth: "600px" }}

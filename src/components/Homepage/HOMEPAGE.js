@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { get, onValue, ref, update } from "firebase/database";
 import FrameProgram from "./FrameProgram";
 import InsuranceEmployer from "../HomepageForms/InsuranceEmployer";
+import RightSectionComponent from "./RightSectionComponent";
 
 const HOMEPAGE = () => {
   const navigate = useNavigate();
@@ -392,7 +393,7 @@ const HOMEPAGE = () => {
             <FrameComponent1 />
           </div>
           <div>
-            <FrameComponent />
+            <RightSectionComponent />
           </div>
         </main>
       </div>

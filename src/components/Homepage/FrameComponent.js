@@ -3,22 +3,8 @@ import { FiExternalLink } from "react-icons/fi";
 const FrameComponent = () => {
   return (
     <div className="frame-parent25">
-      
-      <div className="frame-parent26">
-        <div className="engagement-parent">
-          <h3 className="engagement">Engagement</h3>
-          <div className="line-wrapper">
-            <img className="line-icon" loading="lazy" alt="" />
-          </div>
-        </div>
-        <h3 className="forms">Forms</h3>
-        <div className="workflow-wrapper">
-          <h3 className="workflow">Workflow</h3>
-        </div>
-        <h1 className="h11">{`>`}</h1>
-      </div>
       <div className="tasks-parent">
-        <h3 className="tasks1">Tasks</h3>
+        <div className="tasks1">Tasks</div>
         <div className="frame-wrapper15">
           <div className="rectangle-parent8">
             <div className="frame-child11" />

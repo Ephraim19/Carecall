@@ -54,6 +54,7 @@
   box-sizing: border-box;
 }
 .rectangle-parent3 {
+  cursor: pointer;
   align-self: stretch;
   height: 17px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);

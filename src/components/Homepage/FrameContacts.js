@@ -61,10 +61,10 @@ const FrameContacts = (patientData) => {
             <div className="frame-wrapper2">
               <Popup
                 trigger={
-                  <button className="group-div">
+                  <div className="group-div">
                     <div className="rectangle-div" />
                     <div className="edit1">EDIT</div>
-                  </button>
+                  </div>
                 }
                 position="right center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}

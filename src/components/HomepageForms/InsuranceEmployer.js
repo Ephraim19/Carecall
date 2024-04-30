@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 
 const InsuranceEmployer = (insDisplay) => {
-  
   const dbRef = ref(database, "InsuranceEmployer");
   const [employer, setEmployer] = React.useState("");
   const [department, setDepartment] = React.useState("");
@@ -15,7 +14,7 @@ const InsuranceEmployer = (insDisplay) => {
   const [insuranceId, setInsuranceId] = React.useState("");
 
   useEffect(() => {
-    if(insDisplay.insDisplay) {
+    if (insDisplay.insDisplay) {
       setEmployer(insDisplay.insDisplay.employer);
       setDepartment(insDisplay.insDisplay.department);
       setInsurer(insDisplay.insDisplay.insurer);
@@ -25,15 +24,14 @@ const InsuranceEmployer = (insDisplay) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if(insDisplay.insDisplay) {
-
+    if (insDisplay.insDisplay) {
       const updates = {};
       updates[insDisplay.insDisplay.id + "/employer"] = employer;
       updates[insDisplay.insDisplay.id + "/department"] = department;
       updates[insDisplay.insDisplay.id + "/insurer"] = insurer;
       updates[insDisplay.insDisplay.id + "/insuranceId"] = insuranceId;
-      console.log(insDisplay.insDisplay.id + "/employer")
-      
+      console.log(insDisplay.insDisplay.id + "/employer");
+
       update(dbRef, updates)
         .then(() => {
           toast.success("Successfully updated data! ");
@@ -92,12 +90,12 @@ const InsuranceEmployer = (insDisplay) => {
           onChange={(e) => setInsuranceId(e.target.value)}
         />
 
-        <button className={styles.signUpButton} onClick={onSubmit}>
+        <div className={styles.signUpButton} onClick={onSubmit}>
           <div className={styles.signUpButton1}>
             <div className={styles.signUpButtonChild} />
             <b className={styles.createAccount}>SUBMIT DATA</b>
           </div>
-        </button>
+        </div>
       </form>
       <ToastContainer />
     </div>

@@ -446,7 +446,7 @@
   padding: var(--padding-10xs) var(--padding-7xs) var(--padding-11xs)
     var(--padding-4xs);
   color: var(--color-steelblue);
-
+   cursor: pointer;
 }
 .frame-parent6,
 .frame-wrapper2,
