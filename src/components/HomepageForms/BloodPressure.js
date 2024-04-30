@@ -15,7 +15,7 @@ const BloodPressure = () => {
   return (
     <div>
       <form className={styles.firstNameField}>
-        <b className={styles.createNewCarecall}>WEIGHT & HEIGHT(BMI)</b>
+        <b className={styles.createNewCarecall}>BLOOD PRESSURE</b>
 
         <input
           className={styles.firstNameField1}

@@ -39,11 +39,12 @@
     font-family: var(--font-istok-web);
   }
   .logInTo {
+    left: 100px;
     width: 361px;
     height: 27px;
     font-size: var(--font-size-mid);
     display: flex;
-    color: var(--color-black);
+    color: var(--color-navy);
     align-items: center;
     flex-shrink: 0;
     max-width: 100%;
