@@ -5,7 +5,6 @@ import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
-import { onAuthStateChanged } from "firebase/auth";
 import DatePicker from "react-datepicker";
 
 const BMI = () => {

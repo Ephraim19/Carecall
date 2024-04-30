@@ -90,6 +90,7 @@ const Prescriptions = () => {
             value={daysTaken}
             onChange={(e) => setDaysTaken(e.target.value)}
           />
+          
         </label>
         <br />
         <br />

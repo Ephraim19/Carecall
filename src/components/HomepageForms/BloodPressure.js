@@ -5,6 +5,7 @@ import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import DatePicker from "react-datepicker";
 
 const BloodPressure = () => {
   const [pressure, setPressure] = useState("");
@@ -107,13 +108,12 @@ const BloodPressure = () => {
           value={pulse}
           onChange={(e) => setPulse(e.target.value)}
         />
-        <input
-          className={styles.phoneNumber}
-          placeholder="DATE"
-          type="text"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-        />
+        <div className={styles.phoneNumber}>
+          <DatePicker
+            selected={dueDate}
+            onChange={(date) => setDueDate(date)}
+          />
+        </div>
 
         <button className={styles.signUpButton} onClick={NewBp}>
           <div className={styles.signUpButton1}>
