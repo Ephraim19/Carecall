@@ -14,7 +14,7 @@
 
 hr {
   height: 1px;
-  background-color: var(--color-navy);;
+  background-color: var(--color-navy);
   border: none;
 }
 
@@ -34,6 +34,7 @@ hr {
 }
 .forms,
 .workflow {
+  cursor: pointer;
   margin: 0;
   position: relative;
   font-size: inherit;
@@ -331,14 +332,14 @@ hr {
   }
 }
 
-@media screen and (max-width: 1300px) {
+/* @media screen and (max-width: 1300px) {
   .frame-parent25 {
     padding-top: var(--padding-xl);
     padding-bottom: var(--padding-253xl);
     box-sizing: border-box;
   }
-}
-@media screen and (max-width: 900px) {
+} */
+/* @media screen and (max-width: 900px) {
   .h11 {
     font-size: var(--font-size-9xl);
   }
@@ -346,7 +347,7 @@ hr {
     padding-bottom: var(--padding-158xl);
     box-sizing: border-box;
   }
-}
+} */
 
 /* 
 @media screen and (max-width: 1650px) {

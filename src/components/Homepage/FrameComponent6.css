@@ -153,6 +153,7 @@
   background-color: var(--color-gainsboro);
   display: none;
 }
+
 .view-all-members {
   position: relative;
   font-size: var(--font-size-base);

@@ -1,0 +1,405 @@
+.carecall,
+.connectedContinuousCare {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.carecall {
+  margin: 0;
+  height: 37px;
+  font-size: var(--font-size-23xl);
+  font-weight: 700;
+  font-family: var(--font-istok-web);
+  color: var(--color-darkblue);
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.connectedContinuousCare {
+  flex: 1;
+  font-size: var(--font-size-6xs);
+  font-family: var(--font-inter);
+  color: var(--color-dodgerblue);
+  text-align: right;
+}
+
+.connectedContinuousCareLabe {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 var(--padding-4xs) 0 var(--padding-15xl);
+  margin-top: -2px;
+}
+
+.carecallBranding,
+.createNewCarecall {
+  position: absolute;
+  margin: 0 !important;
+  display: flex;
+}
+
+.carecallBranding {
+  width: 174px;
+  top: calc(50% - 331.5px);
+  left: calc(50% - 234.5px);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.createNewCarecall {
+  height: 5px;
+  width: 250px;
+  top: 15px;
+  left: 110px;
+  font-size: var(--font-size-mid);
+  font-family: var(--font-inter);
+  color: var(--color-navy);
+  text-align: left;
+  align-items: center;
+}
+
+.firstNameField1 {
+
+  width: auto;
+  background-color: transparent;
+  top: calc(50% - 175.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+.firstNameField11 {
+    background-color: transparent;
+    height: 1px;
+    top: calc(50% - 5.5px);
+    left: calc(50% - 255px);
+    padding: var(--padding-xs) var(--padding-2xs);
+  }
+  
+.Nutrition .newPassword,
+.emailAddress,
+.firstNameField1,
+.firstNameField11,
+.lastNameField,
+.lastNameField1,
+.phoneNumber
+ {
+  margin: 0 !important;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+
+}
+
+.lastNameField {
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 175.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.lastNameField1 {
+    width: 220px;
+    background-color: transparent;
+    height: 1px;
+    top: calc(50% - 5.5px);
+    left: calc(50% + -94.5px);
+    padding: var(--padding-xs) var(--padding-mini);
+  }
+
+.phoneNumber {
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 93.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
+.Nutrition {
+  width: 220px;
+  background-color: var(--color-gainsboro);
+  height: 41px;
+  top: calc(50% - 3.5px);
+  left: calc(50% - 234.5px);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+.newPasswordField {
+  height: 41px;
+  width: 469px;
+  background-color: var(--color-gainsboro);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.emailAddress {
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 93.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.newPasswordField {
+  position: relative;
+  display: none;
+  max-width: 100%;
+}
+.newPasswordChild {
+  width: 291px;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) 0 0;
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+
+.seeunseePasswordIcon {
+  height: 33px;
+  width: 38px;
+  position: relative;
+  object-fit: cover;
+  z-index: 1;
+  color: var(--color-darkblue);
+}
+.confirmPasswordField {
+  width: 469px;
+  background-color: var(--color-gainsboro);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  max-width: 100%;
+}
+.newPassword {
+  width: 220px;
+  background-color: var(--color-gainsboro);
+  height: 41px;
+  top: calc(50% - 3.5px);
+  left: calc(50% - 234.5px);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+.confirmPasswordField {
+  height: 41px;
+  position: relative;
+  display: none;
+}
+
+.confirmPasswordChild {
+  width: 291px;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) 0 0;
+  box-sizing: border-box;
+  font-family: var(--font-inter);
+  font-size: var(--font-size-mini);
+  color: var(--color-black);
+}
+
+.seeunseePasswordIcon1 {
+  height: 33px;
+  width: 38px;
+  position: relative;
+  object-fit: cover;
+  z-index: 1;
+  color: aqua;
+}
+/* .confirmPassword, */
+.signUpButtonChild {
+  width: 469px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  max-width: 100%;
+}
+.confirmPassword {
+  width: 220px;
+  background-color: var(--color-gainsboro);
+  height: 41px;
+  top: calc(50% - 93.5px);
+  left: calc(50% + 14.5px);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.signUpButtonChild {
+  height: 41px;
+  position: relative;
+  background-color: var(--color-darkblue);
+  display: none;
+}
+.createAccount {
+  width: 291px;
+  position: relative;
+  font-size: var(--font-size-mini);
+  display: flex;
+  font-family: var(--font-inter);
+  color: var(--color-white);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.signUpButton,
+.signUpButton1 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.signUpButton1 {
+  flex: 1;
+  background-color: var(--color-darkblue);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  padding: var(--padding-xs) var(--padding-xl) var(--padding-xs)
+    var(--padding-13xl);
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.signUpButton {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 469px;
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 114.5px);
+  left: calc(50% - 234.5px);
+  justify-content: flex-start;
+}
+
+.alreadyHaveAn,
+.logIn {
+  position: relative;
+  font-size: var(--font-size-xs);
+  font-family: var(--font-inter);
+  color: var(--color-black);
+  text-align: left;
+}
+.logIn {
+  color: var(--color-dodgerblue);
+  display: inline-block;
+  min-width: 35px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.firstNameField,
+.logInPrompt {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.logInPrompt {
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 316.5px);
+  left: calc(50% - 234.5px);
+  align-items: flex-start;
+  gap: var(--gap-8xs);
+}
+
+.firstNameField {
+  margin-left: -110px;
+  height: 450px;
+  width: 509px;
+  border-radius: var(--br-11xl);
+  background-color: transparent;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: var(--padding-41xl) var(--padding-51xl);
+  box-sizing: border-box;
+  position: relative;
+  gap: 1px 2px;
+}
+
+@media screen and (max-width: 950px) {
+  .carecall {
+    font-size: var(--font-size-15xl);
+  }
+  .confirmPassword,
+  .newPassword {
+    flex-wrap: wrap;
+  }
+  .firstNameField {
+    height: auto;
+  }
+}
+@media screen and (max-width: 700px) {
+  .logInPrompt {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 450px) {
+  .carecall {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+.frame-wrapper6 {
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 var(--padding-3xs);
+}
+.frame-button,
+.frame-wrapper6 {
+  display: flex;
+  align-items: flex-start;
+}
+.frame-button {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-5xs) var(--padding-lg) var(--padding-xs);
+  background-color: var(--color-gainsboro);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--br-11xl);
+  flex-direction: row;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+.frame-button:hover,
+.rectangle-parent1:hover {
+  background-color: var(--color-silver);
+}
+.frame-child1 {
+  height: 25px;
+  width: 50px;
+  position: relative;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--br-11xl);
+  background-color: var(--color-gainsboro);
+  display: none;
+}
+.view-all-members {
+  position: relative;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  font-family: var(--font-roboto-slab);
+  color: var(--color-navy);
+  text-align: center;
+  z-index: 1;
+}
