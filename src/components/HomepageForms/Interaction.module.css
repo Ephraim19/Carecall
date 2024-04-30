@@ -1,0 +1,375 @@
+.carecall {
+    margin: 0;
+    height: 37px;
+    position: relative;
+    font-size: 45px;
+    font-weight: 900;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .connectedContinuousCare {
+    flex: 1;
+    position: absolute;
+    font-size: 10px;
+  }
+  .carecallParent,
+  .connectedContinuousCareWrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .connectedContinuousCareWrapper {
+    align-self: stretch;
+    flex-direction: row;
+    padding: 0 var(--padding-3xs) 0 var(--padding-15xl);
+    margin-top: -2px;
+    text-align: right;
+    font-size: var(--font-size-6xs);
+    color: var(--color-dodgerblue);
+    font-family: var(--font-inter);
+  }
+  .carecallParent {
+    width: 187px;
+    overflow: hidden;
+    flex-direction: column;
+    padding: var(--padding-6xs) var(--padding-7xs);
+    box-sizing: border-box;
+    font-family: var(--font-istok-web);
+  }
+  .logInTo {
+    width: 361px;
+    height: 27px;
+    font-size: var(--font-size-mid);
+    display: flex;
+    color: var(--color-black);
+    align-items: center;
+    flex-shrink: 0;
+    max-width: 100%;
+  }
+  .div,
+  .email,
+  .logInTo {
+    position: relative;
+    font-family: var(--font-inter);
+    text-align: left;
+    
+  }
+  .email {
+    font-size: var(--font-size-mini);
+    color: var(--color-black);
+    display: inline-block;
+    min-width: 40px;
+  }
+  .div {
+    width: 23px;
+    font-size: var(--font-size-smi);
+    background: linear-gradient(#f90d1b, #f90d1b),
+      linear-gradient(#f90d1b, #f90d1b), #f90d1b;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .emailFieldForLogin,
+  .emailParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .emailFieldForLogin {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background-color: var(--color-gainsboro);
+    align-self: stretch;
+    height: 41px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding: var(--padding-smi) var(--padding-xl) var(--padding-2xs);
+    box-sizing: border-box;
+    font-family: var(--font-inter);
+    font-size: var(--font-size-mini);
+    color: var(--color-silver);
+    min-width: 250px;
+    color: black;
+  }
+  .div1,
+  .password {
+    position: relative;
+    font-family: var(--font-inter);
+    text-align: left;
+  }
+  .password {
+    font-size: var(--font-size-mini);
+    color: var(--color-black);
+    display: inline-block;
+    min-width: 71px;
+  }
+  .div1 {
+    width: 23px;
+    font-size: var(--font-size-smi);
+    background: linear-gradient(#f90d1b, #f90d1b),
+      linear-gradient(#f90d1b, #f90d1b), #f90d1b;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .passwordParent {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .passwordField1 {
+    height: 41px;
+    width: 469px;
+    position: relative;
+    background-color: var(--color-gainsboro);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: none;
+    max-width: 100%;
+  }
+  .passwordFieldChild {
+    width: 283.7px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    height: 25.6px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0 0 var(--padding-6xs-2);
+    box-sizing: border-box;
+    font-family: var(--font-inter);
+    font-size: var(--font-size-mini);
+    color: black;
+  }
+  .seeunseePasswordIcon {
+    height: 33px;
+    width: 38px;
+    position: relative;
+    object-fit: contain;
+    z-index: 1;
+  }
+  .passwordField {
+    align-self: stretch;
+    background-color: var(--color-gainsboro);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--padding-9xs) var(--padding-6xs) var(--padding-9xs)
+      var(--padding-lgi-5);
+    box-sizing: border-box;
+    max-width: 100%;
+    gap: var(--gap-xl);
+  }
+  .buttonIcon {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0 !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    background-color: var(--color-darkblue);
+  }
+  .logIn,
+  .loginButtonloginButton {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .logIn {
+    width: 80px;
+    font-size: var(--font-size-mini);
+    font-family: var(--font-inter);
+    color: var(--color-white);
+    text-align: center;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .loginButtonloginButton {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-3xs-4) var(--padding-xl) var(--padding-2xs-5);
+    background-color: transparent;
+    align-self: stretch;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--gap-3xs);
+  }
+  
+  .frameWrapper,
+  .logInToYourCarecallAccounParent {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+  .logInToYourCarecallAccounParent {
+    margin: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--gap-11xl);
+  }
+  .frameWrapper {
+    align-self: stretch;
+    flex-direction: row;
+    padding: 0 var(--padding-smi) 0 var(--padding-xs);
+    box-sizing: border-box;
+  }
+  .buttonIcon1,
+  .logIn1 {
+    position: absolute;
+    top: calc(50% - 20.5px);
+    left: calc(50% - 234.5px);
+    width: 100%;
+    height: 100%;
+  }
+  .logIn1 {
+    top: calc(50% - 11.1px);
+    left: calc(50% - 40.5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 21.1px;
+    white-space: nowrap;
+  }
+  .loginButton {
+    width: 469px;
+    height: 41px;
+    position: relative;
+    display: none;
+    max-width: 100%;
+    text-align: center;
+    font-size: var(--font-size-mini);
+    color: var(--color-white);
+  }
+  .newHere {
+    width: 84px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .createAnAccount {
+    flex: 1;
+    position: relative;
+    color: var(--color-dodgerblue);
+    cursor: pointer;
+    margin-left: -16px;
+  }
+  .newHereParent {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 138px;
+  }
+  .forgotPassword {
+    margin-right: -9px;
+    width: 132px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    debug_commit: 1de1738;
+  }
+  .forgotPasswordWrapper {
+    width: 123px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .resetPassword {
+    height: 19px;
+    width: 59px;
+    position: relative;
+    color: var(--color-dodgerblue);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .frameGroup,
+  .frameParent,
+  .resetPasswordPrompt {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .resetPasswordPrompt {
+    flex-direction: row;
+    cursor: pointer;
+    text-align: right;
+  }
+  .frameGroup,
+  .frameParent {
+    overflow: hidden;
+  }
+  .frameGroup {
+    align-self: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: var(--padding-11xs) var(--padding-xs);
+    gap: var(--gap-57xl);
+    font-size: var(--font-size-xs);
+    color: var(--color-black);
+  }
+  .frameParent {
+    width: 586px;
+    border-radius: var(--br-11xl);
+    background-color: var(--color-white);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+    flex-direction: column;
+    padding: var(--padding-35xl) var(--padding-27xl);
+    box-sizing: border-box;
+    gap: var(--gap-22xl);
+    max-width: 100%;
+    text-align: left;
+    font-size: var(--font-size-23xl);
+    color: var(--color-darkblue);
+    font-family: var(--font-inter);
+  }
+  @media screen and (max-width: 750px) {
+    .carecall {
+      font-size: var(--font-size-15xl);
+    }
+  }
+  @media screen and (max-width: 675px) {
+    .frameGroup {
+      gap: var(--gap-19xl);
+    }
+    .frameParent {
+      gap: var(--gap-xl);
+      padding: var(--padding-16xl) var(--padding-4xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .carecall {
+      font-size: var(--font-size-6xl);
+    }
+  }
+
+  

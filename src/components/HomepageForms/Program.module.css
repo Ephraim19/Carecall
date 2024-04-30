@@ -271,6 +271,7 @@
 }
 
 .signUpButton,
+.signUpButton5
 .signUpButton1 {
   display: flex;
   flex-direction: row;
@@ -295,7 +296,19 @@
   width: 469px;
   margin: 0 !important;
   position: absolute;
-  top: calc(50% + 114.5px);
+  top: calc(50% + 24.5px);
+  left: calc(50% - 234.5px);
+  justify-content: flex-start;
+}
+.signUpButton5 {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  width: 469px;
+  margin: 0 !important;
+  position: absolute;
+  top: calc(50% + 64.5px);
   left: calc(50% - 234.5px);
   justify-content: flex-start;
 }
