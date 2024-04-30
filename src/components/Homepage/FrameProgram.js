@@ -30,7 +30,7 @@ const FrameProgram = (programStatusDisplay) => {
                   <div className="eraser-tool">
                     <div className="active">
                       {programStatusDisplay.programStatusDisplay
-                        ? programStatusDisplay.programStatusDisplay.nutritionist
+                        ? programStatusDisplay.programStatusDisplay.status
                         : "--"}
                     </div>
                     <div className="data-hub-wrapper">

@@ -56,28 +56,6 @@ const InsuranceEmployer = (insDisplay) => {
           toast.error("Error adding document: ", error);
         });
     }
-
-
-    // if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
-    //   const updates = {};
-    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/program"] = program;
-    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/status"] = status;
-    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/stage"] = stage;
-    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/careManager"] =
-    //     careManager;
-    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/nutritionist"] =
-    //     nutritionist;
-    //   updates[programStatusDisplay.programStatusDisplay.programStatusDisplay.id + "/engagementLead"] =
-    //     engagementLead;
-    //   update(dbRef, updates)
-    //     .then(() => {
-    //       toast.success("Successfully updated data! ");
-    //     })
-    //     .catch((error) => {
-    //       toast.error("Error updating document: ", error);
-    //     });
-    // } else {
-    
   };
 
   return (

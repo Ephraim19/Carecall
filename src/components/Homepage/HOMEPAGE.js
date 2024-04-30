@@ -39,6 +39,7 @@ const HOMEPAGE = () => {
   const [sugar, setSugar] = useState([]);
   const [insurance, setInsurance] = useState([]);
   const [programStatus, setProgramStatus] = useState([]);
+  const [family , setFamily] = useState([]);
 
   const [programStatusDisplay, setProgramStatusDisplay] = React.useState("");
   const [sugarDisplay, setSugarDisplay] = React.useState([]);
@@ -49,6 +50,7 @@ const HOMEPAGE = () => {
   const [bpDisplay, setBpDisplay] = React.useState([]);
   const [taskDisplay, setTaskDisplay] = React.useState([]);
   const [insuranceDisplay, setInsuranceDisplay] = React.useState([]);
+  const [familyDisplay, setFamilyDisplay] = React.useState([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -123,11 +125,20 @@ const HOMEPAGE = () => {
         bmiArray1.shift();
         setBmi(bmiArray1);
 
+        // Family
+        var allFamily = allDataArray.filter((data) => data.id === "Family");
+        var familyArray1 = Object.entries(allFamily[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        familyArray1.shift();
+        setFamily(familyArray1);
+
+
         //get programStatus
         var allProgramStatus = allDataArray.filter(
           (data) => data.id === "programStatus"
         );
-        console.log(allProgramStatus[0]);
         var psArray1 = Object.entries(allProgramStatus[0]).map(
           ([id, data]) => ({
             id,
@@ -135,7 +146,6 @@ const HOMEPAGE = () => {
           })
         );
         psArray1.shift();
-        console.log(psArray1);
         setProgramStatus(psArray1);
         
         //get sugar
@@ -251,6 +261,10 @@ const HOMEPAGE = () => {
     // programStatusArray[0].member = patient.id;
     // console.log("programStatusArray", programStatusArray[0]);
     setProgramStatusDisplay(programStatusArray[0]);
+    let familyArray = family.filter(
+      (name) => name.member === patient.id
+    );
+    setFamilyDisplay(familyArray);
   };
 
   return (
@@ -360,7 +374,7 @@ const HOMEPAGE = () => {
             <FrameContacts patientData={patientData} />
             <FrameComponent4 insuranceDisplay={insuranceDisplay} />
             <FrameComponent3 />
-            <FrameComponent2 />
+            <FrameComponent2 familyDisplay={familyDisplay} />
           </div>
           <div className="frame-wrapper3">
             <FrameComponent1 />

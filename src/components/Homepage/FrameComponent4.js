@@ -25,7 +25,7 @@ const FrameComponent4 = (insuranceDisplay) => {
             trigger={
               <button className="rectangle-parent2">
                 <div className="frame-child3" />
-                <div className="edit2">EDIT</div>
+                <div className="edit2">{insDisplay ? "EDIT":"ADD"}</div>
               </button>
             }
             position="right center"
