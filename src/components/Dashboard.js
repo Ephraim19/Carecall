@@ -4,7 +4,7 @@ import { Audio } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { get, onValue, ref, update } from "firebase/database";
 import { database, auth } from "./Firebase";
-import carecall from "./carecall.png";
+import carecall from "./carecall.svg";
 import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Line } from "react-chartjs-2";
