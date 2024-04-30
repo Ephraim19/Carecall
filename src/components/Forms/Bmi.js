@@ -63,6 +63,7 @@ const Bmi = () => {
     });
   };
 
+  
   return (
     <div>
       <nav className="App-nav">
