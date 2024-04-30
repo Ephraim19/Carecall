@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./FrameComponent2.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import InsuranceEmployer from "../HomepageForms/InsuranceEmployer";
 import Family from "../HomepageForms/Family";
+
 const FrameComponent2 = (familyDisplay) => {
   // useEffect(() => {
   //   console.log(familyDisplay.familyDisplay[0].id);

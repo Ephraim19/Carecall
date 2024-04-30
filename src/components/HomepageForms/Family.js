@@ -16,7 +16,7 @@ const Family = (familyDisplay) => {
   const [age3, setAge3] = React.useState("");
 
   useEffect(() => {
-    
+    console.log(familyDisplay.familyDisplay.familyDisplay);
     if (familyDisplay.familyDisplay.familyDisplay.length > 0) {
       setPrimaryMember(familyDisplay.familyDisplay.familyDisplay[0].primaryMember);
       setSpouse(familyDisplay.familyDisplay.familyDisplay[0].spouse);
@@ -25,7 +25,7 @@ const Family = (familyDisplay) => {
       setAge2(familyDisplay.familyDisplay.familyDisplay[0].age2);
       setAge3(familyDisplay.familyDisplay.familyDisplay[0].age3);
     }
-  }, []);
+  }, [familyDisplay.familyDisplay.familyDisplay]);
 
   const onSubmit = async (e) => {
     e.preventDefault();

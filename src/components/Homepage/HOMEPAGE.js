@@ -39,7 +39,8 @@ const HOMEPAGE = () => {
   const [sugar, setSugar] = useState([]);
   const [insurance, setInsurance] = useState([]);
   const [programStatus, setProgramStatus] = useState([]);
-  const [family , setFamily] = useState([]);
+  const [family, setFamily] = useState([]);
+  const [address, setAddress] = useState([]);
 
   const [programStatusDisplay, setProgramStatusDisplay] = React.useState("");
   const [sugarDisplay, setSugarDisplay] = React.useState([]);
@@ -51,6 +52,7 @@ const HOMEPAGE = () => {
   const [taskDisplay, setTaskDisplay] = React.useState([]);
   const [insuranceDisplay, setInsuranceDisplay] = React.useState([]);
   const [familyDisplay, setFamilyDisplay] = React.useState([]);
+  const [addressDisplay, setAddressDisplay] = React.useState([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -64,7 +66,6 @@ const HOMEPAGE = () => {
     var allDataArray = [];
     get(dbAll)
       .then((snapshot) => {
-
         if (snapshot.exists()) {
           allDataArray = Object.entries(snapshot.val()).map(([id, data]) => ({
             id,
@@ -116,6 +117,16 @@ const HOMEPAGE = () => {
         prescArray1.shift();
         setPrescription(prescArray1);
 
+        //Get addresses
+        var allAddress = allDataArray.filter((data) => data.id === "Addresses");
+        var addressArray1 = Object.entries(allAddress[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        addressArray1.shift();
+        setAddress(addressArray1);
+        console.log("addressArray1", addressArray1);
+
         //get bmi
         var allBmi = allDataArray.filter((data) => data.id === "Bmi");
         var bmiArray1 = Object.entries(allBmi[0]).map(([id, data]) => ({
@@ -134,7 +145,6 @@ const HOMEPAGE = () => {
         familyArray1.shift();
         setFamily(familyArray1);
 
-
         //get programStatus
         var allProgramStatus = allDataArray.filter(
           (data) => data.id === "programStatus"
@@ -147,7 +157,7 @@ const HOMEPAGE = () => {
         );
         psArray1.shift();
         setProgramStatus(psArray1);
-        
+
         //get sugar
         var allSugar = allDataArray.filter((data) => data.id === "Bloodsugar");
         var sugarArray1 = Object.entries(allSugar[0]).map(([id, data]) => ({
@@ -161,15 +171,15 @@ const HOMEPAGE = () => {
         var allInsurance = allDataArray.filter(
           (data) => data.id === "InsuranceEmployer"
         );
-        
-        var InsuranceArray1 = Object.entries(allInsurance[0]).map(([id, data]) => ({
-          id,
-          ...data,
-        }));
+
+        var InsuranceArray1 = Object.entries(allInsurance[0]).map(
+          ([id, data]) => ({
+            id,
+            ...data,
+          })
+        );
         InsuranceArray1.shift();
         setInsurance(InsuranceArray1);
-        
-        
       });
   }, []);
 
@@ -261,10 +271,12 @@ const HOMEPAGE = () => {
     // programStatusArray[0].member = patient.id;
     // console.log("programStatusArray", programStatusArray[0]);
     setProgramStatusDisplay(programStatusArray[0]);
-    let familyArray = family.filter(
-      (name) => name.member === patient.id
-    );
+    let familyArray = family.filter((name) => name.member === patient.id);
     setFamilyDisplay(familyArray);
+
+    let addressArray = address.filter((name) => name.member === patient.id);
+    console.log("addressArray", addressArray[0]);
+    setAddressDisplay(addressArray[0]);
   };
 
   return (
@@ -373,7 +385,7 @@ const HOMEPAGE = () => {
             <FrameProgram programStatusDisplay={programStatusDisplay} />
             <FrameContacts patientData={patientData} />
             <FrameComponent4 insuranceDisplay={insuranceDisplay} />
-            <FrameComponent3 />
+            <FrameComponent3 addressDisplay={addressDisplay} />
             <FrameComponent2 familyDisplay={familyDisplay} />
           </div>
           <div className="frame-wrapper3">

@@ -1,7 +1,10 @@
 import "./FrameComponent3.css";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import Family from "../HomepageForms/Family";
+import Addresses from "../HomepageForms/Addresses";
 
-const FrameComponent3 = () => {
-  
+const FrameComponent3 = (addressDisplay) => {
   return (
     <div className="frame-parent21">
       <div className="layout-combinator-parent">
@@ -11,17 +14,36 @@ const FrameComponent3 = () => {
             <div className="home">HOME</div>
           </div>
           <div className="layout-combinator-inner">
-            <div className="rectangle-parent3">
-              <div className="frame-child4" />
-              <div className="edit3">EDIT</div>
-            </div>
+            <Popup
+              trigger={
+                <button className="rectangle-parent3">
+                  <div className="frame-child4" />
+                  <div className="edit3">
+                    {" "}
+                    {addressDisplay.addressDisplay ? "EDIT" : "ADD"}
+                  </div>
+                </button>
+              }
+              position="right center"
+              contentStyle={{ width: "auto", maxWidth: "600px" }}
+            >
+              <Addresses addressDisplay ={addressDisplay} />
+            </Popup>
           </div>
         </div>
-        <div className="court-316-kiu">Court 316, Kiu River Estate, Kahawa</div>
+        <div className="court-316-kiu">
+          {addressDisplay.addressDisplay
+            ? addressDisplay.addressDisplay.home
+            : "--"}
+        </div>
       </div>
       <div className="office-parent">
         <div className="office">OFFICE</div>
-        <div className="th-ave-suits">5th Ave Suits, Upperhill, Nairobi</div>
+        <div className="th-ave-suits">
+          {addressDisplay.addressDisplay
+            ? addressDisplay.addressDisplay.office
+            : "--"}
+        </div>
       </div>
       <div className="geolocation-parent">
         <div className="geolocation">GEOLOCATION</div>
@@ -31,18 +53,28 @@ const FrameComponent3 = () => {
         <div className="star-shape-inner">
           <div className="county-parent">
             <div className="county">COUNTY</div>
-            <div className="nairobi-county">Nairobi County</div>
+            <div className="nairobi-county">
+              {addressDisplay.addressDisplay
+                ? addressDisplay.addressDisplay.county
+                : "--"}
+            </div>
           </div>
         </div>
         <div className="path-exclusion">
           <div className="town">TOWN</div>
-          <div className="nairobi">Nairobi</div>
+          <div className="nairobi">
+            {addressDisplay.addressDisplay
+              ? addressDisplay.addressDisplay.town
+              : "--"}
+          </div>
         </div>
       </div>
       <div className="image-importer">
         <div className="delivery-instructions">DELIVERY INSTRUCTIONS</div>
         <div className="always-deliver-at">
-          Always deliver at the office on weekdays
+          {addressDisplay.addressDisplay
+            ? addressDisplay.addressDisplay.deliveryInstructions
+            : "--"}
         </div>
       </div>
     </div>
