@@ -37,6 +37,7 @@ const HOMEPAGE = () => {
   const [prescription, setPrescription] = useState([]);
   const [bmi, setBmi] = useState([]);
   const [sugar, setSugar] = useState([]);
+  const [insurance, setInsurance] = useState([]);
   const [programStatus, setProgramStatus] = useState([]);
 
   const [programStatusDisplay, setProgramStatusDisplay] = React.useState("");
@@ -156,7 +157,7 @@ const HOMEPAGE = () => {
           ...data,
         }));
         InsuranceArray1.shift();
-        setInsuranceDisplay(InsuranceArray1);
+        setInsurance(InsuranceArray1);
         
         
       });
@@ -242,7 +243,11 @@ const HOMEPAGE = () => {
     let programStatusArray = programStatus.filter(
       (name) => name.member === patient.id
     );
-    console.log(programStatusArray[0]);
+    let InsuranceEmployerArray = insurance.filter(
+      (name) => name.member === patient.id
+    );
+    setInsuranceDisplay(InsuranceEmployerArray);
+    console.log("InsuranceEmployerArray", InsuranceEmployerArray);
     // programStatusArray[0].member = patient.id;
     // console.log("programStatusArray", programStatusArray[0]);
     setProgramStatusDisplay(programStatusArray[0]);
@@ -353,7 +358,7 @@ const HOMEPAGE = () => {
 
             <FrameProgram programStatusDisplay={programStatusDisplay} />
             <FrameContacts patientData={patientData} />
-            <FrameComponent4 insuranceDisplay={InsuranceEmployer} />
+            <FrameComponent4 insuranceDisplay={insuranceDisplay} />
             <FrameComponent3 />
             <FrameComponent2 />
           </div>

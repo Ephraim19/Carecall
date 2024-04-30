@@ -6,30 +6,57 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 
-const InsuranceEmployer = () => {
-  const [program, setProgram] = React.useState("");
-  const [status, setStatus] = React.useState("");
-  const [stage, setStage] = React.useState("");
-  const [careManager, setCareManager] = React.useState("");
-  const [nutritionist, setNutritionist] = React.useState("");
-  const [engagementLead, setEngagementLead] = React.useState("");
-  // const [programStatusData, setProgramStatusData] = React.useState([]);
-  const dbRef = ref(database, "programStatus");
+const InsuranceEmployer = (insDisplay) => {
+  
+  const dbRef = ref(database, "InsuranceEmployer");
+  const [employer, setEmployer] = React.useState("");
+  const [department, setDepartment] = React.useState("");
+  const [insurer, setInsurer] = React.useState("");
+  const [insuranceId, setInsuranceId] = React.useState("");
 
-  // useEffect(() => {
-  //   if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
-
-  //     setProgram(programStatusDisplay.programStatusDisplay.programStatusDisplay.program);
-  //     setStatus(programStatusDisplay.programStatusDisplay.programStatusDisplay.status);
-  //     setStage(programStatusDisplay.programStatusDisplay.programStatusDisplay.stage);
-  //     setCareManager(programStatusDisplay.programStatusDisplay.programStatusDisplay.careManager);
-  //     setNutritionist(programStatusDisplay.programStatusDisplay.programStatusDisplay.nutritionist);
-  //     setEngagementLead(programStatusDisplay.programStatusDisplay.programStatusDisplay.engagementLead);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if(insDisplay.insDisplay) {
+      setEmployer(insDisplay.insDisplay.employer);
+      setDepartment(insDisplay.insDisplay.department);
+      setInsurer(insDisplay.insDisplay.insurer);
+      setInsuranceId(insDisplay.insDisplay.insuranceId);
+    }
+  }, [insDisplay]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if(insDisplay.insDisplay) {
+
+      const updates = {};
+      updates[insDisplay.insDisplay.id + "/employer"] = employer;
+      updates[insDisplay.insDisplay.id + "/department"] = department;
+      updates[insDisplay.insDisplay.id + "/insurer"] = insurer;
+      updates[insDisplay.insDisplay.id + "/insuranceId"] = insuranceId;
+      console.log(insDisplay.insDisplay.id + "/employer")
+      
+      update(dbRef, updates)
+        .then(() => {
+          toast.success("Successfully updated data! ");
+        })
+        .catch((error) => {
+          toast.error("Error updating document: ", error);
+        });
+    } else {
+      push(ref(database, "InsuranceEmployer"), {
+        member: Cookies.get("memberId"),
+        employer: employer,
+        department: department,
+        insurer: insurer,
+        insuranceId: insuranceId,
+      })
+        .then(() => {
+          toast.success("Successfully submitted data! ");
+        })
+        .catch((error) => {
+          toast.error("Error adding document: ", error);
+        });
+    }
+
 
     // if (programStatusDisplay.programStatusDisplay.programStatusDisplay) {
     //   const updates = {};
@@ -50,134 +77,41 @@ const InsuranceEmployer = () => {
     //       toast.error("Error updating document: ", error);
     //     });
     // } else {
-    push(ref(database, "programStatus"), {
-      member: Cookies.get("memberId"),
-      program: program,
-      status: status,
-      stage: stage,
-      careManager: careManager,
-      nutritionist: nutritionist,
-      engagementLead: engagementLead,
-    })
-      .then(() => {
-        toast.success("Successfully submitted data! ");
-      })
-      .catch((error) => {
-        toast.error("Error adding document: ", error);
-      });
-    // }
+    
   };
 
   return (
     <div>
       <form className={styles.firstNameField}>
-        <b className={styles.createNewCarecall}>Program, Status & Assignees</b>
+        <b className={styles.createNewCarecall}>Insurance & Employer</b>
 
-        <label htmlFor="Program">
-          <select
-            className={styles.firstNameField1}
-            onChange={(e) => setProgram(e.target.value)}
-          >
-            <option value={program} key={"HS"}>
-              {program.length > 0 ? program : "SELECT THE PROGRAM"}
-            </option>
-            <option className="App-info" value="AcuteCare" key={"AcuteCare"}>
-              AcuteCare
-            </option>
-
-            <option
-              className="App-info"
-              value="VitalCare360"
-              key={"VitalCare360"}
-            >
-              VitalCare360
-            </option>
-
-            <option
-              className="App-info"
-              value="ChronicCare"
-              key={"ChronicCare"}
-            >
-              ChronicCare
-            </option>
-
-            <option className="App-info" value="Wellness" key={"Wellness"}>
-              Wellness
-            </option>
-
-            <option
-              className="App-info"
-              value="MedicalCamp"
-              key={"MedicalCamp"}
-            >
-              MedicalCamp
-            </option>
-          </select>
-        </label>
-
-        <label htmlFor="Status">
-          <select
-            className={styles.lastNameField}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value={status} key={"HS1"}>
-              {status.length > 0 ? status : "SELECT THE STATUS"}
-            </option>
-            <option className="App-info" value="Active" key={"Active"}>
-              Active
-            </option>
-
-            <option className="App-info" value="inactive" key={"Inactive"}>
-              Inactive
-            </option>
-            <option className="App-info" value="Discharged" key={"Discharged"}>
-              Discharged
-            </option>
-          </select>
-        </label>
-
-        <label htmlFor="Stage">
-          <select
-            className={styles.phoneNumber}
-            onChange={(e) => setStage(e.target.value)}
-          >
-            <option value={stage} key={"HS2"}>
-              {stage.length > 0 ? stage : "SELECT THE STAGE"}
-            </option>
-            <option className="App-info" value="Discovery" key={"Discovery"}>
-              Discovery
-            </option>
-
-            <option className="App-info" value="Onboarded" key={"Onboarded"}>
-              Onboarded
-            </option>
-            <option className="App-info" value="Discharged" key={"Discharged"}>
-              Discharged
-            </option>
-          </select>
-        </label>
-
+        <input
+          className={styles.firstNameField1}
+          placeholder="EMPLOYER"
+          type="text"
+          value={employer}
+          onChange={(e) => setEmployer(e.target.value)}
+        />
+        <input
+          className={styles.lastNameField}
+          placeholder="DEPARTMENT"
+          type="text"
+          value={department}
+          onChange={(e) => setDepartment(e.target.value)}
+        />
+        <input
+          className={styles.phoneNumber}
+          placeholder="INSURER"
+          type="text"
+          value={insurer}
+          onChange={(e) => setInsurer(e.target.value)}
+        />
         <input
           className={styles.emailAddress}
-          placeholder="CARE MANAGER"
-          type="email"
-          value={careManager}
-          onChange={(e) => setCareManager(e.target.value)}
-        />
-
-        <input
-          className={styles.firstNameField11}
-          placeholder="NUTRITIONIST"
+          placeholder="INSURANCE ID"
           type="text"
-          value={nutritionist}
-          onChange={(e) => setNutritionist(e.target.value)}
-        />
-        <input
-          className={styles.lastNameField1}
-          placeholder="ENGAGEMENT LEAD"
-          type="text"
-          value={engagementLead}
-          onChange={(e) => setEngagementLead(e.target.value)}
+          value={insuranceId}
+          onChange={(e) => setInsuranceId(e.target.value)}
         />
 
         <button className={styles.signUpButton} onClick={onSubmit}>
