@@ -3,7 +3,7 @@ import Bpanalytics from "./Bpanalytics";
 import { get, push, ref, update } from "firebase/database";
 import { database } from "../Firebase";
 import Bmianalytics from "./Bmianalytics";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import Tasksanalytics from "./Tasksanalytics";
 
 const Analytic = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import { useNavigate } from "react-router-dom";
 
 const NewAdded = () => {

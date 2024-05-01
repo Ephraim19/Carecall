@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import Registration from "./Registration";
 import Triage from "./Triage";
 import Cookies from "js-cookie";

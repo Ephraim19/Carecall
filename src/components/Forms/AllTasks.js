@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import carecall from "../carecall.png";
 import { ref, get } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -107,10 +106,6 @@ const AllTasks = () => {
 
   return (
     <div>
-      <nav className="App-nav">
-        <img src={carecall} alt="logo" className="App-logo" />
-        <form className="App-info"></form>
-      </nav>
       <h4>All tasks</h4>
       <table key={1} className="customers">
         <tr>

@@ -59,6 +59,7 @@ const HOMEPAGE = () => {
   const [insuranceDisplay, setInsuranceDisplay] = React.useState([]);
   const [familyDisplay, setFamilyDisplay] = React.useState([]);
   const [addressDisplay, setAddressDisplay] = React.useState([]);
+  const [careId, setCareId] = React.useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -259,6 +260,10 @@ const HOMEPAGE = () => {
     setPatientData(patient);
     Cookies.set("memberId", patient.id, { expires: 1 });
 
+    if (patient.careCallId === undefined) {
+      setCareId(Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000);
+    }
+
     setSearched([]);
 
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
@@ -299,6 +304,13 @@ const HOMEPAGE = () => {
     setBpDisplay(bpArray);
   };
 
+  const allMembers = () => {
+    navigate("/allmembers");
+  };
+  const New = () => {
+    navigate("/new");
+  };
+  
   return (
     <div>
       <header className="home-page-inner">
@@ -360,7 +372,7 @@ const HOMEPAGE = () => {
                   ))}
                 </ul>
               ) : (
-                <ul className="searchable" style={{display:"none"}} >
+                <ul className="searchable" style={{ display: "none" }}>
                   {searched.map((patient) => (
                     <li
                       key={patient.id}
@@ -373,11 +385,10 @@ const HOMEPAGE = () => {
               )}
             </div>
           </div>
-
           <div className="frame-wrapper6">
             <button className="frame-button">
               <div className="frame-child1" />
-              <div className="view-all-members">Members</div>
+              <div className="view-all-members" onClick={allMembers} >Members</div>
             </button>
           </div>
           <div className="frame-wrapper7">
@@ -385,7 +396,7 @@ const HOMEPAGE = () => {
               <div className="frame-wrapper8">
                 <button className="rectangle-parent1">
                   <div className="frame-child2" />
-                  <div className="add-new-member">New Member</div>
+                  <div className="add-new-member" onClick={New}>New Member</div>
                 </button>
               </div>
               <img
@@ -403,7 +414,7 @@ const HOMEPAGE = () => {
             className="frame-group"
             style={{ overflow: "scroll", height: "600px" }}
           >
-            <FrameComponent5 patientData={patientData} />
+            <FrameComponent5 patientData={patientData}  />
             <div className="frame-container">
               <div className="rectangle-parent">
                 <div className="frame-child" />

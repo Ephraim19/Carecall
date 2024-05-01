@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { database } from "../Firebase";
 import { ref, push, get,update } from "firebase/database";
 import Cookies from "js-cookie";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import DatePicker from "react-datepicker";
 
 //supabase passwrd 24YC?ei&@qK.UZE

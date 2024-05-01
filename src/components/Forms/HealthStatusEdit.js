@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import { ref, get, update } from "firebase/database";
 
 import { database } from "../Firebase";

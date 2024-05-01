@@ -3,6 +3,10 @@ import "./FrameComponent5.css";
 import { FiArrowLeftCircle } from "react-icons/fi";
 const FrameComponent5 = (patientData) => {
   const [patientData1, setPatientData1] = useState([]);
+  const [careId, setCareId] = React.useState("");
+
+  const hideBio = (e) => {
+  };
 
   useEffect(() => {
     const patientArray = Object.entries(patientData).map(([id, data]) => ({
@@ -19,13 +23,13 @@ const FrameComponent5 = (patientData) => {
             <div className="felix-wandera-wrapper">
               <h2 className="felix-wandera">{patient.patient}</h2>
             </div>
-            <FiArrowLeftCircle className="group-icon" />
+            <FiArrowLeftCircle className="group-icon" onClick={hideBio} />
           </div>
           <div className="id-20387-parent">
             <div className="id-20387">
               <span>ID:</span>
               <span className="span2">{` `}</span>
-              <span className="span3">{patient.idc ? patient.idc:"--"}</span>
+              <span className="span3">{patient.idc ? patient.idc : "--"}</span>
             </div>
             <div className="age-37-y-container">
               <span>Age:</span>

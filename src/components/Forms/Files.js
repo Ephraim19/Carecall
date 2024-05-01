@@ -5,7 +5,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { ref, push } from "firebase/database";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import { storage, database } from "../Firebase";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";

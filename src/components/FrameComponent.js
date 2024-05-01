@@ -5,8 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
-import { useNavigate, Link } from "react-router-dom";
-import carecall from "../carecall.png";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const FrameComponent = () => {

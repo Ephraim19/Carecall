@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import { ref, push } from "firebase/database";
 import { database } from "../Firebase";
 import Cookies from "js-cookie";

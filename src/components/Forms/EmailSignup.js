@@ -17,7 +17,7 @@ export default EmailSignup;
 // import { createUserWithEmailAndPassword } from "firebase/auth";
 // import { auth } from "../Firebase";
 // import { useNavigate, Link } from "react-router-dom";
-// import carecall from "../carecall.png";
+// import carecall from "../carecall.svg";
 // import { database } from "../Firebase";
 // import { ref, push, get, update, set } from "firebase/database";
 

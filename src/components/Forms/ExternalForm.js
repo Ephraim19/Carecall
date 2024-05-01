@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { database, storage } from "../Firebase";
 import { ref, push, get, update, set } from "firebase/database";
-import carecall from "../carecall.png";
+import carecall from "../carecall.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
