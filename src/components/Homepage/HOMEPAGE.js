@@ -3,8 +3,9 @@ import FrameComponent5 from "./FrameComponent5";
 import FrameComponent4 from "./FrameComponent4";
 import FrameComponent3 from "./FrameComponent3";
 import FrameComponent2 from "./FrameComponent2";
-import FrameComponent1 from "./FrameComponent1";
 import FrameComponent from "./FrameComponent";
+import Interactions from "../HomepageDisplay/Interactions";
+import "./FrameComponent1.css";
 import FrameContacts from "./FrameContacts";
 import "./HOMEPAGE.css";
 import { FaBars, FaSearch } from "react-icons/fa";
@@ -21,6 +22,7 @@ import RightSectionComponent from "./RightSectionComponent";
 
 const HOMEPAGE = () => {
   const navigate = useNavigate();
+  const [state, setState] = React.useState("conditions");
   const [allData, setAllData] = useState([]);
   const [patientData, setPatientData] = useState([]);
   const dbAll = ref(database);
@@ -341,7 +343,7 @@ const HOMEPAGE = () => {
               )}
             </div>
           </div>
-          
+
           <div className="frame-wrapper6">
             <button className="frame-button">
               <div className="frame-child1" />
@@ -390,10 +392,44 @@ const HOMEPAGE = () => {
             <FrameComponent2 familyDisplay={familyDisplay} />
           </div>
           <div className="frame-wrapper3">
-            <FrameComponent1 />
+            <div className="frame-parent24">
+              <div className="frame-wrapper14">
+                <div className="overview-parent">
+                  <h3 className="overview">Overview</h3>
+                  {/* <div className="data-processor-wrapper">
+                    <FaBars
+                      className="data-processor-icon"
+                      loading="lazy"
+                      alt=""
+                    />
+                  </div> */}
+                </div>
+              </div>
+              <div
+                className="conditions-wrapper"
+                onClick={(e) => setState("conditions")}
+              >
+                <h3 className="conditions">Conditions</h3>
+              </div>
+              <div
+                className="interventions-wrapper"
+                onClick={(e) => setState("interventions")}
+              >
+                <h3 className="interventions">Interventions</h3>
+              </div>
+              <div
+                className="input-filter"
+                onClick={(e) => setState("interactions")}
+              >
+                <h3 className="interactions">Interactions</h3>
+              </div>
+              <h1 className="h1">{`>`}</h1>
+            </div>
           </div>
+          {state === "interactions" ? <Interactions /> : ""}
+
           <div>
-            <RightSectionComponent />
+            <RightSectionComponent interactionDisplay={interactionDisplay} />
           </div>
         </main>
       </div>

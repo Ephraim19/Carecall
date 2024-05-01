@@ -35,6 +35,7 @@ const RightSectionComponent = () => {
         </div>
         <h1 className="h11">{`>`}</h1>
       </div>
+      
       {state === "engagement" ? <FrameComponent /> : ""}
       {state === "forms" ? <Forms /> : ""}
       {state === "workflow" ? "workflow" : ""}

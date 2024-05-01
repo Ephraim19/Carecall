@@ -85,19 +85,20 @@ const Appointment = () => {
           value={clinic}
           onChange={(e) => setClinic(e.target.value)}
         />
-                <input
-          className={styles.phoneNumber}
-          placeholder="Diagnosis"
-          type="text"
-          value={diagnosis}
-          onChange={(e) => setDiagnosis(e.target.value)}
-        />
-          <div className={styles.lastName }>
+                  <div className={styles.lastNameField }>
           <DatePicker
             selected={dueDate}
             onChange={(date) => setDueDate(date)}
           />
         </div>
+                <input
+          className={styles.phoneNumber }
+          placeholder="Diagnosis"
+          type="text"
+          value={diagnosis}
+          onChange={(e) => setDiagnosis(e.target.value)}
+        />
+
 
 
         <button className={styles.signUpButton} onClick={NewClinic} type="button" >

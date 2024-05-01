@@ -283,6 +283,8 @@ hr {
   padding: var(--padding-7xs) var(--padding-3xl) var(--padding-101xl);
   position: relative;
 }
+
+
 .frame-parent25 {
   width: 325px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
