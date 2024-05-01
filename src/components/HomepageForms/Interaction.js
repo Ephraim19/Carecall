@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./Interaction.module.css";
 import { ref, push } from "firebase/database";
 import { database, auth } from "../Firebase";
@@ -64,7 +64,7 @@ const Interaction = () => {
               <div className={styles.div}>*</div>
             </div>
             <input
-              className={styles.emailFieldForLogin}
+              className={styles.emailFieldForLogin12}
               placeholder="Enter the interaction"
               type="text"
               onChange={(e) => setInteraction(e.target.value)}

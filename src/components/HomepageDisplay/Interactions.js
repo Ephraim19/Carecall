@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Interactions.css";
-import { FiExternalLink } from "react-icons/fi";
 
 const Interactions = (interactionDisplay) => {
   return (

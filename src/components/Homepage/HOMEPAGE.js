@@ -25,7 +25,7 @@ import BMI from "../HomepageDisplay/BMI";
 
 const HOMEPAGE = () => {
   const navigate = useNavigate();
-  const [state, setState] = React.useState("conditions");
+  const [state, setState] = React.useState("BMI");
   const [allData, setAllData] = useState([]);
   const [patientData, setPatientData] = useState([]);
   const dbAll = ref(database);
@@ -348,7 +348,7 @@ const HOMEPAGE = () => {
               />
             </div>
             <div>
-              {searched ? (
+              {searched.length > 0 ? (
                 <ul className="searchable">
                   {searched.map((patient) => (
                     <li
@@ -360,7 +360,16 @@ const HOMEPAGE = () => {
                   ))}
                 </ul>
               ) : (
-                " "
+                <ul className="searchable" style={{display:"none"}} >
+                  {searched.map((patient) => (
+                    <li
+                      key={patient.id}
+                      onClick={() => handleResultClick(patient)}
+                    >
+                      {patient.patient}
+                    </li>
+                  ))}
+                </ul>
               )}
             </div>
           </div>
@@ -432,7 +441,7 @@ const HOMEPAGE = () => {
               >
                 <h3 className="conditions">Conditions</h3>
               </div> */}
-              
+
               <div
                 className="conditions-wrapper"
                 onClick={(e) => setState("BMI")}
