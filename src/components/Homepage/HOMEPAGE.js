@@ -97,7 +97,6 @@ const HOMEPAGE = () => {
         }));
         intArray1.shift();
         setInteraction(intArray1);
-
         //get clinic
         var allClinic = allDataArray.filter((data) => data.id === "Clinic");
         var clncArray1 = Object.entries(allClinic[0]).map(([id, data]) => ({
@@ -128,7 +127,6 @@ const HOMEPAGE = () => {
         }));
         addressArray1.shift();
         setAddress(addressArray1);
-        console.log("addressArray1", addressArray1);
 
         //get bmi
         var allBmi = allDataArray.filter((data) => data.id === "Bmi");
@@ -257,6 +255,8 @@ const HOMEPAGE = () => {
     setClinicDisplay(clncArray);
     let intArray = interaction.filter((name) => name.patient === patient.id);
     setInteractionDisplay(intArray);
+    console.log("intArray1", intArray);
+
     let prescArray = prescription.filter((name) => name.patient === patient.id);
     setPrescriptionDisplay(prescArray);
     let bmiArray = bmi.filter((name) => name.patient === patient.id);
@@ -270,15 +270,12 @@ const HOMEPAGE = () => {
       (name) => name.member === patient.id
     );
     setInsuranceDisplay(InsuranceEmployerArray);
-    console.log("InsuranceEmployerArray", InsuranceEmployerArray);
     // programStatusArray[0].member = patient.id;
-    // console.log("programStatusArray", programStatusArray[0]);
     setProgramStatusDisplay(programStatusArray[0]);
     let familyArray = family.filter((name) => name.member === patient.id);
     setFamilyDisplay(familyArray);
 
     let addressArray = address.filter((name) => name.member === patient.id);
-    console.log("addressArray", addressArray[0]);
     setAddressDisplay(addressArray[0]);
   };
 
@@ -426,10 +423,14 @@ const HOMEPAGE = () => {
               <h1 className="h1">{`>`}</h1>
             </div>
           </div>
-          {state === "interactions" ? <Interactions /> : ""}
+          {state === "interactions" ? (
+            <Interactions interactionDisplay={interactionDisplay} />
+          ) : (
+            ""
+          )}
 
           <div>
-            <RightSectionComponent interactionDisplay={interactionDisplay} />
+            <RightSectionComponent />
           </div>
         </main>
       </div>
