@@ -16,7 +16,14 @@ const BMI = (bmiDisplay) => {
             <td>{bmi.dueDate.slice(0, 17)}</td>
             <td>{bmi.weight}</td>
             <td>{bmi.height}</td>
-            <td> {(parseInt(bmi.weight) / parseInt(bmi.height ^ 2)).toFixed(2)}</td>
+            <td>
+              {" "}
+              {bmi.height < 100
+                ? (parseInt(bmi.weight) / parseInt(bmi.height ^ 2)).toFixed(2)
+                : (
+                    parseInt(bmi.weight) / parseInt((bmi.height / 100) ^ 2)
+                  ).toFixed(2)}
+            </td>
           </tr>
         ))}
       </table>
