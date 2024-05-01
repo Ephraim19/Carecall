@@ -193,7 +193,7 @@ const HOMEPAGE = () => {
         InsuranceArray1.shift();
         setInsurance(InsuranceArray1);
       });
-  }, []);
+  }, [allData]);
 
   const handleSearch = (e) => {
     e.preventDefault();
