@@ -8,6 +8,7 @@ import Interactions from "../HomepageDisplay/Interactions";
 import "./FrameComponent1.css";
 import FrameContacts from "./FrameContacts";
 import "./HOMEPAGE.css";
+import BloodPressure from "../HomepageDisplay/BloodPressure";
 import { FaBars, FaSearch } from "react-icons/fa";
 import "./FrameComponent6.css";
 import Cookies from "js-cookie";
@@ -87,6 +88,15 @@ const HOMEPAGE = () => {
         tsArray1.shift();
         setPatientTasks(tsArray1);
 
+        //get BP
+        var allBP = allDataArray.filter((data) => data.id === "bloodPressure");
+        var bpArray1 = Object.entries(allBP[0]).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+        bpArray1.shift();
+        setBp(bpArray1);
+
         //get interaction
         var allInteraction = allDataArray.filter(
           (data) => data.id === "Interaction"
@@ -97,6 +107,7 @@ const HOMEPAGE = () => {
         }));
         intArray1.shift();
         setInteraction(intArray1);
+
         //get clinic
         var allClinic = allDataArray.filter((data) => data.id === "Clinic");
         var clncArray1 = Object.entries(allClinic[0]).map(([id, data]) => ({
@@ -254,8 +265,8 @@ const HOMEPAGE = () => {
     let clncArray = clinic.filter((name) => name.patient === patient.id);
     setClinicDisplay(clncArray);
     let intArray = interaction.filter((name) => name.patient === patient.id);
-    setInteractionDisplay(intArray);
-    console.log("intArray1", intArray);
+    console.log(intArray);
+    setInteractionDisplay(intArray.reverse());
 
     let prescArray = prescription.filter((name) => name.patient === patient.id);
     setPrescriptionDisplay(prescArray);
@@ -277,6 +288,11 @@ const HOMEPAGE = () => {
 
     let addressArray = address.filter((name) => name.member === patient.id);
     setAddressDisplay(addressArray[0]);
+
+    let bpArray = bp.filter((name) => name.patient === patient.id);
+    setBpDisplay(bpArray);
+    console.log(bpArray);
+
   };
 
   return (
@@ -317,7 +333,7 @@ const HOMEPAGE = () => {
 
               <input
                 className="search-by-patient"
-                placeholder="name, phone or CareCall ID "
+                placeholder= {allData.length > 0 ? "name, phone or CareCall ID" : "Loading..."}
                 type="text"
                 onChange={handleSearch}
                 value={member}
@@ -402,11 +418,17 @@ const HOMEPAGE = () => {
                   </div> */}
                 </div>
               </div>
-              <div
+              {/* <div
                 className="conditions-wrapper"
                 onClick={(e) => setState("conditions")}
               >
                 <h3 className="conditions">Conditions</h3>
+              </div> */}
+              <div
+                className="conditions-wrapper"
+                onClick={(e) => setState("BP")}
+              >
+                <h3 className="conditions">BP</h3>
               </div>
               <div
                 className="interventions-wrapper"
@@ -425,6 +447,11 @@ const HOMEPAGE = () => {
           </div>
           {state === "interactions" ? (
             <Interactions interactionDisplay={interactionDisplay} />
+          ) : (
+            ""
+          )}
+          {state === "BP" ? (
+            <BloodPressure bpDisplay ={bpDisplay} />
           ) : (
             ""
           )}
