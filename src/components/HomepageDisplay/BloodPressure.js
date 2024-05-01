@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import "./Interactions.css";
 
 const BloodPressure = (bpDisplay) => {
-  useEffect(() => {
-    console.log(bpDisplay.bpDisplay);
-  }, []);
+
   return (
     <div className="frame-parent2525">
       <table id="pressure">

@@ -20,6 +20,8 @@ import { get, onValue, ref, update } from "firebase/database";
 import FrameProgram from "./FrameProgram";
 import InsuranceEmployer from "../HomepageForms/InsuranceEmployer";
 import RightSectionComponent from "./RightSectionComponent";
+import BloodSugar from "../HomepageDisplay/BloodSugar";
+import BMI from "../HomepageDisplay/BMI";
 
 const HOMEPAGE = () => {
   const navigate = useNavigate();
@@ -261,19 +263,22 @@ const HOMEPAGE = () => {
 
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
     setTaskDisplay(taskArray);
-    // let Bps = bp.filter((name) => name.patient === patient.id);
+
     let clncArray = clinic.filter((name) => name.patient === patient.id);
     setClinicDisplay(clncArray);
+
     let intArray = interaction.filter((name) => name.patient === patient.id);
-    console.log(intArray);
     setInteractionDisplay(intArray.reverse());
 
     let prescArray = prescription.filter((name) => name.patient === patient.id);
     setPrescriptionDisplay(prescArray);
+
     let bmiArray = bmi.filter((name) => name.patient === patient.id);
     setBmiDisplay(bmiArray);
+
     let sugarArray = sugar.filter((name) => name.patient === patient.id);
     setSugarDisplay(sugarArray);
+
     let programStatusArray = programStatus.filter(
       (name) => name.member === patient.id
     );
@@ -281,6 +286,7 @@ const HOMEPAGE = () => {
       (name) => name.member === patient.id
     );
     setInsuranceDisplay(InsuranceEmployerArray);
+
     // programStatusArray[0].member = patient.id;
     setProgramStatusDisplay(programStatusArray[0]);
     let familyArray = family.filter((name) => name.member === patient.id);
@@ -291,8 +297,6 @@ const HOMEPAGE = () => {
 
     let bpArray = bp.filter((name) => name.patient === patient.id);
     setBpDisplay(bpArray);
-    console.log(bpArray);
-
   };
 
   return (
@@ -333,7 +337,11 @@ const HOMEPAGE = () => {
 
               <input
                 className="search-by-patient"
-                placeholder= {allData.length > 0 ? "name, phone or CareCall ID" : "Loading..."}
+                placeholder={
+                  allData.length > 0
+                    ? "name, phone or CareCall ID"
+                    : "Loading..."
+                }
                 type="text"
                 onChange={handleSearch}
                 value={member}
@@ -406,35 +414,48 @@ const HOMEPAGE = () => {
           </div>
           <div className="frame-wrapper3">
             <div className="frame-parent24">
-              <div className="frame-wrapper14">
+              {/* <div className="frame-wrapper14">
                 <div className="overview-parent">
                   <h3 className="overview">Overview</h3>
-                  {/* <div className="data-processor-wrapper">
+                  <div className="data-processor-wrapper">
                     <FaBars
                       className="data-processor-icon"
                       loading="lazy"
                       alt=""
                     />
-                  </div> */}
+                  </div>
                 </div>
-              </div>
+              </div> */}
               {/* <div
                 className="conditions-wrapper"
                 onClick={(e) => setState("conditions")}
               >
                 <h3 className="conditions">Conditions</h3>
               </div> */}
+              
+              <div
+                className="conditions-wrapper"
+                onClick={(e) => setState("BMI")}
+              >
+                <h3 className="conditions">BMI</h3>
+              </div>
               <div
                 className="conditions-wrapper"
                 onClick={(e) => setState("BP")}
               >
                 <h3 className="conditions">BP</h3>
               </div>
-              <div
+              {/* <div
                 className="interventions-wrapper"
                 onClick={(e) => setState("interventions")}
               >
                 <h3 className="interventions">Interventions</h3>
+              </div> */}
+              <div
+                className="conditions-wrapper"
+                onClick={(e) => setState("BS")}
+              >
+                <h3 className="conditions">BS</h3>
               </div>
               <div
                 className="input-filter"
@@ -450,11 +471,9 @@ const HOMEPAGE = () => {
           ) : (
             ""
           )}
-          {state === "BP" ? (
-            <BloodPressure bpDisplay ={bpDisplay} />
-          ) : (
-            ""
-          )}
+          {state === "BP" ? <BloodPressure bpDisplay={bpDisplay} /> : ""}
+          {state === "BS" ? <BloodSugar sugarDisplay={sugarDisplay} /> : ""}
+          {state === "BMI" ? <BMI bmiDisplay={bmiDisplay} /> : ""}
 
           <div>
             <RightSectionComponent />
