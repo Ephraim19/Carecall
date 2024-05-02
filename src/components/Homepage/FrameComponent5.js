@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./FrameComponent5.css";
 import { FiArrowLeftCircle } from "react-icons/fi";
+import Cookies from "js-cookie";
+
 const FrameComponent5 = (patientData) => {
   const [patientData1, setPatientData1] = useState([]);
   const [careId, setCareId] = React.useState("");
 
-  const hideBio = (e) => {
-  };
+  const hideBio = (e) => {};
 
   useEffect(() => {
     const patientArray = Object.entries(patientData).map(([id, data]) => ({
@@ -29,7 +30,9 @@ const FrameComponent5 = (patientData) => {
             <div className="id-20387">
               <span>ID:</span>
               <span className="span2">{` `}</span>
-              <span className="span3">{patient.idc ? patient.idc : "--"}</span>
+              <span className="span3">
+                {patient.idc ? patient.idc : Cookies.get("careId")}
+              </span>
             </div>
             <div className="age-37-y-container">
               <span>Age:</span>

@@ -68,6 +68,7 @@ const HOMEPAGE = () => {
         navigate("/");
       }
     });
+    Cookies.remove("careId");
 
     //read the whole database
     var allDataArray = [];
@@ -244,7 +245,8 @@ const HOMEPAGE = () => {
       var searches = allPatient.filter(
         (name) =>
           name.patient.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          name.Phone.includes(e.target.value)
+          name.Phone.includes(e.target.value) ||
+          name.idc === parseInt(e.target.value)
       );
 
       setSearched(searches);
@@ -260,9 +262,21 @@ const HOMEPAGE = () => {
     setPatientData(patient);
     Cookies.set("memberId", patient.id, { expires: 1 });
 
-    if (patient.careCallId === undefined) {
-      setCareId(Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000);
-    }
+    const randomId = () => {
+      if (patient.idc === undefined) {
+        let idRand = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+        var searches = allPatient.filter((name) => name.idc === idRand);
+        Cookies.set("careId", idRand, { expires: 1 });
+        if (searches.length === 0) {
+          update(ref(database, `${patient.hospital}/clients/${patient.id}`), {
+            idc: idRand,
+          });
+        } else {
+          randomId();
+        }
+      }
+    };
+    randomId();
 
     setSearched([]);
 
@@ -310,7 +324,7 @@ const HOMEPAGE = () => {
   const New = () => {
     navigate("/new");
   };
-  
+
   return (
     <div>
       <header className="home-page-inner">
@@ -388,7 +402,9 @@ const HOMEPAGE = () => {
           <div className="frame-wrapper6">
             <button className="frame-button">
               <div className="frame-child1" />
-              <div className="view-all-members" onClick={allMembers} >Members</div>
+              <div className="view-all-members" onClick={allMembers}>
+                Members
+              </div>
             </button>
           </div>
           <div className="frame-wrapper7">
@@ -396,7 +412,9 @@ const HOMEPAGE = () => {
               <div className="frame-wrapper8">
                 <button className="rectangle-parent1">
                   <div className="frame-child2" />
-                  <div className="add-new-member" onClick={New}>New Member</div>
+                  <div className="add-new-member" onClick={New}>
+                    New Member
+                  </div>
                 </button>
               </div>
               <img
@@ -414,7 +432,7 @@ const HOMEPAGE = () => {
             className="frame-group"
             style={{ overflow: "scroll", height: "600px" }}
           >
-            <FrameComponent5 patientData={patientData}  />
+            <FrameComponent5 patientData={patientData} />
             <div className="frame-container">
               <div className="rectangle-parent">
                 <div className="frame-child" />
