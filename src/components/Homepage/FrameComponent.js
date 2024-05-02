@@ -2,8 +2,8 @@ import "./FrameComponent.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { FiExternalLink } from "react-icons/fi";
-
-const FrameComponent = () => {
+import Tasks from "../HomepageDisplay/Tasks";
+const FrameComponent = (taskDisplay) => {
   const navigate = useNavigate();
 
   const allTasks = () => {
@@ -12,21 +12,17 @@ const FrameComponent = () => {
   return (
     <div className="frame-parent25">
       <div className="tasks-parent">
-        <div className="tasks1">Tasks</div>
-        <div
-          className="tasks1"
-          style={{ cursor: "pointer" }}
-          onClick={allTasks}
-        >
-          all Tasks
-        </div>
-        <div className="frame-wrapper15">
-          <div className="rectangle-parent8">
-            <div className="frame-child11" />
-            <FiExternalLink className="expand-svgrepocom-icon" />
-          </div>
-        </div>
+        <Tasks />
       </div>
+      <div>
+        <table id="task-table">
+          <tr>
+            <th>DATE</th>
+            <th>Task</th>
+          </tr>
+        </table>
+      </div>
+
       <div className="member-journey-parent">
         <b className="member-journey">Member Journey</b>
         <div className="rectangle-parent9">

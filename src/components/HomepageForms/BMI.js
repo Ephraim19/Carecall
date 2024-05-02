@@ -72,7 +72,7 @@ const BMI = () => {
 
         <input
           className={styles.firstNameField1}
-          placeholder="WEIGHT IN KG IE 77"
+          placeholder="WEIGHT IN KG i.e 77"
           type="text"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}

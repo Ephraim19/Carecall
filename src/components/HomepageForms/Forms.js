@@ -3,7 +3,6 @@ import "../Homepage/FrameComponent.css";
 import styles from "./Forms.module.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import Program from "./Program";
 import Interaction from "./Interaction";
 import BMI from "./BMI";
 import Prescription from "./Prescription";
@@ -22,7 +21,7 @@ const Forms = () => {
               <Popup
                 trigger={
                   <button className="frame-button" type="button">
-                    <div className="view-all-members">Interaction</div>
+                    <div className="view-all-members">INTERACTION</div>
                   </button>
                 }
                 position="left top"
@@ -38,7 +37,7 @@ const Forms = () => {
               <Popup
                 trigger={
                   <button type="button" className="frame-button">
-                    <div className="view-all-members">BMI index</div>
+                    <div className="view-all-members">BMI INDEX</div>
                   </button>
                 }
                 position="left top"
@@ -53,7 +52,7 @@ const Forms = () => {
               <Popup
                 trigger={
                   <button className="frame-button" type="button">
-                    <div className="view-all-members">Blood pressure</div>
+                    <div className="view-all-members">BLOOD PRESSURE</div>
                   </button>
                 }
                 position="left center"
@@ -68,7 +67,7 @@ const Forms = () => {
               <Popup
                 trigger={
                   <button className="frame-button" type="button">
-                    <div className="view-all-members">Prescription</div>
+                    <div className="view-all-members">PRESCRIPTION</div>
                   </button>
                 }
                 position="left center"
@@ -83,7 +82,7 @@ const Forms = () => {
               <Popup
                 trigger={
                   <button type="button" className="frame-button">
-                    <div className="view-all-members">Blood sugar</div>
+                    <div className="view-all-members">BLOOD SUGAR</div>
                   </button>
                 }
                 position="left center"
@@ -98,13 +97,64 @@ const Forms = () => {
               <Popup
                 trigger={
                   <button className="frame-button" type="button">
-                    <div className="view-all-members">Appointment</div>
+                    <div className="view-all-members">APPOINTMENT</div>
                   </button>
                 }
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
                 <Appointment />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.firstNameField112}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button type="button" className="frame-button">
+                    <div className="view-all-members">DOCTOR</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <BloodSugar />
+              </Popup>
+            </div>
+          </div>
+          <div className={styles.lastNameField12} placeholder="PRIMARY MEMBER">
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button className="frame-button" type="button">
+                    <div className="view-all-members">NUTRITIONIST</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <Appointment />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.firstNameField1122}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button type="button" className="frame-button">
+                    <div className="view-all-members">PYSCHOLOGIST</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <BloodSugar />
               </Popup>
             </div>
           </div>

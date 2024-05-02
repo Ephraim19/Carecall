@@ -5,14 +5,17 @@ import FrameComponent3 from "./FrameComponent3";
 import FrameComponent2 from "./FrameComponent2";
 import FrameComponent from "./FrameComponent";
 import Interactions from "../HomepageDisplay/Interactions";
+import Forms from "../HomepageForms/Forms";
 import "./FrameComponent1.css";
 import FrameContacts from "./FrameContacts";
 import "./HOMEPAGE.css";
 import BloodPressure from "../HomepageDisplay/BloodPressure";
 import { FaBars, FaSearch } from "react-icons/fa";
 import "./FrameComponent6.css";
+import "./FrameComponent.css";
 import Cookies from "js-cookie";
-
+import { FiExternalLink } from "react-icons/fi";
+import Tasks from "../HomepageDisplay/Tasks";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "../Firebase";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +29,8 @@ import BMI from "../HomepageDisplay/BMI";
 const HOMEPAGE = () => {
   const navigate = useNavigate();
   const [state, setState] = React.useState("BMI");
+  const [state1, setState1] = React.useState("engagement");
+
   const [allData, setAllData] = useState([]);
   const [patientData, setPatientData] = useState([]);
   const dbAll = ref(database);
@@ -281,22 +286,23 @@ const HOMEPAGE = () => {
     setSearched([]);
 
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
-    setTaskDisplay(taskArray);
+    setTaskDisplay(taskArray.reverse());
+    console.log(taskArray);
 
     let clncArray = clinic.filter((name) => name.patient === patient.id);
-    setClinicDisplay(clncArray);
+    setClinicDisplay(clncArray.reverse());
 
     let intArray = interaction.filter((name) => name.patient === patient.id);
     setInteractionDisplay(intArray.reverse());
 
     let prescArray = prescription.filter((name) => name.patient === patient.id);
-    setPrescriptionDisplay(prescArray);
+    setPrescriptionDisplay(prescArray.reverse());
 
     let bmiArray = bmi.filter((name) => name.patient === patient.id);
-    setBmiDisplay(bmiArray);
+    setBmiDisplay(bmiArray.reverse());
 
     let sugarArray = sugar.filter((name) => name.patient === patient.id);
-    setSugarDisplay(sugarArray);
+    setSugarDisplay(sugarArray.reverse());
 
     let programStatusArray = programStatus.filter(
       (name) => name.member === patient.id
@@ -512,9 +518,74 @@ const HOMEPAGE = () => {
           {state === "BP" ? <BloodPressure bpDisplay={bpDisplay} /> : ""}
           {state === "BS" ? <BloodSugar sugarDisplay={sugarDisplay} /> : ""}
           {state === "BMI" ? <BMI bmiDisplay={bmiDisplay} /> : ""}
-
+          {/* <RightSectionComponent /> */}
           <div>
-            <RightSectionComponent />
+            <div className="frame-parent26">
+              <div className="engagement-parent">
+                <h3
+                  className="engagement"
+                  onClick={(e) => setState1("engagement")}
+                >
+                  Engagement
+                </h3>
+                <div className="line-wrapper">
+                  <hr className="line-icon" />
+                </div>
+              </div>
+              {state1 === "forms" ? (
+                <h3
+                  style={{ color: "#060074" }}
+                  className="forms"
+                  onClick={(e) => setState1("forms")}
+                >
+                  Forms
+                </h3>
+              ) : (
+                <h3 className="forms" onClick={(e) => setState1("forms")}>
+                  Forms
+                </h3>
+              )}
+              <div className="workflow-wrapper">
+                <h3 className="workflow" onClick={(e) => setState1("workflow")}>
+                  Workflow
+                </h3>
+              </div>
+              <h1 className="h11">{`>`}</h1>
+            </div>
+
+            {state1 === "engagement" ? (
+              <div className="frame-parent25">
+                <div className="tasks-parent">
+                  <Tasks taskDisplay = {taskDisplay} />
+                </div>
+
+                <div className="member-journey-parent">
+                  <b className="member-journey">Member Journey</b>
+                  <div className="rectangle-parent9">
+                    <div className="frame-child12" />
+                    <FiExternalLink className="expand-svgrepocom-icon1" />
+                  </div>
+                </div>
+                <div className="frame-parent27">
+                  <div className="rectangle-parent10">
+                    <div className="frame-child13" />
+                    <FiExternalLink className="expand-svgrepocom-icon2" />
+                  </div>
+                  <h3 className="appointments">Appointments</h3>
+                </div>
+                <div className="frame-parent27">
+                  <div className="rectangle-parent10">
+                    <div className="frame-child13" />
+                    <FiExternalLink className="expand-svgrepocom-icon2" />
+                  </div>
+                  <h3 className="appointments">Engagement Panel</h3>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+            {state1 === "forms" ? <Forms /> : ""}
+            {state1 === "workflow" ? "workflow" : ""}
           </div>
         </main>
       </div>

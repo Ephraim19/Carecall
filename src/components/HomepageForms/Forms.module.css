@@ -63,29 +63,46 @@
 }
 
 .firstNameField1 {
-
   width: auto;
   background-color: transparent;
-  top: calc(50% - 175.5px);
+  top: calc(50% - 205.5px);
   left: calc(50% - 255px);
   padding: var(--padding-xs) var(--padding-2xs);
 }
 .firstNameField11 {
-    background-color: transparent;
-    height: 1px;
-    top: calc(50% - 5.5px);
-    left: calc(50% - 255px);
-    padding: var(--padding-xs) var(--padding-2xs);
-  }
-  
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 85.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
+.firstNameField112 {
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 35.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
+.firstNameField1122 {
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 25.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
 .Nutrition .newPassword,
 .emailAddress,
 .firstNameField1,
 .firstNameField11,
+.firstNameField112,
+.firstNameField1122,
 .lastNameField,
 .lastNameField1,
-.phoneNumber
- {
+.lastNameField12,
+.phoneNumber {
   margin: 0 !important;
   position: absolute;
   display: flex;
@@ -94,31 +111,39 @@
   justify-content: flex-start;
   font-family: var(--font-inter);
   font-size: var(--font-size-mini);
-
 }
 
 .lastNameField {
   width: 220px;
   background-color: transparent;
   height: 1px;
-  top: calc(50% - 175.5px);
+  top: calc(50% - 205.5px);
   left: calc(50% + -94.5px);
   padding: var(--padding-xs) var(--padding-mini);
 }
 
 .lastNameField1 {
-    width: 220px;
-    background-color: transparent;
-    height: 1px;
-    top: calc(50% - 5.5px);
-    left: calc(50% + -94.5px);
-    padding: var(--padding-xs) var(--padding-mini);
-  }
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 85.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.lastNameField12 {
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% - 35.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
 
 .phoneNumber {
   background-color: transparent;
   height: 1px;
-  top: calc(50% - 93.5px);
+  top: calc(50% - 145.5px);
   left: calc(50% - 255px);
   padding: var(--padding-xs) var(--padding-2xs);
 }
@@ -142,7 +167,7 @@
   width: 220px;
   background-color: transparent;
   height: 1px;
-  top: calc(50% - 93.5px);
+  top: calc(50% - 145.5px);
   left: calc(50% + -94.5px);
   padding: var(--padding-xs) var(--padding-mini);
 }
