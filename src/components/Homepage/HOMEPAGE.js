@@ -68,7 +68,7 @@ const HOMEPAGE = () => {
         navigate("/");
       }
     });
-    Cookies.remove("careId");
+    // Cookies.remove("careId");
 
     //read the whole database
     var allDataArray = [];
