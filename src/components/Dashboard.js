@@ -592,27 +592,27 @@ const Dashboard = () => {
       });
 
     //read files
-    get(dbRef7)
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          const fileArray = Object.entries(snapshot.val()).map(
-            ([id, data]) => ({
-              id,
-              ...data,
-            })
-          );
-          //Sort by date
-          dateSort(fileArray);
+    // get(dbRef7)
+    //   .then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //       const fileArray = Object.entries(snapshot.val()).map(
+    //         ([id, data]) => ({
+    //           id,
+    //           ...data,
+    //         })
+    //       );
+    //       //Sort by date
+    //       dateSort(fileArray);
 
-          setFile(fileArray);
-          setFileDispaly([fileArray[fileArray.length - 1]]);
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    //       setFile(fileArray);
+    //       setFileDispaly([fileArray[fileArray.length - 1]]);
+    //     } else {
+    //       console.log("No data available");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
     //read BMI
     get(dbRef8)
@@ -732,7 +732,7 @@ const Dashboard = () => {
     let clncArray = clinic.filter((name) => name.patient === patient.id);
     let intArray = interaction.filter((name) => name.patient === patient.id);
     let prescArray = prescription.filter((name) => name.patient === patient.id);
-    let fileArray = file.filter((name) => name.patient === patient.id);
+    // let fileArray = file.filter((name) => name.patient === patient.id);
     let bmiArray = bmi.filter((name) => name.patient === patient.id);
     let sugarArray = sugar.filter((name) => name.patient === patient.id);
     let healthArray = healthS.filter((name) => name.patient === patient.id);
@@ -747,7 +747,7 @@ const Dashboard = () => {
     setClinicDisplay(clncArray);
     setIntDisplay(intArray);
     setPrescDisplay(prescArray);
-    setFileDispaly(fileArray);
+    // setFileDispaly(fileArray);
     setBmiDispaly(bmiArray);
     setSugarDispaly(sugarArray);
     setHealthSDisplay(healthArray);
@@ -1562,7 +1562,8 @@ const Dashboard = () => {
             <br />
             <br />
 
-            <h4>Files </h4>
+            {/* <h4>Files </h4>
+            
 
             <table className="customers">
               <tr>
@@ -1600,7 +1601,7 @@ const Dashboard = () => {
               </Link>
             </button>
 
-            <br />
+            <br /> */}
           </div>
 
           <div style={{ marginTop: "6%" }}>
