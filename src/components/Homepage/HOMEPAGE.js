@@ -287,7 +287,6 @@ const HOMEPAGE = () => {
 
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
     setTaskDisplay(taskArray.reverse());
-    console.log(taskArray);
 
     let clncArray = clinic.filter((name) => name.patient === patient.id);
     setClinicDisplay(clncArray.reverse());
@@ -556,7 +555,7 @@ const HOMEPAGE = () => {
             {state1 === "engagement" ? (
               <div className="frame-parent25">
                 <div className="tasks-parent">
-                  <Tasks taskDisplay = {taskDisplay} />
+                  <Tasks taskDisplay = {[taskDisplay,patientTasks]} />
                 </div>
 
                 <div className="member-journey-parent">

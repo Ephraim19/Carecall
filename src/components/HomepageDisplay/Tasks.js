@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import "./Tasks.css";
 const FrameComponent = (taskDisplay) => {
+  const [state, setState] = React.useState("tasks");
   const navigate = useNavigate();
 
   const allTasks = () => {
@@ -11,33 +12,39 @@ const FrameComponent = (taskDisplay) => {
   return (
     <div className="frame-parent25">
       <div className="tasks-parent">
-        <div className="tasks1">Tasks</div>
+        <div
+          className="tasks1"
+          style={{ cursor: "pointer", marginLeft: "4%" }}
+          onClick={() => setState("tasks")}
+        >
+          Tasks
+        </div>
 
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "4%" }}
-          onClick={allTasks}
+          onClick={() => setState("all")}
         >
           all
         </div>
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "-6%" }}
-          onClick={allTasks}
+          onClick={() => setState("0D")}
         >
-          1D
+          0D
         </div>
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "-6%" }}
-          onClick={allTasks}
+          onClick={() => setState("7D")}
         >
           7D
         </div>
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "-6%" }}
-          onClick={allTasks}
+          onClick={() => setState("30D")}
         >
           30D
         </div>
@@ -54,17 +61,31 @@ const FrameComponent = (taskDisplay) => {
       </div>
       <div>
         <div>
-          <table id="task-table" >
+          <table id="task-table">
             <tr>
               <th>DATE</th>
               <th>Task</th>
             </tr>
-            {taskDisplay.taskDisplay.map((task) => (
-            <tr key={task.id}>
-                <td>{task.dueDate}</td>
-                <td>{task.task}</td>
-            </tr>
-            ))}
+            {state === "tasks" && (
+              <>
+                {taskDisplay.taskDisplay[0].map((task) => (
+                  <tr key={task.id}>
+                    <td>{task.dueDate.slice(0, 17)}</td>
+                    <td>{task.task}</td>
+                  </tr>
+                ))}
+              </>
+            )}
+            {state === "all" && (
+              <>
+                {taskDisplay.taskDisplay[1].map((task) => (
+                  <tr key={task.id}>
+                    <td>{task.dueDate.slice(0, 17)}</td>
+                    <td>{task.task}</td>
+                  </tr>
+                ))}
+              </>
+            )}
           </table>
         </div>
       </div>
