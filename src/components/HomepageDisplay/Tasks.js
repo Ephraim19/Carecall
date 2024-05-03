@@ -4,11 +4,19 @@ import { FiExternalLink } from "react-icons/fi";
 import "./Tasks.css";
 const FrameComponent = (taskDisplay) => {
   const [state, setState] = React.useState("tasks");
-  const navigate = useNavigate();
+  const [today, setToday] = React.useState([]);
+  const OdData = () => {
+    setState("0D");
+    var currentDate = new Date();
 
-  const allTasks = () => {
-    navigate("/alltasks");
+    var today1 = taskDisplay.taskDisplay[1].filter(
+      (namee) =>
+        new Date(namee.dueDate).toLocaleDateString().slice(0, 17) ===
+        currentDate.toLocaleDateString().slice(0, 17)
+    );
+    setToday(today1);
   };
+
   return (
     <div className="frame-parent25">
       <div className="tasks-parent">
@@ -30,7 +38,7 @@ const FrameComponent = (taskDisplay) => {
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "-6%" }}
-          onClick={() => setState("0D")}
+          onClick={OdData}
         >
           0D
         </div>
@@ -79,6 +87,16 @@ const FrameComponent = (taskDisplay) => {
             {state === "all" && (
               <>
                 {taskDisplay.taskDisplay[1].map((task) => (
+                  <tr key={task.id}>
+                    <td>{task.dueDate.slice(0, 17)}</td>
+                    <td>{task.task}</td>
+                  </tr>
+                ))}
+              </>
+            )}
+            {state === "0D" && (
+              <>
+                {today.map((task) => (
                   <tr key={task.id}>
                     <td>{task.dueDate.slice(0, 17)}</td>
                     <td>{task.task}</td>

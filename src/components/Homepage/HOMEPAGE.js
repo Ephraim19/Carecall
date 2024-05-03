@@ -95,7 +95,7 @@ const HOMEPAGE = () => {
           ...data,
         }));
         tsArray1.shift();
-        setPatientTasks(tsArray1);
+        setPatientTasks(tsArray1.reverse());
 
         //get BP
         var allBP = allDataArray.filter((data) => data.id === "bloodPressure");
@@ -286,7 +286,7 @@ const HOMEPAGE = () => {
     setSearched([]);
 
     let taskArray = patientTasks.filter((name) => name.patient === patient.id);
-    setTaskDisplay(taskArray.reverse());
+    setTaskDisplay(taskArray);
 
     let clncArray = clinic.filter((name) => name.patient === patient.id);
     setClinicDisplay(clncArray.reverse());
@@ -553,9 +553,12 @@ const HOMEPAGE = () => {
             </div>
 
             {state1 === "engagement" ? (
-              <div className="frame-parent25">
+              <div
+                className="frame-parent25"
+                // style={{ overflow: "scroll", height: "600px" }}
+              >
                 <div className="tasks-parent">
-                  <Tasks taskDisplay = {[taskDisplay,patientTasks]} />
+                  <Tasks taskDisplay={[taskDisplay, patientTasks]} />
                 </div>
 
                 <div className="member-journey-parent">

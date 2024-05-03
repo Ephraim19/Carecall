@@ -51,7 +51,6 @@ const Tasksanalytics = (allData) => {
 
   const handleEndDateChange = (date) => {
     setEndDate(date);
-
     
     let currentDate = new Date(startDate);
     var dates = [];
