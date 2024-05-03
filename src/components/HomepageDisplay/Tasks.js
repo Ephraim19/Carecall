@@ -5,6 +5,9 @@ import "./Tasks.css";
 const FrameComponent = (taskDisplay) => {
   const [state, setState] = React.useState("tasks");
   const [today, setToday] = React.useState([]);
+  const [sevenDay, setSevenDay] = React.useState([]);
+  const [thirtyDay, setThirtyDay] = React.useState([]);
+
   const OdData = () => {
     setState("0D");
     var currentDate = new Date();
@@ -15,6 +18,45 @@ const FrameComponent = (taskDisplay) => {
         currentDate.toLocaleDateString().slice(0, 17)
     );
     setToday(today1);
+  };
+
+  const sevenData = () => {
+    setState("7D");
+
+    //let currentDate = new Date();
+    // currentDate.setDate(currentDate.getDate() + 7);
+
+    let dates = [];
+    let currentDate = new Date();
+
+    for (let i = 0; i < 7; i++) {
+      currentDate.setDate(currentDate.getDate() + 1);
+      dates.push(new Date(currentDate).toLocaleDateString().slice(0, 17));
+    }
+
+    let today1 = taskDisplay.taskDisplay[1].filter((namee) =>
+      // new Date(namee.dueDate).toLocaleDateString().slice(0, 17)
+      dates.includes(new Date(namee.dueDate).toLocaleDateString().slice(0, 17))
+    );
+    console.log(today1);
+    setSevenDay(today1);
+  };
+
+  const thirtyData = () => {
+    setState("30D");
+
+    let dates = [];
+    let currentDate = new Date();
+
+    for (let i = 0; i < 30; i++) {
+      currentDate.setDate(currentDate.getDate() + 1);
+      dates.push(new Date(currentDate).toLocaleDateString().slice(0, 17));
+    }
+
+    let today1 = taskDisplay.taskDisplay[1].filter((namee) =>
+      dates.includes(new Date(namee.dueDate).toLocaleDateString().slice(0, 17))
+    );
+    setThirtyDay(today1);
   };
 
   return (
@@ -45,14 +87,15 @@ const FrameComponent = (taskDisplay) => {
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "-6%" }}
-          onClick={() => setState("7D")}
+          onClick={sevenData}
         >
           7D
         </div>
         <div
           className="tasks1"
           style={{ cursor: "pointer", marginLeft: "-6%" }}
-          onClick={() => setState("30D")}
+          onClick={thirtyData}
+          
         >
           30D
         </div>
@@ -97,6 +140,26 @@ const FrameComponent = (taskDisplay) => {
             {state === "0D" && (
               <>
                 {today.map((task) => (
+                  <tr key={task.id}>
+                    <td>{task.dueDate.slice(0, 17)}</td>
+                    <td>{task.task}</td>
+                  </tr>
+                ))}
+              </>
+            )}
+            {state === "7D" && (
+              <>
+                {sevenDay.map((task) => (
+                  <tr key={task.id}>
+                    <td>{task.dueDate.slice(0, 17)}</td>
+                    <td>{task.task}</td>
+                  </tr>
+                ))}
+              </>
+            )}
+            {state === "30D" && (
+              <>
+                {thirtyDay.map((task) => (
                   <tr key={task.id}>
                     <td>{task.dueDate.slice(0, 17)}</td>
                     <td>{task.task}</td>
