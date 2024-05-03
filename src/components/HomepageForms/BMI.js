@@ -12,10 +12,6 @@ const BMI = (patientData) => {
   const [height, setHeight] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
 
-  useEffect(() => {
-    console.log(patientData.patientData.patientData);
-  }, []);
-
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
     dateCopy.setTime(dateCopy.getTime() + numOfHours * 60 * 60 * 1000);
@@ -26,11 +22,15 @@ const BMI = (patientData) => {
     return stringDate;
   };
 
+  useEffect(() => {
+    console.log(patientData.patientData.patientData[1]);
+  }, []);
+
   const NewBmi = (event) => {
     event.preventDefault();
 
     push(ref(database, "Bmi"), {
-      patient: patientData.patientData.patientData.id,
+      patient: patientData.patientData.patientData[0].id,
       weight,
       height,
       dueDate: dateStrip(3, dueDate),
@@ -41,28 +41,30 @@ const BMI = (patientData) => {
         if (height === "" || weight === "") {
           toast.error("Please fill in all fields");
         } else {
-          if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
-            push(ref(database, "tasks"), {
-              patient: patientData.patientData.patientData.id,
-              task:
-                patientData.patientData.patientData.patient +
-                " is under weight on " +
-                dateStrip(3, dueDate).slice(0, 17),
-              dueDate: dateStrip(3, new Date()),
-              completed: "Not started",
-            });
-          }
+          if (patientData.patientData.patientData[1].program === "AcuteCare") {
+            if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " is under weight on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
 
-          if (parseInt(weight) / parseInt(height ^ 2) > 25) {
-            push(ref(database, "tasks"), {
-              patient: patientData.patientData.patientData.id,
-              task:
-              patientData.patientData.patientData.patient +
-                " is over weight on " +
-                dateStrip(3, dueDate).slice(0, 17),
-              dueDate: dateStrip(3, new Date()),
-              completed: "Not started",
-            });
+            if (parseInt(weight) / parseInt(height ^ 2) > 25) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " is over weight on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
           }
         }
       })

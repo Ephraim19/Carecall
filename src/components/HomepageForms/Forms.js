@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../Homepage/FrameComponent.css";
 import styles from "./Forms.module.css";
 import Popup from "reactjs-popup";
@@ -10,6 +10,9 @@ import BloodPressure from "./BloodPressure";
 import BloodSugar from "./BloodSugar";
 import Appointment from "./Appointment";
 const Forms = (patientData) => {
+  useEffect(() => {
+    console.log(patientData.patientData);
+  }, []);
 
   return (
     <div className="frame-parent25">
@@ -44,7 +47,7 @@ const Forms = (patientData) => {
                 position="left top"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BMI patientData={patientData}  />
+                <BMI patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -59,7 +62,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BloodPressure />
+                <BloodPressure patientData={patientData} />
               </Popup>
             </div>
           </div>

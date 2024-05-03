@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import DatePicker from "react-datepicker";
 
-const BloodPressure = () => {
+const BloodPressure = (patientData) => {
   const [pressure, setPressure] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
   const [pulse, setPulse] = useState("");
@@ -26,7 +26,7 @@ const BloodPressure = () => {
     event.preventDefault();
     if (pressure && dueDate) {
       push(ref(database, "bloodPressure"), {
-        patient: Cookies.get("memberId"),
+        patient: patientData.patientData.patientData[0].id,
         pressure,
         pulse,
         dueDate: dateStrip(3, dueDate),
@@ -43,30 +43,33 @@ const BloodPressure = () => {
           });
 
           //Create a task if bp is high or low
-          // if (pressure.split("/")[0] > 120 || pressure.split("/")[1] > 80) {
-          //   push(ref(database, "tasks"), {
-          //     patient: Cookies.get("patient"),
-          //     task:
-          //       Cookies.get("userName") +
-          //       " had a high blood pressure on " +
-          //       dateStrip(3, dueDate).slice(0, 17),
-          //     dueDate: dateStrip(3, new Date()),
-          //     completed: "Not started",
-          //   });
-          // } else if (pressure.split("/")[1] < 60 || pressure.split("/")[0] < 60) {
-          //   push(ref(database, "tasks"), {
-          //     patient: Cookies.get("patient"),
-          //     task:
-          //       Cookies.get("userName") +
-          //       " had a low blood pressure on " +
-          //       dateStrip(3, dueDate).slice(0, 17),
-          //     dueDate: dateStrip(3, new Date()),
-          //     completed: "Not started",
-          //   });
-          // }
+          if (patientData.patientData.patientData[1].program === "AcuteCare") {
+            if (pressure.split("/")[0] > 120 || pressure.split("/")[1] > 80) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " had a high blood pressure on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+            if (pressure.split("/")[1] < 60 || pressure.split("/")[0] < 60) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " had a low blood pressure on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+          }
         })
         .catch((error) => {
-          toast.error("Error adding blood pressure", {
+          toast.error("Error adding blood pressure" + error, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
