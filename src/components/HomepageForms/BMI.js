@@ -7,10 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import DatePicker from "react-datepicker";
 
-const BMI = () => {
+const BMI = (patientData) => {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
+
+  useEffect(() => {
+    console.log(patientData.patientData.patientData);
+  }, []);
 
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
@@ -26,7 +30,7 @@ const BMI = () => {
     event.preventDefault();
 
     push(ref(database, "Bmi"), {
-      patient: Cookies.get("memberId"),
+      patient: patientData.patientData.patientData.id,
       weight,
       height,
       dueDate: dateStrip(3, dueDate),
@@ -34,34 +38,36 @@ const BMI = () => {
       .then(() => {
         toast.success("Data submitted successfully");
         //Create a task if user has abnormal BMI
-        // if (height === "" || weight === "") {
-        //   toast.error("Please fill in all fields");
-        // } else {
-        //   if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " is under weight on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   } else if (parseInt(weight) / parseInt(height ^ 2) > 25) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " is over weight on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   }
-        //}
+        if (height === "" || weight === "") {
+          toast.error("Please fill in all fields");
+        } else {
+          if (parseInt(weight) / parseInt(height ^ 2) < 18.5) {
+            push(ref(database, "tasks"), {
+              patient: patientData.patientData.patientData.id,
+              task:
+                patientData.patientData.patientData.patient +
+                " is under weight on " +
+                dateStrip(3, dueDate).slice(0, 17),
+              dueDate: dateStrip(3, new Date()),
+              completed: "Not started",
+            });
+          }
+
+          if (parseInt(weight) / parseInt(height ^ 2) > 25) {
+            push(ref(database, "tasks"), {
+              patient: patientData.patientData.patientData.id,
+              task:
+              patientData.patientData.patientData.patient +
+                " is over weight on " +
+                dateStrip(3, dueDate).slice(0, 17),
+              dueDate: dateStrip(3, new Date()),
+              completed: "Not started",
+            });
+          }
+        }
       })
       .catch((error) => {
-        toast.error("Error submitting data");
+        toast.error("Error submitting data" + error);
       });
   };
 

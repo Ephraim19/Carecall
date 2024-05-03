@@ -313,7 +313,7 @@
     font-size: var(--font-size-lg);
     color: var(--color-steelblue);
     font-family: var(--font-roboto-slab);
-    margin-bottom: 25px;
+    /* margin-bottom: -10%; */
     /* margin-left: 40px; */
   }
   /* .task-table {

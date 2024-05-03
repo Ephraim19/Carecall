@@ -9,7 +9,8 @@ import Prescription from "./Prescription";
 import BloodPressure from "./BloodPressure";
 import BloodSugar from "./BloodSugar";
 import Appointment from "./Appointment";
-const Forms = () => {
+const Forms = (patientData) => {
+
   return (
     <div className="frame-parent25">
       <div className="tasks-parent">
@@ -43,7 +44,7 @@ const Forms = () => {
                 position="left top"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BMI />
+                <BMI patientData={patientData}  />
               </Popup>
             </div>
           </div>

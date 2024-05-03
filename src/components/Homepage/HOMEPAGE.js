@@ -586,7 +586,7 @@ const HOMEPAGE = () => {
             ) : (
               ""
             )}
-            {state1 === "forms" ? <Forms /> : ""}
+            {state1 === "forms" ? <Forms patientData = {patientData} /> : ""}
             {state1 === "workflow" ? "workflow" : ""}
           </div>
         </main>
