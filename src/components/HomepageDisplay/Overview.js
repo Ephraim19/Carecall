@@ -6,6 +6,8 @@ import BloodSugar from "./BloodSugar";
 import Collapsible from "react-collapsible";
 import BMIChart from "./BMIChart";
 import BloodPressureGraph from "./BloodPressureGraph";
+import BloodSugarChart from "./BloodSugarChart";
+
 const Overview = (datas) => {
   return (
     <div className="frame-parent2525">
@@ -40,7 +42,16 @@ const Overview = (datas) => {
 
       <div style={{ cursor: "pointer" }}>
         <Collapsible trigger="BLOODSUGAR DATA">
-          <BloodSugar sugarDisplay={datas.datas[1]} />
+          <p>
+            <Collapsible trigger="Data">
+              <BloodSugar sugarDisplay={datas.datas[1]} />
+            </Collapsible>
+          </p>
+          <p>
+            <Collapsible trigger="Charts & Graphs">
+              <BloodSugarChart sugarDisplay={datas.datas[1]} />
+            </Collapsible>
+          </p>
         </Collapsible>
       </div>
       <div style={{ cursor: "pointer" }}>
