@@ -581,7 +581,7 @@ const HOMEPAGE = () => {
                   Workflow
                 </h3>
               </div>
-              <h1 className="h11">{`>`}</h1>
+              {/* <h1 className="h11">{`>`}</h1> */}
             </div>
 
             {state1 === "engagement" ? (
