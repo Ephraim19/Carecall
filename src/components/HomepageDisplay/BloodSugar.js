@@ -4,7 +4,7 @@ import "./Interactions.css";
 const BloodSugar = (sugarDisplay) => {
 
   return (
-    <div className="frame-parent2525">
+    <div >
       <table id="pressure">
         <tr>
           <th>DATE</th>

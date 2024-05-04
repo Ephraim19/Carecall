@@ -97,7 +97,7 @@ const FrameComponent = (taskDisplay) => {
           onClick={thirtyData}
           
         >
-          30D
+          1M
         </div>
 
         <div className="frame-wrapper15">

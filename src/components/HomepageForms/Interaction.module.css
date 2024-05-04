@@ -82,12 +82,12 @@
     align-items: flex-start;
     justify-content: flex-start;
   }
-  .emailFieldForLogin12 {
+   .emailFieldForLogin12 {
     width: 100%;
     border: 0;
     outline: 0;
     background-color: var(--color-gainsboro);
-    align-self: stretch;
+    align-self: start;
     height: 150px;  
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     padding: var(--padding-smi) var(--padding-xl) var(--padding-2xs);
@@ -97,7 +97,7 @@
     color: var(--color-silver);
     min-width: 250px;
     color: black;
-  }
+  } 
 
   .emailFieldForLogin {
     width: 100%;

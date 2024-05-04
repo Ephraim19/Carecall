@@ -4,7 +4,6 @@ import { database, auth } from "../Firebase";
 import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
 import DatePicker from "react-datepicker";
 
 const BMI = (patientData) => {
@@ -22,9 +21,6 @@ const BMI = (patientData) => {
     return stringDate;
   };
 
-  useEffect(() => {
-    console.log(patientData.patientData.patientData[1]);
-  }, []);
 
   const NewBmi = (event) => {
     event.preventDefault();

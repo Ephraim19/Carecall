@@ -4,10 +4,9 @@ import { database } from "../Firebase";
 import { ref, push, update, get } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Cookies from "js-cookie";
 import DatePicker from "react-datepicker";
 
-const Prescription = (familyDisplay) => {
+const Prescription = (patientData) => {
   const [prescription, setPrescription] = useState("");
   const [daysTaken, setDaysTaken] = useState();
   const [dueDate, setDueDate] = useState(new Date());
@@ -30,43 +29,40 @@ const Prescription = (familyDisplay) => {
     event.preventDefault();
     if (prescription && daysTaken) {
       push(ref(database, "Prescription"), {
-        patient: Cookies.get("memberId"),
+        patient: patientData.patientData.patientData[0].id,
         prescription,
         daysTaken,
         dueDate: dateStrip(3, dueDate),
         status: "Ongoing",
-      })
-        .then(() => {
-          toast.success("Prescription added successfully");
-          // var tody = dateStrip(3, dueDate).slice(5, 17);
-          // var words = tody.split(" ");
-          // var newdate = words[0] + "/" + words[1] + "/" + words[2];
-          // var strToDate = new Date(newdate);
+      }).then(() => {
+        toast.success("Successfully added prescription. click anywhere to close");
+        var tody = dateStrip(3, dueDate).slice(5, 17);
+        var words = tody.split(" ");
+        var newdate = words[0] + "/" + words[1] + "/" + words[2];
+        var strToDate = new Date(newdate);
 
-          // strToDate.setDate(strToDate.getDate() + parseInt(daysTaken));
+        strToDate.setDate(strToDate.getDate() + parseInt(daysTaken));
 
-          // //Create a task
-          // push(ref(database, "tasks"), {
-          //   patient: Cookies.get("patient"),
-          //   task:
-          //     Cookies.get("userName") +
-          //     " has finished " +
-          //     prescription +
-          //     " on " +
-          //     dateStrip(3, strToDate).slice(0, 17),
-          //   dueDate: dateStrip(3, strToDate),
-          //   completed: "Not started",
-          // }).then((data) => {
-          //   console.log(data);
-          // });
-        })
-        .catch((error) => {
-          toast.error("Error adding prescription");
-        });
-    } else{
-      toast.error("Please fill in all fields");
+        //Create a task
+        if (patientData.patientData.patientData[1].program === "AcuteCare") {
+          push(ref(database, "tasks"), {
+            patient: patientData.patientData.patientData[0].id,
+            task:
+              patientData.patientData.patientData[0].patient +
+              " has finished " +
+              prescription +
+              " on " +
+              dateStrip(3, strToDate).slice(0, 17),
+            dueDate: dateStrip(3, strToDate),
+            completed: "Not started",
+          });
+        }
+      });
+    }else{
+      toast.error("Please fill all fields");
     }
   };
+
   return (
     <div>
       <form className={styles.firstNameField}>
@@ -115,7 +111,7 @@ const Prescription = (familyDisplay) => {
           onChange={(e) => setDaysTaken2(e.target.value)}
         /> */}
 
-        <button className={styles.signUpButton5} onClick={NewPrescription} >
+        <button className={styles.signUpButton5} onClick={NewPrescription}>
           <div className={styles.signUpButton1}>
             <div className={styles.signUpButtonChild} />
             <b className={styles.createAccount}>SUBMIT DATA</b>

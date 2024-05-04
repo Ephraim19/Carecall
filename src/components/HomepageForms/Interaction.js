@@ -3,11 +3,10 @@ import styles from "./Interaction.module.css";
 import { ref, push } from "firebase/database";
 import { database, auth } from "../Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Interaction = () => {
+const Interaction = (patientData) => {
   const [interaction, setInteraction] = React.useState("");
   const today = new Date();
   const [mode, setMode] = React.useState("");
@@ -33,7 +32,7 @@ const Interaction = () => {
     e.preventDefault();
     if (interaction && today && mode) {
       push(ref(database, "Interaction"), {
-        patient: Cookies.get("memberId"),
+        patient: patientData.patientData.patientData[0].id,
         interaction,
         mode,
         Hc: hc,
@@ -63,7 +62,7 @@ const Interaction = () => {
               <div className={styles.email}>Interaction</div>
               <div className={styles.div}>*</div>
             </div>
-            <input
+            <textarea
               className={styles.emailFieldForLogin12}
               placeholder="Enter the interaction"
               type="text"

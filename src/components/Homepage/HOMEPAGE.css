@@ -54,6 +54,7 @@
   padding: var(--padding-10xs) 35px;
   box-sizing: border-box;
   color: var(--color-darkslategray-100);
+  margin-bottom: 25%;
 }
 .frame-container {
   align-self: stretch;

@@ -3,7 +3,7 @@ import "./Interactions.css";
 
 const BMI = (bmiDisplay) => {
   return (
-    <div className="frame-parent2525">
+    <div>
       <table id="pressure">
         <tr>
           <th>DATE</th>

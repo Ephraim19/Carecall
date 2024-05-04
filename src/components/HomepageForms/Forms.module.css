@@ -85,6 +85,29 @@
   padding: var(--padding-xs) var(--padding-2xs);
 }
 
+.firstNameField11223 {
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 75.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
+.firstNameField112233 {
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 125.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+.firstNameField1122334 {
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 175.5px);
+  left: calc(50% - 255px);
+  padding: var(--padding-xs) var(--padding-2xs);
+}
+
 .firstNameField1122 {
   background-color: transparent;
   height: 1px;
@@ -99,9 +122,15 @@
 .firstNameField11,
 .firstNameField112,
 .firstNameField1122,
+.firstNameField11223,
+.firstNameField112233,
+.firstNameField1122334,
 .lastNameField,
 .lastNameField1,
 .lastNameField12,
+.lastNameField122,
+.lastNameField1223,
+.lastNameField12233,
 .phoneNumber {
   margin: 0 !important;
   position: absolute;
@@ -136,6 +165,33 @@
   background-color: transparent;
   height: 1px;
   top: calc(50% - 35.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.lastNameField122 {
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 25.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.lastNameField1223 {
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 75.5px);
+  left: calc(50% + -94.5px);
+  padding: var(--padding-xs) var(--padding-mini);
+}
+
+.lastNameField12233 {
+  width: 220px;
+  background-color: transparent;
+  height: 1px;
+  top: calc(50% + 125.5px);
   left: calc(50% + -94.5px);
   padding: var(--padding-xs) var(--padding-mini);
 }

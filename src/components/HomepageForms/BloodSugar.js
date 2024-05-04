@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Program.module.css";
 import { database } from "../Firebase";
 import { ref, push } from "firebase/database";
@@ -7,12 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import DatePicker from "react-datepicker";
 
-const BloodSugar = () => {
+const BloodSugar = (patientData) => {
   const [fasting, setFasting] = useState("");
   const [random, setRandom] = useState("");
   const [HBA1C, setHBA1C] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
-
 
   const dateStrip = (numOfHours, date) => {
     const dateCopy = new Date(date.getTime());
@@ -28,74 +27,77 @@ const BloodSugar = () => {
     event.preventDefault();
     if (fasting || random || (HBA1C && dueDate)) {
       push(ref(database, "Bloodsugar"), {
-        patient: Cookies.get("memberId"),
+        patient: patientData.patientData.patientData[0].id,
         random,
         fasting,
         HBA1C,
         dueDate: dateStrip(3, dueDate),
-      }).then(() => {
-        toast.success("Data submitted successfully");
-        //Create a task if user has abnormal Blood sugar
-        //   if (HBA1C && parseFloat(HBA1C > 5.7) ) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " has high HBA1C on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   }
-        //   if (fasting && parseFloat(fasting) > 10) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " has high fasting blood sugar on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   }
-        //   if (fasting && parseFloat(fasting) < 4) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " has low fasting blood sugar on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   }
-        //   if (random && parseFloat(random) > 10) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " has high random blood sugar on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   }
-        //   if (random && parseFloat(random) < 10) {
-        //     push(ref(database, "tasks"), {
-        //       patient: Cookies.get("patient"),
-        //       task:
-        //         Cookies.get("userName") +
-        //         " has low random blood sugar on " +
-        //         dateStrip(3, dueDate).slice(0, 17),
-        //       dueDate: dateStrip(3, new Date()),
-        //       completed: "Not started",
-        //     });
-        //   }
-        //   navigate("/dashboard");
-      }).catch((error) => {
-        toast.error("Error submitting data");
-      });
-    }else{
+      })
+        .then(() => {
+          toast.success("Data submitted successfully");
+          //Create a task if user has abnormal Blood sugar
+          if (patientData.patientData.patientData[1].program === "AcuteCare") {
+            if (HBA1C && parseFloat(HBA1C > 5.7)) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " has high HBA1C on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+            if (fasting && parseFloat(fasting) > 10) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " has high fasting blood sugar on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+            if (fasting && parseFloat(fasting) < 4) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " has low fasting blood sugar on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+            if (random && parseFloat(random) > 10) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " has high random blood sugar on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+            if (random && parseFloat(random) < 10) {
+              push(ref(database, "tasks"), {
+                patient: patientData.patientData.patientData[0].id,
+                task:
+                  patientData.patientData.patientData[0].patient +
+                  " has low random blood sugar on " +
+                  dateStrip(3, dueDate).slice(0, 17),
+                dueDate: dateStrip(3, new Date()),
+                completed: "Not started",
+              });
+            }
+          }
+        })
+        .catch((error) => {
+          toast.error("Error submitting data " + error);
+        });
+    } else {
       toast.error("Please fill in all fields");
     }
   };
@@ -126,17 +128,18 @@ const BloodSugar = () => {
           value={HBA1C}
           onChange={(e) => setHBA1C(e.target.value)}
         />
-        <div
-          className={styles.emailAddress}
-          
-        >
+        <div className={styles.emailAddress}>
           <DatePicker
             selected={dueDate}
             onChange={(date) => setDueDate(date)}
           />
         </div>
 
-        <button className={styles.signUpButton} type="button" onClick={NewSugar} >
+        <button
+          className={styles.signUpButton}
+          type="button"
+          onClick={NewSugar}
+        >
           <div className={styles.signUpButton1}>
             <div className={styles.signUpButtonChild} />
             <b className={styles.createAccount}>SUBMIT DATA</b>

@@ -35,7 +35,7 @@ const BloodSugar = () => {
         dueDate: dateStrip(3, dueDate),
       }).then(() => {
         //Create a task if user has abnormal Blood sugar
-
+        
         if (HBA1C && parseFloat(HBA1C > 5.7) ) {
           push(ref(database, "tasks"), {
             patient: Cookies.get("patient"),

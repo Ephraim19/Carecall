@@ -25,10 +25,15 @@ import InsuranceEmployer from "../HomepageForms/InsuranceEmployer";
 import RightSectionComponent from "./RightSectionComponent";
 import BloodSugar from "../HomepageDisplay/BloodSugar";
 import BMI from "../HomepageDisplay/BMI";
+import FrameConditions from "./FrameConditions";
+import FrameInterventions from "./FrameInterventions";
+import FrameGoals from "./FrameGoals";
+import FrameFamilyConditions from "./FrameFamilyConditions";
+import Overview from "../HomepageDisplay/Overview";
 
 const HOMEPAGE = () => {
   const navigate = useNavigate();
-  const [state, setState] = React.useState("BMI");
+  const [state, setState] = React.useState("Overview");
   const [state1, setState1] = React.useState("engagement");
 
   const [allData, setAllData] = useState([]);
@@ -52,6 +57,7 @@ const HOMEPAGE = () => {
   const [programStatus, setProgramStatus] = useState([]);
   const [family, setFamily] = useState([]);
   const [address, setAddress] = useState([]);
+  const [personalClinical, setPersonalClinical] = useState("personal");
 
   const [programStatusDisplay, setProgramStatusDisplay] = React.useState("");
   const [sugarDisplay, setSugarDisplay] = React.useState([]);
@@ -265,7 +271,6 @@ const HOMEPAGE = () => {
   const handleResultClick = (patient) => {
     setMember(patient.patient);
     setPatientData(patient);
-    Cookies.set("memberId", patient.id, { expires: 1 });
 
     const randomId = () => {
       if (patient.idc === undefined) {
@@ -441,19 +446,42 @@ const HOMEPAGE = () => {
             <div className="frame-container">
               <div className="rectangle-parent">
                 <div className="frame-child" />
-                <div className="personal">Personal</div>
+                <div
+                  className="personal"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setPersonalClinical("personal")}
+                >
+                  Personal
+                </div>
               </div>
               <div className="rectangle-group">
                 <div className="frame-item" />
-                <div className="clinical">Clinical</div>
+                <div
+                  className="clinical"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setPersonalClinical("clinical")}
+                >
+                  Clinical
+                </div>
               </div>
             </div>
+            {personalClinical === "personal" ? (
+              <>
+                <FrameProgram programStatusDisplay={programStatusDisplay} />
+                <FrameContacts patientData={patientData} />
+                <FrameComponent4 insuranceDisplay={insuranceDisplay} />
+                <FrameComponent3 addressDisplay={addressDisplay} />
+                <FrameComponent2 familyDisplay={familyDisplay} />
+              </>
+            ) : (
+              <>
+                <FrameConditions patientData={patientData} />
+                <FrameInterventions patientData={patientData} />
+                <FrameGoals patientData={patientData} />
+                <FrameFamilyConditions patientData={patientData} />
 
-            <FrameProgram programStatusDisplay={programStatusDisplay} />
-            <FrameContacts patientData={patientData} />
-            <FrameComponent4 insuranceDisplay={insuranceDisplay} />
-            <FrameComponent3 addressDisplay={addressDisplay} />
-            <FrameComponent2 familyDisplay={familyDisplay} />
+              </>
+            )}
           </div>
           <div className="frame-wrapper3">
             <div className="frame-parent24">
@@ -478,15 +506,15 @@ const HOMEPAGE = () => {
 
               <div
                 className="conditions-wrapper"
-                onClick={(e) => setState("BMI")}
+                onClick={(e) => setState("Overview")}
               >
-                <h3 className="conditions">BMI</h3>
+                <h3 className="conditions">Vw</h3>
               </div>
               <div
                 className="conditions-wrapper"
                 onClick={(e) => setState("BP")}
               >
-                <h3 className="conditions">BP</h3>
+                <h3 className="conditions">Int</h3>
               </div>
               {/* <div
                 className="interventions-wrapper"
@@ -498,13 +526,13 @@ const HOMEPAGE = () => {
                 className="conditions-wrapper"
                 onClick={(e) => setState("BS")}
               >
-                <h3 className="conditions">BS</h3>
+                <h3 className="conditions">Engage</h3>
               </div>
               <div
                 className="input-filter"
                 onClick={(e) => setState("interactions")}
               >
-                <h3 className="interactions">Interactions</h3>
+                <h3 className="interactions">Docs</h3>
               </div>
               <h1 className="h1">{`>`}</h1>
             </div>
@@ -514,9 +542,13 @@ const HOMEPAGE = () => {
           ) : (
             ""
           )}
+          {state === "Overview" ? <Overview datas = {[bpDisplay,sugarDisplay,bmiDisplay]} /> : ""}
+          
           {state === "BP" ? <BloodPressure bpDisplay={bpDisplay} /> : ""}
           {state === "BS" ? <BloodSugar sugarDisplay={sugarDisplay} /> : ""}
           {state === "BMI" ? <BMI bmiDisplay={bmiDisplay} /> : ""}
+          {/* {state === "BMI" ? <Overview bmiDisplay={[bmiDisplay} /> : ""} */}
+          
           {/* <RightSectionComponent /> */}
           <div>
             <div className="frame-parent26">
@@ -586,7 +618,11 @@ const HOMEPAGE = () => {
             ) : (
               ""
             )}
-            {state1 === "forms" ? <Forms patientData = {[patientData,programStatusDisplay]} /> : ""}
+            {state1 === "forms" ? (
+              <Forms patientData={[patientData, programStatusDisplay]} />
+            ) : (
+              ""
+            )}
             {state1 === "workflow" ? "workflow" : ""}
           </div>
         </main>

@@ -10,10 +10,6 @@ import BloodPressure from "./BloodPressure";
 import BloodSugar from "./BloodSugar";
 import Appointment from "./Appointment";
 const Forms = (patientData) => {
-  useEffect(() => {
-    console.log(patientData.patientData);
-  }, []);
-
   return (
     <div className="frame-parent25">
       <div className="tasks-parent">
@@ -77,7 +73,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <Prescription />
+                <Prescription patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -92,7 +88,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BloodSugar />
+                <BloodSugar patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -107,7 +103,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <Appointment />
+                <Appointment patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -153,6 +149,111 @@ const Forms = (patientData) => {
                 trigger={
                   <button type="button" className="frame-button">
                     <div className="view-all-members">PYSCHOLOGIST</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <BloodSugar />
+              </Popup>
+            </div>
+          </div>
+          <div className={styles.lastNameField122} placeholder="PRIMARY MEMBER">
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button className="frame-button" type="button">
+                    <div className="view-all-members">LIVER</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <Appointment />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.firstNameField11223}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button type="button" className="frame-button">
+                    <div className="view-all-members">UECS</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <BloodSugar />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.lastNameField1223}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button className="frame-button" type="button">
+                    <div className="view-all-members">URINALYSIS</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <Appointment />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.firstNameField112233}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button type="button" className="frame-button">
+                    <div className="view-all-members">TSH</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <BloodSugar />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.lastNameField12233}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button className="frame-button" type="button">
+                    <div className="view-all-members">LIPID</div>
+                  </button>
+                }
+                position="left center"
+                contentStyle={{ width: "auto", maxWidth: "600px" }}
+              >
+                <Appointment />
+              </Popup>
+            </div>
+          </div>
+          <div
+            className={styles.firstNameField1122334}
+            placeholder="PRIMARY MEMBER"
+          >
+            <div className="frame-wrapper6">
+              <Popup
+                trigger={
+                  <button type="button" className="frame-button">
+                    <div className="view-all-members">HIV</div>
                   </button>
                 }
                 position="left center"

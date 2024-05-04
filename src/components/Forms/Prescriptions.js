@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { database } from "../Firebase";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 const Prescriptions = () => {
   const [prescription, setPrescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
