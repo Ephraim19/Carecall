@@ -9,6 +9,12 @@ import Prescription from "./Prescription";
 import BloodPressure from "./BloodPressure";
 import BloodSugar from "./BloodSugar";
 import Appointment from "./Appointment";
+import TSH from "./TSH";
+import LIPID from "./LIPID";
+import LiverFunction from "./LiverFunction";
+import UECS from "./UECS";
+import HIV from "./HIV";
+
 const Forms = (patientData) => {
   return (
     <div className="frame-parent25">
@@ -27,7 +33,7 @@ const Forms = (patientData) => {
                 position="left top"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <Interaction />
+                <Interaction patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -169,7 +175,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <Appointment />
+                <LiverFunction patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -187,7 +193,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BloodSugar />
+                <UECS patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -223,7 +229,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BloodSugar />
+                <TSH patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -241,7 +247,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <Appointment />
+                <LIPID patientData={patientData} />
               </Popup>
             </div>
           </div>
@@ -259,7 +265,7 @@ const Forms = (patientData) => {
                 position="left center"
                 contentStyle={{ width: "auto", maxWidth: "600px" }}
               >
-                <BloodSugar />
+                <HIV patientData={patientData} />
               </Popup>
             </div>
           </div>

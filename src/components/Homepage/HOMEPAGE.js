@@ -356,7 +356,7 @@ const HOMEPAGE = () => {
                     <span>Care</span>
                     <span className="call">Call</span>
                   </h1>
-                  <div className="connected-continuous-care-wrapper">
+                  <div className="connected-continuous-care-wrapper" style={{marginBottom:"-5%"}}>
                     <b className="connected-continuous-care">
                       Connected. Continuous. Care
                     </b>

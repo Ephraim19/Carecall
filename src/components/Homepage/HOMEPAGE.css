@@ -54,7 +54,6 @@
   padding: var(--padding-10xs) 35px;
   box-sizing: border-box;
   color: var(--color-darkslategray-100);
-  margin-bottom: 25%;
 }
 .frame-container {
   align-self: stretch;
@@ -63,7 +62,7 @@
   background-color: var(--color-dodgerblue-300);
   overflow-y: auto;
   flex-shrink: 0;
-  padding: var(--padding-7xs) var(--padding-smi) var(--padding-4xs);
+  /* padding: var(--padding-7xs) var(--padding-smi) var(--padding-4xs); */
   gap: var(--gap-7xl);
   margin-bottom: 25px;
   max-width: 300px;
