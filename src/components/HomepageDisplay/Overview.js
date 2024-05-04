@@ -4,18 +4,37 @@ import BMI from "./BMI";
 import BloodPressure from "./BloodPressure";
 import BloodSugar from "./BloodSugar";
 import Collapsible from "react-collapsible";
-
+import BMIChart from "./BMIChart";
+import BloodPressureGraph from "./BloodPressureGraph";
 const Overview = (datas) => {
   return (
     <div className="frame-parent2525">
       <div style={{ cursor: "pointer" }}>
         <Collapsible trigger="BMI DATA">
-          <BMI bmiDisplay={datas.datas[2]} />
+          <p>
+            <Collapsible trigger="Data">
+              <BMI bmiDisplay={datas.datas[2]} />
+            </Collapsible>
+          </p>
+          <p>
+            <Collapsible trigger="Charts & Graphs">
+              <BMIChart bmiDisplay1={datas.datas[2]} />{" "}
+            </Collapsible>
+          </p>
         </Collapsible>
         <div style={{ cursor: "pointer" }}></div>
 
         <Collapsible style={{ cursor: "pointer" }} trigger="BLOODPRESSURE DATA">
-          <BloodPressure bpDisplay={datas.datas[0]} />
+          <p>
+            <Collapsible trigger="Data">
+              <BloodPressure bpDisplay={datas.datas[0]} />
+            </Collapsible>
+          </p>
+          <p>
+            <Collapsible trigger="Charts & Graphs">
+              <BloodPressureGraph bpDisplay={datas.datas[0]} />
+            </Collapsible>
+          </p>
         </Collapsible>
       </div>
 
@@ -24,33 +43,62 @@ const Overview = (datas) => {
           <BloodSugar sugarDisplay={datas.datas[1]} />
         </Collapsible>
       </div>
+      <div style={{ cursor: "pointer" }}>
+        <Collapsible trigger="APPOINTMENT">
+          <BloodSugar sugarDisplay={datas.datas[1]} />
+        </Collapsible>
+      </div>
+      <div style={{ cursor: "pointer" }}>
+        <Collapsible trigger="DOCTOR CONSULTATION">
+          <BloodSugar sugarDisplay={datas.datas[1]} />
+        </Collapsible>
+      </div>
+      <div style={{ cursor: "pointer" }}>
+        <Collapsible trigger="NUTRITION CONSULTATION">
+          <BloodSugar sugarDisplay={datas.datas[1]} />
+        </Collapsible>
+      </div>
+      <div style={{ cursor: "pointer" }}>
+        <Collapsible trigger="PHYCHOLOGY CONSULTATION">
+          <BloodSugar sugarDisplay={datas.datas[1]} />
+        </Collapsible>
+      </div>
+      <div style={{ cursor: "pointer" }}>
+        <Collapsible trigger="LIVER FUNCTION">
+          <BloodSugar sugarDisplay={datas.datas[1]} />
+        </Collapsible>
+        <div style={{ cursor: "pointer" }}>
+          <Collapsible trigger="UECS">
+            <BloodSugar sugarDisplay={datas.datas[1]} />
+          </Collapsible>
+        </div>
+        <div style={{ cursor: "pointer" }}>
+          <Collapsible trigger="URINALYSIS">
+            <BloodSugar sugarDisplay={datas.datas[1]} />
+          </Collapsible>
+        </div>
+        <div style={{ cursor: "pointer" }}>
+          <Collapsible trigger="TSH">
+            <BloodSugar sugarDisplay={datas.datas[1]} />
+          </Collapsible>
+        </div>
+        <div style={{ cursor: "pointer" }}>
+          <Collapsible trigger="LIPID">
+            <BloodSugar sugarDisplay={datas.datas[1]} />
+          </Collapsible>
+        </div>
+        <div style={{ cursor: "pointer" }}>
+          <Collapsible trigger="HIV">
+            <BloodSugar sugarDisplay={datas.datas[1]} />
+          </Collapsible>
+        </div>
+        <div style={{ cursor: "pointer" }}>
+          <Collapsible trigger="LOGISTICS">
+            <BloodSugar sugarDisplay={datas.datas[1]} />
+          </Collapsible>
+        </div>
+      </div>
     </div>
-
-    // <div className="frame-parent2525">
-    //   <table id="pressure">
-    //     <tr>
-    //       <th>DATE</th>
-    //       <th>WEIGHT</th>
-    //       <th>HEIGHT</th>
-    //       <th>BMI</th>
-    //     </tr>
-    //     {bmiDisplay.bmiDisplay.map((bmi) => (
-    //       <tr>
-    //         <td>{bmi.dueDate.slice(0, 17)}</td>
-    //         <td>{bmi.weight}</td>
-    //         <td>{bmi.height}</td>
-    //         <td>
-    //           {" "}
-    //           {bmi.height < 100
-    //             ? (parseInt(bmi.weight) / parseInt(bmi.height ^ 2)).toFixed(2)
-    //             : (
-    //                 parseInt(bmi.weight) / parseInt((bmi.height / 100) ^ 2)
-    //               ).toFixed(2)}
-    //         </td>
-    //       </tr>
-    //     ))}
-    //   </table>
-    // </div>
   );
 };
 
